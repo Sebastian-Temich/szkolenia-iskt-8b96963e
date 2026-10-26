@@ -29,9 +29,9 @@ export const Route = createFileRoute("/szkolenia/")({
   head: () => ({
     meta: [
       { title: "Katalog szkoleń — Szkolenia ISKT" },
-      { name: "description", content: DESCRIPTION },
+      { name: "description", content: OPIS_KATALOGU },
       { property: "og:title", content: "Katalog szkoleń — Szkolenia ISKT" },
-      { property: "og:description", content: DESCRIPTION },
+      { property: "og:description", content: OPIS_KATALOGU },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
