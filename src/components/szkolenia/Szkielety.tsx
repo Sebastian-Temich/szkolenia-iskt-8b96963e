@@ -42,6 +42,37 @@ export function KatalogSzkielet() {
   );
 }
 
+/** Reserves four featured-card tracks on the home page while trainings load. */
+export function PolecaneSzkielet() {
+  return (
+    <div
+      className="grid gap-[var(--space-6)] sm:grid-cols-2 xl:grid-cols-4"
+      aria-busy="true"
+      aria-label="Wczytujemy polecane szkolenia"
+    >
+      {Array.from({ length: 4 }, (_, i) => (
+        <div
+          key={i}
+          className="flex min-h-[432px] flex-col gap-3 rounded-lg border border-[var(--border-subtle)] bg-card p-[var(--space-6)] shadow-[var(--shadow-sm)]"
+        >
+          <div className="flex items-center justify-between">
+            <Skeleton className="size-10" />
+            <Skeleton className="h-5 w-24 rounded-pill" />
+          </div>
+          <Skeleton className="h-12 w-full" />
+          <Skeleton className="h-[63px] w-full" />
+          <Skeleton className="h-[56px] w-full" />
+          <div className="mt-auto space-y-3 border-t border-border pt-[14px]">
+            <Skeleton className="h-6 w-40" />
+            <Skeleton className="h-4 w-48" />
+            <Skeleton className="h-5 w-24" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /** Reserves detail content and price-card dimensions while the loader resolves. */
 export function SzczegolSzkielet() {
   return (
