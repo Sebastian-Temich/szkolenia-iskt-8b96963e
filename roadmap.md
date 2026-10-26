@@ -5,8 +5,8 @@
 - [x] Sprawdzić istniejące testy, lint oraz obie strony na komputerze i telefonie; bez zmian testów, paczek, bazy i publikacji.
 
 # Katalog i szczegół szkolenia
-- [ ] Zbudować izolowaną warstwę danych z zatwierdzoną ofertą i cenami.
-- [ ] Dodać katalog, filtry URL i stany ładowania, pustego wyniku i błędu.
-- [ ] Dodać szczegół szkolenia, terminy i stany ładowania, błędu i 404.
-- [ ] Podłączyć link Katalog w nagłówku; zachować pozostałe fundamenty.
-- [ ] Dodać i uruchomić testy; sprawdzić typy, lint i przepływ na komputerze oraz telefonie.
+- [x] Zbudować izolowaną warstwę danych z zatwierdzoną ofertą i cenami.
+- [x] Dodać katalog, filtry URL i stany ładowania, pustego wyniku i błędu.
+- [x] Dodać szczegół szkolenia, terminy i stany ładowania, błędu i 404.
+- [x] Podłączyć link Katalog w nagłówku; zachować pozostałe fundamenty.
+- [x] Dodać i uruchomić testy; sprawdzić typy automatycznie, lint i przepływ na komputerze oraz telefonie.

@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FundamentyRouteImport } from './routes/fundamenty'
+import { Route as SzkoleniaIndexRouteImport } from './routes/szkolenia/index'
+import { Route as SzkoleniaIdRouteImport } from './routes/szkolenia/$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +24,49 @@ const FundamentyRoute = FundamentyRouteImport.update({
   path: '/fundamenty',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SzkoleniaIndexRoute = SzkoleniaIndexRouteImport.update({
+  id: '/szkolenia/',
+  path: '/szkolenia/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SzkoleniaIdRoute = SzkoleniaIdRouteImport.update({
+  id: '/szkolenia/$id',
+  path: '/szkolenia/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/fundamenty': typeof FundamentyRoute
+  '/szkolenia/$id': typeof SzkoleniaIdRoute
+  '/szkolenia/': typeof SzkoleniaIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/fundamenty': typeof FundamentyRoute
+  '/szkolenia/$id': typeof SzkoleniaIdRoute
+  '/szkolenia': typeof SzkoleniaIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/fundamenty': typeof FundamentyRoute
+  '/szkolenia/$id': typeof SzkoleniaIdRoute
+  '/szkolenia/': typeof SzkoleniaIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/fundamenty'
+  fullPaths: '/' | '/fundamenty' | '/szkolenia/$id' | '/szkolenia/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/fundamenty'
-  id: '__root__' | '/' | '/fundamenty'
+  to: '/' | '/fundamenty' | '/szkolenia/$id' | '/szkolenia'
+  id: '__root__' | '/' | '/fundamenty' | '/szkolenia/$id' | '/szkolenia/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FundamentyRoute: typeof FundamentyRoute
+  SzkoleniaIdRoute: typeof SzkoleniaIdRoute
+  SzkoleniaIndexRoute: typeof SzkoleniaIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +85,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FundamentyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/szkolenia/': {
+      id: '/szkolenia/'
+      path: '/szkolenia'
+      fullPath: '/szkolenia/'
+      preLoaderRoute: typeof SzkoleniaIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/szkolenia/$id': {
+      id: '/szkolenia/$id'
+      path: '/szkolenia/$id'
+      fullPath: '/szkolenia/$id'
+      preLoaderRoute: typeof SzkoleniaIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FundamentyRoute: FundamentyRoute,
+  SzkoleniaIdRoute: SzkoleniaIdRoute,
+  SzkoleniaIndexRoute: SzkoleniaIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
