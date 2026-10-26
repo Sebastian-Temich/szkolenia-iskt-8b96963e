@@ -14,3 +14,4 @@
 - Keep the supplied design system in `src/styles.css` verbatim; use token-based utilities in brand components so replacing a brand token does not require component edits.
 - Keep the palette reference data separate from the reference route, with literal Tailwind token classes, so class discovery includes every swatch without a second color source.
 - Keep this milestone frontend-only with a placeholder home and a visual reference route; future training views are separate work.
+- Keep the Vite pre-load repair for the accidental comment terminator in the supplied CSS prose; repair compiler input only so the owner's stylesheet remains byte-for-byte intact.
