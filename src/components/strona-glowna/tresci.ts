@@ -4,13 +4,8 @@ import {
   Banknote,
   BookOpen,
   ClipboardList,
-  CodeXml,
-  Cpu,
-  FlaskConical,
   Handshake,
-  Languages,
   Layers,
-  Leaf,
   Search,
   ShieldCheck,
   Target,
@@ -22,6 +17,7 @@ import {
   type KategoriaSzkolenia,
   type Szkolenie,
 } from "@/lib/szkolenia/adapter";
+import { IKONY_SZKOLEN } from "@/components/szkolenia/ikony";
 
 /** Audience selected on the home page. */
 export type Odbiorca = "individual" | "company";
@@ -162,31 +158,31 @@ function kategoria(nazwa: KategoriaSzkolenia): KategoriaSzkolenia {
 export const KATEGORIE_KOMPETENCJI: KartaKategorii[] = [
   {
     kategoria: kategoria("AI"),
-    ikona: Cpu,
+    ikona: IKONY_SZKOLEN.cpu,
     tytul: "Sztuczna inteligencja",
     opis: "AI w praktyce: narzędzia generatywne, automatyzacja i agenci dla biznesu.",
   },
   {
     kategoria: kategoria("ESG"),
-    ikona: Leaf,
+    ikona: IKONY_SZKOLEN.leaf,
     tytul: "ESG i zrównoważony rozwój",
     opis: "Raportowanie CSRD, ślad węglowy i strategia zrównoważonego rozwoju.",
   },
   {
     kategoria: kategoria("Angielski"),
-    ikona: Languages,
+    ikona: IKONY_SZKOLEN.languages,
     tytul: "Język angielski",
     opis: "Angielski biznesowy i techniczny — od poziomu B1 po zaawansowany.",
   },
   {
     kategoria: kategoria("Software"),
-    ikona: CodeXml,
+    ikona: IKONY_SZKOLEN["code-xml"],
     tytul: "Rozwój oprogramowania",
     opis: "Programowanie, chmura i technologie — od podstaw do wdrożeń.",
   },
   {
     kategoria: kategoria("B+R"),
-    ikona: FlaskConical,
+    ikona: IKONY_SZKOLEN["flask-conical"],
     tytul: "Projekty B+R",
     opis: "Badania, rozwój i granty — komercjalizacja innowacji w Twojej firmie.",
   },
