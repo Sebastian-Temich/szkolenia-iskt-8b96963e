@@ -12,7 +12,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Kontakt", to: "/", hash: "kontakt" },
 ];
 const CTA_CLASS =
-  "h-[calc(var(--space-10)+var(--space-1))] rounded-pill bg-primary px-[var(--space-5)] text-[length:calc(var(--text-base)-var(--border-width))] font-semibold text-primary-foreground shadow-brand transition-colors duration-[var(--dur-fast)] ease-standard hover:bg-[var(--green-800)]";
+  "h-[calc(var(--space-10)+var(--space-1))] rounded-pill bg-primary px-[var(--space-5)] text-[length:var(--text-cta)] font-semibold text-primary-foreground shadow-brand transition-colors duration-[var(--dur-fast)] ease-standard hover:bg-[var(--green-800)]";
 
 /** Renders shared navigation and an accessible mobile menu. */
 export function Header() {
@@ -31,7 +31,7 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-border bg-background/82 backdrop-blur-md">
       <nav
         aria-label="Nawigacja główna"
-        className="mx-auto flex h-[calc(var(--space-16)+var(--space-1))] max-w-[var(--container-max)] items-center justify-between gap-[var(--space-6)] px-[var(--container-pad)]"
+        className="mx-auto flex h-[var(--nav-h)] max-w-[var(--container-max)] items-center justify-between gap-[var(--space-6)] px-[var(--container-pad)]"
       >
         <Link
           to="/"
@@ -40,7 +40,7 @@ export function Header() {
           aria-label="ISKT — strona główna"
         >
           <Logo className="h-[calc(var(--space-10)-var(--border-width-strong))]" />
-          <span className="hidden max-w-[calc(var(--space-32)+var(--space-24))] text-[length:calc(var(--text-base)-var(--border-width))] leading-[var(--lh-tight)] font-extrabold tracking-normal text-foreground sm:block">
+          <span className="hidden max-w-[calc(var(--space-32)+var(--space-24))] text-[length:var(--text-logo)] leading-[var(--lh-tight)] font-extrabold tracking-normal text-foreground sm:block">
             Rozwijaj swoje kompetencje z ISKT
           </span>
         </Link>
@@ -50,7 +50,7 @@ export function Header() {
               key={label}
               to={to}
               {...(hash ? { hash } : {})}
-              className="whitespace-nowrap text-[length:calc(var(--text-sm)+var(--border-width)/2)] font-medium text-[var(--ink-800)] hover:text-primary"
+              className="whitespace-nowrap text-[length:var(--text-nav)] font-medium text-[var(--ink-800)] hover:text-primary"
             >
               {label}
             </Link>

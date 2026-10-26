@@ -7,7 +7,7 @@ import { BlokCeny } from "./BlokCeny";
 /** Displays the approved price and dates, with placeholder navigation for both CTAs. */
 export function KartaZapisu({ szkolenie }: { szkolenie: Szkolenie }) {
   return (
-    <aside className="flex min-h-[480px] flex-col gap-[var(--space-4)] rounded-lg border border-[var(--border-subtle)] bg-card p-[var(--space-8)] shadow-[var(--shadow-md)] lg:sticky lg:top-[88px]">
+    <aside className="flex min-h-[var(--karta-zapisu-min-h)] flex-col gap-[var(--space-4)] rounded-lg border border-[var(--border-subtle)] bg-card p-[var(--space-8)] shadow-[var(--shadow-md)] lg:sticky lg:top-[88px]">
       <BlokCeny price={szkolenie.price} wariant="szczegol" />
       <Button
         asChild

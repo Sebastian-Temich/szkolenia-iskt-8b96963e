@@ -15,10 +15,9 @@ export function FiltryKatalogu() {
     setQuery(search.q);
     return () => clearTimeout(timer.current);
   }, [search.q]);
-  useEffect(() => () => clearTimeout(timer.current), []);
   return (
     <div className="flex flex-wrap items-center justify-between gap-[var(--space-4)]">
-      <div className="flex flex-wrap gap-2" aria-label="Obszar szkolenia">
+      <div role="group" className="flex flex-wrap gap-2" aria-label="Obszar szkolenia">
         {["Wszystkie", ...KATEGORIE_SZKOLEN].map((category) => (
           <Button
             key={category}

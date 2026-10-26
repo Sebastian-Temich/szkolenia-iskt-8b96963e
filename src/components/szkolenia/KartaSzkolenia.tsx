@@ -22,7 +22,7 @@ export function KartaSzkolenia({
       to="/szkolenia/$id"
       params={{ id: szkolenie.id }}
       {...(powrot ? { search: powrot } : {})}
-      className="flex h-full min-h-[432px] flex-col gap-3 rounded-lg border border-[var(--border-subtle)] bg-card p-[var(--space-6)] shadow-[var(--shadow-sm)] transition duration-[var(--dur-base)] ease-standard hover:-translate-y-1 hover:shadow-[var(--shadow-lg)] motion-reduce:transform-none"
+      className="flex h-full min-h-[var(--karta-min-h)] flex-col gap-3 rounded-lg border border-[var(--border-subtle)] bg-card p-[var(--space-6)] shadow-[var(--shadow-sm)] transition duration-[var(--dur-base)] ease-standard hover:-translate-y-1 hover:shadow-[var(--shadow-lg)] motion-reduce:transform-none"
     >
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">

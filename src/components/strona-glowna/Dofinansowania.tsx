@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Eyebrow } from "./Eyebrow";
+import { Eyebrow } from "@/components/brand/Eyebrow";
 import { ZRODLA_DOFINANSOWANIA } from "./tresci";
 
 /** Presents public funding sources on the dark brand gradient block. */

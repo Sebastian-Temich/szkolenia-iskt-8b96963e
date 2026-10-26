@@ -1,6 +1,6 @@
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Eyebrow } from "./Eyebrow";
+import { Eyebrow } from "@/components/brand/Eyebrow";
 import { PrzelacznikOdbiorcy } from "./PrzelacznikOdbiorcy";
 import { OPCJE_OBSZARU, trescKontaktu, type Odbiorca } from "./tresci";
 
