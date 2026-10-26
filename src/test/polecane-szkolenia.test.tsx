@@ -94,7 +94,7 @@ describe("Polecane szkolenia — stan gotowy", () => {
     stan.identyfikatory = [];
     await zamontujTrase("/");
     await waitFor(() =>
-      expect(await screen.findByText("Nie znaleźliśmy polecanych szkoleń")).toBeInTheDocument(),
+      expect(screen.getByText("Nie znaleźliśmy polecanych szkoleń")).toBeInTheDocument(),
     );
     expect(tytulyKart()).toEqual([]);
     expect(screen.queryByRole("button", { name: /Spróbuj ponownie/ })).toBeNull();
