@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, type SearchSchemaInput } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { FiltryKatalogu } from "@/components/szkolenia/FiltryKatalogu";
 import { KatalogNaglowek } from "@/components/szkolenia/KatalogNaglowek";
@@ -10,12 +10,15 @@ import {
   listSzkolenia,
   opiszLiczbeWynikow,
   type FiltrSzkolen,
+  type KategoriaSzkolenia,
 } from "@/lib/szkolenia/adapter";
 const DESCRIPTION =
   "Filtruj według obszaru lub wyszukaj temat. Szkolenia otwarte i zamknięte, z możliwością dofinansowania.";
 
 export const Route = createFileRoute("/szkolenia/")({
-  validateSearch: (search: Record<string, unknown>) => {
+  validateSearch: (
+    search: { kategoria?: unknown; q?: unknown; demo?: unknown } & SearchSchemaInput,
+  ): { kategoria: KategoriaSzkolenia | "Wszystkie"; q: string; demo: FiltrSzkolen["demo"] } => {
     const category =
       KATEGORIE_SZKOLEN.find((category) => category === search["kategoria"]) ?? "Wszystkie";
     const demo =

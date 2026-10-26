@@ -1,11 +1,11 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
-import { getSzkolenie } from "@/lib/szkolenia/adapter";
+import { createFileRoute, notFound, type SearchSchemaInput } from "@tanstack/react-router";
+import { getSzkolenie, type FiltrSzkolen } from "@/lib/szkolenia/adapter";
 import { SzczegolSzkolenia } from "@/components/szkolenia/SzczegolSzkolenia";
 import { SzczegolSzkielet } from "@/components/szkolenia/Szkielety";
 import { BladSzkolen, NieZnalezionoSzkolenia } from "@/components/szkolenia/StanySzkolen";
 
 export const Route = createFileRoute("/szkolenia/$id")({
-  validateSearch: (search: Record<string, unknown>) => ({
+  validateSearch: (search: { demo?: unknown } & SearchSchemaInput): { demo: FiltrSzkolen["demo"] } => ({
     demo: search["demo"] === "ladowanie" || search["demo"] === "blad" ? search["demo"] : undefined,
   }),
   loaderDeps: ({ search }) => ({ demo: search.demo }),
