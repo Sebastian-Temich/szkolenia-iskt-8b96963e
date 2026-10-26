@@ -84,8 +84,8 @@ describe("Katalog szkoleń — zachowanie widoku", () => {
     // Testing Library normalizuje U+00A0 do zwykłej spacji w zapytaniach tekstowych,
     // więc obecność spacji nierozdzielającej sprawdzam na surowym textContent.
     const tekst = (karta as HTMLElement).textContent ?? "";
-    expect(tekst).toContain("298@@NBSP@@zł");
-    expect(tekst).toContain("1@@NNBSP@@490@@NBSP@@zł bez dofinansowania");
+    expect(tekst).toContain("298 zł");
+    expect(tekst).toContain("1 490 zł bez dofinansowania");
     expect(tekst).not.toContain(" zł");
     expect(within(karta as HTMLElement).getByText("z dofinansowaniem")).toBeInTheDocument();
   });

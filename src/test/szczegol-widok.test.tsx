@@ -21,8 +21,8 @@ describe("Szczegół szkolenia — zachowanie widoku", () => {
   it("cena na szczególe ma spację nierozdzielającą przed symbolem waluty", async () => {
     const { container } = await zamontujTrase("/szkolenia/python");
     const tekst = container.textContent ?? "";
-    expect(tekst).toContain("338@@NBSP@@zł");
-    expect(tekst).toContain("1@@NNBSP@@690@@NBSP@@zł bez dofinansowania");
+    expect(tekst).toContain("338 zł");
+    expect(tekst).toContain("1 690 zł bez dofinansowania");
     expect(tekst).not.toContain(" zł");
   });
 
