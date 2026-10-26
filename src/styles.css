@@ -5,29 +5,127 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system definition.
+ * ================================================================
+ *  ISKT Greenovation — design system aplikacji szkolenia.iskt.pl
+ * ================================================================
  *
- * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *  JEDYNE ŹRÓDŁO PRAWDY dla kolorów, typografii, odstępów i efektów.
  *
- * The :root and .dark blocks define the actual color values using oklch.
- * All colors MUST use oklch format.
+ *  Pochodzenie: 124 tokeny przeniesione 1:1 z dostarczonego przez
+ *  właściciela pakietu "ISKT Greenovation Design System", z plików
+ *  tokens/{colors,typography,spacing,effects,fonts,base}.css.
+ *  Wartości NIE były przepisywane z pamięci — zostały wyekstrahowane
+ *  z plików źródłowych. Nie zmieniaj ich bez decyzji ISKT.
  *
- * To add a new semantic color:
- * 1. Add the variable to :root (light value) and .dark (dark value)
- * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ *  Struktura (nie łam jej przy kolejnych edycjach):
+ *
+ *   1. @theme          — tokeny niezależne od motywu (fonty, skala
+ *                        typografii, promienie, cienie, easingi).
+ *                        Tailwind generuje z nich utility: text-2xl,
+ *                        rounded-lg, shadow-brand, ease-standard.
+ *   2. @theme inline   — role kolorystyczne (bg-primary, text-foreground).
+ *                        Wartości biorą z :root, więc zmieniają się z motywem.
+ *   3. :root WARSTWA 1 — surowe skale marki (--green-*, --ink-*, --neutral-*)
+ *                        oraz semantyka ZIP-u (--surface-*, --text-*, --border-*).
+ *                        Tu i tylko tu żyją literały marki.
+ *   4. :root WARSTWA 2 — role shadcn/ui zmapowane na WARSTWĘ 1.
+ *                        Wyłącznie var() — nigdy literał.
+ *
+ *  DECYZJE E01/A (udokumentowane odstąpienia od szablonu):
+ *
+ *  a) Kolory zostają w HEX, nie w oklch. Poprzedni komentarz szablonu
+ *     wymagał oklch; paleta marki jest dostarczona w HEX, więc zostaje
+ *     w HEX, aby dała się weryfikować 1:1 ze źródłem marki. Konwersja
+ *     tworzyłaby 124 wartości pochodne, nieweryfikowalne wobec marki.
+ *  b) --accent (shadcn) = --green-50, NIE --green-500. W shadcn/ui
+ *     --accent to delikatne tło stanu hover, a nie akcent marki.
+ *     Zieleń #54841D jest dostępna jako --green-500 i jako utility
+ *     bg-brand-accent / text-brand-accent.
+ *  c) Blok .dark jest mapowaniem obronnym na tokeny --ink-*/--green-*.
+ *     Dostarczony design system nie definiuje motywu ciemnego
+ *     (themes: []), więc tryb ciemny NIE jest nigdzie włączany.
+ *     Zatwierdzony motyw ciemny wymaga decyzji ISKT.
+ *  e) WARSTWA 2 celowo wskazuje na surowe tokeny (--green-700), a nie
+ *     na aliasy ZIP-u --color-primary/--color-accent. W Tailwind 4
+ *     przedrostek --color-* to zarezerwowana przestrzeń motywu, więc
+ *     łańcuch --primary -> --color-primary -> --primary mógłby stać się
+ *     cykliczny i unieważnić kolor. Aliasy ZIP-u zostają w WARSTWIE 1
+ *     dla wierności, ale nic się na nich nie opiera.
+ *  d) Z tokens/base.css przeniesiono tożsamość typograficzną (krój,
+ *     grubość, interlinia, tracking, kolory, focus, ::selection),
+ *     ale NIE reguły margin dla h1-h6/p — w tym projekcie odstępy
+ *     daje Tailwind preflight + utility, nie globalny margin.
+ *  f) Krój: decyzja ISKT z 2026-10-25 — budujemy na Inter, wybór
+ *     licencjonowanego kroju marki odłożony. Rodziny krojów żyją
+ *     wyłącznie w @theme (patrz PUNKT PODMIANY KROJU), nigdy w
+ *     komponentach. Samo źródło fontu NIE jest tu wciągane przez
+ *     @import z fonts.css: te same rodziny i grubości ładuje
+ *     __root.tsx przez preconnect + <link>, bo zdalny @import
+ *     wewnątrz arkusza blokuje render i tworzy łańcuch żądań.
+ *     Zastrzeżenie właściciela zostaje w mocy: paleta jest
+ *     spróbkowana z logo, a Inter jest podstawieniem — to
+ *     dostarczony materiał, nie potwierdzona tożsamość wizualna.
  */
 
+@theme {
+  /* ---- Kroje (tokens/typography.css + tokens/fonts.css) ----
+     PUNKT PODMIANY KROJU. Decyzja ISKT z 2026-10-25: budujemy na
+     Inter, wybór licencjonowanego kroju marki pozostaje otwarty.
+     Gdy ISKT dostarczy krój markowy, zmieniasz TYLKO te trzy
+     deklaracje (plus źródło fontu w __root.tsx) — nigdzie w
+     komponentach nie ma nazwy kroju, wszystko idzie przez
+     var(--font-body) / var(--font-heading) / var(--font-mono). */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-display: var(--font-sans);
+
+  /* ---- Skala typografii (tokens/typography.css) ----
+     Nadpisuje domyślną skalę Tailwinda skalą marki (modularna ~1,2). */
+  --text-xs: 0.75rem;  /* 12px */
+  --text-xs--line-height: 1.5;
+  --text-sm: 0.875rem;  /* 14px */
+  --text-sm--line-height: 1.5;
+  --text-base: 1rem;  /* 16px */
+  --text-base--line-height: 1.5;
+  --text-lg: 1.125rem;  /* 18px */
+  --text-lg--line-height: 1.5;
+  --text-xl: 1.375rem;  /* 22px */
+  --text-xl--line-height: 1.25;
+  --text-2xl: 1.75rem;  /* 28px */
+  --text-2xl--line-height: 1.08;
+  --text-3xl: 2.25rem;  /* 36px */
+  --text-3xl--line-height: 1.08;
+  --text-4xl: 3rem;  /* 48px */
+  --text-4xl--line-height: 1.08;
+  --text-5xl: 3.75rem;  /* 60px */
+  --text-5xl--line-height: 1.08;
+  --text-6xl: 4.5rem;  /* 72px */
+  --text-6xl--line-height: 1.08;
+
+  /* ---- Promienie (tokens/effects.css) ---- */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-pill: 999px;
+  --radius-3xl: 40px;
+  --radius-4xl: 48px;
+
+  /* ---- Cienie (tokens/effects.css) — miękkie, zielono podbarwione ---- */
+  --shadow-xs: 0 1px 2px rgba(14, 21, 17, 0.06);
+  --shadow-sm: 0 2px 6px rgba(14, 21, 17, 0.07);
+  --shadow-md: 0 8px 20px -6px rgba(14, 21, 17, 0.12);
+  --shadow-lg: 0 18px 40px -12px rgba(14, 21, 17, 0.18);
+  --shadow-brand: 0 12px 30px -10px rgba(30, 85, 29, 0.35);
+
+  /* ---- Easingi (tokens/effects.css) ---- */
+  --ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1);  /* @kind other */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);  /* @kind other */
+}
+
 @theme inline {
-  --font-display: var(--font-display);
-  --font-sans: var(--font-sans);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -61,90 +159,272 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Akcent marki (leaf-lime) jako osobne utility — patrz DECYZJA (b). */
+  --color-brand-accent: var(--green-500);
+  --color-brand-ink: var(--ink-900);
 }
+
+/* ================================================================
+   WARSTWA 1 — surowe tokeny marki (1:1 z dostarczonego ZIP)
+   ================================================================ */
 
 :root {
-  --radius: 0.25rem;
-  --font-display: "Fraunces", Georgia, serif;
-  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
-  --background: oklch(0.975 0.008 85);
-  --foreground: oklch(0.22 0.03 160);
-  --card: oklch(0.99 0.005 85);
-  --card-foreground: oklch(0.22 0.03 160);
-  --popover: oklch(0.99 0.005 85);
-  --popover-foreground: oklch(0.22 0.03 160);
-  --primary: oklch(0.32 0.06 160);
-  --primary-foreground: oklch(0.97 0.01 85);
-  --secondary: oklch(0.93 0.015 85);
-  --secondary-foreground: oklch(0.22 0.03 160);
-  --muted: oklch(0.93 0.015 85);
-  --muted-foreground: oklch(0.45 0.02 160);
-  --accent: oklch(0.78 0.14 70);
-  --accent-foreground: oklch(0.22 0.03 160);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.86 0.02 85);
-  --input: oklch(0.86 0.02 85);
-  --ring: oklch(0.32 0.06 160);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  /* ---- Skala zieleni marki (tokens/colors.css) ---- */
+  --green-50: #F2F8EC;
+  --green-100: #E1EFCF;
+  --green-200: #D5EBAC;  /* lightest leaf */
+  --green-300: #A9CE6E;
+  --green-400: #7FA83A;
+  --green-500: #54841D;  /* leaf-lime accent */
+  --green-600: #2E6B1E;
+  --green-700: #1E551D;  /* PRIMARY — the ISKT wordmark green */
+  --green-800: #123F14;
+  --green-900: #0A3400;  /* deepest forest */
+
+  /* ---- Ink / tech, strona "circuit" znaku (tokens/colors.css) ---- */
+  --ink-900: #0E1511;  /* near-black, faintly green-warm — primary text */
+  --ink-800: #182019;
+  --ink-700: #2A322C;
+  --ink-600: #3E4740;
+
+  /* ---- Ciepłe neutralne (tokens/colors.css) ---- */
+  --neutral-0: #FFFFFF;
+  --neutral-50: #FAFBF8;
+  --neutral-100: #F3F5F0;
+  --neutral-200: #E7EAE2;
+  --neutral-300: #D4D9CD;
+  --neutral-400: #AEB4A6;
+  --neutral-500: #7E857A;
+  --neutral-600: #5B6157;
+  --neutral-700: #40453D;
+  --neutral-800: #282C26;
+  --neutral-900: #14170F;
+
+  /* ---- Statusy (tokens/colors.css) ---- */
+  --success-500: #2E6B1E;
+  --success-50: #EAF4E3;
+  --warning-500: #B8860B;
+  --warning-50: #FBF3DE;
+  --error-500: #B23B2E;
+  --error-50: #FBEBE8;
+  --info-500: #1C6E6A;  /* eco-teal */
+  --info-50: #E3F1F0;
+
+  /* ---- Semantyka ZIP-u (tokens/colors.css) ---- */
+  --color-primary: var(--green-700);
+  --color-primary-hover: var(--green-800);
+  --color-primary-active: var(--green-900);
+  --color-accent: var(--green-500);  /* leaf-lime highlights */
+  --text-primary: var(--ink-900);
+  --text-secondary: var(--neutral-600);
+  --text-muted: var(--neutral-500);
+  --text-brand: var(--green-700);
+  --text-on-dark: var(--neutral-50);
+  --text-on-brand: #FFFFFF;
+  --text-link: var(--green-700);
+  --text-link-hover: var(--green-900);
+  --surface-page: var(--neutral-0);
+  --surface-subtle: var(--neutral-50);
+  --surface-muted: var(--green-50);  /* soft green wash sections */
+  --surface-card: var(--neutral-0);
+  --surface-dark: var(--ink-900);  /* tech / footer sections */
+  --surface-brand: var(--green-700);
+  --border-subtle: var(--neutral-200);
+  --border-default: var(--neutral-300);
+  --border-strong: var(--neutral-400);
+  --border-brand: var(--green-700);
+  --focus-ring: color-mix(in srgb, var(--green-500) 55%, transparent);
+
+  /* ---- Odstępy, siatka 4px (tokens/spacing.css) ---- */
+  --space-0: 0;
+  --space-1: 0.25rem;  /* 4 */
+  --space-2: 0.5rem;  /* 8 */
+  --space-3: 0.75rem;  /* 12 */
+  --space-4: 1rem;  /* 16 */
+  --space-5: 1.25rem;  /* 20 */
+  --space-6: 1.5rem;  /* 24 */
+  --space-8: 2rem;  /* 32 */
+  --space-10: 2.5rem;  /* 40 */
+  --space-12: 3rem;  /* 48 */
+  --space-16: 4rem;  /* 64 */
+  --space-20: 5rem;  /* 80 */
+  --space-24: 6rem;  /* 96 */
+  --space-32: 8rem;  /* 128 */
+
+  /* ---- Rytm sekcji i kontener (tokens/spacing.css) ---- */
+  --section-pad-y: clamp(4rem, 9vw, 7.5rem);
+  --container-max: 1200px;
+  --container-pad: clamp(1.25rem, 5vw, 3rem);
+
+  /* ---- Grubości, interlinia, tracking (tokens/typography.css) ---- */
+  --fw-regular: 400;  /* @kind font */
+  --fw-medium: 500;  /* @kind font */
+  --fw-semibold: 600;  /* @kind font */
+  --fw-bold: 700;  /* @kind font */
+  --fw-extrabold: 800;  /* @kind font */
+  --lh-tight: 1.08;  /* @kind other */
+  --lh-snug: 1.25;  /* @kind other */
+  --lh-normal: 1.5;  /* @kind other */
+  --lh-relaxed: 1.65;  /* @kind other */
+  --ls-tighter: -0.03em;  /* @kind other */
+  --ls-tight: -0.015em;  /* @kind other */
+  --ls-normal: 0;  /* @kind other */
+  --ls-wide: 0.02em;  /* @kind other */
+  --ls-caps: 0.08em;  /* @kind other */
+
+  /* ---- Role typograficzne (tokens/typography.css) ---- */
+  --font-body: var(--font-sans);
+  --font-heading: var(--font-display);
+
+  /* ---- Obramowania i czasy (tokens/effects.css) ---- */
+  --border-width: 1px;
+  --border-width-strong: 2px;
+  --dur-fast: 130ms;  /* @kind other */
+  --dur-base: 220ms;  /* @kind other */
+  --dur-slow: 380ms;  /* @kind other */
+
+  /* ---- Gradienty sygnaturowe (tokens/effects.css) ---- */
+  --gradient-brand: linear-gradient(120deg, var(--green-500) 0%, var(--green-700) 60%, var(--green-900) 100%);
+  --gradient-leaf: linear-gradient(135deg, var(--green-300), var(--green-600));
+  --gradient-wash: linear-gradient(180deg, var(--green-50), var(--neutral-0));
+
+  /* ================================================================
+     WARSTWA 2 — role shadcn/ui zmapowane na WARSTWĘ 1 (tylko var())
+     ================================================================ */
+  --background:                 var(--surface-page);
+  --foreground:                 var(--text-primary);
+  --card:                       var(--surface-card);
+  --card-foreground:            var(--text-primary);
+  --popover:                    var(--surface-card);
+  --popover-foreground:         var(--text-primary);
+  --primary:                    var(--green-700);
+  --primary-foreground:         var(--text-on-brand);
+  --secondary:                  var(--neutral-100);
+  --secondary-foreground:       var(--text-primary);
+  --muted:                      var(--neutral-100);
+  --muted-foreground:           var(--text-secondary);
+  --accent:                     var(--green-50);
+  --accent-foreground:          var(--green-900);
+  --destructive:                var(--error-500);
+  --destructive-foreground:     var(--neutral-0);
+  --border:                     var(--border-subtle);
+  --input:                      var(--border-default);
+  --ring:                       var(--focus-ring);
+  --chart-1:                    var(--green-700);
+  --chart-2:                    var(--green-500);
+  --chart-3:                    var(--green-300);
+  --chart-4:                    var(--info-500);
+  --chart-5:                    var(--ink-700);
+  --sidebar:                    var(--neutral-50);
+  --sidebar-foreground:         var(--text-primary);
+  --sidebar-primary:            var(--green-700);
+  --sidebar-primary-foreground: var(--text-on-brand);
+  --sidebar-accent:             var(--green-50);
+  --sidebar-accent-foreground:  var(--green-900);
+  --sidebar-border:             var(--border-subtle);
+  --sidebar-ring:               var(--focus-ring);
 }
 
+/* Mapowanie obronne — patrz DECYZJA (c). Tryb ciemny nie jest włączany. */
 .dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+  --background:                 var(--surface-dark);
+  --foreground:                 var(--text-on-dark);
+  --card:                       var(--ink-800);
+  --card-foreground:            var(--text-on-dark);
+  --popover:                    var(--ink-800);
+  --popover-foreground:         var(--text-on-dark);
+  --primary:                    var(--green-200);
+  --primary-foreground:         var(--green-900);
+  --secondary:                  var(--ink-700);
+  --secondary-foreground:       var(--text-on-dark);
+  --muted:                      var(--ink-700);
+  --muted-foreground:           var(--neutral-400);
+  --accent:                     var(--ink-700);
+  --accent-foreground:          var(--green-200);
+  --destructive:                var(--error-500);
+  --destructive-foreground:     var(--neutral-0);
+  --border:                     rgba(255, 255, 255, 0.12);
+  --input:                      rgba(255, 255, 255, 0.15);
+  --ring:                       var(--focus-ring);
+  --chart-1:                    var(--green-200);
+  --chart-2:                    var(--green-300);
+  --chart-3:                    var(--green-500);
+  --chart-4:                    var(--info-500);
+  --chart-5:                    var(--neutral-400);
+  --sidebar:                    var(--ink-800);
+  --sidebar-foreground:         var(--text-on-dark);
+  --sidebar-primary:            var(--green-200);
+  --sidebar-primary-foreground: var(--green-900);
+  --sidebar-accent:             var(--ink-700);
+  --sidebar-accent-foreground:  var(--green-200);
+  --sidebar-border:             rgba(255, 255, 255, 0.12);
+  --sidebar-ring:               var(--focus-ring);
 }
+
+/* ================================================================
+   Baza — tożsamość typograficzna z tokens/base.css
+   ================================================================ */
 
 @layer base {
-  * {
+  *,
+  *::before,
+  *::after {
     border-color: var(--color-border);
   }
 
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
-    font-family: var(--font-sans);
+    background-color: var(--surface-page);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--lh-normal);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
-  h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.02em; }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: var(--fw-bold);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-tight);
+    color: var(--text-primary);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-standard);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+  }
+
+  code, kbd, samp {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+
+  ::selection {
+    background: var(--green-200);
+    color: var(--green-900);
+  }
+
+  /* Design system wymaga poszanowania preferencji ograniczonego ruchu. */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
