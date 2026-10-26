@@ -15,5 +15,5 @@
 - [x] Zakotwiczenia w nagłówku i KartaZapisu; testy treści i formularza.
 
 # E01/F — część 1
-- [ ] Nanieść dostarczoną łatkę i pomocnik powrotu; bez części 2 i bez kolejnego planu.
-- [ ] Uruchomić istniejące testy i lint, sprawdzić automatyczną kontrolę typów; bez Playwrighta.
+- [x] Nanieść dostarczoną łatkę i pomocnik powrotu; bez części 2 i bez kolejnego planu.
+- [x] Uruchomić istniejące testy i lint, sprawdzić automatyczną kontrolę typów; bez Playwrighta.
