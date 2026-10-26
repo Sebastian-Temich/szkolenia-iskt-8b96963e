@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { FiltryKatalogu } from "@/components/szkolenia/FiltryKatalogu";
 import { KatalogNaglowek } from "@/components/szkolenia/KatalogNaglowek";
 import { KartaSzkolenia } from "@/components/szkolenia/KartaSzkolenia";
+import { filtryPowrotu } from "@/components/szkolenia/powrot";
 import { KatalogSzkielet } from "@/components/szkolenia/Szkielety";
 import { BladSzkolen, NieZnalezionoSzkolenia } from "@/components/szkolenia/StanySzkolen";
 import {
@@ -56,17 +57,19 @@ export const Route = createFileRoute("/szkolenia/")({
 function Katalog() {
   const szkolenia = Route.useLoaderData();
   const navigate = Route.useNavigate();
+  const search = Route.useSearch();
+  const powrot = filtryPowrotu(search.kategoria, search.q);
   return (
     <section className="mx-auto max-w-[var(--container-max)] space-y-8 px-[var(--container-pad)] pb-[var(--section-pad-y)] pt-[clamp(2.5rem,5vw,4rem)]">
       <KatalogNaglowek />
       <FiltryKatalogu />
-      <p className="text-sm text-[var(--text-muted)]" role="status">
+      <p className="text-sm text-[var(--text-secondary)]" role="status">
         {opiszLiczbeWynikow(szkolenia.length)}
       </p>
       {szkolenia.length ? (
         <div className="grid grid-cols-1 gap-[var(--space-6)] sm:grid-cols-2 lg:grid-cols-3">
           {szkolenia.map((item) => (
-            <KartaSzkolenia key={item.id} szkolenie={item} />
+            <KartaSzkolenia key={item.id} szkolenie={item} powrot={powrot} />
           ))}
         </div>
       ) : (

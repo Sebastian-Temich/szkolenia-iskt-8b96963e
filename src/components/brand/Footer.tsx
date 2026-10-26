@@ -1,9 +1,32 @@
 import { Link } from "@tanstack/react-router";
 import { Logo } from "./Logo";
 
-const LINK_GROUPS = [
-  { title: "Obszary", items: ["AI", "ESG", "Język angielski", "Software · B+R", "Nasi Trenerzy"] },
-  { title: "Dla firm", items: ["Szkolenia zamknięte", "Dofinansowania", "Audyt kompetencji"] },
+/**
+ * Każda pozycja stopki ma istniejący cel w tym etapie: obszary prowadzą do katalogu
+ * z filtrem kategorii, pozycje dla firm do zakotwiczeń strony głównej. Pozycji bez celu
+ * w tym etapie w stopce nie ma — martwy link jest gorszy niż brak linku.
+ */
+type LinkStopki = { label: string; to: "/" | "/szkolenia"; hash?: string; kategoria?: string };
+const LINK_GROUPS: { title: string; items: LinkStopki[] }[] = [
+  {
+    title: "Obszary",
+    items: [
+      { label: "AI", to: "/szkolenia", kategoria: "AI" },
+      { label: "ESG", to: "/szkolenia", kategoria: "ESG" },
+      { label: "Język angielski", to: "/szkolenia", kategoria: "Angielski" },
+      // Jedna etykieta obejmuje dwie kategorie, a filtr katalogu przyjmuje jedną.
+      // Filtrowanie po jednej z nich ukryłoby połowę tego, co obiecuje etykieta.
+      { label: "Software · B+R", to: "/szkolenia" },
+    ],
+  },
+  {
+    title: "Dla firm",
+    items: [
+      { label: "Szkolenia zamknięte", to: "/", hash: "kontakt" },
+      { label: "Dofinansowania", to: "/", hash: "dofinansowania" },
+      { label: "Audyt kompetencji", to: "/", hash: "kontakt" },
+    ],
+  },
 ];
 const HEADING_CLASS =
   "text-[length:calc(var(--text-xs)+var(--border-width))] font-bold uppercase tracking-[var(--ls-wide)] text-foreground";
@@ -28,9 +51,14 @@ export function Footer() {
             <div key={group.title}>
               <h2 className={HEADING_CLASS}>{group.title}</h2>
               <ul className="mt-[var(--space-5)] space-y-[var(--space-3)]">
-                {group.items.map((label) => (
+                {group.items.map(({ label, to, hash, kategoria }) => (
                   <li key={label}>
-                    <Link to="/" className="text-sm text-muted-foreground hover:text-primary">
+                    <Link
+                      to={to}
+                      {...(hash ? { hash } : {})}
+                      {...(kategoria ? { search: { kategoria } } : {})}
+                      className="text-sm text-muted-foreground hover:text-primary"
+                    >
                       {label}
                     </Link>
                   </li>
@@ -50,7 +78,7 @@ export function Footer() {
             </ul>
           </div>
         </div>
-        <div className="flex flex-wrap justify-between gap-[var(--space-3)] pt-[var(--space-6)] text-[length:calc(var(--text-xs)+var(--border-width))] text-[var(--text-muted)]">
+        <div className="flex flex-wrap justify-between gap-[var(--space-3)] pt-[var(--space-6)] text-[length:calc(var(--text-xs)+var(--border-width))] text-[var(--text-secondary)]">
           <p>© 2026 ISKT Greenovation Sp. z o.o. Wszelkie prawa zastrzeżone.</p>
           <p>Polityka prywatności · Regulamin</p>
         </div>

@@ -43,7 +43,7 @@ export function FiltryKatalogu() {
           aria-label="Szukaj szkolenia"
           placeholder="Szukaj szkolenia…"
           value={query}
-          className="h-[46px] w-full rounded-pill border border-[var(--green-200)] bg-card pl-11 pr-4 text-sm placeholder:text-[var(--text-muted)]"
+          className="h-[46px] w-full rounded-pill border border-[var(--green-200)] bg-card pl-11 pr-4 text-sm placeholder:text-[var(--text-secondary)]"
           onChange={(event) => {
             const q = event.target.value;
             setQuery(q);

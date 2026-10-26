@@ -1,14 +1,18 @@
 import { createFileRoute, notFound, type SearchSchemaInput } from "@tanstack/react-router";
 import { getSzkolenie, type FiltrSzkolen } from "@/lib/szkolenia/adapter";
+import { czytajFiltryPowrotu, type PowrotDoKatalogu } from "@/components/szkolenia/powrot";
 import { SzczegolSzkolenia } from "@/components/szkolenia/SzczegolSzkolenia";
 import { SzczegolSzkielet } from "@/components/szkolenia/Szkielety";
 import { BladSzkolen, NieZnalezionoSzkolenia } from "@/components/szkolenia/StanySzkolen";
 
 export const Route = createFileRoute("/szkolenia/$id")({
+  // Poza przełącznikiem demonstracyjnym trasa przenosi filtry katalogu, żeby powrót
+  // ze szczegółu wracał do tego samego wyniku, a nie do pełnej listy.
   validateSearch: (
-    search: { demo?: unknown } & SearchSchemaInput,
-  ): { demo: FiltrSzkolen["demo"] } => ({
+    search: { demo?: unknown; kategoria?: unknown; q?: unknown } & SearchSchemaInput,
+  ): { demo?: FiltrSzkolen["demo"] } & PowrotDoKatalogu => ({
     demo: search["demo"] === "ladowanie" || search["demo"] === "blad" ? search["demo"] : undefined,
+    ...czytajFiltryPowrotu(search),
   }),
   loaderDeps: ({ search }) => ({ demo: search.demo }),
   loader: async ({ params, deps }) => {
@@ -43,5 +47,11 @@ export const Route = createFileRoute("/szkolenia/$id")({
 
 /** Displays the selected training returned by the route loader. */
 function Szczegol() {
-  return <SzczegolSzkolenia szkolenie={Route.useLoaderData()} />;
+  const { kategoria, q } = Route.useSearch();
+  return (
+    <SzczegolSzkolenia
+      szkolenie={Route.useLoaderData()}
+      powrot={{ ...(kategoria ? { kategoria } : {}), ...(q ? { q } : {}) }}
+    />
+  );
 }

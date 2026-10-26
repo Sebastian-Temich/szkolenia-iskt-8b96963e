@@ -4,13 +4,24 @@ import type { Szkolenie } from "@/lib/szkolenia/adapter";
 import { BlokCeny } from "./BlokCeny";
 import { IkonaKategorii } from "./IkonaKategorii";
 import { MetrykiSzkolenia } from "./MetrykiSzkolenia";
+import type { PowrotDoKatalogu } from "./powrot";
 
-/** Makes the entire training card a typed detail link. */
-export function KartaSzkolenia({ szkolenie }: { szkolenie: Szkolenie }) {
+/**
+ * Makes the entire training card a typed detail link. Opcjonalne `powrot` przenosi
+ * aktualne filtry katalogu do adresu szczegółu, żeby powrót do katalogu je zachował.
+ */
+export function KartaSzkolenia({
+  szkolenie,
+  powrot,
+}: {
+  szkolenie: Szkolenie;
+  powrot?: PowrotDoKatalogu;
+}) {
   return (
     <Link
       to="/szkolenia/$id"
       params={{ id: szkolenie.id }}
+      {...(powrot ? { search: powrot } : {})}
       className="flex h-full min-h-[432px] flex-col gap-3 rounded-lg border border-[var(--border-subtle)] bg-card p-[var(--space-6)] shadow-[var(--shadow-sm)] transition duration-[var(--dur-base)] ease-standard hover:-translate-y-1 hover:shadow-[var(--shadow-lg)] motion-reduce:transform-none"
     >
       <div className="flex flex-wrap items-center justify-between gap-2">

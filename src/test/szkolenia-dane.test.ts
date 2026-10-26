@@ -21,19 +21,30 @@ describe("Dane szkoleń", () => {
   beforeEach(() => vi.useFakeTimers());
   afterEach(() => vi.useRealTimers());
   it.each([
-    [298, "298 zł"],
-    [1380, "1\u202F380 zł"],
-    [0, "0 zł"],
+    [298, "298\u00A0zł"],
+    [1380, "1\u202F380\u00A0zł"],
+    [0, "0\u00A0zł"],
   ])("formatuje kwotę %s", (value, expected) => {
     expect(formatujKwote(Number(value))).toBe(expected);
   });
   it("stosuje dokładnie separator U+202F", () => {
     expect(formatujKwote(1380).charCodeAt(1)).toBe(0x202f);
-    expect(formatujKwote(1234567)).toBe("1\u202F234\u202F567 zł");
+    expect(formatujKwote(1234567)).toBe("1\u202F234\u202F567\u00A0zł");
+  });
+  // D11: kwota nie może się łamać od symbolu waluty, więc przed „zł" stoi U+00A0,
+  // a nie zwykła spacja. Asercja na kod znaku, bo zwykła spacja wygląda identycznie.
+  it("oddziela symbol waluty spacją nierozdzielającą U+00A0", () => {
+    for (const kwota of [0, 298, 1380, 1234567]) {
+      const tekst = formatujKwote(kwota);
+      expect(tekst.endsWith("\u00A0zł")).toBe(true);
+      expect(tekst).not.toContain(" zł");
+      expect(tekst.charCodeAt(tekst.length - 3)).toBe(0x00a0);
+    }
+    expect(etykietaCenyPelnej(1490).startsWith("1\u202F490\u00A0zł ")).toBe(true);
   });
   it.each([
-    [1490, "298 zł", "1\u202F490 zł bez dofinansowania"],
-    [6900, "1\u202F380 zł", "6\u202F900 zł bez dofinansowania"],
+    [1490, "298\u00A0zł", "1\u202F490\u00A0zł bez dofinansowania"],
+    [6900, "1\u202F380\u00A0zł", "6\u202F900\u00A0zł bez dofinansowania"],
   ])("oblicza obie etykiety dla ceny %s", (price, main, full) => {
     expect(etykietaCenyGlownej(Number(price))).toBe(main);
     expect(etykietaCenyPelnej(Number(price))).toBe(full);
