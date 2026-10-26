@@ -1,40 +1,26 @@
 import { createFileRoute, type SearchSchemaInput } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { FiltryKatalogu } from "@/components/szkolenia/FiltryKatalogu";
-import { KatalogNaglowek } from "@/components/szkolenia/KatalogNaglowek";
+import { KatalogNaglowek, OPIS_KATALOGU } from "@/components/szkolenia/KatalogNaglowek";
 import { KartaSzkolenia } from "@/components/szkolenia/KartaSzkolenia";
-import { filtryPowrotu } from "@/components/szkolenia/powrot";
+import { filtryPowrotu, rozpoznajKategorie } from "@/components/szkolenia/powrot";
 import { KatalogSzkielet } from "@/components/szkolenia/Szkielety";
 import { BladSzkolen, NieZnalezionoSzkolenia } from "@/components/szkolenia/StanySzkolen";
 import {
-  KATEGORIE_SZKOLEN,
   listSzkolenia,
   opiszLiczbeWynikow,
-  type FiltrSzkolen,
   type KategoriaSzkolenia,
 } from "@/lib/szkolenia/adapter";
-const DESCRIPTION =
-  "Filtruj według obszaru lub wyszukaj temat. Szkolenia otwarte i zamknięte, z możliwością dofinansowania.";
 
 export const Route = createFileRoute("/szkolenia/")({
   validateSearch: (
-    search: { kategoria?: unknown; q?: unknown; demo?: unknown } & SearchSchemaInput,
-  ): { kategoria: KategoriaSzkolenia | "Wszystkie"; q: string; demo: FiltrSzkolen["demo"] } => {
-    const category =
-      KATEGORIE_SZKOLEN.find((category) => category === search["kategoria"]) ?? "Wszystkie";
-    const demo =
-      search["demo"] === "ladowanie" || search["demo"] === "blad" ? search["demo"] : undefined;
-    return { kategoria: category, q: typeof search["q"] === "string" ? search["q"] : "", demo };
-  },
-  loaderDeps: ({ search }) => ({ kategoria: search.kategoria, q: search.q, demo: search.demo }),
-  loader: ({ deps }) => {
-    const filtr: FiltrSzkolen = {
-      kategoria: deps.kategoria,
-      q: deps.q,
-      ...(deps.demo ? { demo: deps.demo } : {}),
-    };
-    return listSzkolenia(filtr);
-  },
+    search: { kategoria?: unknown; q?: unknown } & SearchSchemaInput,
+  ): { kategoria: KategoriaSzkolenia | "Wszystkie"; q: string } => ({
+    kategoria: rozpoznajKategorie(search["kategoria"]) ?? "Wszystkie",
+    q: typeof search["q"] === "string" ? search["q"] : "",
+  }),
+  loaderDeps: ({ search }) => ({ kategoria: search.kategoria, q: search.q }),
+  loader: ({ deps }) => listSzkolenia({ kategoria: deps.kategoria, q: deps.q }),
   pendingMs: 150,
   pendingComponent: KatalogSzkielet,
   errorComponent: ({ reset }) => <BladSzkolen reset={reset} />,
