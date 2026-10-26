@@ -36,8 +36,9 @@ const sekcja = () => screen.getByRole("region", { name: "Najczęściej wybierane
 // Sam fakt tej różnicy wobec szkieletu katalogu należy do zaległości a11y, nie do tej karty.
 const szkielet = () =>
   document.querySelector('[aria-busy="true"][aria-label="Wczytujemy polecane szkolenia"]');
+// Na stronie głównej karty są pod nagłówkiem sekcji h2, więc ich tytuły to h3 (ISK-28).
 const tytulyKart = () =>
-  [...sekcja().querySelectorAll('a[href^="/szkolenia/"] h2')].map((h) => h.textContent);
+  [...sekcja().querySelectorAll('a[href^="/szkolenia/"] h3')].map((h) => h.textContent);
 
 beforeEach(() => {
   stan.tryb = "ok";
@@ -62,7 +63,7 @@ describe("Polecane szkolenia — stan ładowania", () => {
     // react-query trzyma sekcję w stanie ładowania, nie router.
     await zamontujTrase("/");
     await waitFor(() => expect(szkielet()).not.toBeNull());
-    expect(screen.getByRole("heading", { name: "Najczęściej wybierane" })).toBeVisible();
+    expect(await screen.findByRole("heading", { name: "Najczęściej wybierane" })).toBeVisible();
     expect(screen.getByText("Wyróżnione szkolenia")).toBeVisible();
     expect(screen.getByRole("link", { name: /Cały katalog/ }).getAttribute("href")).toBe(
       "/szkolenia",

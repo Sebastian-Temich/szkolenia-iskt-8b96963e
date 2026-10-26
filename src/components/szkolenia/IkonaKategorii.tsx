@@ -1,15 +1,8 @@
-import { Cpu, Leaf, Languages, CodeXml, FlaskConical } from "lucide-react";
 import type { Szkolenie } from "@/lib/szkolenia/adapter";
-const ICONS = {
-  cpu: Cpu,
-  leaf: Leaf,
-  languages: Languages,
-  "code-xml": CodeXml,
-  "flask-conical": FlaskConical,
-};
+import { IKONY_SZKOLEN } from "./ikony";
 
-/** Resolves the category icon from the single shared map. */
+/** Rozwiązuje ikonę kategorii ze wspólnego mapowania. */
 export function IkonaKategorii({ icon }: { icon: Szkolenie["icon"] }) {
-  const Icon = ICONS[icon];
+  const Icon = IKONY_SZKOLEN[icon];
   return <Icon className="size-[22px]" aria-hidden="true" />;
 }

@@ -61,7 +61,7 @@ describe("Nawigacja główna", () => {
     const user = userEvent.setup();
     const { container } = await zamontujTrase("/szkolenia");
 
-    await user.click(screen.getByRole("button", { name: "Otwórz menu" }));
+    await user.click(await screen.findByRole("button", { name: "Otwórz menu" }));
 
     const mobilna = within(
       container.querySelector("nav[aria-label='Nawigacja mobilna']") as HTMLElement,

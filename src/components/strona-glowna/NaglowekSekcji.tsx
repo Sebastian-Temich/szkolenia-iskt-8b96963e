@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Eyebrow } from "./Eyebrow";
+import { Eyebrow } from "@/components/brand/Eyebrow";
 
 type Props = {
   id: string;
@@ -10,7 +10,7 @@ type Props = {
   className?: string;
 };
 
-/** Renders the eyebrow, bold heading and supporting sentence of a section. */
+/** Renderuje eyebrow, pogrubiony nagłówek i zdanie wsparcia sekcji. */
 export function NaglowekSekcji({
   id,
   eyebrow,

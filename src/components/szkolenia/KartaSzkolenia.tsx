@@ -7,22 +7,25 @@ import { MetrykiSzkolenia } from "./MetrykiSzkolenia";
 import type { PowrotDoKatalogu } from "./powrot";
 
 /**
- * Makes the entire training card a typed detail link. Opcjonalne `powrot` przenosi
+ * Cała karta szkolenia jest typowanym linkiem do szczegółu. Opcjonalne `powrot` przenosi
  * aktualne filtry katalogu do adresu szczegółu, żeby powrót do katalogu je zachował.
  */
 export function KartaSzkolenia({
   szkolenie,
   powrot,
+  as: Naglowek = "h2",
 }: {
   szkolenie: Szkolenie;
   powrot?: PowrotDoKatalogu;
+  /** Poziom nagłówka zależy od sekcji: h2 w katalogu, h3 pod nagłówkiem sekcji strony głównej. */
+  as?: "h2" | "h3";
 }) {
   return (
     <Link
       to="/szkolenia/$id"
       params={{ id: szkolenie.id }}
       {...(powrot ? { search: powrot } : {})}
-      className="flex h-full min-h-[432px] flex-col gap-3 rounded-lg border border-[var(--border-subtle)] bg-card p-[var(--space-6)] shadow-[var(--shadow-sm)] transition duration-[var(--dur-base)] ease-standard hover:-translate-y-1 hover:shadow-[var(--shadow-lg)] motion-reduce:transform-none"
+      className="flex h-full min-h-[var(--karta-min-h)] flex-col gap-3 rounded-lg border border-[var(--border-subtle)] bg-card p-[var(--space-6)] shadow-[var(--shadow-sm)] transition duration-[var(--dur-base)] ease-standard hover:-translate-y-1 hover:shadow-[var(--shadow-lg)] motion-reduce:transform-none"
     >
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
@@ -39,7 +42,9 @@ export function KartaSzkolenia({
           </span>
         )}
       </div>
-      <h2 className="text-lg font-bold tracking-[var(--ls-tight)]">{szkolenie.title}</h2>
+      <Naglowek className="text-lg font-bold tracking-[var(--ls-tight)]">
+        {szkolenie.title}
+      </Naglowek>
       <p className="text-sm text-muted-foreground">{szkolenie.desc}</p>
       <MetrykiSzkolenia szkolenie={szkolenie} />
       <div className="mt-auto space-y-4 border-t border-[var(--border-subtle)] pt-[14px]">

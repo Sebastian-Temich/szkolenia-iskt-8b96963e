@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { NaglowekSekcji } from "./NaglowekSekcji";
 import { KATEGORIE_KOMPETENCJI } from "./tresci";
 
-/** Lists the five training areas, each linking to the filtered catalog. */
+/** Wylicza pięć obszarów szkoleń, każdy z linkiem do przefiltrowanego katalogu. */
 export function KategorieKompetencji() {
   return (
     <section

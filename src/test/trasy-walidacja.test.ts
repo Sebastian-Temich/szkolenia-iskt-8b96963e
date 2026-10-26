@@ -19,7 +19,7 @@ const czytajSzczegol = (search: Record<string, unknown>) =>
 
 describe("validateSearch katalogu", () => {
   it("brak parametrów daje Wszystkie i pustą frazę", () => {
-    expect(czytajKatalog({})).toEqual({ kategoria: "Wszystkie", q: "", demo: undefined });
+    expect(czytajKatalog({})).toEqual({ kategoria: "Wszystkie", q: "" });
   });
 
   it("przyjmuje każdą z pięciu zatwierdzonych kategorii", () => {
@@ -41,17 +41,17 @@ describe("validateSearch katalogu", () => {
     }
   });
 
-  it("przełącznik demonstracyjny przyjmuje dokładnie dwie wartości", () => {
-    expect(czytajKatalog({ demo: "ladowanie" })).toMatchObject({ demo: "ladowanie" });
-    expect(czytajKatalog({ demo: "blad" })).toMatchObject({ demo: "blad" });
-    for (const demo of ["Blad", "inne", 1, true]) {
-      expect(czytajKatalog({ demo })).toMatchObject({ demo: undefined });
+  it("aliasy B+R z surowego adresu wracają do B+R", () => {
+    expect(czytajKatalog({ kategoria: decodeURIComponent("B%2BR") })).toMatchObject({
+      kategoria: "B+R",
+    });
+    for (const kategoria of ["B R", "B-R"]) {
+      expect(czytajKatalog({ kategoria })).toMatchObject({ kategoria: "B+R" });
     }
   });
 
   it("nie przepuszcza nieznanych parametrów adresu", () => {
     expect(Object.keys(czytajKatalog({ cokolwiek: "x", kategoria: "AI" })).sort()).toEqual([
-      "demo",
       "kategoria",
       "q",
     ]);
@@ -60,31 +60,27 @@ describe("validateSearch katalogu", () => {
 
 describe("validateSearch szczegółu", () => {
   it("bez filtrów nie dokłada do adresu pustych wartości", () => {
-    expect(czytajSzczegol({})).toEqual({ demo: undefined });
+    expect(czytajSzczegol({})).toEqual({});
   });
 
   it("przenosi filtry powrotu, gdy są poprawne", () => {
     expect(czytajSzczegol({ kategoria: "Software", q: "python" })).toEqual({
-      demo: undefined,
       kategoria: "Software",
       q: "python",
     });
   });
 
   it("pomija filtr powrotu spoza listy i pustą frazę", () => {
-    expect(czytajSzczegol({ kategoria: "Wszystkie", q: "" })).toEqual({ demo: undefined });
-    expect(czytajSzczegol({ kategoria: "nie-ma", q: 7 })).toEqual({ demo: undefined });
+    expect(czytajSzczegol({ kategoria: "Wszystkie", q: "" })).toEqual({});
+    expect(czytajSzczegol({ kategoria: "nie-ma", q: 7 })).toEqual({});
   });
 });
 
 describe("ścieżka notFound w loaderze szczegółu", () => {
   const uruchom = (id: string) =>
-    (
-      TrasaSzczegolu.options.loader as (ctx: {
-        params: { id: string };
-        deps: { demo: undefined };
-      }) => Promise<unknown>
-    )({ params: { id }, deps: { demo: undefined } });
+    (TrasaSzczegolu.options.loader as (ctx: { params: { id: string } }) => Promise<unknown>)({
+      params: { id },
+    });
 
   it("nieznane id rzuca notFound, a nie zwyczajny błąd", async () => {
     await expect(uruchom("nie-istnieje")).rejects.toSatisfy(isNotFound);

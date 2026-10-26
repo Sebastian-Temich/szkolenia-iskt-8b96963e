@@ -284,6 +284,19 @@
   --dur-base: 220ms;  /* @kind other */
   --dur-slow: 380ms;  /* @kind other */
 
+  /* ---- Wymiary układu (ISK-28) ----
+     Rozmiary pisma nawigacji i stopki oraz wysokości kart mają własne tokeny,
+     żeby nie zależały od grubości obramowania ani od magicznych liczb w komponentach. */
+  --text-nav: 14.5px;
+  --text-logo: 15px;
+  --text-cta: 15px;
+  --text-footer-heading: 13px;
+  --text-footer-bottom: 13px;
+  --nav-h: 68px;
+  --logo-h-header: 38px;
+  --karta-min-h: 432px;
+  --karta-zapisu-min-h: 480px;
+
   /* ---- Gradienty sygnaturowe (tokens/effects.css) ---- */
   --gradient-brand: linear-gradient(120deg, var(--green-500) 0%, var(--green-700) 60%, var(--green-900) 100%);
   --gradient-leaf: linear-gradient(135deg, var(--green-300), var(--green-600));
@@ -367,6 +380,10 @@
    ================================================================ */
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   *,
   *::before,
   *::after {

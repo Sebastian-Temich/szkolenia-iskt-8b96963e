@@ -157,30 +157,13 @@ describe("Dane szkoleń", () => {
     all[0]?.program.splice(0);
     expect((await resolveMock(getSzkolenie("genai")))?.program).toHaveLength(4);
   });
-  it("mock czeka 400 ms, a demonstracyjne ładowanie 8000 ms", async () => {
+  it("mock czeka 400 ms", async () => {
     const normal = vi.fn();
-    const slow = vi.fn();
     const first = listSzkolenia().then(normal);
-    const second = listSzkolenia({ demo: "ladowanie" }).then(slow);
     await vi.advanceTimersByTimeAsync(399);
     expect(normal).not.toHaveBeenCalled();
     await vi.advanceTimersByTimeAsync(1);
     expect(normal).toHaveBeenCalledOnce();
-    expect(slow).not.toHaveBeenCalled();
-    await vi.advanceTimersByTimeAsync(7599);
-    expect(slow).not.toHaveBeenCalled();
-    await vi.advanceTimersByTimeAsync(1);
-    expect(slow).toHaveBeenCalledOnce();
-    await Promise.all([first, second]);
-  });
-  it("oba pobrania obsługują demonstracyjny błąd", async () => {
-    const list = expect(listSzkolenia({ demo: "blad" })).rejects.toThrow(
-      "Nie udało się pobrać listy szkoleń",
-    );
-    const detail = expect(getSzkolenie("genai", { demo: "blad" })).rejects.toThrow(
-      "Nie udało się pobrać szkolenia",
-    );
-    await vi.runAllTimersAsync();
-    await Promise.all([list, detail]);
+    await first;
   });
 });

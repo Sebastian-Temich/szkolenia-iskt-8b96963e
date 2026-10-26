@@ -9,9 +9,10 @@ async def main():
         page = await browser.new_page(viewport={"width": 1280, "height": 1800})
         await page.goto("http://localhost:8080/szkolenia")
         await expect(page.get_by_role("status")).to_have_text("9 szkoleń")
-        # Wait for the shared document fonts and hydration before interacting.
+        # Czekamy na stan, nie na zegar: fonty gotowe i przycisk kategorii interaktywny po hydratacji.
         await page.evaluate("document.fonts.ready")
-        await page.wait_for_timeout(2000)
+        await page.wait_for_load_state("networkidle")
+        await expect(page.get_by_role("button", name="AI", exact=True)).to_be_enabled()
         await page.get_by_role("button", name="AI", exact=True).click()
         await expect(page.get_by_role("status")).to_have_text("2 szkolenia")
         await page.get_by_role("searchbox").fill("zzz")

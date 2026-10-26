@@ -1,4 +1,5 @@
 import "@testing-library/jest-dom/vitest";
+import { vi } from "vitest";
 
 Object.defineProperty(window, "scrollTo", {
   writable: true,
@@ -18,3 +19,8 @@ Object.defineProperty(window, "matchMedia", {
     dispatchEvent: () => {},
   }),
 });
+
+// Vitest zwraca pusty napis dla importów `?url` arkuszy CSS, przez co powłoka __root
+// renderowała <link href=""> i React ostrzegał o pustym href. W przeglądarce Vite podaje
+// prawdziwy adres, więc w testach podstawiamy adres arkusza zamiast tłumić ostrzeżenie.
+vi.mock("../styles.css?url", () => ({ default: "/src/styles.css" }));

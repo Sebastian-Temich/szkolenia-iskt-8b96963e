@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { KATEGORIE_SZKOLEN } from "@/lib/szkolenia/adapter";
 const route = getRouteApi("/szkolenia/");
 
-/** Keeps category in the URL and debounces search without adding history entries. */
+/** Trzyma kategorię w adresie i opóźnia wyszukiwanie bez dokładania wpisów historii. */
 export function FiltryKatalogu() {
   const search = route.useSearch();
   const navigate = route.useNavigate();
@@ -15,10 +15,9 @@ export function FiltryKatalogu() {
     setQuery(search.q);
     return () => clearTimeout(timer.current);
   }, [search.q]);
-  useEffect(() => () => clearTimeout(timer.current), []);
   return (
     <div className="flex flex-wrap items-center justify-between gap-[var(--space-4)]">
-      <div className="flex flex-wrap gap-2" aria-label="Obszar szkolenia">
+      <div role="group" className="flex flex-wrap gap-2" aria-label="Obszar szkolenia">
         {["Wszystkie", ...KATEGORIE_SZKOLEN].map((category) => (
           <Button
             key={category}

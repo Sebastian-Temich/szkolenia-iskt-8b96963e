@@ -8,7 +8,7 @@ afterEach(cleanup);
 describe("Katalog szkoleń — zachowanie widoku", () => {
   it("pokazuje dziewięć kart i licznik wyników", async () => {
     await zamontujTrase("/szkolenia");
-    expect(screen.getByRole("status")).toHaveTextContent("9 szkoleń");
+    expect(await screen.findByRole("status")).toHaveTextContent("9 szkoleń");
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
       "Znajdź szkolenie dla siebie lub zespołu",
     );
@@ -17,13 +17,13 @@ describe("Katalog szkoleń — zachowanie widoku", () => {
 
   it("filtr z adresu zawęża wynik bez interakcji", async () => {
     await zamontujTrase("/szkolenia?kategoria=AI");
-    expect(screen.getByRole("status")).toHaveTextContent("2 szkolenia");
+    expect(await screen.findByRole("status")).toHaveTextContent("2 szkolenia");
     expect(screen.getByRole("button", { name: "AI" })).toHaveAttribute("aria-pressed", "true");
   });
 
   it("nieznana kategoria w adresie nie wywraca widoku, lecz wraca do Wszystkie", async () => {
     await zamontujTrase("/szkolenia?kategoria=NIE-ISTNIEJE");
-    expect(screen.getByRole("status")).toHaveTextContent("9 szkoleń");
+    expect(await screen.findByRole("status")).toHaveTextContent("9 szkoleń");
     expect(screen.getByRole("button", { name: "Wszystkie" })).toHaveAttribute(
       "aria-pressed",
       "true",
@@ -32,7 +32,7 @@ describe("Katalog szkoleń — zachowanie widoku", () => {
 
   it("fraza z adresu bez wyniku pokazuje stan pusty, a nie pustą siatkę", async () => {
     const { container } = await zamontujTrase("/szkolenia?q=zzz");
-    expect(screen.getByRole("status")).toHaveTextContent("0 szkoleń");
+    expect(await screen.findByRole("status")).toHaveTextContent("0 szkoleń");
     expect(
       screen.getByRole("heading", { name: "Brak szkoleń dla tych kryteriów" }),
     ).toBeInTheDocument();
@@ -42,7 +42,9 @@ describe("Katalog szkoleń — zachowanie widoku", () => {
   it('„Wyczyść filtry" faktycznie zeruje oba filtry, a nie tylko znika', async () => {
     const user = userEvent.setup();
     const { router } = await zamontujTrase("/szkolenia?kategoria=AI&q=zzz");
-    expect(screen.getByRole("heading", { name: "Brak szkoleń dla tych kryteriów" })).toBeVisible();
+    expect(
+      await screen.findByRole("heading", { name: "Brak szkoleń dla tych kryteriów" }),
+    ).toBeVisible();
 
     await user.click(screen.getByRole("button", { name: "Wyczyść filtry" }));
 
@@ -56,7 +58,7 @@ describe("Katalog szkoleń — zachowanie widoku", () => {
     const user = userEvent.setup();
     const { router } = await zamontujTrase("/szkolenia");
 
-    await user.click(screen.getByRole("button", { name: "ESG" }));
+    await user.click(await screen.findByRole("button", { name: "ESG" }));
 
     await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("2 szkolenia"));
     expect(adres(router)).toContain("kategoria=ESG");
@@ -64,7 +66,7 @@ describe("Katalog szkoleń — zachowanie widoku", () => {
 
   it("karta szkolenia przenosi aktualne filtry do adresu szczegółu", async () => {
     const { container } = await zamontujTrase("/szkolenia?kategoria=Software&q=python");
-    expect(screen.getByRole("status")).toHaveTextContent("1 szkolenie");
+    expect(await screen.findByRole("status")).toHaveTextContent("1 szkolenie");
     const karta = container.querySelector('a[href^="/szkolenia/python"]');
     expect(karta).not.toBeNull();
     expect(karta?.getAttribute("href")).toContain("kategoria=Software");

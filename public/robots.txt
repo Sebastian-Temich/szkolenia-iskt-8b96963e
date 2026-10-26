@@ -1,14 +1,19 @@
 User-agent: Googlebot
 Allow: /
+Disallow: /fundamenty
 
 User-agent: Bingbot
 Allow: /
+Disallow: /fundamenty
 
 User-agent: Twitterbot
 Allow: /
+Disallow: /fundamenty
 
 User-agent: facebookexternalhit
 Allow: /
+Disallow: /fundamenty
 
 User-agent: *
 Allow: /
+Disallow: /fundamenty

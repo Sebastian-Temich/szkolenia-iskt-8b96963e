@@ -24,7 +24,7 @@ afterEach(cleanup);
 describe("Szczegół szkolenia bez dofinansowania", () => {
   it("nie pokazuje karty dofinansowania", async () => {
     await zamontujTrase("/szkolenia/genai");
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+    expect(await screen.findByRole("heading", { level: 1 })).toHaveTextContent(
       "Generatywne AI dla biznesu",
     );
     expect(screen.queryByRole("complementary", { name: "Dofinansowanie" })).toBeNull();
@@ -41,7 +41,7 @@ describe("Szczegół szkolenia bez dofinansowania", () => {
 
   it("nie zmienia pozostałej treści szczegółu", async () => {
     await zamontujTrase("/szkolenia/genai");
-    expect(screen.getByRole("heading", { name: "Czego się nauczysz" })).toBeVisible();
+    expect(await screen.findByRole("heading", { name: "Czego się nauczysz" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Program szkolenia" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Dla kogo jest to szkolenie" })).toBeVisible();
   });

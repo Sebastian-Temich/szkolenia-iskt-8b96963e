@@ -1,6 +1,6 @@
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Eyebrow } from "./Eyebrow";
+import { Eyebrow } from "@/components/brand/Eyebrow";
 import { PrzelacznikOdbiorcy } from "./PrzelacznikOdbiorcy";
 import { OPCJE_OBSZARU, trescKontaktu, type Odbiorca } from "./tresci";
 
@@ -12,7 +12,7 @@ const IKONA =
 
 type Props = { odbiorca: Odbiorca; onZmiana: (o: Odbiorca) => void };
 
-/** Renders contact details and the visual-only, not yet connected contact form. */
+/** Renderuje dane kontaktowe i wyłącznie wizualny, jeszcze niepodłączony formularz. */
 export function SekcjaKontakt({ odbiorca, onZmiana }: Props) {
   const tresc = trescKontaktu(odbiorca);
   return (

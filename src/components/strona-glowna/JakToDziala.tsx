@@ -1,7 +1,7 @@
 import { NaglowekSekcji } from "./NaglowekSekcji";
 import { krokiProcesu, type Odbiorca } from "./tresci";
 
-/** Shows the four process steps for the selected audience. */
+/** Pokazuje cztery kroki procesu dla wybranego odbiorcy. */
 export function JakToDziala({ odbiorca }: { odbiorca: Odbiorca }) {
   const tresc = krokiProcesu(odbiorca);
   return (

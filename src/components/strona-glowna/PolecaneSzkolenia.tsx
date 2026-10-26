@@ -11,19 +11,21 @@ import { wybierzPolecane } from "./tresci";
 const OUTLINE =
   "rounded-pill border-[1.5px] border-primary font-semibold text-primary hover:bg-[var(--green-50)]";
 
-/** Shows the error or empty state in place of the featured grid. */
+/** Pokazuje stan błędu lub pusty w miejscu siatki polecanych; role=alert tylko dla błędu. */
 function Komunikat({
   naglowek,
   ponow,
   czeka,
+  blad = false,
 }: {
   naglowek: string;
+  blad?: boolean;
   ponow?: () => void;
   czeka?: boolean;
 }) {
   return (
     <div
-      role="alert"
+      {...(blad ? { role: "alert" } : {})}
       className="flex flex-col items-start gap-4 rounded-lg border border-[var(--border-subtle)] bg-card p-[var(--space-8)] shadow-[var(--shadow-sm)]"
     >
       <h3 className="text-[1.15rem] font-bold tracking-[var(--ls-tight)]">{naglowek}</h3>
@@ -47,7 +49,7 @@ function Komunikat({
   );
 }
 
-/** Fetches trainings through the adapter and shows the four featured ones. */
+/** Pobiera szkolenia przez adapter i pokazuje cztery polecane. */
 export function PolecaneSzkolenia() {
   const { data, isPending, isError, refetch, isFetching } = useQuery({
     queryKey: ["szkolenia", "polecane"],
@@ -75,6 +77,7 @@ export function PolecaneSzkolenia() {
         ) : isError ? (
           <Komunikat
             naglowek="Nie udało się wczytać polecanych szkoleń"
+            blad
             ponow={() => void refetch()}
             czeka={isFetching}
           />
@@ -83,7 +86,7 @@ export function PolecaneSzkolenia() {
         ) : (
           <div className="grid gap-[var(--space-6)] sm:grid-cols-2 xl:grid-cols-4">
             {polecane.map((s) => (
-              <KartaSzkolenia key={s.id} szkolenie={s} />
+              <KartaSzkolenia key={s.id} szkolenie={s} as="h3" />
             ))}
           </div>
         )}

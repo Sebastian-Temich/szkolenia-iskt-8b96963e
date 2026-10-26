@@ -10,7 +10,7 @@ type Props = {
 const DOMYSLNE: Record<Odbiorca, string> = { individual: "Dla Ciebie", company: "Dla firm" };
 const OPCJE: Odbiorca[] = ["individual", "company"];
 
-/** Switches the page audience between individuals and companies. */
+/** Przełącza odbiorcę strony między osobami indywidualnymi a firmami. */
 export function PrzelacznikOdbiorcy({ wartosc, onZmiana, etykiety = DOMYSLNE }: Props) {
   return (
     <div

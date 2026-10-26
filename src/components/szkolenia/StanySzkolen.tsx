@@ -2,7 +2,7 @@ import { Link, useRouter } from "@tanstack/react-router";
 import { ArrowLeft, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-/** Retries the loader without displaying raw exception text. */
+/** Ponawia loader bez pokazywania surowej treści wyjątku. */
 export function BladSzkolen({
   reset,
   szczegol = false,
@@ -36,7 +36,7 @@ export function BladSzkolen({
   );
 }
 
-/** Provides the catalog recovery path for an unknown training ID. */
+/** Daje ścieżkę powrotu do katalogu dla nieznanego identyfikatora szkolenia. */
 export function NieZnalezionoSzkolenia() {
   return (
     <section className="mx-auto max-w-[var(--container-max)] space-y-5 px-[var(--container-pad)] py-[var(--section-pad-y)]">

@@ -29,9 +29,9 @@ const LINK_GROUPS: { title: string; items: LinkStopki[] }[] = [
   },
 ];
 const HEADING_CLASS =
-  "text-[length:calc(var(--text-xs)+var(--border-width))] font-bold uppercase tracking-[var(--ls-wide)] text-foreground";
+  "text-[length:var(--text-footer-heading)] font-bold uppercase tracking-[var(--ls-wide)] text-foreground";
 
-/** Renders brand information and the supplied contact details. */
+/** Renderuje informacje o marce i dostarczone dane kontaktowe. */
 export function Footer() {
   return (
     <footer className="border-t border-border bg-background px-[var(--container-pad)] pt-[var(--section-pad-y)] pb-[var(--space-10)]">
@@ -78,7 +78,7 @@ export function Footer() {
             </ul>
           </div>
         </div>
-        <div className="flex flex-wrap justify-between gap-[var(--space-3)] pt-[var(--space-6)] text-[length:calc(var(--text-xs)+var(--border-width))] text-[var(--text-secondary)]">
+        <div className="flex flex-wrap justify-between gap-[var(--space-3)] pt-[var(--space-6)] text-[length:var(--text-footer-bottom)] text-[var(--text-secondary)]">
           <p>© 2026 ISKT Greenovation Sp. z o.o. Wszelkie prawa zastrzeżone.</p>
           <p>Polityka prywatności · Regulamin</p>
         </div>

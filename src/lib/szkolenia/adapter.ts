@@ -15,27 +15,19 @@ export {
   etykietaCenyPelnej,
 } from "./cena";
 
-// Opóźnienia i demo należą wyłącznie do warstwy mock i znikają przy jej podmianie.
+// Opóźnienie symuluje sieć i należy wyłącznie do warstwy mock; znika przy jej podmianie.
 const OPOZNIENIE_MOCK = 400;
-const OPOZNIENIE_DEMO = 8000;
-async function waitForMock(demo?: FiltrSzkolen["demo"]): Promise<void> {
-  await new Promise<void>((resolve) =>
-    setTimeout(resolve, demo === "ladowanie" ? OPOZNIENIE_DEMO : OPOZNIENIE_MOCK),
-  );
+async function waitForMock(): Promise<void> {
+  await new Promise<void>((resolve) => setTimeout(resolve, OPOZNIENIE_MOCK));
 }
 /** Pobiera niezależną kopię przefiltrowanej oferty. */
 export async function listSzkolenia(filtr: FiltrSzkolen = {}): Promise<Szkolenie[]> {
-  await waitForMock(filtr.demo);
-  if (filtr.demo === "blad") throw new Error("Nie udało się pobrać listy szkoleń");
+  await waitForMock();
   return structuredClone(filtrujSzkolenia(SZKOLENIA_MOCK, filtr));
 }
 /** Pobiera niezależną kopię szkolenia lub null. */
-export async function getSzkolenie(
-  id: string,
-  opcje?: { demo?: FiltrSzkolen["demo"] },
-): Promise<Szkolenie | null> {
-  await waitForMock(opcje?.demo);
-  if (opcje?.demo === "blad") throw new Error("Nie udało się pobrać szkolenia");
+export async function getSzkolenie(id: string): Promise<Szkolenie | null> {
+  await waitForMock();
   const item = SZKOLENIA_MOCK.find((item) => item.id === id);
   return item ? structuredClone(item) : null;
 }

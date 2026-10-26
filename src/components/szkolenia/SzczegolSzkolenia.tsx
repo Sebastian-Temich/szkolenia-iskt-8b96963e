@@ -7,7 +7,7 @@ import { MetrykiSzkolenia } from "./MetrykiSzkolenia";
 import type { PowrotDoKatalogu } from "./powrot";
 
 /**
- * Renders the owner's training description, outcomes and program without invented content.
+ * Renderuje opis, efekty i program szkolenia właściciela bez wymyślonych treści.
  * `powrot` to filtry katalogu przeniesione przez adres — bez nich powrót gubi wynik.
  */
 export function SzczegolSzkolenia({

@@ -4,13 +4,8 @@ import {
   Banknote,
   BookOpen,
   ClipboardList,
-  CodeXml,
-  Cpu,
-  FlaskConical,
   Handshake,
-  Languages,
   Layers,
-  Leaf,
   Search,
   ShieldCheck,
   Target,
@@ -22,8 +17,9 @@ import {
   type KategoriaSzkolenia,
   type Szkolenie,
 } from "@/lib/szkolenia/adapter";
+import { IKONY_SZKOLEN } from "@/components/szkolenia/ikony";
 
-/** Audience selected on the home page. */
+/** Odbiorca wybrany na stronie głównej. */
 export type Odbiorca = "individual" | "company";
 
 export const POTWIERDZENIA_HERO = [
@@ -32,7 +28,7 @@ export const POTWIERDZENIA_HERO = [
   "Zajęcia z ekspertami",
 ];
 
-/** Returns hero copy for the selected audience. */
+/** Zwraca treść sekcji otwierającej dla wybranego odbiorcy. */
 export function trescHero(odbiorca: Odbiorca) {
   return odbiorca === "individual"
     ? {
@@ -106,7 +102,7 @@ const KROKI_FIRMOWE: Krok[] = [
   },
 ];
 
-/** Returns process heading and steps for the selected audience. */
+/** Zwraca nagłówek i kroki procesu dla wybranego odbiorcy. */
 export function krokiProcesu(odbiorca: Odbiorca) {
   return odbiorca === "individual"
     ? {
@@ -121,7 +117,7 @@ export function krokiProcesu(odbiorca: Odbiorca) {
       };
 }
 
-/** Returns contact heading copy for the selected audience. */
+/** Zwraca treść nagłówka kontaktu dla wybranego odbiorcy. */
 export function trescKontaktu(odbiorca: Odbiorca) {
   return odbiorca === "individual"
     ? {
@@ -136,7 +132,7 @@ export function trescKontaktu(odbiorca: Odbiorca) {
 
 export const POLECANE_ID = ["genai", "esg", "fullstack", "eng-b2"] as const;
 
-/** Picks featured trainings in POLECANE_ID order, skipping missing ids. */
+/** Wybiera polecane szkolenia w kolejności POLECANE_ID, pomijając brakujące identyfikatory. */
 export function wybierzPolecane(lista: Szkolenie[]): Szkolenie[] {
   return POLECANE_ID.map((id) => lista.find((s) => s.id === id)).filter(
     (s): s is Szkolenie => s !== undefined,
@@ -162,31 +158,31 @@ function kategoria(nazwa: KategoriaSzkolenia): KategoriaSzkolenia {
 export const KATEGORIE_KOMPETENCJI: KartaKategorii[] = [
   {
     kategoria: kategoria("AI"),
-    ikona: Cpu,
+    ikona: IKONY_SZKOLEN.cpu,
     tytul: "Sztuczna inteligencja",
     opis: "AI w praktyce: narzędzia generatywne, automatyzacja i agenci dla biznesu.",
   },
   {
     kategoria: kategoria("ESG"),
-    ikona: Leaf,
+    ikona: IKONY_SZKOLEN.leaf,
     tytul: "ESG i zrównoważony rozwój",
     opis: "Raportowanie CSRD, ślad węglowy i strategia zrównoważonego rozwoju.",
   },
   {
     kategoria: kategoria("Angielski"),
-    ikona: Languages,
+    ikona: IKONY_SZKOLEN.languages,
     tytul: "Język angielski",
     opis: "Angielski biznesowy i techniczny — od poziomu B1 po zaawansowany.",
   },
   {
     kategoria: kategoria("Software"),
-    ikona: CodeXml,
+    ikona: IKONY_SZKOLEN["code-xml"],
     tytul: "Rozwój oprogramowania",
     opis: "Programowanie, chmura i technologie — od podstaw do wdrożeń.",
   },
   {
     kategoria: kategoria("B+R"),
-    ikona: FlaskConical,
+    ikona: IKONY_SZKOLEN["flask-conical"],
     tytul: "Projekty B+R",
     opis: "Badania, rozwój i granty — komercjalizacja innowacji w Twojej firmie.",
   },
