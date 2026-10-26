@@ -84,7 +84,9 @@ describe("Stan 3 z 4 — błąd pobrania", () => {
     stan.tryb = "blad";
     const { container } = await zamontujTrase("/szkolenia");
     expect(await screen.findByRole("alert")).toBeInTheDocument();
-    expect(await screen.findByRole("heading", { name: "Nie udało się wczytać katalogu" })).toBeVisible();
+    expect(
+      await screen.findByRole("heading", { name: "Nie udało się wczytać katalogu" }),
+    ).toBeVisible();
     expect(container.textContent).not.toContain("awaria adaptera");
     expect(container.textContent).not.toContain("Error");
   });
@@ -109,7 +111,9 @@ describe("Stan 3 z 4 — błąd pobrania", () => {
     const user = userEvent.setup();
     stan.tryb = "blad";
     await zamontujTrase("/szkolenia/genai");
-    expect(await screen.findByRole("heading", { name: "Nie udało się wczytać szkolenia" })).toBeVisible();
+    expect(
+      await screen.findByRole("heading", { name: "Nie udało się wczytać szkolenia" }),
+    ).toBeVisible();
     const przed = stan.wywolaniaSzczegolu;
 
     stan.tryb = "ok";
@@ -128,7 +132,9 @@ describe("Stan 4 z 4 — nieznane szkolenie", () => {
   it("loader rzuca notFound, a widok daje drogę powrotu do katalogu", async () => {
     stan.nieznane = true;
     await zamontujTrase("/szkolenia/nie-istnieje");
-    expect(await screen.findByRole("heading", { name: "Nie znaleźliśmy tego szkolenia" })).toBeVisible();
+    expect(
+      await screen.findByRole("heading", { name: "Nie znaleźliśmy tego szkolenia" }),
+    ).toBeVisible();
     const powrot = screen.getByRole("link", { name: /Wróć do katalogu/ });
     expect(powrot.getAttribute("href")).toBe("/szkolenia");
   });

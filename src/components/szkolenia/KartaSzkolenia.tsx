@@ -42,7 +42,9 @@ export function KartaSzkolenia({
           </span>
         )}
       </div>
-      <Naglowek className="text-lg font-bold tracking-[var(--ls-tight)]">{szkolenie.title}</Naglowek>
+      <Naglowek className="text-lg font-bold tracking-[var(--ls-tight)]">
+        {szkolenie.title}
+      </Naglowek>
       <p className="text-sm text-muted-foreground">{szkolenie.desc}</p>
       <MetrykiSzkolenia szkolenie={szkolenie} />
       <div className="mt-auto space-y-4 border-t border-[var(--border-subtle)] pt-[14px]">

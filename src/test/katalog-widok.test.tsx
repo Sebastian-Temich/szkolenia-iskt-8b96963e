@@ -42,7 +42,9 @@ describe("Katalog szkoleń — zachowanie widoku", () => {
   it('„Wyczyść filtry" faktycznie zeruje oba filtry, a nie tylko znika', async () => {
     const user = userEvent.setup();
     const { router } = await zamontujTrase("/szkolenia?kategoria=AI&q=zzz");
-    expect(await screen.findByRole("heading", { name: "Brak szkoleń dla tych kryteriów" })).toBeVisible();
+    expect(
+      await screen.findByRole("heading", { name: "Brak szkoleń dla tych kryteriów" }),
+    ).toBeVisible();
 
     await user.click(screen.getByRole("button", { name: "Wyczyść filtry" }));
 

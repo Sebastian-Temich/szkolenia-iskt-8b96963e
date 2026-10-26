@@ -78,11 +78,9 @@ describe("validateSearch szczegółu", () => {
 
 describe("ścieżka notFound w loaderze szczegółu", () => {
   const uruchom = (id: string) =>
-    (
-      TrasaSzczegolu.options.loader as (ctx: {
-        params: { id: string };
-      }) => Promise<unknown>
-    )({ params: { id } });
+    (TrasaSzczegolu.options.loader as (ctx: { params: { id: string } }) => Promise<unknown>)({
+      params: { id },
+    });
 
   it("nieznane id rzuca notFound, a nie zwyczajny błąd", async () => {
     await expect(uruchom("nie-istnieje")).rejects.toSatisfy(isNotFound);

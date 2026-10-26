@@ -41,7 +41,9 @@ export function Dofinansowania() {
                   <span className="inline-flex size-11 items-center justify-center rounded-md bg-[var(--text-on-brand)]/14 text-[var(--text-on-brand)]">
                     <Ikona aria-hidden="true" />
                   </span>
-                  <span className="font-mono text-[20px] font-semibold text-[var(--text-on-brand)]">{skrot}</span>
+                  <span className="font-mono text-[20px] font-semibold text-[var(--text-on-brand)]">
+                    {skrot}
+                  </span>
                 </div>
                 <h3 className="text-[1.05rem] font-bold text-[var(--text-on-brand)]">{tytul}</h3>
                 <p className="text-[14px] text-[var(--text-on-brand)]/85">{opis}</p>
