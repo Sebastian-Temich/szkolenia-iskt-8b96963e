@@ -14,9 +14,9 @@ const LINK_GROUPS: { title: string; items: LinkStopki[] }[] = [
       { label: "AI", to: "/szkolenia", kategoria: "AI" },
       { label: "ESG", to: "/szkolenia", kategoria: "ESG" },
       { label: "Język angielski", to: "/szkolenia", kategoria: "Angielski" },
-      // Jedna etykieta obejmuje dwie kategorie, a filtr katalogu przyjmuje jedną.
-      // Filtrowanie po jednej z nich ukryłoby połowę tego, co obiecuje etykieta.
-      { label: "Software · B+R", to: "/szkolenia" },
+      // Każda pozycja obszaru ma własny filtr kategorii, więc cel linku jest deterministyczny.
+      { label: "Software", to: "/szkolenia", kategoria: "Software" },
+      { label: "B+R", to: "/szkolenia", kategoria: "B+R" },
     ],
   },
   {
