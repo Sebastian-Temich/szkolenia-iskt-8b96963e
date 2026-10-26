@@ -17,7 +17,11 @@ export function BlokCeny({ price, wariant }: { price: number; wariant: "karta" |
         >
           {etykietaCenyGlownej(price)}
         </span>
-        <span className="text-xs font-medium text-primary">{TEKST_DOFINANSOWANIA}</span>
+        <span
+          className={`text-xs text-[var(--green-600)] ${detail ? "font-bold" : "font-semibold"}`}
+        >
+          {TEKST_DOFINANSOWANIA}
+        </span>
       </div>
       <p className="text-xs text-[var(--text-secondary)]">{etykietaCenyPelnej(price)}</p>
       {detail && <p className="text-xs text-muted-foreground">{NOTA_CENY}</p>}

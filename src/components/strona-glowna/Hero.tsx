@@ -5,9 +5,16 @@ import { Eyebrow } from "@/components/brand/Eyebrow";
 import { PrzelacznikOdbiorcy } from "./PrzelacznikOdbiorcy";
 import { POTWIERDZENIA_HERO, trescHero, type Odbiorca } from "./tresci";
 
-const ROZMYCIE = {
+// Dwie różne plamy z makiety: limonkowy akcent po lewej, zieleń marki po prawej.
+const ROZMYCIE_LEWE = {
   background:
-    "radial-gradient(circle, color-mix(in srgb, var(--green-700) 20%, transparent), transparent 65%)",
+    "radial-gradient(circle, color-mix(in srgb, var(--green-500) 20%, transparent), transparent 65%)",
+  filter: "blur(10px)",
+};
+const ROZMYCIE_PRAWE = {
+  background:
+    "radial-gradient(circle, color-mix(in srgb, var(--green-700) 16%, transparent), transparent 65%)",
+  filter: "blur(10px)",
 };
 
 /** Renders the audience-dependent hero with the single page heading. */
@@ -27,12 +34,12 @@ export function Hero({
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -left-40 -top-40 size-[520px]"
-        style={ROZMYCIE}
+        style={ROZMYCIE_LEWE}
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-40 top-20 size-[520px]"
-        style={ROZMYCIE}
+        className="pointer-events-none absolute -right-40 top-20 size-[480px]"
+        style={ROZMYCIE_PRAWE}
       />
       <div className="relative mx-auto flex max-w-[920px] flex-col items-center gap-[var(--space-6)] px-[var(--container-pad)] text-center">
         <PrzelacznikOdbiorcy wartosc={odbiorca} onZmiana={onZmiana} />

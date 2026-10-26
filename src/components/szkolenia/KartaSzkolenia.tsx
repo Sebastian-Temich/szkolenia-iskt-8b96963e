@@ -13,9 +13,12 @@ import type { PowrotDoKatalogu } from "./powrot";
 export function KartaSzkolenia({
   szkolenie,
   powrot,
+  as: Naglowek = "h2",
 }: {
   szkolenie: Szkolenie;
   powrot?: PowrotDoKatalogu;
+  /** Poziom nagłówka zależy od sekcji: h2 w katalogu, h3 pod nagłówkiem sekcji strony głównej. */
+  as?: "h2" | "h3";
 }) {
   return (
     <Link
@@ -39,7 +42,7 @@ export function KartaSzkolenia({
           </span>
         )}
       </div>
-      <h2 className="text-lg font-bold tracking-[var(--ls-tight)]">{szkolenie.title}</h2>
+      <Naglowek className="text-lg font-bold tracking-[var(--ls-tight)]">{szkolenie.title}</Naglowek>
       <p className="text-sm text-muted-foreground">{szkolenie.desc}</p>
       <MetrykiSzkolenia szkolenie={szkolenie} />
       <div className="mt-auto space-y-4 border-t border-[var(--border-subtle)] pt-[14px]">

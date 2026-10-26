@@ -43,10 +43,7 @@ export const Route = createFileRoute("/fundamenty")({
     meta: [
       { title: "Fundamenty wizualne — ISKT Greenovation" },
       { name: "description", content: DESCRIPTION },
-      { property: "og:title", content: "Fundamenty wizualne — ISKT Greenovation" },
-      { property: "og:description", content: DESCRIPTION },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
+      { name: "robots", content: "noindex, nofollow" },
     ],
   }),
   component: Foundations,

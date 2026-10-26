@@ -39,7 +39,7 @@ export function Header() {
           className="flex min-w-0 items-center gap-[var(--space-4)]"
           aria-label="ISKT — strona główna"
         >
-          <Logo className="h-[calc(var(--space-10)-var(--border-width-strong))]" />
+          <Logo className="h-[var(--logo-h-header)]" />
           <span className="hidden max-w-[calc(var(--space-32)+var(--space-24))] text-[length:var(--text-logo)] leading-[var(--lh-tight)] font-extrabold tracking-normal text-foreground sm:block">
             Rozwijaj swoje kompetencje z ISKT
           </span>
