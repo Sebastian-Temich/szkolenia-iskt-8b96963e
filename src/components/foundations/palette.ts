@@ -1,0 +1,56 @@
+/** Literal swatch classes keep Tailwind discovery aligned with the supplied palette. */
+export const PALETTE_GROUPS = [
+  {
+    title: "Zieleń marki",
+    swatches: [
+      { token: "--green-50", hex: "#F2F8EC", className: "bg-[var(--green-50)]" },
+      { token: "--green-100", hex: "#E1EFCF", className: "bg-[var(--green-100)]" },
+      { token: "--green-200", hex: "#D5EBAC", className: "bg-[var(--green-200)]" },
+      { token: "--green-300", hex: "#A9CE6E", className: "bg-[var(--green-300)]" },
+      { token: "--green-400", hex: "#7FA83A", className: "bg-[var(--green-400)]" },
+      { token: "--green-500", hex: "#54841D", className: "bg-[var(--green-500)]" },
+      { token: "--green-600", hex: "#2E6B1E", className: "bg-[var(--green-600)]" },
+      { token: "--green-700", hex: "#1E551D", className: "bg-[var(--green-700)]" },
+      { token: "--green-800", hex: "#123F14", className: "bg-[var(--green-800)]" },
+      { token: "--green-900", hex: "#0A3400", className: "bg-[var(--green-900)]" },
+    ],
+  },
+  {
+    title: "Odcienie atramentowe",
+    swatches: [
+      { token: "--ink-900", hex: "#0E1511", className: "bg-[var(--ink-900)]" },
+      { token: "--ink-800", hex: "#182019", className: "bg-[var(--ink-800)]" },
+      { token: "--ink-700", hex: "#2A322C", className: "bg-[var(--ink-700)]" },
+      { token: "--ink-600", hex: "#3E4740", className: "bg-[var(--ink-600)]" },
+    ],
+  },
+  {
+    title: "Ciepłe neutralne",
+    swatches: [
+      { token: "--neutral-0", hex: "#FFFFFF", className: "bg-[var(--neutral-0)]" },
+      { token: "--neutral-50", hex: "#FAFBF8", className: "bg-[var(--neutral-50)]" },
+      { token: "--neutral-100", hex: "#F3F5F0", className: "bg-[var(--neutral-100)]" },
+      { token: "--neutral-200", hex: "#E7EAE2", className: "bg-[var(--neutral-200)]" },
+      { token: "--neutral-300", hex: "#D4D9CD", className: "bg-[var(--neutral-300)]" },
+      { token: "--neutral-400", hex: "#AEB4A6", className: "bg-[var(--neutral-400)]" },
+      { token: "--neutral-500", hex: "#7E857A", className: "bg-[var(--neutral-500)]" },
+      { token: "--neutral-600", hex: "#5B6157", className: "bg-[var(--neutral-600)]" },
+      { token: "--neutral-700", hex: "#40453D", className: "bg-[var(--neutral-700)]" },
+      { token: "--neutral-800", hex: "#282C26", className: "bg-[var(--neutral-800)]" },
+      { token: "--neutral-900", hex: "#14170F", className: "bg-[var(--neutral-900)]" },
+    ],
+  },
+  {
+    title: "Statusy",
+    swatches: [
+      { token: "--success-500", hex: "#2E6B1E", className: "bg-[var(--success-500)]" },
+      { token: "--success-50", hex: "#EAF4E3", className: "bg-[var(--success-50)]" },
+      { token: "--warning-500", hex: "#B8860B", className: "bg-[var(--warning-500)]" },
+      { token: "--warning-50", hex: "#FBF3DE", className: "bg-[var(--warning-50)]" },
+      { token: "--error-500", hex: "#B23B2E", className: "bg-[var(--error-500)]" },
+      { token: "--error-50", hex: "#FBEBE8", className: "bg-[var(--error-50)]" },
+      { token: "--info-500", hex: "#1C6E6A", className: "bg-[var(--info-500)]" },
+      { token: "--info-50", hex: "#E3F1F0", className: "bg-[var(--info-50)]" },
+    ],
+  },
+] as const;
