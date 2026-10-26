@@ -15,7 +15,7 @@ export default defineConfig({
         enforce: "pre",
         async load(id) {
           const path = id.split("?")[0];
-          if (!path.endsWith("/src/styles.css")) return;
+          if (!path?.endsWith("/src/styles.css")) return;
           if (id.includes("?url")) return;
           // The supplied prose contains an accidental CSS comment terminator.
           // Repair only the compiler input; keep the owner's file byte-for-byte.
