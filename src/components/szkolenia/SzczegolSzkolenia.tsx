@@ -1,17 +1,32 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowLeft, Banknote, Check } from "lucide-react";
+import { ArrowLeft, ArrowRight, Banknote, Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import type { Szkolenie } from "@/lib/szkolenia/adapter";
 import { KartaZapisu } from "./KartaZapisu";
 import { MetrykiSzkolenia } from "./MetrykiSzkolenia";
+import type { PowrotDoKatalogu } from "./powrot";
 
-/** Renders the owner's training description, outcomes and program without invented content. */
-export function SzczegolSzkolenia({ szkolenie }: { szkolenie: Szkolenie }) {
+/**
+ * Renders the owner's training description, outcomes and program without invented content.
+ * `powrot` to filtry katalogu przeniesione przez adres — bez nich powrót gubi wynik.
+ */
+export function SzczegolSzkolenia({
+  szkolenie,
+  powrot = {},
+}: {
+  szkolenie: Szkolenie;
+  powrot?: PowrotDoKatalogu;
+}) {
   return (
     <>
       <section className="bg-[var(--surface-muted)] pb-[clamp(2.5rem,4vw,3.5rem)] pt-[clamp(2rem,4vw,3rem)]">
         <div className="mx-auto max-w-[var(--container-max)] space-y-8 px-[var(--container-pad)]">
           <nav aria-label="Ścieżka nawigacji" className="flex items-center gap-3 text-sm">
-            <Link to="/szkolenia" className="inline-flex items-center gap-2 text-primary">
+            <Link
+              to="/szkolenia"
+              search={powrot}
+              className="inline-flex items-center gap-2 text-primary"
+            >
               <ArrowLeft className="size-4" aria-hidden="true" />
               Katalog
             </Link>
@@ -50,7 +65,11 @@ export function SzczegolSzkolenia({ szkolenie }: { szkolenie: Szkolenie }) {
           </div>
         </div>
       </section>
-      <section className="mx-auto grid max-w-[var(--container-max)] gap-[clamp(1.5rem,3vw,3rem)] px-[var(--container-pad)] py-[var(--section-pad-y)] lg:grid-cols-[1.35fr_0.65fr]">
+      <section
+        className={`mx-auto grid max-w-[var(--container-max)] gap-[clamp(1.5rem,3vw,3rem)] px-[var(--container-pad)] py-[var(--section-pad-y)] ${
+          szkolenie.fundable ? "lg:grid-cols-[1.35fr_0.65fr]" : "lg:grid-cols-1"
+        }`}
+      >
         <div className="flex min-w-0 flex-col gap-[var(--space-12)]">
           <section aria-labelledby="learning-heading" className="space-y-6">
             <h2
@@ -101,6 +120,32 @@ export function SzczegolSzkolenia({ szkolenie }: { szkolenie: Szkolenie }) {
             <p className="text-base text-muted-foreground">{szkolenie.forWhom}</p>
           </section>
         </div>
+        {szkolenie.fundable && (
+          <aside
+            aria-labelledby="dofinansowanie-heading"
+            className="rounded-lg bg-[var(--ink-900)] p-[var(--space-6)] text-primary-foreground lg:sticky lg:top-[88px]"
+          >
+            <h2
+              id="dofinansowanie-heading"
+              className="inline-flex items-center gap-2 text-[13px] font-semibold uppercase tracking-[var(--ls-caps)] text-[var(--green-300)]"
+            >
+              <Banknote className="size-4" aria-hidden="true" />
+              Dofinansowanie
+            </h2>
+            <p className="mt-3 text-[14.5px] leading-[var(--lh-relaxed)] text-primary-foreground/85">
+              To szkolenie kwalifikuje się do dofinansowania z KFS i BUR. Pomożemy Ci przejść przez
+              formalności.
+            </p>
+            <Button
+              asChild
+              className="mt-4 h-[46px] w-full whitespace-normal rounded-pill bg-primary-foreground px-3 text-[15px] font-bold text-[var(--green-800)] hover:bg-[var(--green-50)]"
+            >
+              <Link to="/" hash="kontakt">
+                Sprawdź dofinansowanie <ArrowRight aria-hidden="true" />
+              </Link>
+            </Button>
+          </aside>
+        )}
       </section>
     </>
   );
