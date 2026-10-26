@@ -15,7 +15,7 @@ describe("Szczegół szkolenia — zachowanie widoku", () => {
     expect(screen.getByRole("heading", { name: "Czego się nauczysz" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Dla kogo jest to szkolenie" })).toBeInTheDocument();
     expect(screen.getByText("12–13 wrz 2026 · Online")).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Najbliższe terminy" })).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Najbliższe terminy" })).toBeInTheDocument();
   });
 
   it("cena na szczególe ma spację nierozdzielającą przed symbolem waluty", async () => {
@@ -23,7 +23,11 @@ describe("Szczegół szkolenia — zachowanie widoku", () => {
     const tekst = container.textContent ?? "";
     expect(tekst).toContain("338 zł");
     expect(tekst).toContain("1 690 zł bez dofinansowania");
+    // Poniżej zwykła spacja U+0020, w odróżnieniu od U+00A0 w asercjach powyżej.
     expect(tekst).not.toContain(" zł");
+    const pozycja = tekst.indexOf("zł");
+    expect(pozycja).toBeGreaterThan(0);
+    expect(tekst.charCodeAt(pozycja - 1)).toBe(0x00a0);
   });
 
   // R5: powrót do katalogu zachowuje filtry przeniesione adresem.
@@ -67,6 +71,7 @@ describe("Szczegół szkolenia — zachowanie widoku", () => {
   it("druga sekcja ma ciemną kartę dofinansowania z makiety i działającym CTA", async () => {
     await zamontujTrase("/szkolenia/genai");
     const karta = await screen.findByRole("complementary", { name: "Dofinansowanie" });
+    // Ciemne tło karty jest tu świadomym kontraktem wizualnym z makiety.
     expect(karta).toHaveClass("bg-[var(--ink-900)]");
     expect(
       within(karta).getByText(

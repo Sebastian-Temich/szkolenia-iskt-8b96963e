@@ -6,8 +6,8 @@ import { routeTree } from "@/routeTree.gen";
 
 // Dopasowujemy trasy bez uruchamiania loaderów i renderu: loadery mogą potrzebować serwera
 // lub sieci, których w testach brak, a jsdom nie wczytuje arkuszy, na które czeka React.
-describe("App routing", () => {
-  it("matches a page for / instead of falling back to not found", () => {
+describe("Routing aplikacji", () => {
+  it("dopasowuje stronę dla / zamiast przechodzić do widoku nie znaleziono", () => {
     const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
 
     const matches = router.matchRoutes("/");

@@ -88,7 +88,11 @@ describe("Katalog szkoleń — zachowanie widoku", () => {
     const tekst = (karta as HTMLElement).textContent ?? "";
     expect(tekst).toContain("298 zł");
     expect(tekst).toContain("1 490 zł bez dofinansowania");
+    // Poniżej zwykła spacja U+0020, w odróżnieniu od U+00A0 w asercjach powyżej.
     expect(tekst).not.toContain(" zł");
+    const pozycja = tekst.indexOf("zł");
+    expect(pozycja).toBeGreaterThan(0);
+    expect(tekst.charCodeAt(pozycja - 1)).toBe(0x00a0);
     expect(within(karta as HTMLElement).getByText("z dofinansowaniem")).toBeInTheDocument();
   });
 });

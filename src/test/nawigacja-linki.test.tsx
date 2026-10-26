@@ -44,6 +44,10 @@ describe("Nawigacja główna", () => {
 
   it("nie ma pozycji bez celu w tym etapie", async () => {
     const { container } = await zamontujTrase("/szkolenia");
+    const nawigacja = container.querySelector("nav[aria-label='Nawigacja główna']");
+    expect(nawigacja).not.toBeNull();
+    // Zmierzone 6: w tym samym <nav> stoi też odnośnik logo, poza czterema pozycjami i „Zapisz się".
+    expect((nawigacja as HTMLElement).querySelectorAll("a")).toHaveLength(6);
     expect(container.textContent).not.toContain("Nasi Trenerzy");
     expect(screen.queryByRole("link", { name: /Trenerzy/ })).toBeNull();
   });
