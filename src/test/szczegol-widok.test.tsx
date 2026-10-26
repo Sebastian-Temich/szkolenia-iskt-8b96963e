@@ -29,16 +29,18 @@ describe("Szczegół szkolenia — zachowanie widoku", () => {
   // R5: powrót do katalogu zachowuje filtry przeniesione adresem.
   it("odnośnik Katalog przenosi filtry z adresu szczegółu", async () => {
     const { container } = await zamontujTrase("/szkolenia/python?kategoria=Software&q=python");
-    const powrot = within(container.querySelector("nav[aria-label='Ścieżka nawigacji']") as HTMLElement)
-      .getByRole("link", { name: /Katalog/ });
+    const powrot = within(
+      container.querySelector("nav[aria-label='Ścieżka nawigacji']") as HTMLElement,
+    ).getByRole("link", { name: /Katalog/ });
     expect(powrot.getAttribute("href")).toContain("kategoria=Software");
     expect(powrot.getAttribute("href")).toContain("q=python");
   });
 
   it("bez filtrów odnośnik Katalog prowadzi na czysty adres katalogu", async () => {
     const { container } = await zamontujTrase("/szkolenia/python");
-    const powrot = within(container.querySelector("nav[aria-label='Ścieżka nawigacji']") as HTMLElement)
-      .getByRole("link", { name: /Katalog/ });
+    const powrot = within(
+      container.querySelector("nav[aria-label='Ścieżka nawigacji']") as HTMLElement,
+    ).getByRole("link", { name: /Katalog/ });
     expect(powrot.getAttribute("href")).toBe("/szkolenia");
   });
 
@@ -50,8 +52,9 @@ describe("Szczegół szkolenia — zachowanie widoku", () => {
     await user.click(container.querySelector('a[href^="/szkolenia/python"]') as HTMLElement);
     await screen.findByRole("heading", { name: "Program szkolenia" });
 
-    const powrot = within(container.querySelector("nav[aria-label='Ścieżka nawigacji']") as HTMLElement)
-      .getByRole("link", { name: /Katalog/ });
+    const powrot = within(
+      container.querySelector("nav[aria-label='Ścieżka nawigacji']") as HTMLElement,
+    ).getByRole("link", { name: /Katalog/ });
     await user.click(powrot);
 
     await screen.findByRole("status");

@@ -64,9 +64,9 @@ describe("Polecane szkolenia — stan ładowania", () => {
     await waitFor(() => expect(szkielet()).not.toBeNull());
     expect(screen.getByRole("heading", { name: "Najczęściej wybierane" })).toBeVisible();
     expect(screen.getByText("Wyróżnione szkolenia")).toBeVisible();
-    expect(
-      screen.getByRole("link", { name: /Cały katalog/ }).getAttribute("href"),
-    ).toBe("/szkolenia");
+    expect(screen.getByRole("link", { name: /Cały katalog/ }).getAttribute("href")).toBe(
+      "/szkolenia",
+    );
   });
 });
 

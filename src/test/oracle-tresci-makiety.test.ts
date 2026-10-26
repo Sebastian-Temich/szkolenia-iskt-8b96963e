@@ -175,7 +175,12 @@ describe("fundamenty marki w treści strony", () => {
     ...ODBIORCY.flatMap((o) => krokiProcesu(o).kroki.flatMap((k) => [k.tytul, k.opis])),
     ...ODBIORCY.flatMap((o) => Object.values(trescKontaktu(o))),
     ...KATEGORIE_KOMPETENCJI.flatMap((k) => [k.tytul, k.opis]),
-    ...[SCIEZKI.indywidualna, SCIEZKI.firmowa].flatMap((s) => [s.tytul, s.opis, s.cta, ...s.punkty]),
+    ...[SCIEZKI.indywidualna, SCIEZKI.firmowa].flatMap((s) => [
+      s.tytul,
+      s.opis,
+      s.cta,
+      ...s.punkty,
+    ]),
     ...ZRODLA_DOFINANSOWANIA.flatMap((z) => [z.tytul, z.opis]),
     ...POTWIERDZENIA_HERO,
     ...OPCJE_OBSZARU,

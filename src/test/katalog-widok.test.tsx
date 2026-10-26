@@ -39,7 +39,7 @@ describe("Katalog szkoleń — zachowanie widoku", () => {
     expect(container.querySelectorAll('a[href^="/szkolenia/"]')).toHaveLength(0);
   });
 
-  it("„Wyczyść filtry\" faktycznie zeruje oba filtry, a nie tylko znika", async () => {
+  it('„Wyczyść filtry" faktycznie zeruje oba filtry, a nie tylko znika', async () => {
     const user = userEvent.setup();
     const { router } = await zamontujTrase("/szkolenia?kategoria=AI&q=zzz");
     expect(screen.getByRole("heading", { name: "Brak szkoleń dla tych kryteriów" })).toBeVisible();

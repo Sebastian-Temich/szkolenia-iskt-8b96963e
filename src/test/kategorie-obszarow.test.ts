@@ -17,7 +17,9 @@ const OCZEKIWANE: [string, string][] = [
 
 describe("Karty obszarów kompetencji", () => {
   it("wiąże każdą kartę z jej własną kategorią", () => {
-    expect(KATEGORIE_KOMPETENCJI.map((karta) => [karta.tytul, karta.kategoria])).toEqual(OCZEKIWANE);
+    expect(KATEGORIE_KOMPETENCJI.map((karta) => [karta.tytul, karta.kategoria])).toEqual(
+      OCZEKIWANE,
+    );
   });
 
   it("każda kategoria karty istnieje w zestawie kategorii, niezależnie od jego kolejności", () => {

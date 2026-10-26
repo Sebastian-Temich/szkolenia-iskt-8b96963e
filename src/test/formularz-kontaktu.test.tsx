@@ -134,9 +134,7 @@ describe("Formularz kontaktowy — nie wysyła i nie udaje", () => {
       screen.getByRole("heading", { name: "Zapytaj o szkolenie dla firmy" }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(
-        "Opowiedz nam o zespole — przygotujemy program i wycenę z dofinansowaniem.",
-      ),
+      screen.getByText("Opowiedz nam o zespole — przygotujemy program i wycenę z dofinansowaniem."),
     ).toBeInTheDocument();
   });
 

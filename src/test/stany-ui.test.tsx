@@ -55,7 +55,9 @@ describe("Stan 1 z 4 — ładowanie", () => {
     const szkielet = await screen.findByLabelText("Wczytujemy katalog szkoleń");
     expect(szkielet).toHaveAttribute("aria-busy", "true");
     expect(screen.queryByRole("status")).toBeNull();
-    expect(screen.getByRole("heading", { name: "Znajdź szkolenie dla siebie lub zespołu" })).toBeVisible();
+    expect(
+      screen.getByRole("heading", { name: "Znajdź szkolenie dla siebie lub zespołu" }),
+    ).toBeVisible();
   });
 
   it("szczegół pokazuje szkielet z aria-busy, dopóki adapter nie odpowie", async () => {
@@ -115,7 +117,9 @@ describe("Stan 3 z 4 — błąd pobrania", () => {
 
     await waitFor(() => expect(stan.wywolaniaSzczegolu).toBeGreaterThan(przed));
     await waitFor(() =>
-      expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Generatywne AI dla biznesu"),
+      expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+        "Generatywne AI dla biznesu",
+      ),
     );
   });
 });
