@@ -60,6 +60,10 @@ describe("Formularz kontaktowy — nie wysyła i nie udaje", () => {
 
   it("nie renderuje żadnego stanu sukcesu — ani przed, ani po próbie wysłania", () => {
     const { container } = zamontuj();
+    expect(screen.getByRole("button", { name: /Wyślij zgłoszenie/ })).toBeDisabled();
+    expect(
+      screen.getByText("Formularz zostanie podłączony w kolejnym etapie."),
+    ).toBeInTheDocument();
     fireEvent.submit(container.querySelector("form") as HTMLFormElement);
     expect(container.querySelector('[role="status"]')).toBeNull();
     expect(container.querySelector('[role="alert"]')).toBeNull();

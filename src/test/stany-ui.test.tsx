@@ -142,6 +142,9 @@ describe("Stan 4 z 4 — nieznane szkolenie", () => {
   it("nieznane szkolenie nie pokazuje szkieletu ani komunikatu błędu pobrania", async () => {
     stan.nieznane = true;
     await zamontujTrase("/szkolenia/nie-istnieje");
+    expect(
+      await screen.findByRole("heading", { name: "Nie znaleźliśmy tego szkolenia" }),
+    ).toBeVisible();
     expect(screen.queryByLabelText("Wczytujemy szkolenie")).toBeNull();
     expect(screen.queryByRole("heading", { name: "Nie udało się wczytać szkolenia" })).toBeNull();
   });

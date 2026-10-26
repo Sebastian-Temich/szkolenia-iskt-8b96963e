@@ -1,4 +1,4 @@
-import { cleanup, screen } from "@testing-library/react";
+import { cleanup, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { Szkolenie } from "@/lib/szkolenia/adapter";
 import { zamontujTrase } from "./harness-routera";
@@ -32,9 +32,12 @@ describe("Szczegół szkolenia bez dofinansowania", () => {
   });
 
   it("zwija siatkę do jednej kolumny, zamiast zostawić pustą", async () => {
-    const { container } = await zamontujTrase("/szkolenia/genai");
-    const sekcje = [...container.querySelectorAll("main > section")];
-    const druga = sekcje[sekcje.length - 1] as HTMLElement;
+    await zamontujTrase("/szkolenia/genai");
+    const program = await screen.findByRole("heading", { name: "Program szkolenia" });
+    const druga = program.closest("section") as HTMLElement;
+    expect(druga).not.toBeNull();
+    expect(within(druga).queryByRole("complementary", { name: "Dofinansowanie" })).toBeNull();
+    // Klasy siatki to świadomy kontrakt z makietą: jedna kolumna zamiast pustej prawej.
     expect(druga.className).toContain("lg:grid-cols-1");
     expect(druga.className).not.toContain("lg:grid-cols-[1.35fr_0.65fr]");
   });
