@@ -23,6 +23,4 @@ export type Szkolenie = {
 export type FiltrSzkolen = {
   kategoria?: KategoriaSzkolenia | "Wszystkie";
   q?: string;
-  /** Przełącznik demonstracyjny WYŁĄCZNIE warstwy mock; znika razem z jej podmianą. */
-  demo?: "ladowanie" | "blad";
 };

@@ -1,22 +1,18 @@
 import { createFileRoute, notFound, type SearchSchemaInput } from "@tanstack/react-router";
-import { getSzkolenie, type FiltrSzkolen } from "@/lib/szkolenia/adapter";
+import { getSzkolenie } from "@/lib/szkolenia/adapter";
 import { czytajFiltryPowrotu, type PowrotDoKatalogu } from "@/components/szkolenia/powrot";
 import { SzczegolSzkolenia } from "@/components/szkolenia/SzczegolSzkolenia";
 import { SzczegolSzkielet } from "@/components/szkolenia/Szkielety";
 import { BladSzkolen, NieZnalezionoSzkolenia } from "@/components/szkolenia/StanySzkolen";
 
 export const Route = createFileRoute("/szkolenia/$id")({
-  // Poza przełącznikiem demonstracyjnym trasa przenosi filtry katalogu, żeby powrót
-  // ze szczegółu wracał do tego samego wyniku, a nie do pełnej listy.
+  // Trasa przenosi filtry katalogu, żeby powrót ze szczegółu wracał do tego samego
+  // wyniku, a nie do pełnej listy.
   validateSearch: (
-    search: { demo?: unknown; kategoria?: unknown; q?: unknown } & SearchSchemaInput,
-  ): { demo?: FiltrSzkolen["demo"] } & PowrotDoKatalogu => ({
-    demo: search["demo"] === "ladowanie" || search["demo"] === "blad" ? search["demo"] : undefined,
-    ...czytajFiltryPowrotu(search),
-  }),
-  loaderDeps: ({ search }) => ({ demo: search.demo }),
-  loader: async ({ params, deps }) => {
-    const szkolenie = await getSzkolenie(params.id, { demo: deps.demo });
+    search: { kategoria?: unknown; q?: unknown } & SearchSchemaInput,
+  ): PowrotDoKatalogu => czytajFiltryPowrotu(search),
+  loader: async ({ params }) => {
+    const szkolenie = await getSzkolenie(params.id);
     if (!szkolenie) throw notFound();
     return szkolenie;
   },
