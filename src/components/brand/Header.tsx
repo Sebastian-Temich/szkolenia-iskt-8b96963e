@@ -14,7 +14,7 @@ const NAV_ITEMS: NavItem[] = [
 const CTA_CLASS =
   "h-[calc(var(--space-10)+var(--space-1))] rounded-pill bg-primary px-[var(--space-5)] text-[length:var(--text-cta)] font-semibold text-primary-foreground shadow-brand transition-colors duration-[var(--dur-fast)] ease-standard hover:bg-[var(--green-800)]";
 
-/** Renders shared navigation and an accessible mobile menu. */
+/** Renderuje wspólną nawigację i dostępne menu mobilne. */
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
 

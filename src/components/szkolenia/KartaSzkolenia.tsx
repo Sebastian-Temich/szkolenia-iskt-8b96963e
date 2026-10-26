@@ -7,7 +7,7 @@ import { MetrykiSzkolenia } from "./MetrykiSzkolenia";
 import type { PowrotDoKatalogu } from "./powrot";
 
 /**
- * Makes the entire training card a typed detail link. Opcjonalne `powrot` przenosi
+ * Cała karta szkolenia jest typowanym linkiem do szczegółu. Opcjonalne `powrot` przenosi
  * aktualne filtry katalogu do adresu szczegółu, żeby powrót do katalogu je zachował.
  */
 export function KartaSzkolenia({

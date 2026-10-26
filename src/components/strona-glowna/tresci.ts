@@ -19,7 +19,7 @@ import {
 } from "@/lib/szkolenia/adapter";
 import { IKONY_SZKOLEN } from "@/components/szkolenia/ikony";
 
-/** Audience selected on the home page. */
+/** Odbiorca wybrany na stronie głównej. */
 export type Odbiorca = "individual" | "company";
 
 export const POTWIERDZENIA_HERO = [
@@ -28,7 +28,7 @@ export const POTWIERDZENIA_HERO = [
   "Zajęcia z ekspertami",
 ];
 
-/** Returns hero copy for the selected audience. */
+/** Zwraca treść sekcji otwierającej dla wybranego odbiorcy. */
 export function trescHero(odbiorca: Odbiorca) {
   return odbiorca === "individual"
     ? {
@@ -102,7 +102,7 @@ const KROKI_FIRMOWE: Krok[] = [
   },
 ];
 
-/** Returns process heading and steps for the selected audience. */
+/** Zwraca nagłówek i kroki procesu dla wybranego odbiorcy. */
 export function krokiProcesu(odbiorca: Odbiorca) {
   return odbiorca === "individual"
     ? {
@@ -117,7 +117,7 @@ export function krokiProcesu(odbiorca: Odbiorca) {
       };
 }
 
-/** Returns contact heading copy for the selected audience. */
+/** Zwraca treść nagłówka kontaktu dla wybranego odbiorcy. */
 export function trescKontaktu(odbiorca: Odbiorca) {
   return odbiorca === "individual"
     ? {

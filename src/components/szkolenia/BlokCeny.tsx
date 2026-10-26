@@ -5,7 +5,7 @@ import {
   TEKST_DOFINANSOWANIA,
 } from "@/lib/szkolenia/adapter";
 
-/** Renders the same funding calculation in catalog and detail views. */
+/** Renderuje to samo wyliczenie dofinansowania w katalogu i w szczególe; sufiks ma własną grubość per wariant. */
 export function BlokCeny({ price, wariant }: { price: number; wariant: "karta" | "szczegol" }) {
   const detail = wariant === "szczegol";
   return (

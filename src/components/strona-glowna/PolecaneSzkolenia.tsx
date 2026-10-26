@@ -11,7 +11,7 @@ import { wybierzPolecane } from "./tresci";
 const OUTLINE =
   "rounded-pill border-[1.5px] border-primary font-semibold text-primary hover:bg-[var(--green-50)]";
 
-/** Shows the error or empty state in place of the featured grid. */
+/** Pokazuje stan błędu lub pusty w miejscu siatki polecanych; role=alert tylko dla błędu. */
 function Komunikat({
   naglowek,
   ponow,
@@ -49,7 +49,7 @@ function Komunikat({
   );
 }
 
-/** Fetches trainings through the adapter and shows the four featured ones. */
+/** Pobiera szkolenia przez adapter i pokazuje cztery polecane. */
 export function PolecaneSzkolenia() {
   const { data, isPending, isError, refetch, isFetching } = useQuery({
     queryKey: ["szkolenia", "polecane"],

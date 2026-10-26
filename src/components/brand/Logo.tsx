@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 // Wariant z białym tłem: public/iskt-logo.png — użyj go tylko tam, gdzie
 // znak musi leżeć na nieprzezroczystej jasnej płaszczyźnie.
 
-/** Renders the supplied ISKT brand mark. Height is set by the caller's className. */
+/** Renderuje dostarczony znak ISKT. Wysokość ustala className wywołującego. */
 export function Logo({ className }: { className?: string }) {
   return (
     <img

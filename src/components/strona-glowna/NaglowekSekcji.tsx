@@ -10,7 +10,7 @@ type Props = {
   className?: string;
 };
 
-/** Renders the eyebrow, bold heading and supporting sentence of a section. */
+/** Renderuje eyebrow, pogrubiony nagłówek i zdanie wsparcia sekcji. */
 export function NaglowekSekcji({
   id,
   eyebrow,

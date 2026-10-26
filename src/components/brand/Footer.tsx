@@ -31,7 +31,7 @@ const LINK_GROUPS: { title: string; items: LinkStopki[] }[] = [
 const HEADING_CLASS =
   "text-[length:var(--text-footer-heading)] font-bold uppercase tracking-[var(--ls-wide)] text-foreground";
 
-/** Renders brand information and the supplied contact details. */
+/** Renderuje informacje o marce i dostarczone dane kontaktowe. */
 export function Footer() {
   return (
     <footer className="border-t border-border bg-background px-[var(--container-pad)] pt-[var(--section-pad-y)] pb-[var(--space-10)]">

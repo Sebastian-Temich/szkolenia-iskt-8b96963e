@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-/** Renders the small uppercase section label preceded by a dash. */
+/** Renderuje małą etykietę sekcji wersalikami, poprzedzoną kreską. */
 export function Eyebrow({ children, className }: { children: string; className?: string }) {
   return (
     <p

@@ -49,7 +49,7 @@ export const Route = createFileRoute("/fundamenty")({
   component: Foundations,
 });
 
-/** Presents the supplied design tokens for visual verification. */
+/** Prezentuje dostarczone tokeny marki do weryfikacji wizualnej. */
 function Foundations() {
   return (
     <div className="mx-auto max-w-[var(--container-max)] space-y-16 px-[var(--container-pad)] py-[var(--section-pad-y)]">

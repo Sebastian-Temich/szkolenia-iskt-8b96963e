@@ -27,7 +27,7 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-/** Composes the home page sections and holds the shared audience state. */
+/** Składa sekcje strony głównej i trzyma wspólny stan odbiorcy. */
 function Index() {
   const [odbiorca, setOdbiorca] = useState<Odbiorca>("individual");
   return (

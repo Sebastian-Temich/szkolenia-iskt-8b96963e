@@ -39,7 +39,7 @@ export const Route = createFileRoute("/szkolenia/")({
   component: Katalog,
 });
 
-/** Displays filtered loader results or the approved empty state. */
+/** Wyświetla przefiltrowane wyniki loadera albo zatwierdzony stan pusty. */
 function Katalog() {
   const szkolenia = Route.useLoaderData();
   const navigate = Route.useNavigate();

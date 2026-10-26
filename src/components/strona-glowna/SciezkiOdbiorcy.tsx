@@ -7,7 +7,7 @@ import { SCIEZKI } from "./tresci";
 const CTA =
   "h-11 self-start rounded-pill border-[1.5px] border-primary px-[18px] text-[15px] font-semibold text-primary hover:bg-[var(--green-50)]";
 
-/** Renders one audience path card. */
+/** Renderuje kartę jednej ścieżki odbiorcy. */
 function Karta({
   ikona: Ikona,
   tresc,
@@ -42,7 +42,7 @@ function Karta({
   );
 }
 
-/** Shows both audience paths regardless of the selected audience. */
+/** Pokazuje obie ścieżki niezależnie od wybranego odbiorcy. */
 export function SciezkiOdbiorcy() {
   return (
     <section aria-label="Ścieżki szkoleń" className="pb-[var(--section-pad-y)]">

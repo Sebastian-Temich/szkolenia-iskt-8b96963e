@@ -41,7 +41,7 @@ export const Route = createFileRoute("/szkolenia/$id")({
   component: Szczegol,
 });
 
-/** Displays the selected training returned by the route loader. */
+/** Wyświetla szkolenie zwrócone przez loader trasy. */
 function Szczegol() {
   const { kategoria, q } = Route.useSearch();
   return (

@@ -12,7 +12,7 @@ const IKONA =
 
 type Props = { odbiorca: Odbiorca; onZmiana: (o: Odbiorca) => void };
 
-/** Renders contact details and the visual-only, not yet connected contact form. */
+/** Renderuje dane kontaktowe i wyłącznie wizualny, jeszcze niepodłączony formularz. */
 export function SekcjaKontakt({ odbiorca, onZmiana }: Props) {
   const tresc = trescKontaktu(odbiorca);
   return (

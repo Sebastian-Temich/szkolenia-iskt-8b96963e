@@ -1,7 +1,7 @@
 import { Clock, Monitor, Gauge } from "lucide-react";
 import type { Szkolenie } from "@/lib/szkolenia/adapter";
 
-/** Displays duration, delivery format and level in a shared order. */
+/** Wyświetla czas trwania, format i poziom we wspólnej kolejności. */
 export function MetrykiSzkolenia({
   szkolenie,
   detail = false,

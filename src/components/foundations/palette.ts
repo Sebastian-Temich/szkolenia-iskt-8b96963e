@@ -1,4 +1,4 @@
-/** Literal swatch classes keep Tailwind discovery aligned with the supplied palette. */
+/** Dosłowne klasy próbek utrzymują wykrywanie klas Tailwinda zgodne z dostarczoną paletą. */
 export const PALETTE_GROUPS = [
   {
     title: "Zieleń marki",

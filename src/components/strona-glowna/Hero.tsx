@@ -17,7 +17,7 @@ const ROZMYCIE_PRAWE = {
   filter: "blur(10px)",
 };
 
-/** Renders the audience-dependent hero with the single page heading. */
+/** Renderuje sekcję otwierającą zależną od odbiorcy, z jedynym nagłówkiem h1 strony. */
 export function Hero({
   odbiorca,
   onZmiana,

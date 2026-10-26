@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { terminySzkolenia, type Szkolenie } from "@/lib/szkolenia/adapter";
 import { BlokCeny } from "./BlokCeny";
 
-/** Displays the approved price and dates, with placeholder navigation for both CTAs. */
+/** Wyświetla zatwierdzoną cenę i terminy; oba CTA prowadzą do kontaktu na stronie głównej. */
 export function KartaZapisu({ szkolenie }: { szkolenie: Szkolenie }) {
   return (
     <aside className="flex min-h-[var(--karta-zapisu-min-h)] flex-col gap-[var(--space-4)] rounded-lg border border-[var(--border-subtle)] bg-card p-[var(--space-8)] shadow-[var(--shadow-md)] lg:sticky lg:top-[88px]">
