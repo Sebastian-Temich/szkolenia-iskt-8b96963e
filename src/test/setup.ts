@@ -1,5 +1,9 @@
 import "@testing-library/jest-dom/vitest";
+import { configure } from "@testing-library/dom";
 import { vi } from "vitest";
+
+// Limit oczekiwania na loader warstwy mock (400 ms razy liczba nawigacji w teście), a nie maskowanie błędu.
+configure({ asyncUtilTimeout: 5000 });
 
 Object.defineProperty(window, "scrollTo", {
   writable: true,
