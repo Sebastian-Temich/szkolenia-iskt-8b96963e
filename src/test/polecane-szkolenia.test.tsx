@@ -62,7 +62,7 @@ describe("Polecane szkolenia — stan ładowania", () => {
     // react-query trzyma sekcję w stanie ładowania, nie router.
     await zamontujTrase("/");
     await waitFor(() => expect(szkielet()).not.toBeNull());
-    expect(screen.getByRole("heading", { name: "Najczęściej wybierane" })).toBeVisible();
+    expect((await screen.findByRole("heading", { name: "Najczęściej wybierane" })).toBeVisible();
     expect(screen.getByText("Wyróżnione szkolenia")).toBeVisible();
     expect(screen.getByRole("link", { name: /Cały katalog/ }).getAttribute("href")).toBe(
       "/szkolenia",
@@ -94,7 +94,7 @@ describe("Polecane szkolenia — stan gotowy", () => {
     stan.identyfikatory = [];
     await zamontujTrase("/");
     await waitFor(() =>
-      expect(screen.getByText("Nie znaleźliśmy polecanych szkoleń")).toBeInTheDocument(),
+      expect((await screen.findByText("Nie znaleźliśmy polecanych szkoleń")).toBeInTheDocument(),
     );
     expect(tytulyKart()).toEqual([]);
     expect(screen.queryByRole("button", { name: /Spróbuj ponownie/ })).toBeNull();

@@ -8,7 +8,7 @@ afterEach(cleanup);
 describe("Szczegół szkolenia — zachowanie widoku", () => {
   it("pokazuje tytuł, program, cenę i terminy właściciela", async () => {
     await zamontujTrase("/szkolenia/genai");
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+    expect((await screen.findByRole("heading", { level: 1 })).toHaveTextContent(
       "Generatywne AI dla biznesu",
     );
     expect(screen.getByRole("heading", { name: "Program szkolenia" })).toBeInTheDocument();
@@ -47,7 +47,7 @@ describe("Szczegół szkolenia — zachowanie widoku", () => {
   it("przejście z katalogu na szczegół i powrót zachowuje zawężony wynik", async () => {
     const user = userEvent.setup();
     const { router, container } = await zamontujTrase("/szkolenia?kategoria=Software&q=python");
-    expect(screen.getByRole("status")).toHaveTextContent("1 szkolenie");
+    expect((await screen.findByRole("status")).toHaveTextContent("1 szkolenie");
 
     await user.click(container.querySelector('a[href^="/szkolenia/python"]') as HTMLElement);
     await screen.findByRole("heading", { name: "Program szkolenia" });
@@ -66,7 +66,7 @@ describe("Szczegół szkolenia — zachowanie widoku", () => {
   // R3: prawa kolumna drugiej sekcji nie jest już porzucona.
   it("druga sekcja ma ciemną kartę dofinansowania z makiety i działającym CTA", async () => {
     await zamontujTrase("/szkolenia/genai");
-    const karta = screen.getByRole("complementary", { name: "Dofinansowanie" });
+    const karta = (await screen.findByRole("complementary", { name: "Dofinansowanie" });
     expect(karta).toHaveClass("bg-[var(--ink-900)]");
     expect(
       within(karta).getByText(
