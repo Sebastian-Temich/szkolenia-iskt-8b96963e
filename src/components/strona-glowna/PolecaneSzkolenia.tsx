@@ -12,19 +12,35 @@ const OUTLINE =
   "rounded-pill border-[1.5px] border-primary font-semibold text-primary hover:bg-[var(--green-50)]";
 
 /** Shows the error or empty state in place of the featured grid. */
-function Komunikat({ naglowek, ponow, czeka }: { naglowek: string; ponow?: () => void; czeka?: boolean }) {
+function Komunikat({
+  naglowek,
+  ponow,
+  czeka,
+}: {
+  naglowek: string;
+  ponow?: () => void;
+  czeka?: boolean;
+}) {
   return (
-    <div role="alert" className="flex flex-col items-start gap-4 rounded-lg border border-[var(--border-subtle)] bg-card p-[var(--space-8)] shadow-[var(--shadow-sm)]">
+    <div
+      role="alert"
+      className="flex flex-col items-start gap-4 rounded-lg border border-[var(--border-subtle)] bg-card p-[var(--space-8)] shadow-[var(--shadow-sm)]"
+    >
       <h3 className="text-[1.15rem] font-bold tracking-[var(--ls-tight)]">{naglowek}</h3>
       {ponow && (
         <>
-          <p className="text-muted-foreground">Spróbuj ponownie — jeśli problem się powtórzy, odezwij się do nas.</p>
+          <p className="text-muted-foreground">
+            Spróbuj ponownie — jeśli problem się powtórzy, odezwij się do nas.
+          </p>
           <Button className="rounded-pill" onClick={ponow} disabled={czeka}>
             <RotateCcw aria-hidden="true" /> Spróbuj ponownie
           </Button>
         </>
       )}
-      <Link to="/szkolenia" className="text-sm font-semibold text-primary underline-offset-4 hover:underline">
+      <Link
+        to="/szkolenia"
+        className="text-sm font-semibold text-primary underline-offset-4 hover:underline"
+      >
         Przejdź do katalogu
       </Link>
     </div>
@@ -43,7 +59,11 @@ export function PolecaneSzkolenia() {
     <section aria-labelledby="polecane-naglowek" className="py-[var(--section-pad-y)]">
       <div className="mx-auto max-w-[var(--container-max)] space-y-10 px-[var(--container-pad)]">
         <div className="flex flex-wrap items-end justify-between gap-[var(--space-6)]">
-          <NaglowekSekcji id="polecane-naglowek" eyebrow="Wyróżnione szkolenia" naglowek="Najczęściej wybierane" />
+          <NaglowekSekcji
+            id="polecane-naglowek"
+            eyebrow="Wyróżnione szkolenia"
+            naglowek="Najczęściej wybierane"
+          />
           <Button asChild variant="outline" className={`h-[46px] px-5 text-[15px] ${OUTLINE}`}>
             <Link to="/szkolenia">
               Cały katalog <ArrowRight aria-hidden="true" />
@@ -53,7 +73,11 @@ export function PolecaneSzkolenia() {
         {isPending ? (
           <PolecaneSzkielet />
         ) : isError ? (
-          <Komunikat naglowek="Nie udało się wczytać polecanych szkoleń" ponow={() => void refetch()} czeka={isFetching} />
+          <Komunikat
+            naglowek="Nie udało się wczytać polecanych szkoleń"
+            ponow={() => void refetch()}
+            czeka={isFetching}
+          />
         ) : polecane.length === 0 ? (
           <Komunikat naglowek="Nie znaleźliśmy polecanych szkoleń" />
         ) : (

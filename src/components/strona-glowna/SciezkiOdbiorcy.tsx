@@ -8,7 +8,15 @@ const CTA =
   "h-11 self-start rounded-pill border-[1.5px] border-primary px-[18px] text-[15px] font-semibold text-primary hover:bg-[var(--green-50)]";
 
 /** Renders one audience path card. */
-function Karta({ ikona: Ikona, tresc, link }: { ikona: LucideIcon; tresc: (typeof SCIEZKI)["firmowa"]; link: ReactNode }) {
+function Karta({
+  ikona: Ikona,
+  tresc,
+  link,
+}: {
+  ikona: LucideIcon;
+  tresc: (typeof SCIEZKI)["firmowa"];
+  link: ReactNode;
+}) {
   return (
     <div className="flex flex-col gap-4 rounded-lg border border-[var(--border-subtle)] bg-card p-[var(--space-8)] shadow-[var(--shadow-sm)]">
       <span className="inline-flex size-[54px] items-center justify-center rounded-md bg-[var(--green-50)] text-primary">
@@ -18,7 +26,10 @@ function Karta({ ikona: Ikona, tresc, link }: { ikona: LucideIcon; tresc: (typeo
       <p className="text-[15px] text-muted-foreground">{tresc.opis}</p>
       <ul className="flex list-none flex-col gap-2">
         {tresc.punkty.map((p) => (
-          <li key={p} className="inline-flex items-center gap-2 text-[14.5px] text-[var(--ink-800)]">
+          <li
+            key={p}
+            className="inline-flex items-center gap-2 text-[14.5px] text-[var(--ink-800)]"
+          >
             <Check className="size-4 shrink-0 text-[var(--green-600)]" aria-hidden="true" />
             {p}
           </li>

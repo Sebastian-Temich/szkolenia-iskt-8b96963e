@@ -43,7 +43,12 @@ describe("Strona główna", () => {
   });
   it("wybiera polecane w stałej kolejności", () => {
     const lista = ["eng-b2", "python", "fullstack", "esg", "genai"].map(s);
-    expect(wybierzPolecane(lista).map((x) => x.id)).toEqual(["genai", "esg", "fullstack", "eng-b2"]);
+    expect(wybierzPolecane(lista).map((x) => x.id)).toEqual([
+      "genai",
+      "esg",
+      "fullstack",
+      "eng-b2",
+    ]);
     expect(wybierzPolecane([s("esg"), s("genai")]).map((x) => x.id)).toEqual(["genai", "esg"]);
   });
   it("ma pięć kategorii z KATEGORIE_SZKOLEN", () => {
@@ -53,7 +58,9 @@ describe("Strona główna", () => {
   it("formularz jest nieaktywny i bez komunikatu sukcesu", () => {
     render(<SekcjaKontakt odbiorca="individual" onZmiana={() => undefined} />);
     expect(screen.getByRole("button", { name: "Wyślij zgłoszenie" })).toBeDisabled();
-    expect(screen.getByText("Formularz zostanie podłączony w kolejnym etapie.")).toBeInTheDocument();
+    expect(
+      screen.getByText("Formularz zostanie podłączony w kolejnym etapie."),
+    ).toBeInTheDocument();
     expect(screen.queryByText("Dziękujemy za zgłoszenie!")).toBeNull();
   });
 });

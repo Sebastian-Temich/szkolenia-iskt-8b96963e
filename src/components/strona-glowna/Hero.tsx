@@ -11,12 +11,29 @@ const ROZMYCIE = {
 };
 
 /** Renders the audience-dependent hero with the single page heading. */
-export function Hero({ odbiorca, onZmiana }: { odbiorca: Odbiorca; onZmiana: (o: Odbiorca) => void }) {
+export function Hero({
+  odbiorca,
+  onZmiana,
+}: {
+  odbiorca: Odbiorca;
+  onZmiana: (o: Odbiorca) => void;
+}) {
   const tresc = trescHero(odbiorca);
   return (
-    <section aria-labelledby="hero-naglowek" className="relative overflow-hidden py-[var(--section-pad-y)]">
-      <div aria-hidden="true" className="pointer-events-none absolute -left-40 -top-40 size-[520px]" style={ROZMYCIE} />
-      <div aria-hidden="true" className="pointer-events-none absolute -right-40 top-20 size-[520px]" style={ROZMYCIE} />
+    <section
+      aria-labelledby="hero-naglowek"
+      className="relative overflow-hidden py-[var(--section-pad-y)]"
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-40 -top-40 size-[520px]"
+        style={ROZMYCIE}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-40 top-20 size-[520px]"
+        style={ROZMYCIE}
+      />
       <div className="relative mx-auto flex max-w-[920px] flex-col items-center gap-[var(--space-6)] px-[var(--container-pad)] text-center">
         <PrzelacznikOdbiorcy wartosc={odbiorca} onZmiana={onZmiana} />
         <Eyebrow>{tresc.eyebrow}</Eyebrow>

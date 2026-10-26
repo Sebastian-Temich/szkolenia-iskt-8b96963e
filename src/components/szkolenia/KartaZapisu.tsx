@@ -22,7 +22,9 @@ export function KartaZapisu({ szkolenie }: { szkolenie: Szkolenie }) {
         variant="outline"
         className="h-12 w-full whitespace-normal rounded-pill border-[1.5px] border-primary px-3 text-primary hover:bg-[var(--green-50)]"
       >
-        <Link to="/" hash="kontakt">Zapytaj o termin dla firmy</Link>
+        <Link to="/" hash="kontakt">
+          Zapytaj o termin dla firmy
+        </Link>
       </Button>
       <div className="space-y-4 border-t border-[var(--border-subtle)] pt-5">
         <h2 className="text-[13px] font-semibold uppercase tracking-[var(--ls-caps)] text-[var(--green-600)]">

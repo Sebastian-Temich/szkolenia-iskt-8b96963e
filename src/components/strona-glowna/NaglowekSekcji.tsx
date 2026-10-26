@@ -11,7 +11,14 @@ type Props = {
 };
 
 /** Renders the eyebrow, bold heading and supporting sentence of a section. */
-export function NaglowekSekcji({ id, eyebrow, naglowek, wsparcie, wysrodkowany, className }: Props) {
+export function NaglowekSekcji({
+  id,
+  eyebrow,
+  naglowek,
+  wsparcie,
+  wysrodkowany,
+  className,
+}: Props) {
   return (
     <div
       className={cn(

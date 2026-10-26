@@ -14,19 +14,29 @@ export function Dofinansowania() {
     >
       <div className="mx-auto max-w-[var(--container-max)] px-[var(--container-pad)]">
         <div className="relative space-y-10 overflow-hidden rounded-2xl bg-[image:var(--gradient-brand)] p-[clamp(2.5rem,5vw,4.5rem)] text-white shadow-[var(--shadow-lg)]">
-          <div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-white/16 blur-3xl" />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-white/16 blur-3xl"
+          />
           <div className="relative flex max-w-[720px] flex-col gap-4">
             <Eyebrow className="text-[var(--green-200)]">Dofinansowania</Eyebrow>
-            <h2 id="dofinansowania-naglowek" className="text-[clamp(2rem,3.4vw,2.6rem)] font-extrabold leading-[1.1] tracking-[var(--ls-tight)] text-white">
+            <h2
+              id="dofinansowania-naglowek"
+              className="text-[clamp(2rem,3.4vw,2.6rem)] font-extrabold leading-[1.1] tracking-[var(--ls-tight)] text-white"
+            >
               Zapłać nawet o 80% mniej
             </h2>
             <p className="text-lg text-white/90">
-              Większość naszych szkoleń kwalifikuje się do publicznych źródeł finansowania. Pomożemy Ci sprawdzić dostępne dotacje i przejść przez formalności — od wniosku po rozliczenie.
+              Większość naszych szkoleń kwalifikuje się do publicznych źródeł finansowania. Pomożemy
+              Ci sprawdzić dostępne dotacje i przejść przez formalności — od wniosku po rozliczenie.
             </p>
           </div>
           <div className="relative grid gap-[var(--space-6)] md:grid-cols-3">
             {ZRODLA_DOFINANSOWANIA.map(({ skrot, ikona: Ikona, tytul, opis }) => (
-              <div key={skrot} className="flex flex-col gap-3 rounded-lg border border-white/16 bg-white/8 p-[var(--space-6)] backdrop-blur-sm">
+              <div
+                key={skrot}
+                className="flex flex-col gap-3 rounded-lg border border-white/16 bg-white/8 p-[var(--space-6)] backdrop-blur-sm"
+              >
                 <div className="flex items-center justify-between">
                   <span className="inline-flex size-11 items-center justify-center rounded-md bg-white/14 text-white">
                     <Ikona aria-hidden="true" />

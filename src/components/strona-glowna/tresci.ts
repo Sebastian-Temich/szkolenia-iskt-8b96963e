@@ -17,12 +17,20 @@ import {
   TrendingUp,
   Wallet,
 } from "lucide-react";
-import { KATEGORIE_SZKOLEN, type KategoriaSzkolenia, type Szkolenie } from "@/lib/szkolenia/adapter";
+import {
+  KATEGORIE_SZKOLEN,
+  type KategoriaSzkolenia,
+  type Szkolenie,
+} from "@/lib/szkolenia/adapter";
 
 /** Audience selected on the home page. */
 export type Odbiorca = "individual" | "company";
 
-export const POTWIERDZENIA_HERO = ["Dofinansowanie do 80%", "Certyfikat ISKT", "Zajęcia z ekspertami"];
+export const POTWIERDZENIA_HERO = [
+  "Dofinansowanie do 80%",
+  "Certyfikat ISKT",
+  "Zajęcia z ekspertami",
+];
 
 /** Returns hero copy for the selected audience. */
 export function trescHero(odbiorca: Odbiorca) {
@@ -46,16 +54,56 @@ export function trescHero(odbiorca: Odbiorca) {
 export type Krok = { nr: string; ikona: LucideIcon; tytul: string; opis: string };
 
 const KROKI_INDYWIDUALNE: Krok[] = [
-  { nr: "01", ikona: Search, tytul: "Wybierz szkolenie", opis: "Przeglądaj katalog i wybierz temat dopasowany do Twoich celów." },
-  { nr: "02", ikona: ClipboardList, tytul: "Zapisz się online", opis: "Wypełnij formularz i zarezerwuj miejsce w kilka minut." },
-  { nr: "03", ikona: BookOpen, tytul: "Ucz się z ekspertem", opis: "Praktyczne zajęcia online lub stacjonarnie, z materiałami i nagraniami." },
-  { nr: "04", ikona: Award, tytul: "Odbierz certyfikat", opis: "Potwierdź nowe kompetencje uznawanym certyfikatem ISKT." },
+  {
+    nr: "01",
+    ikona: Search,
+    tytul: "Wybierz szkolenie",
+    opis: "Przeglądaj katalog i wybierz temat dopasowany do Twoich celów.",
+  },
+  {
+    nr: "02",
+    ikona: ClipboardList,
+    tytul: "Zapisz się online",
+    opis: "Wypełnij formularz i zarezerwuj miejsce w kilka minut.",
+  },
+  {
+    nr: "03",
+    ikona: BookOpen,
+    tytul: "Ucz się z ekspertem",
+    opis: "Praktyczne zajęcia online lub stacjonarnie, z materiałami i nagraniami.",
+  },
+  {
+    nr: "04",
+    ikona: Award,
+    tytul: "Odbierz certyfikat",
+    opis: "Potwierdź nowe kompetencje uznawanym certyfikatem ISKT.",
+  },
 ];
 const KROKI_FIRMOWE: Krok[] = [
-  { nr: "01", ikona: Target, tytul: "Analiza potrzeb", opis: "Bezpłatna konsultacja i audyt kompetencji Twojego zespołu." },
-  { nr: "02", ikona: Layers, tytul: "Program na miarę", opis: "Projektujemy zakres, format i harmonogram pod cele biznesowe." },
-  { nr: "03", ikona: Handshake, tytul: "Realizacja + dofinansowanie", opis: "Szkolenie zamknięte u Ciebie lub online, z rozliczeniem KFS/BUR." },
-  { nr: "04", ikona: TrendingUp, tytul: "Raport efektów", opis: "Mierzymy rezultaty i rekomendujemy dalsze ścieżki rozwoju." },
+  {
+    nr: "01",
+    ikona: Target,
+    tytul: "Analiza potrzeb",
+    opis: "Bezpłatna konsultacja i audyt kompetencji Twojego zespołu.",
+  },
+  {
+    nr: "02",
+    ikona: Layers,
+    tytul: "Program na miarę",
+    opis: "Projektujemy zakres, format i harmonogram pod cele biznesowe.",
+  },
+  {
+    nr: "03",
+    ikona: Handshake,
+    tytul: "Realizacja + dofinansowanie",
+    opis: "Szkolenie zamknięte u Ciebie lub online, z rozliczeniem KFS/BUR.",
+  },
+  {
+    nr: "04",
+    ikona: TrendingUp,
+    tytul: "Raport efektów",
+    opis: "Mierzymy rezultaty i rekomendujemy dalsze ścieżki rozwoju.",
+  },
 ];
 
 /** Returns process heading and steps for the selected audience. */
@@ -103,18 +151,48 @@ export type KartaKategorii = {
 };
 const [AI, ESG, ANG, SOFT, BR] = KATEGORIE_SZKOLEN;
 export const KATEGORIE_KOMPETENCJI: KartaKategorii[] = [
-  { kategoria: AI, ikona: Cpu, tytul: "Sztuczna inteligencja", opis: "AI w praktyce: narzędzia generatywne, automatyzacja i agenci dla biznesu." },
-  { kategoria: ESG, ikona: Leaf, tytul: "ESG i zrównoważony rozwój", opis: "Raportowanie CSRD, ślad węglowy i strategia zrównoważonego rozwoju." },
-  { kategoria: ANG, ikona: Languages, tytul: "Język angielski", opis: "Angielski biznesowy i techniczny — od poziomu B1 po zaawansowany." },
-  { kategoria: SOFT, ikona: CodeXml, tytul: "Rozwój oprogramowania", opis: "Programowanie, chmura i technologie — od podstaw do wdrożeń." },
-  { kategoria: BR, ikona: FlaskConical, tytul: "Projekty B+R", opis: "Badania, rozwój i granty — komercjalizacja innowacji w Twojej firmie." },
+  {
+    kategoria: AI,
+    ikona: Cpu,
+    tytul: "Sztuczna inteligencja",
+    opis: "AI w praktyce: narzędzia generatywne, automatyzacja i agenci dla biznesu.",
+  },
+  {
+    kategoria: ESG,
+    ikona: Leaf,
+    tytul: "ESG i zrównoważony rozwój",
+    opis: "Raportowanie CSRD, ślad węglowy i strategia zrównoważonego rozwoju.",
+  },
+  {
+    kategoria: ANG,
+    ikona: Languages,
+    tytul: "Język angielski",
+    opis: "Angielski biznesowy i techniczny — od poziomu B1 po zaawansowany.",
+  },
+  {
+    kategoria: SOFT,
+    ikona: CodeXml,
+    tytul: "Rozwój oprogramowania",
+    opis: "Programowanie, chmura i technologie — od podstaw do wdrożeń.",
+  },
+  {
+    kategoria: BR,
+    ikona: FlaskConical,
+    tytul: "Projekty B+R",
+    opis: "Badania, rozwój i granty — komercjalizacja innowacji w Twojej firmie.",
+  },
 ];
 
 export const SCIEZKI = {
   indywidualna: {
     tytul: "Dla osób indywidualnych",
     opis: "Zdobądź certyfikat i realne umiejętności. Elastyczne terminy, dostęp online, mentoring.",
-    punkty: ["Dofinansowanie BUR do 80%", "Certyfikat ukończenia", "Nagrania i materiały", "Płatność w ratach"],
+    punkty: [
+      "Dofinansowanie BUR do 80%",
+      "Certyfikat ukończenia",
+      "Nagrania i materiały",
+      "Płatność w ratach",
+    ],
     cta: "Szkolenia otwarte",
   },
   firmowa: {
@@ -126,9 +204,24 @@ export const SCIEZKI = {
 };
 
 export const ZRODLA_DOFINANSOWANIA = [
-  { skrot: "KFS", ikona: Banknote, tytul: "Krajowy Fundusz Szkoleniowy", opis: "Nawet do 100% kosztów dla mikroprzedsiębiorstw i 80% dla pozostałych firm." },
-  { skrot: "BUR", ikona: Wallet, tytul: "Baza Usług Rozwojowych", opis: "Dofinansowanie z funduszy unijnych — do 80% wartości usługi rozwojowej." },
-  { skrot: "EFS", ikona: ShieldCheck, tytul: "Fundusze Europejskie", opis: "Projekty regionalne finansujące rozwój kompetencji pracowników." },
+  {
+    skrot: "KFS",
+    ikona: Banknote,
+    tytul: "Krajowy Fundusz Szkoleniowy",
+    opis: "Nawet do 100% kosztów dla mikroprzedsiębiorstw i 80% dla pozostałych firm.",
+  },
+  {
+    skrot: "BUR",
+    ikona: Wallet,
+    tytul: "Baza Usług Rozwojowych",
+    opis: "Dofinansowanie z funduszy unijnych — do 80% wartości usługi rozwojowej.",
+  },
+  {
+    skrot: "EFS",
+    ikona: ShieldCheck,
+    tytul: "Fundusze Europejskie",
+    opis: "Projekty regionalne finansujące rozwój kompetencji pracowników.",
+  },
 ];
 
 export const OPCJE_OBSZARU = [

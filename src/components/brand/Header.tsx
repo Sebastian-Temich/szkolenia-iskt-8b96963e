@@ -50,7 +50,7 @@ export function Header() {
             <Link
               key={label}
               to={to}
-              hash={hash}
+              {...(hash ? { hash } : {})}
               className="whitespace-nowrap text-[length:calc(var(--text-sm)+var(--border-width)/2)] font-medium text-[var(--ink-800)] hover:text-primary"
             >
               {label}
@@ -85,7 +85,7 @@ export function Header() {
               <Link
                 key={label}
                 to={to}
-              hash={hash}
+                {...(hash ? { hash } : {})}
                 onClick={() => setIsOpen(false)}
                 className="text-sm font-medium text-foreground hover:text-primary"
               >
