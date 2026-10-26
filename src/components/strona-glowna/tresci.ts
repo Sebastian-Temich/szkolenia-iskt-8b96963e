@@ -132,7 +132,7 @@ export function trescKontaktu(odbiorca: Odbiorca) {
 
 export const POLECANE_ID = ["genai", "esg", "fullstack", "eng-b2"] as const;
 
-/** Picks featured trainings in POLECANE_ID order, skipping missing ids. */
+/** Wybiera polecane szkolenia w kolejności POLECANE_ID, pomijając brakujące identyfikatory. */
 export function wybierzPolecane(lista: Szkolenie[]): Szkolenie[] {
   return POLECANE_ID.map((id) => lista.find((s) => s.id === id)).filter(
     (s): s is Szkolenie => s !== undefined,
