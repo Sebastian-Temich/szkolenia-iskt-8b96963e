@@ -57,7 +57,7 @@ describe("Strona główna", () => {
   });
   // Asercja na brak konkretnego napisu nie mogła upaść, bo tego napisu nigdy w kodzie nie było.
   // Zamiast napisu sprawdzamy mechanizm: próba wysłania nie zmienia widoku o ani jeden węzeł.
-  // Pełne pokrycie zachowania formularza dojdzie w części 2 tego zadania.
+  // Pełne pokrycie zachowania formularza jest w formularz-kontaktu.test.tsx.
   it("formularz jest nieaktywny i nie renderuje żadnego stanu sukcesu", () => {
     const { container } = render(
       <SekcjaKontakt odbiorca="individual" onZmiana={() => undefined} />,
