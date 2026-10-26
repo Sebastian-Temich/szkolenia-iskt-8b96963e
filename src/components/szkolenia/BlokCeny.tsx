@@ -1,4 +1,9 @@
-import { etykietaCenyGlownej, etykietaCenyPelnej, NOTA_CENY, TEKST_DOFINANSOWANIA } from "@/lib/szkolenia/adapter";
+import {
+  etykietaCenyGlownej,
+  etykietaCenyPelnej,
+  NOTA_CENY,
+  TEKST_DOFINANSOWANIA,
+} from "@/lib/szkolenia/adapter";
 
 /** Renders the same funding calculation in catalog and detail views. */
 export function BlokCeny({ price, wariant }: { price: number; wariant: "karta" | "szczegol" }) {
@@ -7,7 +12,9 @@ export function BlokCeny({ price, wariant }: { price: number; wariant: "karta" |
     <div className="space-y-2">
       {detail && <p className="text-sm font-medium text-muted-foreground">Cena szkolenia</p>}
       <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-        <span className={`${detail ? "text-3xl" : "text-lg"} whitespace-nowrap font-extrabold tracking-[var(--ls-tighter)] text-primary`}>
+        <span
+          className={`${detail ? "text-3xl" : "text-lg"} whitespace-nowrap font-extrabold tracking-[var(--ls-tighter)] text-primary`}
+        >
           {etykietaCenyGlownej(price)}
         </span>
         <span className="text-xs font-medium text-primary">{TEKST_DOFINANSOWANIA}</span>

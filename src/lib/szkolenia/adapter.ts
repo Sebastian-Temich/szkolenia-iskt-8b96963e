@@ -5,13 +5,23 @@ import type { FiltrSzkolen, Szkolenie } from "./typy";
 export { KATEGORIE_SZKOLEN } from "./typy";
 export type { FiltrSzkolen, Szkolenie, KategoriaSzkolenia } from "./typy";
 export { filtrujSzkolenia, opiszLiczbeWynikow } from "./filtrowanie";
-export { UDZIAL_WLASNY, TEKST_DOFINANSOWANIA, NOTA_CENY, formatujKwote, cenaZDofinansowaniem, etykietaCenyGlownej, etykietaCenyPelnej } from "./cena";
+export {
+  UDZIAL_WLASNY,
+  TEKST_DOFINANSOWANIA,
+  NOTA_CENY,
+  formatujKwote,
+  cenaZDofinansowaniem,
+  etykietaCenyGlownej,
+  etykietaCenyPelnej,
+} from "./cena";
 
 // Opóźnienia i demo należą wyłącznie do warstwy mock i znikają przy jej podmianie.
 const OPOZNIENIE_MOCK = 400;
 const OPOZNIENIE_DEMO = 8000;
 async function waitForMock(demo?: FiltrSzkolen["demo"]): Promise<void> {
-  await new Promise<void>((resolve) => setTimeout(resolve, demo === "ladowanie" ? OPOZNIENIE_DEMO : OPOZNIENIE_MOCK));
+  await new Promise<void>((resolve) =>
+    setTimeout(resolve, demo === "ladowanie" ? OPOZNIENIE_DEMO : OPOZNIENIE_MOCK),
+  );
 }
 /** Pobiera niezależną kopię przefiltrowanej oferty. */
 export async function listSzkolenia(filtr: FiltrSzkolen = {}): Promise<Szkolenie[]> {
@@ -20,7 +30,10 @@ export async function listSzkolenia(filtr: FiltrSzkolen = {}): Promise<Szkolenie
   return structuredClone(filtrujSzkolenia(SZKOLENIA_MOCK, filtr));
 }
 /** Pobiera niezależną kopię szkolenia lub null. */
-export async function getSzkolenie(id: string, opcje?: { demo?: FiltrSzkolen["demo"] }): Promise<Szkolenie | null> {
+export async function getSzkolenie(
+  id: string,
+  opcje?: { demo?: FiltrSzkolen["demo"] },
+): Promise<Szkolenie | null> {
   await waitForMock(opcje?.demo);
   if (opcje?.demo === "blad") throw new Error("Nie udało się pobrać szkolenia");
   const item = SZKOLENIA_MOCK.find((item) => item.id === id);
