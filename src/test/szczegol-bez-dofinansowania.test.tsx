@@ -34,7 +34,7 @@ describe("Szczegół szkolenia bez dofinansowania", () => {
   it("zwija siatkę do jednej kolumny, zamiast zostawić pustą", async () => {
     await zamontujTrase("/szkolenia/genai");
     const program = await screen.findByRole("heading", { name: "Program szkolenia" });
-    const druga = program.closest("section") as HTMLElement;
+    const druga = program.closest("main > section") as HTMLElement;
     expect(druga).not.toBeNull();
     expect(within(druga).queryByRole("complementary", { name: "Dofinansowanie" })).toBeNull();
     // Klasy siatki to świadomy kontrakt z makietą: jedna kolumna zamiast pustej prawej.
