@@ -83,7 +83,7 @@ describe("Stan 3 z 4 — błąd pobrania", () => {
   it("katalog pokazuje komunikat po polsku bez treści wyjątku", async () => {
     stan.tryb = "blad";
     const { container } = await zamontujTrase("/szkolenia");
-    expectawait screen.findByRole("alert")).toBeInTheDocument();
+    expect(await screen.findByRole("alert")).toBeInTheDocument();
     expect(await screen.findByRole("heading", { name: "Nie udało się wczytać katalogu" })).toBeVisible();
     expect(container.textContent).not.toContain("awaria adaptera");
     expect(container.textContent).not.toContain("Error");
