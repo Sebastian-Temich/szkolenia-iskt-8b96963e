@@ -149,34 +149,43 @@ export type KartaKategorii = {
   tytul: string;
   opis: string;
 };
-const [AI, ESG, ANG, SOFT, BR] = KATEGORIE_SZKOLEN;
+/**
+ * Wiąże kartę obszaru z kategorią po identyfikatorze, nie po pozycji w KATEGORIE_SZKOLEN.
+ * Pozycyjne rozpakowanie tablicy po cichu przypisywało kartom cudze kategorie przy zmianie
+ * kolejności w typy.ts; tu zmiana kolejności jest nieszkodliwa, a literówka wywala build.
+ */
+function kategoria(nazwa: KategoriaSzkolenia): KategoriaSzkolenia {
+  const znaleziona = KATEGORIE_SZKOLEN.find((pozycja) => pozycja === nazwa);
+  if (!znaleziona) throw new Error(`Nieznana kategoria szkolenia: ${nazwa}`);
+  return znaleziona;
+}
 export const KATEGORIE_KOMPETENCJI: KartaKategorii[] = [
   {
-    kategoria: AI,
+    kategoria: kategoria("AI"),
     ikona: Cpu,
     tytul: "Sztuczna inteligencja",
     opis: "AI w praktyce: narzędzia generatywne, automatyzacja i agenci dla biznesu.",
   },
   {
-    kategoria: ESG,
+    kategoria: kategoria("ESG"),
     ikona: Leaf,
     tytul: "ESG i zrównoważony rozwój",
     opis: "Raportowanie CSRD, ślad węglowy i strategia zrównoważonego rozwoju.",
   },
   {
-    kategoria: ANG,
+    kategoria: kategoria("Angielski"),
     ikona: Languages,
     tytul: "Język angielski",
     opis: "Angielski biznesowy i techniczny — od poziomu B1 po zaawansowany.",
   },
   {
-    kategoria: SOFT,
+    kategoria: kategoria("Software"),
     ikona: CodeXml,
     tytul: "Rozwój oprogramowania",
     opis: "Programowanie, chmura i technologie — od podstaw do wdrożeń.",
   },
   {
-    kategoria: BR,
+    kategoria: kategoria("B+R"),
     ikona: FlaskConical,
     tytul: "Projekty B+R",
     opis: "Badania, rozwój i granty — komercjalizacja innowacji w Twojej firmie.",

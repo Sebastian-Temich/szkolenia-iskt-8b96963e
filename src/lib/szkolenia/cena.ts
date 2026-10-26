@@ -2,9 +2,12 @@ export const UDZIAL_WLASNY = 0.2;
 export const TEKST_DOFINANSOWANIA = "z dofinansowaniem";
 export const NOTA_CENY = "za osobę · dofinansowanie do 80%";
 
-/** Formatuje kwotę PLN z separatorem tysięcy U+202F. */
+/**
+ * Formatuje kwotę PLN z separatorem tysięcy U+202F i spacją nierozdzielającą U+00A0
+ * przed symbolem waluty, żeby kwota nie łamała się od „zł" w wąskiej karcie.
+ */
 export function formatujKwote(kwota: number): string {
-  return `${String(kwota).replace(/\B(?=(\d{3})+(?!\d))/g, "\u202F")} zł`;
+  return `${String(kwota).replace(/\B(?=(\d{3})+(?!\d))/g, "\u202F")}\u00A0zł`;
 }
 /** Wylicza zaokrąglony udział własny klienta. */
 export function cenaZDofinansowaniem(pelnaCena: number): number {

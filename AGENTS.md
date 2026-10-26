@@ -16,4 +16,5 @@
 - Keep training views frontend-only; all training data, types, filters and price helpers are consumed through src/lib/szkolenia/adapter.ts, the only module allowed to import mock-dane.ts, so replacing the data source does not require view edits.
 - Keep catalog URL state in the file route loader dependencies and debounce search replacements, so filtering is shareable without cluttering browser history.
 - Keep the training icon mapping, price block and metric rendering shared across catalog and detail views, so their representations stay consistent.
+- Keep catalog return-filter parsing and default omission in the shared powrot helper, so catalog cards and detail breadcrumbs preserve the same URL state.
 - Keep the Vite pre-load repair for the accidental comment terminator in the supplied CSS prose; repair compiler input only so the owner's stylesheet remains byte-for-byte intact.

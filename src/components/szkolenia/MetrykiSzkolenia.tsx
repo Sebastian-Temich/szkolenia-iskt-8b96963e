@@ -27,7 +27,7 @@ export function MetrykiSzkolenia({
           <dt
             className={
               detail
-                ? "flex items-center gap-2 text-[13px] text-[var(--text-muted)]"
+                ? "flex items-center gap-2 text-[13px] text-[var(--text-secondary)]"
                 : "flex items-center"
             }
           >

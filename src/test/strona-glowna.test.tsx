@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { SekcjaKontakt } from "@/components/strona-glowna/SekcjaKontakt";
 import {
@@ -55,12 +55,20 @@ describe("Strona główna", () => {
     expect(KATEGORIE_KOMPETENCJI).toHaveLength(5);
     for (const k of KATEGORIE_KOMPETENCJI) expect(KATEGORIE_SZKOLEN).toContain(k.kategoria);
   });
-  it("formularz jest nieaktywny i bez komunikatu sukcesu", () => {
-    render(<SekcjaKontakt odbiorca="individual" onZmiana={() => undefined} />);
+  // Asercja na brak konkretnego napisu nie mogła upaść, bo tego napisu nigdy w kodzie nie było.
+  // Zamiast napisu sprawdzamy mechanizm: próba wysłania nie zmienia widoku o ani jeden węzeł.
+  // Pełne pokrycie zachowania formularza dojdzie w części 2 tego zadania.
+  it("formularz jest nieaktywny i nie renderuje żadnego stanu sukcesu", () => {
+    const { container } = render(
+      <SekcjaKontakt odbiorca="individual" onZmiana={() => undefined} />,
+    );
     expect(screen.getByRole("button", { name: "Wyślij zgłoszenie" })).toBeDisabled();
     expect(
       screen.getByText("Formularz zostanie podłączony w kolejnym etapie."),
     ).toBeInTheDocument();
-    expect(screen.queryByText("Dziękujemy za zgłoszenie!")).toBeNull();
+    const przed = container.innerHTML;
+    fireEvent.submit(container.querySelector("form") as HTMLFormElement);
+    expect(container.innerHTML).toBe(przed);
+    expect(container.querySelector('[role="status"]')).toBeNull();
   });
 });

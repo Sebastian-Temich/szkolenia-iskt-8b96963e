@@ -8,7 +8,6 @@ type NavItem = { label: string; to: "/" | "/szkolenia"; hash?: string };
 const NAV_ITEMS: NavItem[] = [
   { label: "Obszary", to: "/", hash: "obszary" },
   { label: "Katalog", to: "/szkolenia" },
-  { label: "Nasi Trenerzy", to: "/" },
   { label: "Dofinansowania", to: "/", hash: "dofinansowania" },
   { label: "Kontakt", to: "/", hash: "kontakt" },
 ];
