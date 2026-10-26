@@ -10,3 +10,6 @@
 - [x] Dodać szczegół szkolenia, terminy i stany ładowania, błędu i 404.
 - [x] Podłączyć link Katalog w nagłówku; zachować pozostałe fundamenty.
 - [x] Dodać i uruchomić testy; sprawdzić typy automatycznie, lint i przepływ na komputerze oraz telefonie.
+# Strona główna (E01/B2)
+- [x] Sekcje strony głównej, przełącznik odbiorcy, polecane z adaptera, formularz bez wysyłki.
+- [x] Zakotwiczenia w nagłówku i KartaZapisu; testy treści i formularza.
