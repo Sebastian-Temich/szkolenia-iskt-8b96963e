@@ -72,7 +72,7 @@ describe("Stan 2 z 4 — pusty wynik", () => {
   it("pokazuje stan pusty z wyjściem, a nie pustą siatkę", async () => {
     stan.pusto = true;
     const { container } = await zamontujTrase("/szkolenia");
-    expect((await screen.findByRole("status")).toHaveTextContent("0 szkoleń");
+    expect(await screen.findByRole("status")).toHaveTextContent("0 szkoleń");
     expect(screen.getByRole("heading", { name: "Brak szkoleń dla tych kryteriów" })).toBeVisible();
     expect(screen.getByRole("button", { name: "Wyczyść filtry" })).toBeEnabled();
     expect(container.querySelectorAll('a[href^="/szkolenia/"]')).toHaveLength(0);
@@ -83,8 +83,8 @@ describe("Stan 3 z 4 — błąd pobrania", () => {
   it("katalog pokazuje komunikat po polsku bez treści wyjątku", async () => {
     stan.tryb = "blad";
     const { container } = await zamontujTrase("/szkolenia");
-    expect(await screen.findByRole("alert")).toBeInTheDocument();
-    expect((await screen.findByRole("heading", { name: "Nie udało się wczytać katalogu" })).toBeVisible();
+    expectawait screen.findByRole("alert")).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Nie udało się wczytać katalogu" })).toBeVisible();
     expect(container.textContent).not.toContain("awaria adaptera");
     expect(container.textContent).not.toContain("Error");
   });
@@ -109,7 +109,7 @@ describe("Stan 3 z 4 — błąd pobrania", () => {
     const user = userEvent.setup();
     stan.tryb = "blad";
     await zamontujTrase("/szkolenia/genai");
-    expect((await screen.findByRole("heading", { name: "Nie udało się wczytać szkolenia" })).toBeVisible();
+    expect(await screen.findByRole("heading", { name: "Nie udało się wczytać szkolenia" })).toBeVisible();
     const przed = stan.wywolaniaSzczegolu;
 
     stan.tryb = "ok";
@@ -128,7 +128,7 @@ describe("Stan 4 z 4 — nieznane szkolenie", () => {
   it("loader rzuca notFound, a widok daje drogę powrotu do katalogu", async () => {
     stan.nieznane = true;
     await zamontujTrase("/szkolenia/nie-istnieje");
-    expect((await screen.findByRole("heading", { name: "Nie znaleźliśmy tego szkolenia" })).toBeVisible();
+    expect(await screen.findByRole("heading", { name: "Nie znaleźliśmy tego szkolenia" })).toBeVisible();
     const powrot = screen.getByRole("link", { name: /Wróć do katalogu/ });
     expect(powrot.getAttribute("href")).toBe("/szkolenia");
   });
