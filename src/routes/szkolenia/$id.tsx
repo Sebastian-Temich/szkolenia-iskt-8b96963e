@@ -5,7 +5,9 @@ import { SzczegolSzkielet } from "@/components/szkolenia/Szkielety";
 import { BladSzkolen, NieZnalezionoSzkolenia } from "@/components/szkolenia/StanySzkolen";
 
 export const Route = createFileRoute("/szkolenia/$id")({
-  validateSearch: (search: { demo?: unknown } & SearchSchemaInput): { demo: FiltrSzkolen["demo"] } => ({
+  validateSearch: (
+    search: { demo?: unknown } & SearchSchemaInput,
+  ): { demo: FiltrSzkolen["demo"] } => ({
     demo: search["demo"] === "ladowanie" || search["demo"] === "blad" ? search["demo"] : undefined,
   }),
   loaderDeps: ({ search }) => ({ demo: search.demo }),
