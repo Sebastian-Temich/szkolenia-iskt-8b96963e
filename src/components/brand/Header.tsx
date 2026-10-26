@@ -4,7 +4,14 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "./Logo";
 
-const NAV_ITEMS = ["Obszary", "Katalog", "Nasi Trenerzy", "Dofinansowania", "Kontakt"];
+type NavItem = { label: string; to: "/" | "/szkolenia"; hash?: string };
+const NAV_ITEMS: NavItem[] = [
+  { label: "Obszary", to: "/", hash: "obszary" },
+  { label: "Katalog", to: "/szkolenia" },
+  { label: "Nasi Trenerzy", to: "/" },
+  { label: "Dofinansowania", to: "/", hash: "dofinansowania" },
+  { label: "Kontakt", to: "/", hash: "kontakt" },
+];
 const CTA_CLASS =
   "h-[calc(var(--space-10)+var(--space-1))] rounded-pill bg-primary px-[var(--space-5)] text-[length:calc(var(--text-base)-var(--border-width))] font-semibold text-primary-foreground shadow-brand transition-colors duration-[var(--dur-fast)] ease-standard hover:bg-[var(--green-800)]";
 
@@ -39,17 +46,18 @@ export function Header() {
           </span>
         </Link>
         <div className="hidden items-center gap-[var(--space-5)] xl:flex">
-          {NAV_ITEMS.map((label) => (
+          {NAV_ITEMS.map(({ label, to, hash }) => (
             <Link
               key={label}
-              to={label === "Katalog" ? "/szkolenia" : "/"}
+              to={to}
+              hash={hash}
               className="whitespace-nowrap text-[length:calc(var(--text-sm)+var(--border-width)/2)] font-medium text-[var(--ink-800)] hover:text-primary"
             >
               {label}
             </Link>
           ))}
           <Button asChild className={CTA_CLASS}>
-            <Link to="/">
+            <Link to="/" hash="kontakt">
               Zapisz się <ArrowRight aria-hidden="true" />
             </Link>
           </Button>
@@ -73,10 +81,11 @@ export function Header() {
           className="border-t border-border bg-background px-[var(--container-pad)] py-[var(--space-6)] xl:hidden"
         >
           <div className="mx-auto flex max-w-[var(--container-max)] flex-col items-start gap-[var(--space-5)]">
-            {NAV_ITEMS.map((label) => (
+            {NAV_ITEMS.map(({ label, to, hash }) => (
               <Link
                 key={label}
-                to={label === "Katalog" ? "/szkolenia" : "/"}
+                to={to}
+              hash={hash}
                 onClick={() => setIsOpen(false)}
                 className="text-sm font-medium text-foreground hover:text-primary"
               >
@@ -84,7 +93,7 @@ export function Header() {
               </Link>
             ))}
             <Button asChild className={CTA_CLASS}>
-              <Link to="/" onClick={() => setIsOpen(false)}>
+              <Link to="/" hash="kontakt" onClick={() => setIsOpen(false)}>
                 Zapisz się <ArrowRight aria-hidden="true" />
               </Link>
             </Button>
