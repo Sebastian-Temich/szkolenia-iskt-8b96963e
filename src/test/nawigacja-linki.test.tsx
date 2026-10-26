@@ -46,9 +46,7 @@ describe("Nawigacja główna", () => {
     const { container } = await zamontujTrase("/szkolenia");
     const nawigacja = container.querySelector("nav[aria-label='Nawigacja główna']");
     expect(nawigacja).not.toBeNull();
-    expect((nawigacja as HTMLElement).querySelectorAll("a")).toHaveLength(
-      CELE_NAGLOWKA.length + 1,
-    );
+    expect((nawigacja as HTMLElement).querySelectorAll("a")).toHaveLength(CELE_NAGLOWKA.length + 1);
     expect(container.textContent).not.toContain("Nasi Trenerzy");
     expect(screen.queryByRole("link", { name: /Trenerzy/ })).toBeNull();
   });
