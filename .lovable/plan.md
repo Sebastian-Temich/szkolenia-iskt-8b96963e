@@ -1,20 +1,23 @@
-# Fundamenty wizualne ISKT Greenovation
+# Katalog i szczegół szkolenia ISKT
 
 ## Zakres
-- Zastąpić cały design system dostarczonym CSS, zachowując wartości HEX, tokeny i kolejność bloków.
-- Załadować Inter i JetBrains Mono przez nagłówek dokumentu; przetłumaczyć komunikaty błędów.
-- Dodać tymczasowy wordmark ISKT (nie znak marki), wspólny przyklejony biały nagłówek z menu mobilnym i stopkę zgodne z najnowszymi treściami.
-- Zastąpić przykładową ofertę oszczędną stroną główną z zatwierdzonym hasłem i trzema wyróżnikami.
-- Dodać wyłącznie stronę `/fundamenty` z paletą, typografią, promieniami, cieniami i gradientami.
+- Dodać `/szkolenia` z dziewięcioma zatwierdzonymi szkoleniami, filtrami kategorii, wyszukiwaniem i poprawną odmianą liczby wyników.
+- Dodać `/szkolenia/$id` z programem, efektami nauki, odbiorcami, ceną i dokładnie podanymi terminami.
+- Zachować teksty i ceny bez zmian. Pokazywać cenę z dofinansowaniem oraz pełną cenę za pomocą wspólnego bloku ceny.
+- Uwzględnić szkielety ładowania, pusty wynik, błąd z ponowieniem i 404; oba przyciski szczegółu kierują tymczasowo do `/`.
+- Zmienić wyłącznie odnośnik „Katalog” w nagłówku. Strona główna, stopka, logo, wspólny układ i CSS pozostają nietknięte.
 
 ## Szczegóły techniczne
-- Zachować QueryClientProvider, reportLovableError i Outlet; wspólny układ umieścić w istniejącej trasie głównej.
-- Linki przyszłych działów kierować do `/`; nie tworzyć katalogu ani tras szkoleń.
-- Stosować istniejące komponenty shadcn/ui bez zmian w ich plikach; nie instalować paczek.
-- Wektor logo nie jest dostępny: nagłówek i stopka użyją tymczasowego tekstu ISKT w kolorze marki, bez grafiki zastępczej.
-- Zachować dostarczony CSS dosłownie; w elementach strony unikać nakładających się napisów i dekoracyjnych rozmytych kul.
+- Warstwa `src/lib/szkolenia/` obejmuje pięć wskazanych plików: `typy`, `mock-dane`, `filtrowanie`, `adapter`, `cena` (opis mówi o czterech, ale wymienia pięć).
+- Tylko adapter importuje mocki; udostępnia widokom również typy, kategorie oraz czyste pomocnicze funkcje filtrowania i ceny, aby zachować jeden punkt podmiany.
+- Stan filtrów przechowywać w URL; wyszukiwanie aktualizować po 300 ms bez dopisywania historii. Nie dodawać zależności; walidację parametrów wykonać bez dodatkowego adaptera Zod.
+- Dane ładować w loaderach tras; demonstracyjne opóźnienia i błędy pozostają wyłącznie w warstwie mock.
+- Stosować istniejące shadcn/ui, lucide-react i tokeny marki. Każda nowa trasa otrzyma własny tytuł i opis oraz metadane udostępniania.
+- Dodać wymagany skrypt `typecheck: tsc --noEmit`; kontrolę typów wykonuje automatyczna weryfikacja projektu, bez ręcznego uruchamiania kompilatora.
+- Bez bazy, klienta usług, zmiennych środowiskowych, formularzy, publikacji i nowych paczek.
 
 ## Weryfikacja
-- Uruchomić istniejące testy bez ich zmiany oraz `bun run lint`; sprawdzić błędy w zmienionych plikach.
-- Sprawdzić obie strony, menu mobilne, nagłówek po przewinięciu i wyświetlanie tokenów na komputerze i telefonie.
-- Potwierdzić wynik automatycznej kompilacji. Bez publikacji i bez włączania bazy danych.
+- Dodać szybkie testy danych z fałszywymi zegarami: ceny, separator U+202F, filtrowanie, odmiana, integralność dziewięciu pozycji, pobranie i terminy.
+- Uruchomić `bun run test` i `bun run lint`; sprawdzić wynik automatycznej kontroli typów i kompilacji.
+- Sprawdzić katalog → filtr → wyszukiwanie → szczegół → powrót oraz stany puste, błędne, ładowanie i 404 na komputerze i telefonie.
+- Podać utworzone i zmienione pliki oraz rzeczywiste wyniki poleceń; nie przedstawiać automatycznej kontroli jako ręcznego uruchomienia `bun run typecheck`.

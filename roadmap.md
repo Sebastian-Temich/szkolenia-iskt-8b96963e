@@ -3,3 +3,10 @@
 - [x] Dodać tymczasowy wordmark oraz wspólny nagłówek i stopkę w components/brand.
 - [x] Zastąpić ofertę placeholderem i dodać /fundamenty.
 - [x] Sprawdzić istniejące testy, lint oraz obie strony na komputerze i telefonie; bez zmian testów, paczek, bazy i publikacji.
+
+# Katalog i szczegół szkolenia
+- [ ] Zbudować izolowaną warstwę danych z zatwierdzoną ofertą i cenami.
+- [ ] Dodać katalog, filtry URL i stany ładowania, pustego wyniku i błędu.
+- [ ] Dodać szczegół szkolenia, terminy i stany ładowania, błędu i 404.
+- [ ] Podłączyć link Katalog w nagłówku; zachować pozostałe fundamenty.
+- [ ] Dodać i uruchomić testy; sprawdzić typy, lint i przepływ na komputerze oraz telefonie.
