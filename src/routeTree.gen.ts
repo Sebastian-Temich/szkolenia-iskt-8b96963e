@@ -11,8 +11,16 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FundamentyRouteImport } from './routes/fundamenty'
+import { Route as PanelRouteImport } from './routes/panel'
+import { Route as PanelIndexRouteImport } from './routes/panel/index'
 import { Route as SzkoleniaIndexRouteImport } from './routes/szkolenia/index'
 import { Route as SzkoleniaIdRouteImport } from './routes/szkolenia/$id'
+import { Route as PanelSzkoleniaIndexRouteImport } from './routes/panel/szkolenia/index'
+import { Route as PanelSzkoleniaIdRouteImport } from './routes/panel/szkolenia/$id'
+import { Route as PanelSzkoleniaNoweRouteImport } from './routes/panel/szkolenia/nowe'
+import { Route as PanelTrenerzyIndexRouteImport } from './routes/panel/trenerzy/index'
+import { Route as PanelTrenerzyIdRouteImport } from './routes/panel/trenerzy/$id'
+import { Route as PanelTrenerzyNowyRouteImport } from './routes/panel/trenerzy/nowy'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -24,6 +32,16 @@ const FundamentyRoute = FundamentyRouteImport.update({
   path: '/fundamenty',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PanelRoute = PanelRouteImport.update({
+  id: '/panel',
+  path: '/panel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PanelIndexRoute = PanelIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PanelRoute,
+} as any)
 const SzkoleniaIndexRoute = SzkoleniaIndexRouteImport.update({
   id: '/szkolenia/',
   path: '/szkolenia/',
@@ -34,37 +52,127 @@ const SzkoleniaIdRoute = SzkoleniaIdRouteImport.update({
   path: '/szkolenia/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PanelSzkoleniaIndexRoute = PanelSzkoleniaIndexRouteImport.update({
+  id: '/szkolenia/',
+  path: '/szkolenia/',
+  getParentRoute: () => PanelRoute,
+} as any)
+const PanelSzkoleniaIdRoute = PanelSzkoleniaIdRouteImport.update({
+  id: '/szkolenia/$id',
+  path: '/szkolenia/$id',
+  getParentRoute: () => PanelRoute,
+} as any)
+const PanelSzkoleniaNoweRoute = PanelSzkoleniaNoweRouteImport.update({
+  id: '/szkolenia/nowe',
+  path: '/szkolenia/nowe',
+  getParentRoute: () => PanelRoute,
+} as any)
+const PanelTrenerzyIndexRoute = PanelTrenerzyIndexRouteImport.update({
+  id: '/trenerzy/',
+  path: '/trenerzy/',
+  getParentRoute: () => PanelRoute,
+} as any)
+const PanelTrenerzyIdRoute = PanelTrenerzyIdRouteImport.update({
+  id: '/trenerzy/$id',
+  path: '/trenerzy/$id',
+  getParentRoute: () => PanelRoute,
+} as any)
+const PanelTrenerzyNowyRoute = PanelTrenerzyNowyRouteImport.update({
+  id: '/trenerzy/nowy',
+  path: '/trenerzy/nowy',
+  getParentRoute: () => PanelRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/fundamenty': typeof FundamentyRoute
+  '/panel': typeof PanelRouteWithChildren
   '/szkolenia/$id': typeof SzkoleniaIdRoute
+  '/panel/': typeof PanelIndexRoute
   '/szkolenia/': typeof SzkoleniaIndexRoute
+  '/panel/szkolenia/$id': typeof PanelSzkoleniaIdRoute
+  '/panel/szkolenia/nowe': typeof PanelSzkoleniaNoweRoute
+  '/panel/trenerzy/$id': typeof PanelTrenerzyIdRoute
+  '/panel/trenerzy/nowy': typeof PanelTrenerzyNowyRoute
+  '/panel/szkolenia/': typeof PanelSzkoleniaIndexRoute
+  '/panel/trenerzy/': typeof PanelTrenerzyIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/fundamenty': typeof FundamentyRoute
   '/szkolenia/$id': typeof SzkoleniaIdRoute
+  '/panel': typeof PanelIndexRoute
   '/szkolenia': typeof SzkoleniaIndexRoute
+  '/panel/szkolenia/$id': typeof PanelSzkoleniaIdRoute
+  '/panel/szkolenia/nowe': typeof PanelSzkoleniaNoweRoute
+  '/panel/trenerzy/$id': typeof PanelTrenerzyIdRoute
+  '/panel/trenerzy/nowy': typeof PanelTrenerzyNowyRoute
+  '/panel/szkolenia': typeof PanelSzkoleniaIndexRoute
+  '/panel/trenerzy': typeof PanelTrenerzyIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/fundamenty': typeof FundamentyRoute
+  '/panel': typeof PanelRouteWithChildren
   '/szkolenia/$id': typeof SzkoleniaIdRoute
+  '/panel/': typeof PanelIndexRoute
   '/szkolenia/': typeof SzkoleniaIndexRoute
+  '/panel/szkolenia/$id': typeof PanelSzkoleniaIdRoute
+  '/panel/szkolenia/nowe': typeof PanelSzkoleniaNoweRoute
+  '/panel/trenerzy/$id': typeof PanelTrenerzyIdRoute
+  '/panel/trenerzy/nowy': typeof PanelTrenerzyNowyRoute
+  '/panel/szkolenia/': typeof PanelSzkoleniaIndexRoute
+  '/panel/trenerzy/': typeof PanelTrenerzyIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/fundamenty' | '/szkolenia/$id' | '/szkolenia/'
+  fullPaths:
+    | '/'
+    | '/fundamenty'
+    | '/panel'
+    | '/szkolenia/$id'
+    | '/panel/'
+    | '/szkolenia/'
+    | '/panel/szkolenia/$id'
+    | '/panel/szkolenia/nowe'
+    | '/panel/trenerzy/$id'
+    | '/panel/trenerzy/nowy'
+    | '/panel/szkolenia/'
+    | '/panel/trenerzy/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/fundamenty' | '/szkolenia/$id' | '/szkolenia'
-  id: '__root__' | '/' | '/fundamenty' | '/szkolenia/$id' | '/szkolenia/'
+  to:
+    | '/'
+    | '/fundamenty'
+    | '/szkolenia/$id'
+    | '/panel'
+    | '/szkolenia'
+    | '/panel/szkolenia/$id'
+    | '/panel/szkolenia/nowe'
+    | '/panel/trenerzy/$id'
+    | '/panel/trenerzy/nowy'
+    | '/panel/szkolenia'
+    | '/panel/trenerzy'
+  id:
+    | '__root__'
+    | '/'
+    | '/fundamenty'
+    | '/panel'
+    | '/szkolenia/$id'
+    | '/panel/'
+    | '/szkolenia/'
+    | '/panel/szkolenia/$id'
+    | '/panel/szkolenia/nowe'
+    | '/panel/trenerzy/$id'
+    | '/panel/trenerzy/nowy'
+    | '/panel/szkolenia/'
+    | '/panel/trenerzy/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FundamentyRoute: typeof FundamentyRoute
+  PanelRoute: typeof PanelRouteWithChildren
   SzkoleniaIdRoute: typeof SzkoleniaIdRoute
   SzkoleniaIndexRoute: typeof SzkoleniaIndexRoute
 }
@@ -85,6 +193,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FundamentyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/panel': {
+      id: '/panel'
+      path: '/panel'
+      fullPath: '/panel'
+      preLoaderRoute: typeof PanelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/panel/': {
+      id: '/panel/'
+      path: '/'
+      fullPath: '/panel/'
+      preLoaderRoute: typeof PanelIndexRouteImport
+      parentRoute: typeof PanelRoute
+    }
     '/szkolenia/': {
       id: '/szkolenia/'
       path: '/szkolenia'
@@ -99,12 +221,77 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SzkoleniaIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/panel/szkolenia/': {
+      id: '/panel/szkolenia/'
+      path: '/szkolenia'
+      fullPath: '/panel/szkolenia/'
+      preLoaderRoute: typeof PanelSzkoleniaIndexRouteImport
+      parentRoute: typeof PanelRoute
+    }
+    '/panel/szkolenia/$id': {
+      id: '/panel/szkolenia/$id'
+      path: '/szkolenia/$id'
+      fullPath: '/panel/szkolenia/$id'
+      preLoaderRoute: typeof PanelSzkoleniaIdRouteImport
+      parentRoute: typeof PanelRoute
+    }
+    '/panel/szkolenia/nowe': {
+      id: '/panel/szkolenia/nowe'
+      path: '/szkolenia/nowe'
+      fullPath: '/panel/szkolenia/nowe'
+      preLoaderRoute: typeof PanelSzkoleniaNoweRouteImport
+      parentRoute: typeof PanelRoute
+    }
+    '/panel/trenerzy/': {
+      id: '/panel/trenerzy/'
+      path: '/trenerzy'
+      fullPath: '/panel/trenerzy/'
+      preLoaderRoute: typeof PanelTrenerzyIndexRouteImport
+      parentRoute: typeof PanelRoute
+    }
+    '/panel/trenerzy/$id': {
+      id: '/panel/trenerzy/$id'
+      path: '/trenerzy/$id'
+      fullPath: '/panel/trenerzy/$id'
+      preLoaderRoute: typeof PanelTrenerzyIdRouteImport
+      parentRoute: typeof PanelRoute
+    }
+    '/panel/trenerzy/nowy': {
+      id: '/panel/trenerzy/nowy'
+      path: '/trenerzy/nowy'
+      fullPath: '/panel/trenerzy/nowy'
+      preLoaderRoute: typeof PanelTrenerzyNowyRouteImport
+      parentRoute: typeof PanelRoute
+    }
   }
 }
+
+interface PanelRouteChildren {
+  PanelIndexRoute: typeof PanelIndexRoute
+  PanelSzkoleniaIdRoute: typeof PanelSzkoleniaIdRoute
+  PanelSzkoleniaNoweRoute: typeof PanelSzkoleniaNoweRoute
+  PanelTrenerzyIdRoute: typeof PanelTrenerzyIdRoute
+  PanelTrenerzyNowyRoute: typeof PanelTrenerzyNowyRoute
+  PanelSzkoleniaIndexRoute: typeof PanelSzkoleniaIndexRoute
+  PanelTrenerzyIndexRoute: typeof PanelTrenerzyIndexRoute
+}
+
+const PanelRouteChildren: PanelRouteChildren = {
+  PanelIndexRoute: PanelIndexRoute,
+  PanelSzkoleniaIdRoute: PanelSzkoleniaIdRoute,
+  PanelSzkoleniaNoweRoute: PanelSzkoleniaNoweRoute,
+  PanelTrenerzyIdRoute: PanelTrenerzyIdRoute,
+  PanelTrenerzyNowyRoute: PanelTrenerzyNowyRoute,
+  PanelSzkoleniaIndexRoute: PanelSzkoleniaIndexRoute,
+  PanelTrenerzyIndexRoute: PanelTrenerzyIndexRoute,
+}
+
+const PanelRouteWithChildren = PanelRoute._addFileChildren(PanelRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FundamentyRoute: FundamentyRoute,
+  PanelRoute: PanelRouteWithChildren,
   SzkoleniaIdRoute: SzkoleniaIdRoute,
   SzkoleniaIndexRoute: SzkoleniaIndexRoute,
 }
