@@ -20,4 +20,4 @@
 
 # Panel redakcyjny
 - [x] Klient bazy, warstwa danych, bramka, listy, formularze, przypisania, testy.
-- [ ] Bramka jakości: prettier na plikach panelu, ostrzeżenia react-refresh, test/tsc/lint.
+- [x] Bramka jakości: prettier na plikach panelu, ostrzeżenia react-refresh, test/tsc/lint.
