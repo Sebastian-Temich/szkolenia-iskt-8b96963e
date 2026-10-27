@@ -34,36 +34,67 @@ function trafienia(fragment: string): Trafienie[] {
   );
 }
 
+function wartoscTokenu(token: string): string {
+  const arkusz = readFileSync(join(KORZEN, "styles.css"), "utf8");
+  const wartosc = arkusz.match(new RegExp(`${token}\\s*:\\s*([^;]+);`))?.[1];
+  if (!wartosc) throw new Error(`Nie znaleziono wartości tokenu ${token}.`);
+  return wartosc.replace(/\s+/g, "").toLowerCase();
+}
+
+function luminancja(kolor: string): number {
+  if (!/^#[0-9a-f]{6}$/i.test(kolor)) {
+    throw new Error(`Nieprawidłowy kolor szesnastkowy: ${kolor}.`);
+  }
+  const kanaly = (
+    [
+      [1, 0.2126],
+      [3, 0.7152],
+      [5, 0.0722],
+    ] as const
+  ).map(([poczatek, waga]) => {
+    const kanal = parseInt(kolor.slice(poczatek, poczatek + 2), 16) / 255;
+    const liniowy = kanal <= 0.04045 ? kanal / 12.92 : ((kanal + 0.055) / 1.055) ** 2.4;
+    return liniowy * waga;
+  });
+  return kanaly.reduce((suma, kanal) => suma + kanal, 0);
+}
+
+function kontrast(pierwszy: string, drugi: string): number {
+  const a = luminancja(pierwszy);
+  const b = luminancja(drugi);
+  return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+}
+
 describe("Kontrast tekstu pomocniczego", () => {
   it("nie stawia --text-muted pod żadnym tekstem", () => {
+    // Skan obejmuje także wariant placeholder:, bo placeholder:text-[var(--text-muted)] zawiera szukany fragment.
     const podTekstem = trafienia(TOKEN_ZA_SLABY).filter(
       ({ tresc }) => !tresc.includes("pointer-events-none"),
     );
     expect(podTekstem.map((t) => `${t.plik}:${t.linia}`)).toEqual([]);
   });
 
-  it("nie używa --text-muted w podpowiedzi pola, bo to też tekst", () => {
-    expect(trafienia("placeholder:text-[var(--text-muted)]")).toEqual([]);
-  });
-
   it("nośny tekst pomocniczy stoi na --text-secondary", () => {
     const pliki = new Set(trafienia(TOKEN_POPRAWNY).map((t) => t.plik));
-    for (const oczekiwany of [
-      "components/szkolenia/BlokCeny.tsx",
-      "components/szkolenia/MetrykiSzkolenia.tsx",
-      "components/brand/Footer.tsx",
-      "components/szkolenia/FiltryKatalogu.tsx",
-      "routes/szkolenia/index.tsx",
-    ]) {
-      expect([...pliki]).toContain(oczekiwany);
-    }
+    // Świadomie nie przypinamy tożsamości plików: przeniesienie tekstu pomocniczego nie zmienia kontrastu, a liczba trzyma podłogę pod naprawą D9.
+    expect(pliki.size).toBeGreaterThanOrEqual(5);
   });
 
   it("nie zmienia wartości tokenów marki w arkuszu", () => {
-    const arkusz = readFileSync(join(KORZEN, "styles.css"), "utf8");
-    expect(arkusz).toContain("--neutral-500: #7E857A;");
-    expect(arkusz).toContain("--neutral-600: #5B6157;");
-    expect(arkusz).toContain("--text-muted: var(--neutral-500);");
-    expect(arkusz).toContain("--text-secondary: var(--neutral-600);");
+    expect(wartoscTokenu("--neutral-500")).toBe("#7e857a");
+    expect(wartoscTokenu("--neutral-600")).toBe("#5b6157");
+    expect(wartoscTokenu("--text-muted")).toBe("var(--neutral-500)");
+    expect(wartoscTokenu("--text-secondary")).toBe("var(--neutral-600)");
+  });
+
+  it("liczy kontrast WCAG 2.1 uzasadniający regułę D9", () => {
+    // To powód D9, nie jej powtórzenie: gdy właściciel pociemni token do poziomu AA, test to ujawni i całą regułę będzie można wycofać.
+    // WCAG 2.1: luminancja relatywna po korekcie gamma i (jaśniejszy + 0,05) / (ciemniejszy + 0,05).
+    const tlo = wartoscTokenu("--neutral-0");
+    const slabszy = kontrast(wartoscTokenu("--neutral-500"), tlo);
+    const poprawny = kontrast(wartoscTokenu("--neutral-600"), tlo);
+    expect(slabszy).toBeLessThan(4.5);
+    expect(slabszy).toBeGreaterThanOrEqual(3);
+    expect(poprawny).toBeGreaterThanOrEqual(4.5);
   });
 });
