@@ -7,7 +7,7 @@ import type { SzkoleniePanel } from "@/lib/panel/typy";
 import { pusteSzkolenie, szkolenieNaFormularz } from "@/lib/panel/walidacja";
 import { FormularzSzkolenia } from "./FormularzSzkolenia";
 import { KLUCZE } from "./klucze";
-import { useKomunikat } from "./komunikat";
+import { useKomunikat } from "./komunikat-kontekst";
 import { BladListy, SzkieletListy } from "./StanyListy";
 import { NaglowekStrony, NieZnaleziono } from "./NaglowekStrony";
 

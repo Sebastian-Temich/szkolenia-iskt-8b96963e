@@ -7,7 +7,7 @@ import type { TrenerPanel } from "@/lib/panel/typy";
 import { pustyTrener, trenerNaFormularz } from "@/lib/panel/walidacja";
 import { FormularzTrenera } from "./FormularzTrenera";
 import { KLUCZE } from "./klucze";
-import { useKomunikat } from "./komunikat";
+import { useKomunikat } from "./komunikat-kontekst";
 import { BladListy, SzkieletListy } from "./StanyListy";
 import { NaglowekStrony, NieZnaleziono } from "./NaglowekStrony";
 

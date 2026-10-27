@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ArrowDown, ArrowUp, Plus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { KLASY_INPUT } from "./pola";
+import { KLASY_INPUT } from "./pola"; // @@
 
 /** Pozycja do wyboru: identyfikator i czytelna nazwa. */
 export type OpcjaPowiazania = { id: string; etykieta: string };

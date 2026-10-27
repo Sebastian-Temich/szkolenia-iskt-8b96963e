@@ -2,7 +2,7 @@ import { useFieldArray, useFormContext } from "react-hook-form";
 import { Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { numerModulu, type FormularzSzkolenia } from "@/lib/panel/walidacja";
-import { KLASY_INPUT, KLASY_TEXTAREA, PoleFormularza, SekcjaFormularza, ariaPola } from "./pola";
+import { KLASY_INPUT, KLASY_TEXTAREA, PoleFormularza, SekcjaFormularza, ariaPola } from "./pola"; // @@
 
 /** Edytor dokładnie czterech efektów szkolenia. */
 export function EdytorEfektow() {

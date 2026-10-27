@@ -4,7 +4,7 @@ import { komunikatBledu } from "@/lib/panel/bledy";
 import type { StatusTresci } from "@/lib/panel/typy";
 import type { ZamiarUsuniecia } from "./DialogUsuwania";
 import { KLUCZE } from "./klucze";
-import { useKomunikat } from "./komunikat";
+import { useKomunikat } from "./komunikat-kontekst";
 
 type Operacje = {
   publikuj: (id: string) => Promise<void>;

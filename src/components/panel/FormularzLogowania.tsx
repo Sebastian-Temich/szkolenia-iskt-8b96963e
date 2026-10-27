@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { zaloguj, type SesjaPanelu } from "@/lib/panel/sesja";
 import { komunikatBledu } from "@/lib/panel/bledy";
 import { KartaDostepu } from "./EkranyDostepu";
-import { KLASY_INPUT, PoleFormularza, ariaPola } from "./pola";
+import { KLASY_INPUT, PoleFormularza, ariaPola } from "./pola"; // @@
 
 const schemat = z.object({
   email: z.string().trim().min(1, "Wpisz adres e-mail.").email("Wpisz poprawny adres e-mail."),
