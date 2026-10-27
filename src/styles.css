@@ -341,6 +341,18 @@
 
 /* Mapowanie obronne — patrz DECYZJA (c). Tryb ciemny nie jest włączany. */
 .dark {
+  /* ---- WARSTWA 1 — tokeny semantyczne pod tekstem i powierzchnie, które ten tekst
+     podkładają. Bez nich body i h1–h6 (przypięte do --text-primary) zostają ciemne
+     na ciemnym: 1,00:1. Liczby to kontrast WCAG 2.1 na --ink-900 / --ink-800.
+     Zakaz pod tekstem w tym motywie: --neutral-500 (4,87 / 4,39 — pod AA na karcie)
+     i --neutral-600 (2,90 / 2,61). ---- */
+  --text-primary:               var(--text-on-dark);  /* 17,83 / 16,05 */
+  --text-secondary:             var(--neutral-300);   /* 12,88 / 11,60 */
+  --text-muted:                 var(--neutral-400);   /*  8,71 /  7,84 */
+  --surface-page:               var(--ink-900);
+  --surface-card:               var(--ink-800);
+
+  /* ---- WARSTWA 2 — role shadcn ---- */
   --background:                 var(--surface-dark);
   --foreground:                 var(--text-on-dark);
   --card:                       var(--ink-800);
