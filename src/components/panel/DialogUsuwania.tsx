@@ -27,6 +27,7 @@ export function DialogUsuwania(props: {
           // Bez automatycznego fokusu: w pełnym drzewie aplikacji w jsdom wywoływał pętlę fokusu.
           e.preventDefault();
         }}
+        onCloseAutoFocus={(e) => e.preventDefault()}
       >
         <AlertDialogHeader>
           <AlertDialogTitle>{zamiar?.tytul}</AlertDialogTitle>
