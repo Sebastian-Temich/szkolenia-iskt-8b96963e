@@ -48,8 +48,13 @@ export function FormularzSzkolenia(props: {
         <EdytorProgramu />
         <EdytorTerminow />
         <SekcjaFormularza tytul="Trenerzy">
-          <WyborPowiazan idPola="sz-trenerzy" etykieta="Trenerzy" opcje={props.trenerzy}
-            wybrane={przypisani} onZmiana={setPrzypisani} />
+          <WyborPowiazan
+            idPola="sz-trenerzy"
+            etykieta="Trenerzy"
+            opcje={props.trenerzy}
+            wybrane={przypisani}
+            onZmiana={setPrzypisani}
+          />
         </SekcjaFormularza>
         {maBledy ? (
           <p role="alert" className="rounded-md bg-[var(--error-50)] p-3 text-sm text-destructive">
@@ -62,7 +67,11 @@ export function FormularzSzkolenia(props: {
           </p>
         ) : null}
         <div className="flex flex-wrap gap-3">
-          <Button type="submit" className="rounded-pill" disabled={formularz.formState.isSubmitting}>
+          <Button
+            type="submit"
+            className="rounded-pill"
+            disabled={formularz.formState.isSubmitting}
+          >
             <Save aria-hidden="true" />
             {formularz.formState.isSubmitting ? "Zapisujemy…" : "Zapisz szkolenie"}
           </Button>

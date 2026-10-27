@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useKomunikat } from "./komunikat";
+import { useKomunikat } from "./komunikat-kontekst";
 
 const KLASY_LINKU =
   "rounded-pill px-4 py-2 text-sm font-semibold text-[var(--text-secondary)] outline-none hover:bg-[var(--green-50)] hover:text-primary focus-visible:ring-[3px] focus-visible:ring-[var(--focus-ring)]";
@@ -21,14 +21,20 @@ export function UkladPanelu(props: { email: string; onWyloguj: () => void; child
             <Link
               to="/panel/szkolenia"
               className={KLASY_LINKU}
-              activeProps={{ className: "bg-[var(--green-50)] text-primary", "aria-current": "page" }}
+              activeProps={{
+                className: "bg-[var(--green-50)] text-primary",
+                "aria-current": "page",
+              }}
             >
               Szkolenia
             </Link>
             <Link
               to="/panel/trenerzy"
               className={KLASY_LINKU}
-              activeProps={{ className: "bg-[var(--green-50)] text-primary", "aria-current": "page" }}
+              activeProps={{
+                className: "bg-[var(--green-50)] text-primary",
+                "aria-current": "page",
+              }}
             >
               Trenerzy
             </Link>

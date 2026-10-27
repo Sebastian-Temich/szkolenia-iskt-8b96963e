@@ -14,7 +14,8 @@ function pasuje(t: TrenerPanel, fraza: string): boolean {
 /** Lista trenerów z filtrem statusu i frazą, w kolejności sort_order. */
 export async function listaTrenerow(filtr: FiltrPanelu = {}): Promise<TrenerPanel[]> {
   let zapytanie = pobierzKlienta().from(TABELA).select("*");
-  if (filtr.status && filtr.status !== "wszystkie") zapytanie = zapytanie.eq("status", filtr.status);
+  if (filtr.status && filtr.status !== "wszystkie")
+    zapytanie = zapytanie.eq("status", filtr.status);
   const { data, error } = await zapytanie.order("sort_order", { ascending: true });
   if (error) throw mapujBlad(error, "Nie udało się wczytać listy trenerów.");
   const wiersze: TrenerWiersz[] = data ?? [];
@@ -23,7 +24,11 @@ export async function listaTrenerow(filtr: FiltrPanelu = {}): Promise<TrenerPane
 
 /** Jeden trener albo null. */
 export async function pobierzTrenera(id: string): Promise<TrenerPanel | null> {
-  const { data, error } = await pobierzKlienta().from(TABELA).select("*").eq("id", id).maybeSingle();
+  const { data, error } = await pobierzKlienta()
+    .from(TABELA)
+    .select("*")
+    .eq("id", id)
+    .maybeSingle();
   if (error) throw mapujBlad(error, "Nie udało się wczytać trenera.");
   const wiersz: TrenerWiersz | null = data;
   return wiersz ? wierszNaTrenera(wiersz) : null;

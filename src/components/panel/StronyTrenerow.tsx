@@ -7,7 +7,7 @@ import type { TrenerPanel } from "@/lib/panel/typy";
 import { pustyTrener, trenerNaFormularz } from "@/lib/panel/walidacja";
 import { FormularzTrenera } from "./FormularzTrenera";
 import { KLUCZE } from "./klucze";
-import { useKomunikat } from "./komunikat";
+import { useKomunikat } from "./komunikat-kontekst";
 import { BladListy, SzkieletListy } from "./StanyListy";
 import { NaglowekStrony, NieZnaleziono } from "./NaglowekStrony";
 
@@ -44,12 +44,21 @@ export function NowyTrener() {
       {szkolenia.isPending ? (
         <SzkieletListy etykieta="Wczytujemy formularz" />
       ) : szkolenia.isError ? (
-        <BladListy tytul="Nie udało się wczytać listy szkoleń" opis="Spróbuj ponownie za chwilę."
-          ponow={() => void szkolenia.refetch()} trwa={szkolenia.isFetching} />
+        <BladListy
+          tytul="Nie udało się wczytać listy szkoleń"
+          opis="Spróbuj ponownie za chwilę."
+          ponow={() => void szkolenia.refetch()}
+          trwa={szkolenia.isFetching}
+        />
       ) : (
-        <FormularzTrenera edycja={false} wartosci={pustyTrener()}
-          redakcja={{ status: "draft", publishedAt: null }} szkolenia={szkolenia.data}
-          przypisane={[]} onZapisz={zapisz} />
+        <FormularzTrenera
+          edycja={false}
+          wartosci={pustyTrener()}
+          redakcja={{ status: "draft", publishedAt: null }}
+          szkolenia={szkolenia.data}
+          przypisane={[]}
+          onZapisz={zapisz}
+        />
       )}
     </div>
   );
@@ -59,7 +68,11 @@ export function NowyTrener() {
 export function EdycjaTrenera({ id }: { id: string }) {
   const zapisz = useZapisTrenera(true);
   const szkolenia = useOpcjeSzkolen();
-  const trener = useQuery({ queryKey: KLUCZE.trener(id), queryFn: () => pobierzTrenera(id), retry: false });
+  const trener = useQuery({
+    queryKey: KLUCZE.trener(id),
+    queryFn: () => pobierzTrenera(id),
+    retry: false,
+  });
   const przypisane = useQuery({
     queryKey: KLUCZE.przypisania("trener", id),
     queryFn: () => odczytajPrzypisania("trener", id),
@@ -69,18 +82,29 @@ export function EdycjaTrenera({ id }: { id: string }) {
   if (zapytania.some((z) => z.isPending)) return <SzkieletListy etykieta="Wczytujemy trenera" />;
   if (zapytania.some((z) => z.isError) || !szkolenia.data || !przypisane.data) {
     return (
-      <BladListy tytul="Nie udało się wczytać trenera" opis="Spróbuj ponownie za chwilę."
-        ponow={() => zapytania.forEach((z) => void z.refetch())} trwa={zapytania.some((z) => z.isFetching)} />
+      <BladListy
+        tytul="Nie udało się wczytać trenera"
+        opis="Spróbuj ponownie za chwilę."
+        ponow={() => zapytania.forEach((z) => void z.refetch())}
+        trwa={zapytania.some((z) => z.isFetching)}
+      />
     );
   }
-  if (!trener.data) return <NieZnaleziono tytul="Nie znaleźliśmy tego trenera" powrot="/panel/trenerzy" />;
+  if (!trener.data)
+    return <NieZnaleziono tytul="Nie znaleźliśmy tego trenera" powrot="/panel/trenerzy" />;
   const t = trener.data;
   return (
     <div className="flex flex-col gap-5">
       <NaglowekStrony tytul={`Edycja: ${t.name}`} powrot="/panel/trenerzy" />
-      <FormularzTrenera key={t.id} edycja wartosci={trenerNaFormularz(t)}
-        redakcja={{ status: t.status, publishedAt: t.publishedAt }} szkolenia={szkolenia.data}
-        przypisane={przypisane.data} onZapisz={zapisz} />
+      <FormularzTrenera
+        key={t.id}
+        edycja
+        wartosci={trenerNaFormularz(t)}
+        redakcja={{ status: t.status, publishedAt: t.publishedAt }}
+        szkolenia={szkolenia.data}
+        przypisane={przypisane.data}
+        onZapisz={zapisz}
+      />
     </div>
   );
 }

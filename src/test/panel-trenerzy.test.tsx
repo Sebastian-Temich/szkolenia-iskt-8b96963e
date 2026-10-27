@@ -1,4 +1,4 @@
-import { cleanup, screen, waitFor, within } from "@testing-library/react";
+import { cleanup, fireEvent, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { StanKonfiguracji } from "@/lib/supabase/klient";
@@ -24,7 +24,12 @@ function atrapa(): Atrapa {
 }
 
 const ANNA = wierszTrenera();
-const JAN = wierszTrenera({ id: "jan-kowalski", sort_order: 2, name: "Jan Kowalski", initials: "JK" });
+const JAN = wierszTrenera({
+  id: "jan-kowalski",
+  sort_order: 2,
+  name: "Jan Kowalski",
+  initials: "JK",
+});
 const GENAI = wierszSzkolenia();
 const ESG = wierszSzkolenia({ id: "esg", sort_order: 2, title: "ESG w praktyce", cat: "ESG" });
 
@@ -35,6 +40,19 @@ function zalogowany(dane: Parameters<typeof utworzAtrape>[0]) {
 
 beforeEach(() => zalogowany({ trenerzy: [ANNA, JAN], szkolenia: [GENAI, ESG] }));
 afterEach(cleanup);
+
+/**
+ * Dialog szukany selektorem, a kliknięcia w nim przez fireEvent: symulacja wskaźnika
+ * user-event przy otwartym modalu Radix w pełnym drzewie aplikacji blokuje jsdom.
+ */
+async function znajdzDialog(): Promise<HTMLElement> {
+  let dialog: HTMLElement | null = null;
+  await waitFor(() => {
+    dialog = document.querySelector<HTMLElement>('[role="alertdialog"]');
+    expect(dialog).not.toBeNull();
+  });
+  return dialog as unknown as HTMLElement;
+}
 
 async function wypelnijTrenera(user: ReturnType<typeof userEvent.setup>) {
   await user.type(await screen.findByLabelText("Identyfikator"), "ewa-zielinska");
@@ -66,7 +84,9 @@ describe("Lista trenerów", () => {
     atrapa().sterowanie.tryby["trenerzy"] = "blad";
     await zamontujTrase("/panel/trenerzy");
     const alert = await screen.findByRole("alert");
-    expect(within(alert).getByRole("heading", { name: "Nie udało się wczytać listy trenerów" })).toBeVisible();
+    expect(
+      within(alert).getByRole("heading", { name: "Nie udało się wczytać listy trenerów" }),
+    ).toBeVisible();
     const przed = atrapa().gdzie("trenerzy", "select").length;
     atrapa().sterowanie.tryby["trenerzy"] = "ok";
     await user.click(within(alert).getByRole("button", { name: "Spróbuj ponownie" }));
@@ -107,7 +127,10 @@ describe("Formularz trenera", () => {
     const user = userEvent.setup();
     await zamontujTrase("/panel/trenerzy/nowy");
     await wypelnijTrenera(user);
-    await user.type(screen.getByLabelText("Adres zdjęcia (opcjonalnie)"), "https://example.org/ewa.jpg");
+    await user.type(
+      screen.getByLabelText("Adres zdjęcia (opcjonalnie)"),
+      "https://example.org/ewa.jpg",
+    );
     await user.click(screen.getByRole("button", { name: "Zapisz trenera" }));
     await waitFor(() => expect(atrapa().gdzie("trenerzy", "insert")).toHaveLength(1));
     const wiersz = atrapa().gdzie("trenerzy", "insert")[0]?.wiersz as Record<string, unknown>;
@@ -179,19 +202,18 @@ describe("Przypisania", () => {
 
 describe("Usuwanie trenera", () => {
   it("dialog nazywa skutek, a potwierdzenie usuwa tylko z tabeli trenerzy", async () => {
-    const user = userEvent.setup();
     zalogowany({
       trenerzy: [ANNA],
       szkolenia: [GENAI],
       szkolenie_trener: [{ szkolenie_id: "genai", trener_id: "anna-nowak", sort_order: 0 }],
     });
     await zamontujTrase("/panel/trenerzy");
-    await user.click(await screen.findByRole("button", { name: "Usuń: Anna Nowak" }));
-    const dialog = await screen.findByRole("alertdialog");
+    fireEvent.click(await screen.findByLabelText("Usuń: Anna Nowak"));
+    const dialog = await znajdzDialog();
     expect(dialog).toHaveTextContent(
       "Usuniesz trenera Anna Nowak. Zniknie 1 przypisań do szkoleń. Same szkolenia zostaną nietknięte.",
     );
-    await user.click(within(dialog).getByRole("button", { name: "Usuń na stałe" }));
+    fireEvent.click(within(dialog).getByText("Usuń na stałe"));
     await waitFor(() => expect(atrapa().gdzie("trenerzy", "delete")).toHaveLength(1));
     expect(atrapa().gdzie("trenerzy", "delete")[0]?.filtry).toEqual([
       { kolumna: "id", operator: "eq", wartosc: "anna-nowak" },

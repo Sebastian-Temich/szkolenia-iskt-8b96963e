@@ -1,8 +1,5 @@
-import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
-
-type Komunikat = { pokaz: (tresc: string) => void; tresc: string | null };
-
-const KontekstKomunikatu = createContext<Komunikat>({ pokaz: () => {}, tresc: null });
+import { useCallback, useState, type ReactNode } from "react";
+import { KontekstKomunikatu } from "./komunikat-kontekst";
 
 /** Przechowuje komunikat sukcesu, który przetrwa powrót z formularza na listę. */
 export function DostawcaKomunikatu({ children }: { children: ReactNode }) {
@@ -11,9 +8,4 @@ export function DostawcaKomunikatu({ children }: { children: ReactNode }) {
   return (
     <KontekstKomunikatu.Provider value={{ pokaz, tresc }}>{children}</KontekstKomunikatu.Provider>
   );
-}
-
-/** Dostęp do komunikatu sukcesu panelu. */
-export function useKomunikat(): Komunikat {
-  return useContext(KontekstKomunikatu);
 }

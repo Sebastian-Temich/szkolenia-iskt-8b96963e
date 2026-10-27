@@ -15,7 +15,8 @@ function pasuje(s: SzkoleniePanel, fraza: string): boolean {
 /** Lista szkoleń z filtrem statusu i frazą, w kolejności sort_order. */
 export async function listaSzkolen(filtr: FiltrPanelu = {}): Promise<SzkoleniePanel[]> {
   let zapytanie = pobierzKlienta().from(TABELA).select("*");
-  if (filtr.status && filtr.status !== "wszystkie") zapytanie = zapytanie.eq("status", filtr.status);
+  if (filtr.status && filtr.status !== "wszystkie")
+    zapytanie = zapytanie.eq("status", filtr.status);
   const { data, error } = await zapytanie.order("sort_order", { ascending: true });
   if (error) throw mapujBlad(error, "Nie udało się wczytać listy szkoleń.");
   const wiersze: SzkolenieWiersz[] = data ?? [];
@@ -24,7 +25,11 @@ export async function listaSzkolen(filtr: FiltrPanelu = {}): Promise<SzkoleniePa
 
 /** Jedno szkolenie albo null. */
 export async function pobierzSzkolenie(id: string): Promise<SzkoleniePanel | null> {
-  const { data, error } = await pobierzKlienta().from(TABELA).select("*").eq("id", id).maybeSingle();
+  const { data, error } = await pobierzKlienta()
+    .from(TABELA)
+    .select("*")
+    .eq("id", id)
+    .maybeSingle();
   if (error) throw mapujBlad(error, "Nie udało się wczytać szkolenia.");
   const wiersz: SzkolenieWiersz | null = data;
   return wiersz ? wierszNaSzkolenie(wiersz) : null;

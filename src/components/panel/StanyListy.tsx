@@ -17,7 +17,12 @@ export function SzkieletListy({ etykieta }: { etykieta: string }) {
 }
 
 /** Błąd wczytania listy z ponowieniem zapytania. */
-export function BladListy(props: { tytul: string; opis: string; ponow: () => void; trwa: boolean }) {
+export function BladListy(props: {
+  tytul: string;
+  opis: string;
+  ponow: () => void;
+  trwa: boolean;
+}) {
   return (
     <div
       role="alert"

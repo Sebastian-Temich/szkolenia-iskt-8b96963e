@@ -1,17 +1,13 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  aktualizujSzkolenie,
-  pobierzSzkolenie,
-  utworzSzkolenie,
-} from "@/lib/panel/szkolenia-repo";
+import { aktualizujSzkolenie, pobierzSzkolenie, utworzSzkolenie } from "@/lib/panel/szkolenia-repo";
 import { listaTrenerow } from "@/lib/panel/trenerzy-repo";
 import { odczytajPrzypisania, zapiszPrzypisania } from "@/lib/panel/przypisania-repo";
 import type { SzkoleniePanel } from "@/lib/panel/typy";
 import { pusteSzkolenie, szkolenieNaFormularz } from "@/lib/panel/walidacja";
 import { FormularzSzkolenia } from "./FormularzSzkolenia";
 import { KLUCZE } from "./klucze";
-import { useKomunikat } from "./komunikat";
+import { useKomunikat } from "./komunikat-kontekst";
 import { BladListy, SzkieletListy } from "./StanyListy";
 import { NaglowekStrony, NieZnaleziono } from "./NaglowekStrony";
 
@@ -48,12 +44,21 @@ export function NoweSzkolenie() {
       {trenerzy.isPending ? (
         <SzkieletListy etykieta="Wczytujemy formularz" />
       ) : trenerzy.isError ? (
-        <BladListy tytul="Nie udało się wczytać listy trenerów" opis="Spróbuj ponownie za chwilę."
-          ponow={() => void trenerzy.refetch()} trwa={trenerzy.isFetching} />
+        <BladListy
+          tytul="Nie udało się wczytać listy trenerów"
+          opis="Spróbuj ponownie za chwilę."
+          ponow={() => void trenerzy.refetch()}
+          trwa={trenerzy.isFetching}
+        />
       ) : (
-        <FormularzSzkolenia edycja={false} wartosci={pusteSzkolenie()}
-          redakcja={{ status: "draft", publishedAt: null }} trenerzy={trenerzy.data}
-          przypisani={[]} onZapisz={zapisz} />
+        <FormularzSzkolenia
+          edycja={false}
+          wartosci={pusteSzkolenie()}
+          redakcja={{ status: "draft", publishedAt: null }}
+          trenerzy={trenerzy.data}
+          przypisani={[]}
+          onZapisz={zapisz}
+        />
       )}
     </div>
   );
@@ -63,7 +68,11 @@ export function NoweSzkolenie() {
 export function EdycjaSzkolenia({ id }: { id: string }) {
   const zapisz = useZapisSzkolenia(true);
   const trenerzy = useOpcjeTrenerow();
-  const szkolenie = useQuery({ queryKey: KLUCZE.szkolenie(id), queryFn: () => pobierzSzkolenie(id), retry: false });
+  const szkolenie = useQuery({
+    queryKey: KLUCZE.szkolenie(id),
+    queryFn: () => pobierzSzkolenie(id),
+    retry: false,
+  });
   const przypisani = useQuery({
     queryKey: KLUCZE.przypisania("szkolenie", id),
     queryFn: () => odczytajPrzypisania("szkolenie", id),
@@ -75,18 +84,29 @@ export function EdycjaSzkolenia({ id }: { id: string }) {
   }
   if (zapytania.some((z) => z.isError) || !trenerzy.data || !przypisani.data) {
     return (
-      <BladListy tytul="Nie udało się wczytać szkolenia" opis="Spróbuj ponownie za chwilę."
-        ponow={() => zapytania.forEach((z) => void z.refetch())} trwa={zapytania.some((z) => z.isFetching)} />
+      <BladListy
+        tytul="Nie udało się wczytać szkolenia"
+        opis="Spróbuj ponownie za chwilę."
+        ponow={() => zapytania.forEach((z) => void z.refetch())}
+        trwa={zapytania.some((z) => z.isFetching)}
+      />
     );
   }
-  if (!szkolenie.data) return <NieZnaleziono tytul="Nie znaleźliśmy tego szkolenia" powrot="/panel/szkolenia" />;
+  if (!szkolenie.data)
+    return <NieZnaleziono tytul="Nie znaleźliśmy tego szkolenia" powrot="/panel/szkolenia" />;
   const s = szkolenie.data;
   return (
     <div className="flex flex-col gap-5">
       <NaglowekStrony tytul={`Edycja: ${s.title}`} powrot="/panel/szkolenia" />
-      <FormularzSzkolenia key={s.id} edycja wartosci={szkolenieNaFormularz(s)}
-        redakcja={{ status: s.status, publishedAt: s.publishedAt }} trenerzy={trenerzy.data}
-        przypisani={przypisani.data} onZapisz={zapisz} />
+      <FormularzSzkolenia
+        key={s.id}
+        edycja
+        wartosci={szkolenieNaFormularz(s)}
+        redakcja={{ status: s.status, publishedAt: s.publishedAt }}
+        trenerzy={trenerzy.data}
+        przypisani={przypisani.data}
+        onZapisz={zapisz}
+      />
     </div>
   );
 }

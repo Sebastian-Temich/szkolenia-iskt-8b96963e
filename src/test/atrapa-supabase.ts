@@ -91,8 +91,14 @@ export function utworzAtrape(poczatek: Partial<Record<string, Wiersz[]>> = {}) {
       insert: (w: unknown) => ((operacja = "insert"), (wiersz = w), budowniczy),
       update: (w: unknown) => ((operacja = "update"), (wiersz = w), budowniczy),
       delete: () => ((operacja = "delete"), budowniczy),
-      eq: (kolumna: string, wartosc: unknown) => (filtry.push({ kolumna, operator: "eq", wartosc }), budowniczy),
-      in: (kolumna: string, wartosc: unknown[]) => (filtry.push({ kolumna, operator: "in", wartosc }), budowniczy),
+      eq: (kolumna: string, wartosc: unknown) => (
+        filtry.push({ kolumna, operator: "eq", wartosc }),
+        budowniczy
+      ),
+      in: (kolumna: string, wartosc: unknown[]) => (
+        filtry.push({ kolumna, operator: "in", wartosc }),
+        budowniczy
+      ),
       order: (kolumna: string) => ((sortuj = kolumna), budowniczy),
       single: () => ((tryb = "jeden"), budowniczy),
       maybeSingle: () => ((tryb = "jedenLubNic"), budowniczy),
@@ -130,7 +136,10 @@ export function utworzAtrape(poczatek: Partial<Record<string, Wiersz[]>> = {}) {
         }
         sterowanie.sesja = { user: { email }, access_token: "atrapa" };
         powiadom("SIGNED_IN");
-        return Promise.resolve({ data: { session: sterowanie.sesja, user: sterowanie.sesja.user }, error: null });
+        return Promise.resolve({
+          data: { session: sterowanie.sesja, user: sterowanie.sesja.user },
+          error: null,
+        });
       },
       signOut: () => {
         sterowanie.sesja = null;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ArrowDown, ArrowUp, Plus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { KLASY_INPUT } from "./pola";
+import { KLASY_INPUT } from "./pola-klasy";
 
 /** Pozycja do wyboru: identyfikator i czytelna nazwa. */
 export type OpcjaPowiazania = { id: string; etykieta: string };
@@ -42,17 +42,33 @@ export function WyborPowiazan(props: {
                 {i + 1}. {nazwa(id)}
               </span>
               <span className="flex gap-1">
-                <Button type="button" variant="ghost" size="icon" disabled={i === 0}
-                  aria-label={`Przesuń wyżej: ${nazwa(id)}`} onClick={() => przesun(i, -1)}>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  disabled={i === 0}
+                  aria-label={`Przesuń wyżej: ${nazwa(id)}`}
+                  onClick={() => przesun(i, -1)}
+                >
                   <ArrowUp aria-hidden="true" />
                 </Button>
-                <Button type="button" variant="ghost" size="icon" disabled={i === wybrane.length - 1}
-                  aria-label={`Przesuń niżej: ${nazwa(id)}`} onClick={() => przesun(i, 1)}>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  disabled={i === wybrane.length - 1}
+                  aria-label={`Przesuń niżej: ${nazwa(id)}`}
+                  onClick={() => przesun(i, 1)}
+                >
                   <ArrowDown aria-hidden="true" />
                 </Button>
-                <Button type="button" variant="ghost" size="icon"
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
                   aria-label={`Usuń przypisanie: ${nazwa(id)}`}
-                  onClick={() => onZmiana(wybrane.filter((w) => w !== id))}>
+                  onClick={() => onZmiana(wybrane.filter((w) => w !== id))}
+                >
                   <X aria-hidden="true" />
                 </Button>
               </span>
@@ -65,16 +81,29 @@ export function WyborPowiazan(props: {
           <label htmlFor={props.idPola} className="text-[13.5px] font-semibold">
             Dodaj: {props.etykieta.toLocaleLowerCase("pl-PL")}
           </label>
-          <select id={props.idPola} className={KLASY_INPUT} value={doDodania}
-            onChange={(e) => setDoDodania(e.target.value)}>
+          <select
+            id={props.idPola}
+            className={KLASY_INPUT}
+            value={doDodania}
+            onChange={(e) => setDoDodania(e.target.value)}
+          >
             <option value="">Wybierz…</option>
             {dostepne.map((o) => (
-              <option key={o.id} value={o.id}>{o.etykieta}</option>
+              <option key={o.id} value={o.id}>
+                {o.etykieta}
+              </option>
             ))}
           </select>
         </div>
-        <Button type="button" variant="outline" disabled={!doDodania}
-          onClick={() => { onZmiana([...wybrane, doDodania]); setDoDodania(""); }}>
+        <Button
+          type="button"
+          variant="outline"
+          disabled={!doDodania}
+          onClick={() => {
+            onZmiana([...wybrane, doDodania]);
+            setDoDodania("");
+          }}
+        >
           <Plus aria-hidden="true" />
           Dodaj
         </Button>
