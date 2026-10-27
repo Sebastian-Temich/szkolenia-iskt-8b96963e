@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,9 +21,16 @@ export function DialogUsuwania(props: {
   onAnuluj: () => void;
 }) {
   const { zamiar } = props;
+  const anuluj = useRef<HTMLButtonElement>(null);
   return (
     <AlertDialog open={zamiar !== null} onOpenChange={(otwarty) => !otwarty && props.onAnuluj()}>
-      <AlertDialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
+      <AlertDialogContent
+        onOpenAutoFocus={(e) => {
+          // Fokus startuje na bezpiecznym „Anuluj”, ustawiany ręcznie zamiast automatycznego wyszukiwania.
+          e.preventDefault();
+          anuluj.current?.focus();
+        }}
+      >
         <AlertDialogHeader>
           <AlertDialogTitle>{zamiar?.tytul}</AlertDialogTitle>
           <AlertDialogDescription>{zamiar?.skutek}</AlertDialogDescription>
@@ -32,7 +40,7 @@ export function DialogUsuwania(props: {
           publiczne linki.
         </p>
         <AlertDialogFooter>
-          <AlertDialogCancel>Anuluj</AlertDialogCancel>
+          <AlertDialogCancel ref={anuluj}>Anuluj</AlertDialogCancel>
           <AlertDialogAction
             disabled={props.trwa}
             className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
