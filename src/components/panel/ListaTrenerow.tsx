@@ -95,7 +95,7 @@ export function ListaTrenerow() {
         />
       ) : (
         <>
-          <p role="status" className="text-sm text-[var(--text-secondary)]">
+          <p role="status" aria-label="Liczba wyników" className="text-sm text-[var(--text-secondary)]">
             Wyniki: {lista.data.length}
           </p>
           <Table>

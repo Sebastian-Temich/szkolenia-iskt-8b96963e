@@ -48,7 +48,7 @@ export function UkladPanelu(props: { email: string; onWyloguj: () => void; child
           </Button>
         </div>
       </div>
-      <div role="status" aria-live="polite">
+      <div role="status" aria-live="polite" aria-label="Komunikaty panelu">
         {tresc ? (
           <p className="rounded-md border border-[var(--border-subtle)] bg-[var(--green-50)] px-4 py-3 text-sm font-medium text-primary">
             {tresc}

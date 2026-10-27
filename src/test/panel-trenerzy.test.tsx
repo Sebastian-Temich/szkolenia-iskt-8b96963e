@@ -42,8 +42,7 @@ beforeEach(() => zalogowany({ trenerzy: [ANNA, JAN], szkolenia: [GENAI, ESG] }))
 afterEach(cleanup);
 
 /**
- * Dialog szukany selektorem, a kliknięcia w nim przez fireEvent: symulacja wskaźnika
- * user-event przy otwartym modalu Radix w pełnym drzewie aplikacji blokuje jsdom.
+ * Pętla portal → host w react-dom 19.3.1 wymaga niezależnie fireEvent bez focus() przed kliknięciem oraz podziału testów otwierających dialog na osobne pliki.
  */
 async function znajdzDialog(): Promise<HTMLElement> {
   let dialog: HTMLElement | null = null;
@@ -220,5 +219,10 @@ describe("Usuwanie trenera", () => {
     ]);
     expect(atrapa().gdzie("szkolenia", "delete")).toHaveLength(0);
     expect(atrapa().wywolania.filter((w) => w.operacja === "delete")).toHaveLength(1);
+    // Dowodem usunięcia jest zniknięcie wiersza, nie poprawny kształt zapytania.
+    expect(
+      await screen.findByRole("heading", { name: "Nie ma jeszcze żadnych trenerów" }),
+    ).toBeVisible();
+    expect(screen.queryByText("Anna Nowak")).toBeNull();
   });
 });
