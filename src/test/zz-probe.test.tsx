@@ -1,6 +1,21 @@
-import { render, screen } from "@testing-library/react";
-import { DialogUsuwania } from "@/components/panel/DialogUsuwania";
+import { cleanup, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { vi } from "vitest";
+import type { StanKonfiguracji } from "@/lib/supabase/klient";
+import { utworzAtrape, wierszSzkolenia, type Atrapa } from "./atrapa-supabase";
+import { zamontujTrase } from "./harness-routera";
+const stan = vi.hoisted(() => ({ atrapa: null as Atrapa | null, konfig: { ok: true } as StanKonfiguracji }));
+vi.mock("@/lib/supabase/klient", () => ({ stanKonfiguracji: () => stan.konfig, pobierzKlienta: () => stan.atrapa!.klient }));
+afterEach(cleanup);
 it("probe", async () => {
-  render(<html><body><DialogUsuwania zamiar={{ id: "a", tytul: "T", skutek: "S" }} trwa={false} onPotwierdz={() => {}} onAnuluj={() => {}} /></body></html>);
-  expect(await screen.findByRole("alertdialog")).toBeDefined();
+  stan.atrapa = utworzAtrape({ szkolenia: [wierszSzkolenia()] });
+  stan.atrapa.sterowanie.sesja = { user: { email: "a@b.pl" }, access_token: "t" };
+  const user = userEvent.setup();
+  await zamontujTrase("/panel/szkolenia");
+  const b = await screen.findByRole("button", { name: "Usuń: Generatywne AI dla biznesu" });
+  process.stdout.write("A\n");
+  await user.click(b);
+  process.stdout.write("B\n");
+  const d = document.querySelector('[role="alertdialog"]');
+  process.stdout.write("C " + String(!!d) + "\n");
 });
