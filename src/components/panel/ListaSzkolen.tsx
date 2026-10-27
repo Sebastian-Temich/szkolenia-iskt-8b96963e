@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatujKwote } from "@/lib/szkolenia/cena";
+import { formatujKwote } from "@/lib/szkolenia/adapter";
 import {
   listaSzkolen,
   publikujSzkolenie,

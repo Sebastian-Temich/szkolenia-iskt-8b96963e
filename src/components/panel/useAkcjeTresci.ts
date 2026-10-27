@@ -57,8 +57,7 @@ export function useAkcjeTresci(op: Operacje) {
     },
     anuluj: () => setZamiar(null),
     potwierdz: async (id: string) => {
-      const nazwa = zamiar?.tytul ?? "";
-      if (await wykonaj(() => op.usun(id), `Usunięto: ${nazwa.replace(/^Usunąć /, "")}`)) {
+      if (await wykonaj(() => op.usun(id), "Wpis został usunięty.")) {
         setZamiar(null);
       }
     },
