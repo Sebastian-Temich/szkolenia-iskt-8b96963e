@@ -21,7 +21,7 @@ it("probe", async () => {
   L("C");
   let n = 0;
   document.addEventListener("focusin", (e) => { n++; if (n < 12) L("F " + (e.target as HTMLElement).outerHTML.slice(0, 90)); if (n === 12) throw new Error("x"); }, true);
-  await user.click(anuluj);
+  (await import("@testing-library/react")).fireEvent.click(anuluj);
   L("D");
   await screen.findByRole("alertdialog");
   L("E");
