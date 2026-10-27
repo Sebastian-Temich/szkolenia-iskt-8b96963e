@@ -274,6 +274,6 @@ describe("Publikacja, wycofanie i usuwanie", () => {
     fireEvent.click(within(dialog).getByText("Usuń na stałe"));
     await waitFor(() => expect(atrapa().gdzie("szkolenia", "delete")).toHaveLength(1));
     expect(atrapa().gdzie("trenerzy", "delete")).toHaveLength(0);
-    expect(await screen.findByText("Nie ma jeszcze żadnych szkoleń")).toBeVisible();
+    expect(await screen.findByText("Wpis został usunięty.")).toBeVisible();
   });
 });
