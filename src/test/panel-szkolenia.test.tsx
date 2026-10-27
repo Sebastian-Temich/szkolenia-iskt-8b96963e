@@ -92,7 +92,7 @@ describe("Lista szkoleń — cztery stany", () => {
     expect(within(wiersz as HTMLElement).getByText("Szkic")).toBeVisible();
     const genai = screen.getByText("Generatywne AI dla biznesu").closest("tr") as HTMLElement;
     expect(within(genai).getByText("Opublikowane")).toBeVisible();
-    expect(screen.getByRole("status", { name: "" })).toBeDefined();
+    expect(screen.getByText("Wyniki: 2")).toBeVisible();
   });
 
   it("filtr statusu zawęża zapytanie do szkiców", async () => {
@@ -214,6 +214,7 @@ describe("Publikacja, wycofanie i usuwanie", () => {
     expect(typeof wiersz["published_at"]).toBe("string");
     expect(String(wiersz["published_at"]).length).toBeGreaterThan(0);
     expect(w?.filtry).toEqual([{ kolumna: "id", operator: "eq", wartosc: "genai" }]);
+    expect(await screen.findByText("„Generatywne AI dla biznesu” opublikowane.")).toBeVisible();
   });
 
   it("wycofanie ustawia status draft", async () => {
@@ -224,6 +225,9 @@ describe("Publikacja, wycofanie i usuwanie", () => {
     );
     await waitFor(() => expect(atrapa().gdzie("szkolenia", "update")).toHaveLength(1));
     expect(atrapa().gdzie("szkolenia", "update")[0]?.wiersz).toEqual({ status: "draft" });
+    expect(
+      await screen.findByText("„Generatywne AI dla biznesu” wycofane do szkicu."),
+    ).toBeVisible();
   });
 
   it("dialog usunięcia nazywa liczbę przypisań, a anulowanie nie wysyła usunięcia", async () => {
