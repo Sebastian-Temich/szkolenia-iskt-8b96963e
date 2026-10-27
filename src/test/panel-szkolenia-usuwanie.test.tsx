@@ -35,8 +35,7 @@ beforeEach(() => zalogowany({ szkolenia: [wierszSzkolenia()] }));
 afterEach(cleanup);
 
 /**
- * Dialog szukany selektorem, a kliknięcia w nim przez fireEvent: symulacja wskaźnika
- * user-event przy otwartym modalu Radix w pełnym drzewie aplikacji blokuje jsdom.
+ * Pętla portal → host w react-dom 19.3.1 wymaga niezależnie fireEvent bez focus() przed kliknięciem oraz podziału testów otwierających dialog na osobne pliki.
  */
 async function znajdzDialog(): Promise<HTMLElement> {
   let dialog: HTMLElement | null = null;
@@ -55,6 +54,7 @@ describe("Usuwanie szkolenia", () => {
     fireEvent.click(within(dialog).getByText("Usuń na stałe"));
     await waitFor(() => expect(atrapa().gdzie("szkolenia", "delete")).toHaveLength(1));
     expect(atrapa().gdzie("trenerzy", "delete")).toHaveLength(0);
-    expect(await screen.findByText("Wpis został usunięty.")).toBeVisible();
+    expect(await screen.findByText("Nie ma jeszcze żadnych szkoleń")).toBeVisible();
+    expect(screen.getByText("Wpis został usunięty.")).toBeVisible();
   });
 });

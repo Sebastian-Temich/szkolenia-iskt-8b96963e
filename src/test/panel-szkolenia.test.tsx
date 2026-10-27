@@ -32,8 +32,7 @@ beforeEach(() => zalogowany({ szkolenia: [wierszSzkolenia()] }));
 afterEach(cleanup);
 
 /**
- * Dialog szukany selektorem, a kliknięcia w nim przez fireEvent: symulacja wskaźnika
- * user-event przy otwartym modalu Radix w pełnym drzewie aplikacji blokuje jsdom.
+ * Pętla portal → host w react-dom 19.3.1 wymaga niezależnie fireEvent bez focus() przed kliknięciem oraz podziału testów otwierających dialog na osobne pliki.
  */
 async function znajdzDialog(): Promise<HTMLElement> {
   let dialog: HTMLElement | null = null;
@@ -105,7 +104,7 @@ describe("Lista szkoleń — cztery stany", () => {
     expect(within(wiersz as HTMLElement).getByText("Szkic")).toBeVisible();
     const genai = screen.getByText("Generatywne AI dla biznesu").closest("tr") as HTMLElement;
     expect(within(genai).getByText("Opublikowane")).toBeVisible();
-    expect(screen.getByText("Wyniki: 2")).toBeVisible();
+    expect(screen.getByRole("status", { name: "Liczba wyników" })).toHaveTextContent("Wyniki: 2");
   });
 
   it("filtr statusu zawęża zapytanie do szkiców", async () => {
