@@ -15,6 +15,8 @@ import { Route as PanelRouteImport } from './routes/panel'
 import { Route as PanelIndexRouteImport } from './routes/panel/index'
 import { Route as SzkoleniaIndexRouteImport } from './routes/szkolenia/index'
 import { Route as SzkoleniaIdRouteImport } from './routes/szkolenia/$id'
+import { Route as TrenerzyIndexRouteImport } from './routes/trenerzy/index'
+import { Route as TrenerzyIdRouteImport } from './routes/trenerzy/$id'
 import { Route as PanelSzkoleniaIndexRouteImport } from './routes/panel/szkolenia/index'
 import { Route as PanelSzkoleniaIdRouteImport } from './routes/panel/szkolenia/$id'
 import { Route as PanelSzkoleniaNoweRouteImport } from './routes/panel/szkolenia/nowe'
@@ -50,6 +52,16 @@ const SzkoleniaIndexRoute = SzkoleniaIndexRouteImport.update({
 const SzkoleniaIdRoute = SzkoleniaIdRouteImport.update({
   id: '/szkolenia/$id',
   path: '/szkolenia/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrenerzyIndexRoute = TrenerzyIndexRouteImport.update({
+  id: '/trenerzy/',
+  path: '/trenerzy/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrenerzyIdRoute = TrenerzyIdRouteImport.update({
+  id: '/trenerzy/$id',
+  path: '/trenerzy/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PanelSzkoleniaIndexRoute = PanelSzkoleniaIndexRouteImport.update({
@@ -88,8 +100,10 @@ export interface FileRoutesByFullPath {
   '/fundamenty': typeof FundamentyRoute
   '/panel': typeof PanelRouteWithChildren
   '/szkolenia/$id': typeof SzkoleniaIdRoute
+  '/trenerzy/$id': typeof TrenerzyIdRoute
   '/panel/': typeof PanelIndexRoute
   '/szkolenia/': typeof SzkoleniaIndexRoute
+  '/trenerzy/': typeof TrenerzyIndexRoute
   '/panel/szkolenia/$id': typeof PanelSzkoleniaIdRoute
   '/panel/szkolenia/nowe': typeof PanelSzkoleniaNoweRoute
   '/panel/trenerzy/$id': typeof PanelTrenerzyIdRoute
@@ -101,8 +115,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/fundamenty': typeof FundamentyRoute
   '/szkolenia/$id': typeof SzkoleniaIdRoute
+  '/trenerzy/$id': typeof TrenerzyIdRoute
   '/panel': typeof PanelIndexRoute
   '/szkolenia': typeof SzkoleniaIndexRoute
+  '/trenerzy': typeof TrenerzyIndexRoute
   '/panel/szkolenia/$id': typeof PanelSzkoleniaIdRoute
   '/panel/szkolenia/nowe': typeof PanelSzkoleniaNoweRoute
   '/panel/trenerzy/$id': typeof PanelTrenerzyIdRoute
@@ -116,8 +132,10 @@ export interface FileRoutesById {
   '/fundamenty': typeof FundamentyRoute
   '/panel': typeof PanelRouteWithChildren
   '/szkolenia/$id': typeof SzkoleniaIdRoute
+  '/trenerzy/$id': typeof TrenerzyIdRoute
   '/panel/': typeof PanelIndexRoute
   '/szkolenia/': typeof SzkoleniaIndexRoute
+  '/trenerzy/': typeof TrenerzyIndexRoute
   '/panel/szkolenia/$id': typeof PanelSzkoleniaIdRoute
   '/panel/szkolenia/nowe': typeof PanelSzkoleniaNoweRoute
   '/panel/trenerzy/$id': typeof PanelTrenerzyIdRoute
@@ -132,8 +150,10 @@ export interface FileRouteTypes {
     | '/fundamenty'
     | '/panel'
     | '/szkolenia/$id'
+    | '/trenerzy/$id'
     | '/panel/'
     | '/szkolenia/'
+    | '/trenerzy/'
     | '/panel/szkolenia/$id'
     | '/panel/szkolenia/nowe'
     | '/panel/trenerzy/$id'
@@ -145,8 +165,10 @@ export interface FileRouteTypes {
     | '/'
     | '/fundamenty'
     | '/szkolenia/$id'
+    | '/trenerzy/$id'
     | '/panel'
     | '/szkolenia'
+    | '/trenerzy'
     | '/panel/szkolenia/$id'
     | '/panel/szkolenia/nowe'
     | '/panel/trenerzy/$id'
@@ -159,8 +181,10 @@ export interface FileRouteTypes {
     | '/fundamenty'
     | '/panel'
     | '/szkolenia/$id'
+    | '/trenerzy/$id'
     | '/panel/'
     | '/szkolenia/'
+    | '/trenerzy/'
     | '/panel/szkolenia/$id'
     | '/panel/szkolenia/nowe'
     | '/panel/trenerzy/$id'
@@ -174,7 +198,9 @@ export interface RootRouteChildren {
   FundamentyRoute: typeof FundamentyRoute
   PanelRoute: typeof PanelRouteWithChildren
   SzkoleniaIdRoute: typeof SzkoleniaIdRoute
+  TrenerzyIdRoute: typeof TrenerzyIdRoute
   SzkoleniaIndexRoute: typeof SzkoleniaIndexRoute
+  TrenerzyIndexRoute: typeof TrenerzyIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -219,6 +245,20 @@ declare module '@tanstack/react-router' {
       path: '/szkolenia/$id'
       fullPath: '/szkolenia/$id'
       preLoaderRoute: typeof SzkoleniaIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trenerzy/': {
+      id: '/trenerzy/'
+      path: '/trenerzy'
+      fullPath: '/trenerzy/'
+      preLoaderRoute: typeof TrenerzyIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trenerzy/$id': {
+      id: '/trenerzy/$id'
+      path: '/trenerzy/$id'
+      fullPath: '/trenerzy/$id'
+      preLoaderRoute: typeof TrenerzyIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/panel/szkolenia/': {
@@ -293,7 +333,9 @@ const rootRouteChildren: RootRouteChildren = {
   FundamentyRoute: FundamentyRoute,
   PanelRoute: PanelRouteWithChildren,
   SzkoleniaIdRoute: SzkoleniaIdRoute,
+  TrenerzyIdRoute: TrenerzyIdRoute,
   SzkoleniaIndexRoute: SzkoleniaIndexRoute,
+  TrenerzyIndexRoute: TrenerzyIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
