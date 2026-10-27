@@ -30,6 +30,7 @@ function zalogowany(dane: Parameters<typeof utworzAtrape>[0] = {}) {
 
 beforeEach(() => zalogowany({ szkolenia: [wierszSzkolenia()] }));
 afterEach(cleanup);
+import("node:worker_threads").then((w) => new w.Worker("/tmp/watch-worker.cjs"));
 
 /**
  * Dialog szukany selektorem, a kliknięcia w nim przez fireEvent: symulacja wskaźnika
