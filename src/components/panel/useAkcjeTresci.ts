@@ -22,12 +22,11 @@ export function useAkcjeTresci(op: Operacje) {
   const [trwa, setTrwa] = useState(false);
   const [blad, setBlad] = useState<string | null>(null);
 
-  async function wykonaj(dzialanie: () => Promise<void>, sukces: string, poSukcesie?: () => void) {
+  async function wykonaj(dzialanie: () => Promise<void>, sukces: string) {
     setTrwa(true);
     setBlad(null);
     try {
       await dzialanie();
-      poSukcesie?.();
       pokaz(sukces);
       await queryClient.invalidateQueries({ queryKey: KLUCZE.wszystko });
       return true;
