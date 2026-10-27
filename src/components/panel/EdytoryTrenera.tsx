@@ -2,7 +2,8 @@ import { useFieldArray, useFormContext } from "react-hook-form";
 import { Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { FormularzTrenera } from "@/lib/panel/walidacja";
-import { KLASY_INPUT, KLASY_TEXTAREA, PoleFormularza, SekcjaFormularza, ariaPola } from "./pola"; // @@
+import { PoleFormularza, SekcjaFormularza } from "./pola";
+import { KLASY_INPUT, KLASY_TEXTAREA, ariaPola } from "./pola-klasy";
 
 /** Edytor doświadczenia zawodowego trenera. */
 export function EdytorDoswiadczenia() {

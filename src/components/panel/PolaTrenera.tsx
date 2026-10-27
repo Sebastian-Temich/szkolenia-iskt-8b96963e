@@ -1,7 +1,8 @@
 import { useFormContext } from "react-hook-form";
 import { KATEGORIE_SZKOLEN } from "@/lib/szkolenia/adapter";
 import type { FormularzTrenera } from "@/lib/panel/walidacja";
-import { KLASY_INPUT, KLASY_TEXTAREA, PoleFormularza, SekcjaFormularza, ariaPola } from "./pola"; // @@
+import { PoleFormularza, SekcjaFormularza } from "./pola";
+import { KLASY_INPUT, KLASY_TEXTAREA, ariaPola } from "./pola-klasy";
 
 /** Podstawowe pola trenera, obszary, umiejętności i adres zdjęcia. */
 export function PolaTrenera({ edycja }: { edycja: boolean }) {

@@ -15,4 +15,3 @@ export function ariaPola(id: string, blad?: string, maOpis = false) {
     "aria-describedby": opisane.length ? opisane.join(" ") : undefined,
   } as const;
 }
-

@@ -1,5 +1,5 @@
 import type { StatusTresci } from "@/lib/panel/typy";
-import { KLASY_INPUT } from "./pola"; // @@
+import { KLASY_INPUT } from "./pola-klasy";
 
 /** Wybór statusu na liście. */
 export type FiltrStatusu = StatusTresci | "wszystkie";

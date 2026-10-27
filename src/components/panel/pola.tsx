@@ -1,8 +1,5 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { KLASY_INPUT, KLASY_POLA, KLASY_TEXTAREA, ariaPola } from "./pola-klasy";
-
-export { KLASY_INPUT, KLASY_POLA, KLASY_TEXTAREA, ariaPola };
 
 type PoleProps = {
   id: string;

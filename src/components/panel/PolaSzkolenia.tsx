@@ -2,7 +2,8 @@ import { useFormContext } from "react-hook-form";
 import { KATEGORIE_SZKOLEN } from "@/lib/szkolenia/adapter";
 import { IKONY_OBSZAROW } from "@/lib/panel/typy";
 import type { FormularzSzkolenia } from "@/lib/panel/walidacja";
-import { KLASY_INPUT, KLASY_TEXTAREA, PoleFormularza, SekcjaFormularza, ariaPola } from "./pola"; // @@
+import { PoleFormularza, SekcjaFormularza } from "./pola";
+import { KLASY_INPUT, KLASY_TEXTAREA, ariaPola } from "./pola-klasy";
 
 const NAZWY_IKON: Record<(typeof IKONY_OBSZAROW)[number], string> = {
   cpu: "Procesor (AI)",
