@@ -1,0 +1,26 @@
+import { cleanup, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { vi } from "vitest";
+import type { StanKonfiguracji } from "@/lib/supabase/klient";
+import { utworzAtrape, wierszSzkolenia, type Atrapa } from "./atrapa-supabase";
+import { zamontujTrase } from "./harness-routera";
+const stan = vi.hoisted(() => ({ atrapa: null as Atrapa | null, konfig: { ok: true } as StanKonfiguracji }));
+vi.mock("@/lib/supabase/klient", () => ({ stanKonfiguracji: () => stan.konfig, pobierzKlienta: () => stan.atrapa!.klient }));
+afterEach(cleanup);
+const L = (s: string) => process.stdout.write(s + "\n");
+it("probe", async () => {
+  stan.atrapa = utworzAtrape({ szkolenia: [wierszSzkolenia()] });
+  stan.atrapa.sterowanie.sesja = { user: { email: "a@b.pl" }, access_token: "t" };
+  const user = userEvent.setup();
+  await zamontujTrase("/panel/szkolenia");
+  await user.click(await screen.findByRole("button", { name: "Usuń: Generatywne AI dla biznesu" }));
+  L("A");
+  const d = document.querySelector('[role="alertdialog"]') as HTMLElement;
+  L("B " + d.textContent);
+  const anuluj = within(d).getByText("Anuluj");
+  L("C");
+  await user.click(anuluj);
+  L("D");
+  await screen.findByRole("alertdialog");
+  L("E");
+});
