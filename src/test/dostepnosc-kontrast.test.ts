@@ -45,11 +45,16 @@ function luminancja(kolor: string): number {
   if (!/^#[0-9a-f]{6}$/i.test(kolor)) {
     throw new Error(`Nieprawidłowy kolor szesnastkowy: ${kolor}.`);
   }
-  const kanaly = [1, 3, 5].map((poczatek) => {
+  const kanaly = ([
+    [1, 0.2126],
+    [3, 0.7152],
+    [5, 0.0722],
+  ] as const).map(([poczatek, waga]) => {
     const kanal = parseInt(kolor.slice(poczatek, poczatek + 2), 16) / 255;
-    return kanal <= 0.04045 ? kanal / 12.92 : ((kanal + 0.055) / 1.055) ** 2.4;
+    const liniowy = kanal <= 0.04045 ? kanal / 12.92 : ((kanal + 0.055) / 1.055) ** 2.4;
+    return liniowy * waga;
   });
-  return kanaly.reduce((suma, kanal, index) => suma + kanal * [0.2126, 0.7152, 0.0722][index], 0);
+  return kanaly.reduce((suma, kanal) => suma + kanal, 0);
 }
 
 function kontrast(pierwszy: string, drugi: string): number {
