@@ -22,7 +22,7 @@ export function DialogUsuwania(props: {
   const { zamiar } = props;
   return (
     <AlertDialog open={zamiar !== null} onOpenChange={(otwarty) => !otwarty && props.onAnuluj()}>
-      <AlertDialogContent>
+      <AlertDialogContent onOpenAutoFocus={(e) => e.preventDefault()} onCloseAutoFocus={(e) => e.preventDefault()}>
         <AlertDialogHeader>
           <AlertDialogTitle>{zamiar?.tytul}</AlertDialogTitle>
           <AlertDialogDescription>{zamiar?.skutek}</AlertDialogDescription>
