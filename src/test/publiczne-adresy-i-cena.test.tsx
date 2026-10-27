@@ -72,8 +72,8 @@ describe("Format ceny po podmianie źródła", () => {
     await screen.findByRole("status");
     const karta = screen.getByRole("link", { name: /Szczegóły/ });
     const tekst = karta.textContent ?? "";
-    expect(tekst).toContain("298 zł");
-    expect(tekst).toContain("1 490 zł");
+    expect(tekst).toContain("298 zł");
+    expect(tekst).toContain("1 490 zł");
     // Zwykła spacja U+0020 przed „zł" byłaby regresją D11 — wygląda identycznie.
     expect(tekst).not.toContain(" zł");
   });
@@ -87,8 +87,8 @@ describe("Format ceny po podmianie źródła", () => {
     const { container } = await zamontujTrase("/szkolenia/genai");
     await screen.findByRole("heading", { level: 1 });
     const tekst = container.textContent ?? "";
-    expect(tekst).toContain("246 913 zł");
-    expect(tekst).toContain("1 234 567 zł bez dofinansowania");
+    expect(tekst).toContain("246 913 zł");
+    expect(tekst).toContain("1 234 567 zł bez dofinansowania");
     expect(tekst).not.toContain("1234567");
   });
 });
