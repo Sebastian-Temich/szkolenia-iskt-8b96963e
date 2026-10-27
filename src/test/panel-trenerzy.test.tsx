@@ -1,4 +1,4 @@
-import { cleanup, screen, waitFor, within } from "@testing-library/react";
+import { cleanup, fireEvent, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { StanKonfiguracji } from "@/lib/supabase/klient";
@@ -41,7 +41,10 @@ function zalogowany(dane: Parameters<typeof utworzAtrape>[0]) {
 beforeEach(() => zalogowany({ trenerzy: [ANNA, JAN], szkolenia: [GENAI, ESG] }));
 afterEach(cleanup);
 
-/** Dialog szukany selektorem: zapytania po roli przy otwartym modalu są w jsdom skrajnie wolne. */
+/**
+ * Dialog szukany selektorem, a kliknięcia w nim przez fireEvent: symulacja wskaźnika
+ * user-event przy otwartym modalu Radix w pełnym drzewie aplikacji blokuje jsdom.
+ */
 async function znajdzDialog(): Promise<HTMLElement> {
   let dialog: HTMLElement | null = null;
   await waitFor(() => {
@@ -199,20 +202,18 @@ describe("Przypisania", () => {
 
 describe("Usuwanie trenera", () => {
   it("dialog nazywa skutek, a potwierdzenie usuwa tylko z tabeli trenerzy", async () => {
-    // Wyłączona kontrola pointer-events: w pełnym drzewie z otwartym dialogiem jest skrajnie wolna w jsdom.
-    const user = userEvent.setup({ pointerEventsCheck: 0 });
-    zalogowany({
+        zalogowany({
       trenerzy: [ANNA],
       szkolenia: [GENAI],
       szkolenie_trener: [{ szkolenie_id: "genai", trener_id: "anna-nowak", sort_order: 0 }],
     });
     await zamontujTrase("/panel/trenerzy");
-    await user.click(await screen.findByRole("button", { name: "Usuń: Anna Nowak" }));
+    fireEvent.click(await screen.findByRole("button", { name: "Usuń: Anna Nowak" }));
     const dialog = await znajdzDialog();
     expect(dialog).toHaveTextContent(
       "Usuniesz trenera Anna Nowak. Zniknie 1 przypisań do szkoleń. Same szkolenia zostaną nietknięte.",
     );
-    await user.click(within(dialog).getByText("Usuń na stałe"));
+    fireEvent.click(within(dialog).getByText("Usuń na stałe"));
     await waitFor(() => expect(atrapa().gdzie("trenerzy", "delete")).toHaveLength(1));
     expect(atrapa().gdzie("trenerzy", "delete")[0]?.filtry).toEqual([
       { kolumna: "id", operator: "eq", wartosc: "anna-nowak" },

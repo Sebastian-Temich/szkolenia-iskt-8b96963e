@@ -1,4 +1,4 @@
-import { cleanup, screen, waitFor, within } from "@testing-library/react";
+import { cleanup, fireEvent, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { StanKonfiguracji } from "@/lib/supabase/klient";
@@ -31,7 +31,10 @@ function zalogowany(dane: Parameters<typeof utworzAtrape>[0] = {}) {
 beforeEach(() => zalogowany({ szkolenia: [wierszSzkolenia()] }));
 afterEach(cleanup);
 
-/** Dialog szukany selektorem: zapytania po roli przy otwartym modalu są w jsdom skrajnie wolne. */
+/**
+ * Dialog szukany selektorem, a kliknięcia w nim przez fireEvent: symulacja wskaźnika
+ * user-event przy otwartym modalu Radix w pełnym drzewie aplikacji blokuje jsdom.
+ */
 async function znajdzDialog(): Promise<HTMLElement> {
   let dialog: HTMLElement | null = null;
   await waitFor(() => {
@@ -241,9 +244,7 @@ describe("Publikacja, wycofanie i usuwanie", () => {
   });
 
   it("dialog usunięcia nazywa liczbę przypisań, a anulowanie nie wysyła usunięcia", async () => {
-    // Wyłączona kontrola pointer-events: w pełnym drzewie z otwartym dialogiem jest skrajnie wolna w jsdom.
-    const user = userEvent.setup({ pointerEventsCheck: 0 });
-    zalogowany({
+        zalogowany({
       szkolenia: [wierszSzkolenia()],
       szkolenie_trener: [
         { szkolenie_id: "genai", trener_id: "anna-nowak", sort_order: 0 },
@@ -251,28 +252,22 @@ describe("Publikacja, wycofanie i usuwanie", () => {
       ],
     });
     await zamontujTrase("/panel/szkolenia");
-    await user.click(
-      await screen.findByRole("button", { name: "Usuń: Generatywne AI dla biznesu" }),
-    );
+    fireEvent.click(await screen.findByRole("button", { name: "Usuń: Generatywne AI dla biznesu" }));
     const dialog = await znajdzDialog();
     expect(dialog).toHaveTextContent(
       "Usuniesz szkolenie Generatywne AI dla biznesu. Zniknie 2 przypisań do trenerów. Sami trenerzy zostaną nietknięci.",
     );
     expect(dialog).toHaveTextContent("Zalecaną drogą wycofania jest „Wycofaj”");
-    await user.click(within(dialog).getByText("Anuluj"));
+    fireEvent.click(within(dialog).getByText("Anuluj"));
     await waitFor(() => expect(document.querySelector('[role="alertdialog"]')).toBeNull());
     expect(atrapa().wywolania.filter((w) => w.operacja === "delete")).toHaveLength(0);
   });
 
   it("potwierdzenie usuwa tylko szkolenie", async () => {
-    // Wyłączona kontrola pointer-events: w pełnym drzewie z otwartym dialogiem jest skrajnie wolna w jsdom.
-    const user = userEvent.setup({ pointerEventsCheck: 0 });
-    await zamontujTrase("/panel/szkolenia");
-    await user.click(
-      await screen.findByRole("button", { name: "Usuń: Generatywne AI dla biznesu" }),
-    );
+        await zamontujTrase("/panel/szkolenia");
+    fireEvent.click(await screen.findByRole("button", { name: "Usuń: Generatywne AI dla biznesu" }));
     const dialog = await znajdzDialog();
-    await user.click(within(dialog).getByText("Usuń na stałe"));
+    fireEvent.click(within(dialog).getByText("Usuń na stałe"));
     await waitFor(() => expect(atrapa().gdzie("szkolenia", "delete")).toHaveLength(1));
     expect(atrapa().gdzie("trenerzy", "delete")).toHaveLength(0);
     expect(await screen.findByText("Nie ma jeszcze żadnych szkoleń")).toBeVisible();
