@@ -30,7 +30,6 @@ function zalogowany(dane: Parameters<typeof utworzAtrape>[0] = {}) {
 
 beforeEach(() => zalogowany({ szkolenia: [wierszSzkolenia()] }));
 afterEach(cleanup);
-import("node:worker_threads").then((w) => new w.Worker("/tmp/watch-worker.cjs"));
 
 /**
  * Dialog szukany selektorem, a kliknięcia w nim przez fireEvent: symulacja wskaźnika
@@ -246,18 +245,27 @@ describe("Publikacja, wycofanie i usuwanie", () => {
         { szkolenie_id: "genai", trener_id: "jan-kowalski", sort_order: 1 },
       ],
     });
+    require("fs").appendFileSync("/tmp/mark.txt", "M1\n");
     await zamontujTrase("/panel/szkolenia");
+    require("fs").appendFileSync("/tmp/mark.txt", "M2\n");
     fireEvent.click(
       await screen.findByRole("button", { name: "Usuń: Generatywne AI dla biznesu" }),
     );
+    require("fs").appendFileSync("/tmp/mark.txt", "M3\n");
     const dialog = await znajdzDialog();
+    require("fs").appendFileSync("/tmp/mark.txt", "M4\n");
     expect(dialog).toHaveTextContent(
       "Usuniesz szkolenie Generatywne AI dla biznesu. Zniknie 2 przypisań do trenerów. Sami trenerzy zostaną nietknięci.",
     );
+    require("fs").appendFileSync("/tmp/mark.txt", "M5\n");
     expect(dialog).toHaveTextContent("Zalecaną drogą wycofania jest „Wycofaj”");
+    require("fs").appendFileSync("/tmp/mark.txt", "M6\n");
     fireEvent.click(within(dialog).getByText("Anuluj"));
+    require("fs").appendFileSync("/tmp/mark.txt", "M7\n");
     await waitFor(() => expect(document.querySelector('[role="alertdialog"]')).toBeNull());
+    require("fs").appendFileSync("/tmp/mark.txt", "M8\n");
     expect(atrapa().wywolania.filter((w) => w.operacja === "delete")).toHaveLength(0);
+    require("fs").appendFileSync("/tmp/mark.txt", "M9\n");
   });
 
   it("potwierdzenie usuwa tylko szkolenie", async () => {
