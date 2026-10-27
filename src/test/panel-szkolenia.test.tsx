@@ -31,6 +31,16 @@ function zalogowany(dane: Parameters<typeof utworzAtrape>[0] = {}) {
 beforeEach(() => zalogowany({ szkolenia: [wierszSzkolenia()] }));
 afterEach(cleanup);
 
+/** Dialog szukany selektorem: zapytania po roli przy otwartym modalu są w jsdom skrajnie wolne. */
+async function znajdzDialog(): Promise<HTMLElement> {
+  let dialog: HTMLElement | null = null;
+  await waitFor(() => {
+    dialog = document.querySelector<HTMLElement>('[role="alertdialog"]');
+    expect(dialog).not.toBeNull();
+  });
+  return dialog as unknown as HTMLElement;
+}
+
 describe("Lista szkoleń — cztery stany", () => {
   it("ładowanie: szkielet z aria-busy", async () => {
     atrapa().sterowanie.tryby["szkolenia"] = "wisi";
@@ -244,13 +254,13 @@ describe("Publikacja, wycofanie i usuwanie", () => {
     await user.click(
       await screen.findByRole("button", { name: "Usuń: Generatywne AI dla biznesu" }),
     );
-    const dialog = await screen.findByRole("alertdialog");
+    const dialog = await znajdzDialog();
     expect(dialog).toHaveTextContent(
       "Usuniesz szkolenie Generatywne AI dla biznesu. Zniknie 2 przypisań do trenerów. Sami trenerzy zostaną nietknięci.",
     );
     expect(dialog).toHaveTextContent("Zalecaną drogą wycofania jest „Wycofaj”");
-    await user.click(within(dialog).getByRole("button", { name: "Anuluj" }));
-    await waitFor(() => expect(screen.queryByRole("alertdialog")).toBeNull());
+    await user.click(within(dialog).getByText("Anuluj"));
+    await waitFor(() => expect(document.querySelector('[role="alertdialog"]')).toBeNull());
     expect(atrapa().wywolania.filter((w) => w.operacja === "delete")).toHaveLength(0);
   });
 
@@ -261,8 +271,8 @@ describe("Publikacja, wycofanie i usuwanie", () => {
     await user.click(
       await screen.findByRole("button", { name: "Usuń: Generatywne AI dla biznesu" }),
     );
-    const dialog = await screen.findByRole("alertdialog");
-    await user.click(within(dialog).getByRole("button", { name: "Usuń na stałe" }));
+    const dialog = await znajdzDialog();
+    await user.click(within(dialog).getByText("Usuń na stałe"));
     await waitFor(() => expect(atrapa().gdzie("szkolenia", "delete")).toHaveLength(1));
     expect(atrapa().gdzie("trenerzy", "delete")).toHaveLength(0);
     expect(await screen.findByText("Nie ma jeszcze żadnych szkoleń")).toBeVisible();

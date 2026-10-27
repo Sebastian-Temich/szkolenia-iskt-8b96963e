@@ -41,6 +41,16 @@ function zalogowany(dane: Parameters<typeof utworzAtrape>[0]) {
 beforeEach(() => zalogowany({ trenerzy: [ANNA, JAN], szkolenia: [GENAI, ESG] }));
 afterEach(cleanup);
 
+/** Dialog szukany selektorem: zapytania po roli przy otwartym modalu są w jsdom skrajnie wolne. */
+async function znajdzDialog(): Promise<HTMLElement> {
+  let dialog: HTMLElement | null = null;
+  await waitFor(() => {
+    dialog = document.querySelector<HTMLElement>('[role="alertdialog"]');
+    expect(dialog).not.toBeNull();
+  });
+  return dialog as unknown as HTMLElement;
+}
+
 async function wypelnijTrenera(user: ReturnType<typeof userEvent.setup>) {
   await user.type(await screen.findByLabelText("Identyfikator"), "ewa-zielinska");
   await user.type(screen.getByLabelText("Imię i nazwisko"), "Ewa Zielińska");
@@ -198,11 +208,11 @@ describe("Usuwanie trenera", () => {
     });
     await zamontujTrase("/panel/trenerzy");
     await user.click(await screen.findByRole("button", { name: "Usuń: Anna Nowak" }));
-    const dialog = await screen.findByRole("alertdialog");
+    const dialog = await znajdzDialog();
     expect(dialog).toHaveTextContent(
       "Usuniesz trenera Anna Nowak. Zniknie 1 przypisań do szkoleń. Same szkolenia zostaną nietknięte.",
     );
-    await user.click(within(dialog).getByRole("button", { name: "Usuń na stałe" }));
+    await user.click(within(dialog).getByText("Usuń na stałe"));
     await waitFor(() => expect(atrapa().gdzie("trenerzy", "delete")).toHaveLength(1));
     expect(atrapa().gdzie("trenerzy", "delete")[0]?.filtry).toEqual([
       { kolumna: "id", operator: "eq", wartosc: "anna-nowak" },
