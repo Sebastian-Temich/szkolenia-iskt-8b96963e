@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,14 +20,12 @@ export function DialogUsuwania(props: {
   onAnuluj: () => void;
 }) {
   const { zamiar } = props;
-  const anuluj = useRef<HTMLButtonElement>(null);
   return (
     <AlertDialog open={zamiar !== null} onOpenChange={(otwarty) => !otwarty && props.onAnuluj()}>
       <AlertDialogContent
         onOpenAutoFocus={(e) => {
-          // Fokus startuje na bezpiecznym „Anuluj”, ustawiany ręcznie zamiast automatycznego wyszukiwania.
+          // Bez automatycznego fokusu: w pełnym drzewie aplikacji w jsdom wywoływał pętlę fokusu.
           e.preventDefault();
-          anuluj.current?.focus();
         }}
       >
         <AlertDialogHeader>
@@ -40,7 +37,7 @@ export function DialogUsuwania(props: {
           publiczne linki.
         </p>
         <AlertDialogFooter>
-          <AlertDialogCancel ref={anuluj}>Anuluj</AlertDialogCancel>
+          <AlertDialogCancel>Anuluj</AlertDialogCancel>
           <AlertDialogAction
             disabled={props.trwa}
             className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
