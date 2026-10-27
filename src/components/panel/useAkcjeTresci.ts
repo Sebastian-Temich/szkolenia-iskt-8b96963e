@@ -57,12 +57,9 @@ export function useAkcjeTresci(op: Operacje) {
     },
     anuluj: () => setZamiar(null),
     potwierdz: async (id: string) => {
-      // Dialog zamykamy przed odświeżeniem listy, żeby nie zostawał nad usuniętym wierszem.
-      await wykonaj(
-        () => op.usun(id),
-        "Wpis został usunięty.",
-        () => setZamiar(null),
-      );
+      if (await wykonaj(() => op.usun(id), "Wpis został usunięty.")) {
+        setZamiar(null);
+      }
     },
   };
 }
