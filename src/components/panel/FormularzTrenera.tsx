@@ -47,8 +47,13 @@ export function FormularzTrenera(props: {
         <EdytorDoswiadczenia />
         <EdytorWyksztalcenia />
         <SekcjaFormularza tytul="Szkolenia">
-          <WyborPowiazan idPola="tr-szkolenia" etykieta="Szkolenia" opcje={props.szkolenia}
-            wybrane={przypisane} onZmiana={setPrzypisane} />
+          <WyborPowiazan
+            idPola="tr-szkolenia"
+            etykieta="Szkolenia"
+            opcje={props.szkolenia}
+            wybrane={przypisane}
+            onZmiana={setPrzypisane}
+          />
         </SekcjaFormularza>
         {maBledy ? (
           <p role="alert" className="rounded-md bg-[var(--error-50)] p-3 text-sm text-destructive">
@@ -61,7 +66,11 @@ export function FormularzTrenera(props: {
           </p>
         ) : null}
         <div className="flex flex-wrap gap-3">
-          <Button type="submit" className="rounded-pill" disabled={formularz.formState.isSubmitting}>
+          <Button
+            type="submit"
+            className="rounded-pill"
+            disabled={formularz.formState.isSubmitting}
+          >
             <Save aria-hidden="true" />
             {formularz.formState.isSubmitting ? "Zapisujemy…" : "Zapisz trenera"}
           </Button>

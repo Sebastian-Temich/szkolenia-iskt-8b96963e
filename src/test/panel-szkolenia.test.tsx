@@ -67,12 +67,23 @@ describe("Lista szkoleń — cztery stany", () => {
       expect(atrapa().gdzie("szkolenia", "select").length).toBeGreaterThan(przed),
     );
     expect(await screen.findByText("Generatywne AI dla biznesu")).toBeVisible();
-    expect(screen.queryByRole("heading", { name: "Nie udało się wczytać listy szkoleń" })).toBeNull();
+    expect(
+      screen.queryByRole("heading", { name: "Nie udało się wczytać listy szkoleń" }),
+    ).toBeNull();
   });
 
   it("dane: tabela z kolumnami, plakietką szkicu i liczbą trenerów", async () => {
     zalogowany({
-      szkolenia: [wierszSzkolenia(), wierszSzkolenia({ id: "esg", sort_order: 2, title: "ESG w praktyce", status: "draft", published_at: null })],
+      szkolenia: [
+        wierszSzkolenia(),
+        wierszSzkolenia({
+          id: "esg",
+          sort_order: 2,
+          title: "ESG w praktyce",
+          status: "draft",
+          published_at: null,
+        }),
+      ],
       szkolenie_trener: [{ szkolenie_id: "genai", trener_id: "anna-nowak", sort_order: 0 }],
     });
     await zamontujTrase("/panel/szkolenia");
@@ -132,7 +143,9 @@ describe("Formularz szkolenia", () => {
     expect(screen.getByText("Uzupełnij tę pozycję.")).toBeVisible();
     expect(screen.getByText("Cena nie może być ujemna.")).toBeVisible();
     expect(screen.getByLabelText("Identyfikator")).toHaveAttribute("aria-invalid", "true");
-    expect(screen.getByLabelText("Cena (PLN brutto, pełna)").getAttribute("aria-describedby")).toContain("sz-cena-blad");
+    expect(
+      screen.getByLabelText("Cena (PLN brutto, pełna)").getAttribute("aria-describedby"),
+    ).toContain("sz-cena-blad");
     expect(atrapa().gdzie("szkolenia", "insert")).toHaveLength(0);
   });
 
@@ -191,7 +204,9 @@ describe("Publikacja, wycofanie i usuwanie", () => {
     const user = userEvent.setup();
     zalogowany({ szkolenia: [wierszSzkolenia({ status: "draft", published_at: null })] });
     await zamontujTrase("/panel/szkolenia");
-    await user.click(await screen.findByRole("button", { name: "Publikuj: Generatywne AI dla biznesu" }));
+    await user.click(
+      await screen.findByRole("button", { name: "Publikuj: Generatywne AI dla biznesu" }),
+    );
     await waitFor(() => expect(atrapa().gdzie("szkolenia", "update")).toHaveLength(1));
     const w = atrapa().gdzie("szkolenia", "update")[0];
     const wiersz = w?.wiersz as Record<string, unknown>;
@@ -204,7 +219,9 @@ describe("Publikacja, wycofanie i usuwanie", () => {
   it("wycofanie ustawia status draft", async () => {
     const user = userEvent.setup();
     await zamontujTrase("/panel/szkolenia");
-    await user.click(await screen.findByRole("button", { name: "Wycofaj: Generatywne AI dla biznesu" }));
+    await user.click(
+      await screen.findByRole("button", { name: "Wycofaj: Generatywne AI dla biznesu" }),
+    );
     await waitFor(() => expect(atrapa().gdzie("szkolenia", "update")).toHaveLength(1));
     expect(atrapa().gdzie("szkolenia", "update")[0]?.wiersz).toEqual({ status: "draft" });
   });
@@ -219,7 +236,9 @@ describe("Publikacja, wycofanie i usuwanie", () => {
       ],
     });
     await zamontujTrase("/panel/szkolenia");
-    await user.click(await screen.findByRole("button", { name: "Usuń: Generatywne AI dla biznesu" }));
+    await user.click(
+      await screen.findByRole("button", { name: "Usuń: Generatywne AI dla biznesu" }),
+    );
     const dialog = await screen.findByRole("alertdialog");
     expect(dialog).toHaveTextContent(
       "Usuniesz szkolenie Generatywne AI dla biznesu. Zniknie 2 przypisań do trenerów. Sami trenerzy zostaną nietknięci.",
@@ -233,7 +252,9 @@ describe("Publikacja, wycofanie i usuwanie", () => {
   it("potwierdzenie usuwa tylko szkolenie", async () => {
     const user = userEvent.setup();
     await zamontujTrase("/panel/szkolenia");
-    await user.click(await screen.findByRole("button", { name: "Usuń: Generatywne AI dla biznesu" }));
+    await user.click(
+      await screen.findByRole("button", { name: "Usuń: Generatywne AI dla biznesu" }),
+    );
     const dialog = await screen.findByRole("alertdialog");
     await user.click(within(dialog).getByRole("button", { name: "Usuń na stałe" }));
     await waitFor(() => expect(atrapa().gdzie("szkolenia", "delete")).toHaveLength(1));

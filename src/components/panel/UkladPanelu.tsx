@@ -21,14 +21,20 @@ export function UkladPanelu(props: { email: string; onWyloguj: () => void; child
             <Link
               to="/panel/szkolenia"
               className={KLASY_LINKU}
-              activeProps={{ className: "bg-[var(--green-50)] text-primary", "aria-current": "page" }}
+              activeProps={{
+                className: "bg-[var(--green-50)] text-primary",
+                "aria-current": "page",
+              }}
             >
               Szkolenia
             </Link>
             <Link
               to="/panel/trenerzy"
               className={KLASY_LINKU}
-              activeProps={{ className: "bg-[var(--green-50)] text-primary", "aria-current": "page" }}
+              activeProps={{
+                className: "bg-[var(--green-50)] text-primary",
+                "aria-current": "page",
+              }}
             >
               Trenerzy
             </Link>

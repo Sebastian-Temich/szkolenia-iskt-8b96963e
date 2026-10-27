@@ -24,7 +24,12 @@ function atrapa(): Atrapa {
 }
 
 const ANNA = wierszTrenera();
-const JAN = wierszTrenera({ id: "jan-kowalski", sort_order: 2, name: "Jan Kowalski", initials: "JK" });
+const JAN = wierszTrenera({
+  id: "jan-kowalski",
+  sort_order: 2,
+  name: "Jan Kowalski",
+  initials: "JK",
+});
 const GENAI = wierszSzkolenia();
 const ESG = wierszSzkolenia({ id: "esg", sort_order: 2, title: "ESG w praktyce", cat: "ESG" });
 
@@ -66,7 +71,9 @@ describe("Lista trenerów", () => {
     atrapa().sterowanie.tryby["trenerzy"] = "blad";
     await zamontujTrase("/panel/trenerzy");
     const alert = await screen.findByRole("alert");
-    expect(within(alert).getByRole("heading", { name: "Nie udało się wczytać listy trenerów" })).toBeVisible();
+    expect(
+      within(alert).getByRole("heading", { name: "Nie udało się wczytać listy trenerów" }),
+    ).toBeVisible();
     const przed = atrapa().gdzie("trenerzy", "select").length;
     atrapa().sterowanie.tryby["trenerzy"] = "ok";
     await user.click(within(alert).getByRole("button", { name: "Spróbuj ponownie" }));
@@ -107,7 +114,10 @@ describe("Formularz trenera", () => {
     const user = userEvent.setup();
     await zamontujTrase("/panel/trenerzy/nowy");
     await wypelnijTrenera(user);
-    await user.type(screen.getByLabelText("Adres zdjęcia (opcjonalnie)"), "https://example.org/ewa.jpg");
+    await user.type(
+      screen.getByLabelText("Adres zdjęcia (opcjonalnie)"),
+      "https://example.org/ewa.jpg",
+    );
     await user.click(screen.getByRole("button", { name: "Zapisz trenera" }));
     await waitFor(() => expect(atrapa().gdzie("trenerzy", "insert")).toHaveLength(1));
     const wiersz = atrapa().gdzie("trenerzy", "insert")[0]?.wiersz as Record<string, unknown>;

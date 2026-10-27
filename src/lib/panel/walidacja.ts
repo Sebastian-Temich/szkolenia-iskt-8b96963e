@@ -166,7 +166,10 @@ const adresZdjecia = z
         return false;
       }
     },
-    { message: "Wpisz pełny adres zdjęcia zaczynający się od http:// lub https:// albo zostaw pole puste." },
+    {
+      message:
+        "Wpisz pełny adres zdjęcia zaczynający się od http:// lub https:// albo zostaw pole puste.",
+    },
   );
 
 export const schematTrenera = z.object({

@@ -17,3 +17,7 @@
 # E01/F — część 1
 - [x] Nanieść dostarczoną łatkę i pomocnik powrotu; bez części 2 i bez kolejnego planu.
 - [x] Uruchomić istniejące testy i lint, sprawdzić automatyczną kontrolę typów; bez Playwrighta.
+
+# Panel redakcyjny
+- [x] Klient bazy, warstwa danych, bramka, listy, formularze, przypisania, testy.
+- [ ] Bramka jakości: prettier na plikach panelu, ostrzeżenia react-refresh, test/tsc/lint.

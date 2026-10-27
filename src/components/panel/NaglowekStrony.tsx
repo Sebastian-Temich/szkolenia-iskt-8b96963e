@@ -7,7 +7,10 @@ type Powrot = "/panel/szkolenia" | "/panel/trenerzy";
 export function NaglowekStrony({ tytul, powrot }: { tytul: string; powrot: Powrot }) {
   return (
     <div className="flex flex-col gap-2">
-      <Link to={powrot} className="inline-flex items-center gap-1 self-start text-sm font-semibold text-primary outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--focus-ring)]">
+      <Link
+        to={powrot}
+        className="inline-flex items-center gap-1 self-start text-sm font-semibold text-primary outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--focus-ring)]"
+      >
         <ArrowLeft className="size-4" aria-hidden="true" />
         Wróć do listy
       </Link>
