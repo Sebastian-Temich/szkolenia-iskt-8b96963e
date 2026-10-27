@@ -38,7 +38,6 @@ export function EdytorProgramu() {
               <span className="pb-2.5 font-mono text-sm font-semibold text-[var(--green-600)]" aria-hidden="true">
                 {numerModulu(i)}
               </span>
-              <input type="hidden" value={numerModulu(i)} {...register(`program.${i}.n`)} />
               <PoleFormularza id={`sz-program-${i}`} etykieta={`Moduł ${numerModulu(i)}`} blad={blad} className="flex-1">
                 <input className={KLASY_INPUT} {...ariaPola(`sz-program-${i}`, blad)} {...register(`program.${i}.t`)} />
               </PoleFormularza>
