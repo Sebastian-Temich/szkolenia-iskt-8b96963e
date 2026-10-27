@@ -213,6 +213,7 @@ describe("Formularz szkolenia", () => {
 });
 
 describe("Publikacja, wycofanie i usuwanie", () => {
+  beforeEach(() => { process.stdout.write("DOM " + document.documentElement.outerHTML.length + " " + document.querySelectorAll("*").length + "\n"); });
   it("publikacja ustawia status published i niepusty published_at", async () => {
     zalogowany({ szkolenia: [wierszSzkolenia({ status: "draft", published_at: null })] });
     await zamontujTrase("/panel/szkolenia");
