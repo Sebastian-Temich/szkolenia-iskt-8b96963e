@@ -1,7 +1,17 @@
 import { cleanup, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { adres, zamontujTrase } from "./harness-routera";
+import { atrapaMakiety } from "./atrapa-klienta";
+
+/**
+ * Źródłem danych widoków publicznych jest Supabase, więc test podstawia klienta bazy
+ * atrapą wypełnioną treścią makiety. Trasy, loadery, mapery i komponenty zostają
+ * produkcyjne — podmieniony jest wyłącznie transport do bazy.
+ */
+vi.mock("@/lib/supabase/klient", async () => (await import("./atrapa-klienta")).modulKlienta);
+
+beforeEach(() => atrapaMakiety());
 
 afterEach(cleanup);
 

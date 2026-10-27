@@ -3,6 +3,16 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { Szkolenie } from "@/lib/szkolenia/adapter";
 import { zamontujTrase, zamontujTraseBezCzekania } from "./harness-routera";
+import { atrapaMakiety } from "./atrapa-klienta";
+
+/**
+ * Źródłem danych widoków publicznych jest Supabase, więc test podstawia klienta bazy
+ * atrapą wypełnioną treścią makiety. Trasy, loadery, mapery i komponenty zostają
+ * produkcyjne — podmieniony jest wyłącznie transport do bazy.
+ */
+vi.mock("@/lib/supabase/klient", async () => (await import("./atrapa-klienta")).modulKlienta);
+
+beforeEach(() => atrapaMakiety());
 
 /**
  * Cztery stany UI katalogu i szczegółu: ładowanie, pusty wynik, błąd pobrania z ponowieniem
