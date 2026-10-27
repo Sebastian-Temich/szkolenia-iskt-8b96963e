@@ -2,7 +2,10 @@ import type { Szkolenie } from "./typy";
 
 const P = (tytuly: string[]) => tytuly.map((t, i) => ({ n: String(i + 1).padStart(2, "0"), t }));
 
-/** Zamockowane dane oferty. Importowane wyłącznie przez `adapter.ts`. */
+/**
+ * Dane makiety. Od E02/F nie są źródłem widoków publicznych — zostają wyłącznie jako
+ * oracle testów zgodności z makietą (`oracle-tresci-makiety`, `szkolenia-dane`).
+ */
 export const SZKOLENIA_MOCK: Szkolenie[] = [
   {
     id: "genai",
@@ -245,8 +248,5 @@ export const SZKOLENIA_MOCK: Szkolenie[] = [
 ];
 
 /** Terminy domyślne — w makiecie wspólne dla całej oferty. */
-export const TERMINY_DOMYSLNE = [
-  "12–13 wrz 2026 · Online",
-  "3–4 paź 2026 · Warszawa",
-  "Termin ustalany indywidualnie",
-];
+// Stała przeniesiona do `terminy.ts`, bo należy do ścieżki produkcyjnej, nie do atrapy.
+export { TERMINY_DOMYSLNE } from "./terminy";

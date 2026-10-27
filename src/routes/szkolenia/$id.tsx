@@ -1,5 +1,6 @@
 import { createFileRoute, notFound, type SearchSchemaInput } from "@tanstack/react-router";
 import { getSzkolenie } from "@/lib/szkolenia/adapter";
+import { trenerzySzkolenia } from "@/lib/trenerzy/adapter";
 import { czytajFiltryPowrotu, type PowrotDoKatalogu } from "@/components/szkolenia/powrot";
 import { SzczegolSzkolenia } from "@/components/szkolenia/SzczegolSzkolenia";
 import { SzczegolSzkielet } from "@/components/szkolenia/Szkielety";
@@ -14,7 +15,9 @@ export const Route = createFileRoute("/szkolenia/$id")({
   loader: async ({ params }) => {
     const szkolenie = await getSzkolenie(params.id);
     if (!szkolenie) throw notFound();
-    return szkolenie;
+    // Prowadzących dociągamy dopiero po rozstrzygnięciu szkolenia: nieznany adres ma dać
+    // notFound, a nie zapytanie o przypisania do nieistniejącego wiersza.
+    return { szkolenie, trenerzy: await trenerzySzkolenia(szkolenie.id) };
   },
   pendingMs: 150,
   pendingComponent: SzczegolSzkielet,
@@ -23,9 +26,9 @@ export const Route = createFileRoute("/szkolenia/$id")({
   notFoundComponent: NieZnalezionoSzkolenia,
   head: ({ loaderData }) => {
     const title = loaderData
-      ? `${loaderData.title} — Szkolenia ISKT`
+      ? `${loaderData.szkolenie.title} — Szkolenia ISKT`
       : "Szkolenie niedostępne — Szkolenia ISKT";
-    const description = loaderData?.desc ?? "Sprawdź pełny katalog szkoleń ISKT.";
+    const description = loaderData?.szkolenie.desc ?? "Sprawdź pełny katalog szkoleń ISKT.";
     return {
       meta: [
         { title },
@@ -44,9 +47,11 @@ export const Route = createFileRoute("/szkolenia/$id")({
 /** Wyświetla szkolenie zwrócone przez loader trasy. */
 function Szczegol() {
   const { kategoria, q } = Route.useSearch();
+  const { szkolenie, trenerzy } = Route.useLoaderData();
   return (
     <SzczegolSzkolenia
-      szkolenie={Route.useLoaderData()}
+      szkolenie={szkolenie}
+      trenerzy={trenerzy}
       powrot={{ ...(kategoria ? { kategoria } : {}), ...(q ? { q } : {}) }}
     />
   );

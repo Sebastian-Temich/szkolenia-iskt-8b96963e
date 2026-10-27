@@ -4,10 +4,13 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "./Logo";
 
-type NavItem = { label: string; to: "/" | "/szkolenia"; hash?: string };
+type NavItem = { label: string; to: "/" | "/szkolenia" | "/trenerzy"; hash?: string };
+// Kolejność i etykiety z makiety. „Nasi Trenerzy" wchodzi tu dopiero w E02/F, bo wcześniej
+// nie istniała trasa docelowa, a martwy odnośnik jest gorszy niż brak odnośnika.
 const NAV_ITEMS: NavItem[] = [
   { label: "Obszary", to: "/", hash: "obszary" },
   { label: "Katalog", to: "/szkolenia" },
+  { label: "Nasi Trenerzy", to: "/trenerzy" },
   { label: "Dofinansowania", to: "/", hash: "dofinansowania" },
   { label: "Kontakt", to: "/", hash: "kontakt" },
 ];
