@@ -231,7 +231,8 @@ describe("Publikacja, wycofanie i usuwanie", () => {
   });
 
   it("dialog usunięcia nazywa liczbę przypisań, a anulowanie nie wysyła usunięcia", async () => {
-    const user = userEvent.setup();
+    // Wyłączona kontrola pointer-events: w pełnym drzewie z otwartym dialogiem jest skrajnie wolna w jsdom.
+    const user = userEvent.setup({ pointerEventsCheck: 0 });
     zalogowany({
       szkolenia: [wierszSzkolenia()],
       szkolenie_trener: [
@@ -254,7 +255,8 @@ describe("Publikacja, wycofanie i usuwanie", () => {
   });
 
   it("potwierdzenie usuwa tylko szkolenie", async () => {
-    const user = userEvent.setup();
+    // Wyłączona kontrola pointer-events: w pełnym drzewie z otwartym dialogiem jest skrajnie wolna w jsdom.
+    const user = userEvent.setup({ pointerEventsCheck: 0 });
     await zamontujTrase("/panel/szkolenia");
     await user.click(
       await screen.findByRole("button", { name: "Usuń: Generatywne AI dla biznesu" }),

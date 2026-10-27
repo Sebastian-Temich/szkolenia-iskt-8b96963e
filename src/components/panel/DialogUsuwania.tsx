@@ -22,13 +22,7 @@ export function DialogUsuwania(props: {
   const { zamiar } = props;
   return (
     <AlertDialog open={zamiar !== null} onOpenChange={(otwarty) => !otwarty && props.onAnuluj()}>
-      <AlertDialogContent
-        onOpenAutoFocus={(e) => {
-          // Bez automatycznego fokusu: w pełnym drzewie aplikacji w jsdom wywoływał pętlę fokusu.
-          e.preventDefault();
-        }}
-        onCloseAutoFocus={(e) => e.preventDefault()}
-      >
+      <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{zamiar?.tytul}</AlertDialogTitle>
           <AlertDialogDescription>{zamiar?.skutek}</AlertDialogDescription>

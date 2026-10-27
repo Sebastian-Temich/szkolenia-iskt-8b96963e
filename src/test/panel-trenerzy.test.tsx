@@ -189,7 +189,8 @@ describe("Przypisania", () => {
 
 describe("Usuwanie trenera", () => {
   it("dialog nazywa skutek, a potwierdzenie usuwa tylko z tabeli trenerzy", async () => {
-    const user = userEvent.setup();
+    // Wyłączona kontrola pointer-events: w pełnym drzewie z otwartym dialogiem jest skrajnie wolna w jsdom.
+    const user = userEvent.setup({ pointerEventsCheck: 0 });
     zalogowany({
       trenerzy: [ANNA],
       szkolenia: [GENAI],
