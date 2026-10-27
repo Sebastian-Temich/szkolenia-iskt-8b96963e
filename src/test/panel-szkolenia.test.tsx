@@ -29,7 +29,7 @@ function zalogowany(dane: Parameters<typeof utworzAtrape>[0] = {}) {
 }
 
 beforeEach(() => zalogowany({ szkolenia: [wierszSzkolenia()] }));
-afterEach(() => { require("fs").appendFileSync("/tmp/mark.txt", "C0\n"); cleanup(); require("fs").appendFileSync("/tmp/mark.txt", "C1\n"); });
+afterEach(cleanup);
 
 /**
  * Dialog szukany selektorem, a kliknięcia w nim przez fireEvent: symulacja wskaźnika
@@ -214,9 +214,12 @@ describe("Formularz szkolenia", () => {
 
 describe("Publikacja, wycofanie i usuwanie", () => {
   it("publikacja ustawia status published i niepusty published_at", async () => {
+    const user = userEvent.setup();
     zalogowany({ szkolenia: [wierszSzkolenia({ status: "draft", published_at: null })] });
     await zamontujTrase("/panel/szkolenia");
-    fireEvent.click(await screen.findByRole("button", { name: "Publikuj: Generatywne AI dla biznesu" }));
+    await user.click(
+      await screen.findByRole("button", { name: "Publikuj: Generatywne AI dla biznesu" }),
+    );
     await waitFor(() => expect(atrapa().gdzie("szkolenia", "update")).toHaveLength(1));
     const w = atrapa().gdzie("szkolenia", "update")[0];
     const wiersz = w?.wiersz as Record<string, unknown>;
@@ -228,8 +231,11 @@ describe("Publikacja, wycofanie i usuwanie", () => {
   });
 
   it("wycofanie ustawia status draft", async () => {
+    const user = userEvent.setup();
     await zamontujTrase("/panel/szkolenia");
-    fireEvent.click(await screen.findByRole("button", { name: "Wycofaj: Generatywne AI dla biznesu" }));
+    await user.click(
+      await screen.findByRole("button", { name: "Wycofaj: Generatywne AI dla biznesu" }),
+    );
     await waitFor(() => expect(atrapa().gdzie("szkolenia", "update")).toHaveLength(1));
     expect(atrapa().gdzie("szkolenia", "update")[0]?.wiersz).toEqual({ status: "draft" });
     expect(
@@ -245,45 +251,25 @@ describe("Publikacja, wycofanie i usuwanie", () => {
         { szkolenie_id: "genai", trener_id: "jan-kowalski", sort_order: 1 },
       ],
     });
-    require("fs").appendFileSync("/tmp/mark.txt", "M1\n");
     await zamontujTrase("/panel/szkolenia");
-    require("fs").appendFileSync("/tmp/mark.txt", "M2\n");
-    fireEvent.click(
-      await screen.findByRole("button", { name: "Usuń: Generatywne AI dla biznesu" }),
-    );
-    require("fs").appendFileSync("/tmp/mark.txt", "M3\n");
+    fireEvent.click(await screen.findByLabelText("Usuń: Generatywne AI dla biznesu"));
     const dialog = await znajdzDialog();
-    require("fs").appendFileSync("/tmp/mark.txt", "M4\n");
     expect(dialog).toHaveTextContent(
       "Usuniesz szkolenie Generatywne AI dla biznesu. Zniknie 2 przypisań do trenerów. Sami trenerzy zostaną nietknięci.",
     );
-    require("fs").appendFileSync("/tmp/mark.txt", "M5\n");
     expect(dialog).toHaveTextContent("Zalecaną drogą wycofania jest „Wycofaj”");
-    require("fs").appendFileSync("/tmp/mark.txt", "M6\n");
     fireEvent.click(within(dialog).getByText("Anuluj"));
-    require("fs").appendFileSync("/tmp/mark.txt", "M7\n");
     await waitFor(() => expect(document.querySelector('[role="alertdialog"]')).toBeNull());
-    require("fs").appendFileSync("/tmp/mark.txt", "M8\n");
     expect(atrapa().wywolania.filter((w) => w.operacja === "delete")).toHaveLength(0);
-    require("fs").appendFileSync("/tmp/mark.txt", "M9\n");
   });
 
   it("potwierdzenie usuwa tylko szkolenie", async () => {
     await zamontujTrase("/panel/szkolenia");
-    require("fs").appendFileSync("/tmp/mark.txt", "M21\n");
-    fireEvent.click(
-      await screen.findByRole("button", { name: "Usuń: Generatywne AI dla biznesu" }),
-    );
-    require("fs").appendFileSync("/tmp/mark.txt", "M22\n");
+    fireEvent.click(await screen.findByLabelText("Usuń: Generatywne AI dla biznesu"));
     const dialog = await znajdzDialog();
-    require("fs").appendFileSync("/tmp/mark.txt", "M23\n");
     fireEvent.click(within(dialog).getByText("Usuń na stałe"));
-    require("fs").appendFileSync("/tmp/mark.txt", "M24\n");
     await waitFor(() => expect(atrapa().gdzie("szkolenia", "delete")).toHaveLength(1));
-    require("fs").appendFileSync("/tmp/mark.txt", "M25\n");
     expect(atrapa().gdzie("trenerzy", "delete")).toHaveLength(0);
-    require("fs").appendFileSync("/tmp/mark.txt", "M26\n");
     expect(await screen.findByText("Wpis został usunięty.")).toBeVisible();
-    require("fs").appendFileSync("/tmp/mark.txt", "M27\n");
   });
 });

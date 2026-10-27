@@ -208,7 +208,7 @@ describe("Usuwanie trenera", () => {
       szkolenie_trener: [{ szkolenie_id: "genai", trener_id: "anna-nowak", sort_order: 0 }],
     });
     await zamontujTrase("/panel/trenerzy");
-    fireEvent.click(await screen.findByRole("button", { name: "Usuń: Anna Nowak" }));
+    fireEvent.click(await screen.findByLabelText("Usuń: Anna Nowak"));
     const dialog = await znajdzDialog();
     expect(dialog).toHaveTextContent(
       "Usuniesz trenera Anna Nowak. Zniknie 1 przypisań do szkoleń. Same szkolenia zostaną nietknięte.",
