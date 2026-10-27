@@ -2,20 +2,25 @@ import { Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Banknote, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Szkolenie } from "@/lib/szkolenia/adapter";
+import type { Trener } from "@/lib/trenerzy/typy";
 import { KartaZapisu } from "./KartaZapisu";
 import { MetrykiSzkolenia } from "./MetrykiSzkolenia";
+import { ProwadzacySzkolenie } from "./ProwadzacySzkolenie";
 import type { PowrotDoKatalogu } from "./powrot";
 
 /**
  * Renderuje opis, efekty i program szkolenia właściciela bez wymyślonych treści.
  * `powrot` to filtry katalogu przeniesione przez adres — bez nich powrót gubi wynik.
+ * `trenerzy` to przypisani prowadzący; pusta lista nie rysuje bloku prowadzących.
  */
 export function SzczegolSzkolenia({
   szkolenie,
   powrot = {},
+  trenerzy = [],
 }: {
   szkolenie: Szkolenie;
   powrot?: PowrotDoKatalogu;
+  trenerzy?: Trener[];
 }) {
   return (
     <>
@@ -67,7 +72,7 @@ export function SzczegolSzkolenia({
       </section>
       <section
         className={`mx-auto grid max-w-[var(--container-max)] gap-[clamp(1.5rem,3vw,3rem)] px-[var(--container-pad)] py-[var(--section-pad-y)] ${
-          szkolenie.fundable ? "lg:grid-cols-[1.35fr_0.65fr]" : "lg:grid-cols-1"
+          szkolenie.fundable || trenerzy.length ? "lg:grid-cols-[1.35fr_0.65fr]" : "lg:grid-cols-1"
         }`}
       >
         <div className="flex min-w-0 flex-col gap-[var(--space-12)]">
@@ -120,31 +125,36 @@ export function SzczegolSzkolenia({
             <p className="text-base text-muted-foreground">{szkolenie.forWhom}</p>
           </section>
         </div>
-        {szkolenie.fundable && (
-          <aside
-            aria-labelledby="dofinansowanie-heading"
-            className="rounded-lg bg-[var(--ink-900)] p-[var(--space-6)] text-primary-foreground lg:sticky lg:top-[88px]"
-          >
-            <h2
-              id="dofinansowanie-heading"
-              className="inline-flex items-center gap-2 text-[13px] font-semibold uppercase tracking-[var(--ls-caps)] text-[var(--green-300)]"
-            >
-              <Banknote className="size-4" aria-hidden="true" />
-              Dofinansowanie
-            </h2>
-            <p className="mt-3 text-[14.5px] leading-[var(--lh-relaxed)] text-primary-foreground/85">
-              To szkolenie kwalifikuje się do dofinansowania z KFS i BUR. Pomożemy Ci przejść przez
-              formalności.
-            </p>
-            <Button
-              asChild
-              className="mt-4 h-[46px] w-full whitespace-normal rounded-pill bg-primary-foreground px-3 text-[15px] font-bold text-[var(--green-800)] hover:bg-[var(--green-50)]"
-            >
-              <Link to="/" hash="kontakt">
-                Sprawdź dofinansowanie <ArrowRight aria-hidden="true" />
-              </Link>
-            </Button>
-          </aside>
+        {(szkolenie.fundable || trenerzy.length > 0) && (
+          <div className="flex flex-col gap-[var(--space-6)] lg:sticky lg:top-[88px]">
+            <ProwadzacySzkolenie trenerzy={trenerzy} />
+            {szkolenie.fundable && (
+              <aside
+                aria-labelledby="dofinansowanie-heading"
+                className="rounded-lg bg-[var(--ink-900)] p-[var(--space-6)] text-white"
+              >
+                <h2
+                  id="dofinansowanie-heading"
+                  className="inline-flex items-center gap-2 text-[13px] font-semibold uppercase tracking-[var(--ls-caps)] text-[var(--green-300)]"
+                >
+                  <Banknote className="size-4" aria-hidden="true" />
+                  Dofinansowanie
+                </h2>
+                <p className="mt-3 text-[14.5px] leading-[var(--lh-relaxed)] text-white/85">
+                  To szkolenie kwalifikuje się do dofinansowania z KFS i BUR. Pomożemy Ci przejść
+                  przez formalności.
+                </p>
+                <Button
+                  asChild
+                  className="mt-4 h-[46px] w-full whitespace-normal rounded-pill bg-white px-3 text-[15px] font-bold text-[var(--green-800)] hover:bg-[var(--green-50)]"
+                >
+                  <Link to="/" hash="kontakt">
+                    Sprawdź dofinansowanie <ArrowRight aria-hidden="true" />
+                  </Link>
+                </Button>
+              </aside>
+            )}
+          </div>
         )}
       </section>
     </>

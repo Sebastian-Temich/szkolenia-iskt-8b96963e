@@ -6,7 +6,12 @@ import { Logo } from "./Logo";
  * z filtrem kategorii, pozycje dla firm do zakotwiczeń strony głównej. Pozycji bez celu
  * w tym etapie w stopce nie ma — martwy link jest gorszy niż brak linku.
  */
-type LinkStopki = { label: string; to: "/" | "/szkolenia"; hash?: string; kategoria?: string };
+type LinkStopki = {
+  label: string;
+  to: "/" | "/szkolenia" | "/trenerzy";
+  hash?: string;
+  kategoria?: string;
+};
 const LINK_GROUPS: { title: string; items: LinkStopki[] }[] = [
   {
     title: "Obszary",
@@ -17,6 +22,8 @@ const LINK_GROUPS: { title: string; items: LinkStopki[] }[] = [
       // Każda pozycja obszaru ma własny filtr kategorii, więc cel linku jest deterministyczny.
       { label: "Software", to: "/szkolenia", kategoria: "Software" },
       { label: "B+R", to: "/szkolenia", kategoria: "B+R" },
+      // Pozycja z makiety; cel istnieje od E02/F.
+      { label: "Nasi Trenerzy", to: "/trenerzy" },
     ],
   },
   {
