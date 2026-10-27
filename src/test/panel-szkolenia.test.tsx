@@ -244,7 +244,7 @@ describe("Publikacja, wycofanie i usuwanie", () => {
   });
 
   it("dialog usunięcia nazywa liczbę przypisań, a anulowanie nie wysyła usunięcia", async () => {
-        zalogowany({
+    zalogowany({
       szkolenia: [wierszSzkolenia()],
       szkolenie_trener: [
         { szkolenie_id: "genai", trener_id: "anna-nowak", sort_order: 0 },
@@ -252,7 +252,9 @@ describe("Publikacja, wycofanie i usuwanie", () => {
       ],
     });
     await zamontujTrase("/panel/szkolenia");
-    fireEvent.click(await screen.findByRole("button", { name: "Usuń: Generatywne AI dla biznesu" }));
+    fireEvent.click(
+      await screen.findByRole("button", { name: "Usuń: Generatywne AI dla biznesu" }),
+    );
     const dialog = await znajdzDialog();
     expect(dialog).toHaveTextContent(
       "Usuniesz szkolenie Generatywne AI dla biznesu. Zniknie 2 przypisań do trenerów. Sami trenerzy zostaną nietknięci.",
@@ -264,8 +266,10 @@ describe("Publikacja, wycofanie i usuwanie", () => {
   });
 
   it("potwierdzenie usuwa tylko szkolenie", async () => {
-        await zamontujTrase("/panel/szkolenia");
-    fireEvent.click(await screen.findByRole("button", { name: "Usuń: Generatywne AI dla biznesu" }));
+    await zamontujTrase("/panel/szkolenia");
+    fireEvent.click(
+      await screen.findByRole("button", { name: "Usuń: Generatywne AI dla biznesu" }),
+    );
     const dialog = await znajdzDialog();
     fireEvent.click(within(dialog).getByText("Usuń na stałe"));
     await waitFor(() => expect(atrapa().gdzie("szkolenia", "delete")).toHaveLength(1));

@@ -202,7 +202,7 @@ describe("Przypisania", () => {
 
 describe("Usuwanie trenera", () => {
   it("dialog nazywa skutek, a potwierdzenie usuwa tylko z tabeli trenerzy", async () => {
-        zalogowany({
+    zalogowany({
       trenerzy: [ANNA],
       szkolenia: [GENAI],
       szkolenie_trener: [{ szkolenie_id: "genai", trener_id: "anna-nowak", sort_order: 0 }],
