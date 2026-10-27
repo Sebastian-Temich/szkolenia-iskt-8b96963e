@@ -214,12 +214,9 @@ describe("Formularz szkolenia", () => {
 
 describe("Publikacja, wycofanie i usuwanie", () => {
   it("publikacja ustawia status published i niepusty published_at", async () => {
-    const user = userEvent.setup();
     zalogowany({ szkolenia: [wierszSzkolenia({ status: "draft", published_at: null })] });
     await zamontujTrase("/panel/szkolenia");
-    await user.click(
-      await screen.findByRole("button", { name: "Publikuj: Generatywne AI dla biznesu" }),
-    );
+    fireEvent.click(await screen.findByRole("button", { name: "Publikuj: Generatywne AI dla biznesu" }));
     await waitFor(() => expect(atrapa().gdzie("szkolenia", "update")).toHaveLength(1));
     const w = atrapa().gdzie("szkolenia", "update")[0];
     const wiersz = w?.wiersz as Record<string, unknown>;
@@ -231,11 +228,8 @@ describe("Publikacja, wycofanie i usuwanie", () => {
   });
 
   it("wycofanie ustawia status draft", async () => {
-    const user = userEvent.setup();
     await zamontujTrase("/panel/szkolenia");
-    await user.click(
-      await screen.findByRole("button", { name: "Wycofaj: Generatywne AI dla biznesu" }),
-    );
+    fireEvent.click(await screen.findByRole("button", { name: "Wycofaj: Generatywne AI dla biznesu" }));
     await waitFor(() => expect(atrapa().gdzie("szkolenia", "update")).toHaveLength(1));
     expect(atrapa().gdzie("szkolenia", "update")[0]?.wiersz).toEqual({ status: "draft" });
     expect(
