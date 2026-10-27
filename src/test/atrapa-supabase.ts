@@ -50,7 +50,7 @@ export function utworzAtrape(poczatek: Partial<Record<string, Wiersz[]>> = {}) {
     let operacja: Operacja = "select";
     let wiersz: unknown;
     const filtry: Filtr[] = [];
-    let sortuj: string | null = null;
+    const sortuj: string[] = [];
     let tryb: "wiele" | "jeden" | "jedenLubNic" = "wiele";
 
     function wykonaj(): Promise<Wynik> {
@@ -74,9 +74,22 @@ export function utworzAtrape(poczatek: Partial<Record<string, Wiersz[]>> = {}) {
         return Promise.resolve({ data: null, error: null });
       }
       let wynik = structuredClone(zbior.filter((w) => pasuje(w, filtry)));
-      if (sortuj) {
-        const k = sortuj;
-        wynik = wynik.sort((a, b) => Number(a[k]) - Number(b[k]));
+      // Kolejne .order(...) to klucze porządku o malejącej wadze (jak w PostgREST).
+      // Liczby porównujemy numerycznie, resztę po bajtach (porządek tekstu jak w Postgres).
+      if (sortuj.length > 0) {
+        wynik = wynik.sort((a, b) => {
+          for (const k of sortuj) {
+            const x = a[k];
+            const y = b[k];
+            if (typeof x === "number" && typeof y === "number") {
+              const roznica = x - y;
+              if (roznica !== 0) return roznica;
+            } else if (x !== y) {
+              return String(x) < String(y) ? -1 : 1;
+            }
+          }
+          return 0;
+        });
       }
       if (tryb === "wiele") return Promise.resolve({ data: wynik, error: null });
       const pierwszy = wynik[0] ?? null;
@@ -99,7 +112,7 @@ export function utworzAtrape(poczatek: Partial<Record<string, Wiersz[]>> = {}) {
         filtry.push({ kolumna, operator: "in", wartosc }),
         budowniczy
       ),
-      order: (kolumna: string) => ((sortuj = kolumna), budowniczy),
+      order: (kolumna: string) => (sortuj.push(kolumna), budowniczy),
       single: () => ((tryb = "jeden"), budowniczy),
       maybeSingle: () => ((tryb = "jedenLubNic"), budowniczy),
       then: <A, B>(ok: (w: Wynik) => A, nie?: (e: unknown) => B) => wykonaj().then(ok, nie),
