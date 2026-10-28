@@ -68,8 +68,18 @@ describe("Lista trenerów", () => {
     zalogowany({
       trenerzy: [ANNA],
       szkolenie_trener: [
-        { szkolenie_id: "genai", trener_id: "anna-nowak", sort_order: 0 },
-        { szkolenie_id: "esg", trener_id: "anna-nowak", sort_order: 0 },
+        {
+          szkolenie_id: "genai",
+          trener_id: "anna-nowak",
+          sort_order_trener: 0,
+          sort_order_szkolenie: 0,
+        },
+        {
+          szkolenie_id: "esg",
+          trener_id: "anna-nowak",
+          sort_order_trener: 0,
+          sort_order_szkolenie: 1,
+        },
       ],
     });
     await zamontujTrase("/panel/trenerzy");
@@ -150,8 +160,8 @@ describe("Przypisania", () => {
 
     await waitFor(() => expect(atrapa().gdzie("szkolenie_trener", "insert")).toHaveLength(1));
     expect(atrapa().gdzie("szkolenie_trener", "insert")[0]?.wiersz).toEqual([
-      { szkolenie_id: "genai", trener_id: "jan-kowalski", sort_order: 0 },
-      { szkolenie_id: "genai", trener_id: "anna-nowak", sort_order: 1 },
+      { szkolenie_id: "genai", trener_id: "jan-kowalski", sort_order_trener: 0 },
+      { szkolenie_id: "genai", trener_id: "anna-nowak", sort_order_trener: 1 },
     ]);
     expect(atrapa().gdzie("szkolenie_trener", "delete")).toHaveLength(0);
     expect(atrapa().gdzie("szkolenia", "update")).toHaveLength(1);
@@ -168,8 +178,8 @@ describe("Przypisania", () => {
 
     await waitFor(() => expect(atrapa().gdzie("szkolenie_trener", "insert")).toHaveLength(1));
     expect(atrapa().gdzie("szkolenie_trener", "insert")[0]?.wiersz).toEqual([
-      { trener_id: "anna-nowak", szkolenie_id: "genai", sort_order: 0 },
-      { trener_id: "anna-nowak", szkolenie_id: "esg", sort_order: 1 },
+      { trener_id: "anna-nowak", szkolenie_id: "genai", sort_order_szkolenie: 0 },
+      { trener_id: "anna-nowak", szkolenie_id: "esg", sort_order_szkolenie: 1 },
     ]);
   });
 
@@ -178,7 +188,14 @@ describe("Przypisania", () => {
     zalogowany({
       trenerzy: [ANNA, JAN],
       szkolenia: [GENAI],
-      szkolenie_trener: [{ szkolenie_id: "genai", trener_id: "anna-nowak", sort_order: 0 }],
+      szkolenie_trener: [
+        {
+          szkolenie_id: "genai",
+          trener_id: "anna-nowak",
+          sort_order_trener: 0,
+          sort_order_szkolenie: 0,
+        },
+      ],
     });
     await zamontujTrase("/panel/szkolenia/genai");
     await user.click(await screen.findByRole("button", { name: "Usuń przypisanie: Anna Nowak" }));
@@ -194,7 +211,7 @@ describe("Przypisania", () => {
       { kolumna: "trener_id", operator: "in", wartosc: ["anna-nowak"] },
     ]);
     expect(atrapa().gdzie("szkolenie_trener", "insert")[0]?.wiersz).toEqual([
-      { szkolenie_id: "genai", trener_id: "jan-kowalski", sort_order: 0 },
+      { szkolenie_id: "genai", trener_id: "jan-kowalski", sort_order_trener: 0 },
     ]);
   });
 });
@@ -204,7 +221,14 @@ describe("Usuwanie trenera", () => {
     zalogowany({
       trenerzy: [ANNA],
       szkolenia: [GENAI],
-      szkolenie_trener: [{ szkolenie_id: "genai", trener_id: "anna-nowak", sort_order: 0 }],
+      szkolenie_trener: [
+        {
+          szkolenie_id: "genai",
+          trener_id: "anna-nowak",
+          sort_order_trener: 0,
+          sort_order_szkolenie: 0,
+        },
+      ],
     });
     await zamontujTrase("/panel/trenerzy");
     fireEvent.click(await screen.findByLabelText("Usuń: Anna Nowak"));
