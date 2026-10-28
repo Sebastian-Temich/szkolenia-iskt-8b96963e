@@ -78,7 +78,13 @@ export function roznicaPrzypisan(obecne: string[], docelowe: string[]) {
  * pozostające są renumerowane do indeksu w `docelowe` niezależnie od zapisanej
  * wartości. To naprawia R7 u źródła (renumeracja nie zależy od porównania ze
  * stanem bazy) i jest idempotentne oraz odporne na dowolny stan wejściowy.
- * Zapis idzie wyłącznie do kolumny TEJ strony — nigdy do kolumny drugiej.
+ * Zapis idzie wyłącznie do kolumny TEJ strony — z jednym wyjątkiem: nowo
+ * wstawiany wiersz dostaje też kolumnę kolejności DRUGIEJ strony, ustawioną na
+ * `max(tej kolumny w obrębie klucza drugiej strony) + 1`, żeby nowe przypisanie
+ * lądowało NA KOŃCU listy drugiej strony (W1b), a nie na `DEFAULT 0` — który
+ * remisuje z istniejącym wierszem na pozycji 0 i łamie zwartość (R7) tej drugiej
+ * partycji. Dotyczy to WYŁĄCZNIE nowego wiersza; wierszy pozostających po drugiej
+ * stronie nie dotykamy (to by zepsuło R1).
  */
 export async function zapiszPrzypisania(
   strona: StronaPrzypisania,
@@ -95,11 +101,30 @@ export async function zapiszPrzypisania(
     if (error) throw mapujBlad(error, blad);
   }
   if (dodaj.length > 0) {
-    const wiersze = dodaj.map((obcy) => ({
-      [k.wlasna]: id,
-      [k.obca]: obcy,
-      [k.kolejnosc]: docelowe.indexOf(obcy),
-    }));
+    // Kolumny DRUGIEJ strony (ta sama tabela, przeciwna encja porządkująca).
+    const ko = kolumny(strona === "szkolenie" ? "trener" : "szkolenie");
+    const wiersze: Array<Record<string, string | number>> = [];
+    for (const obcy of dodaj) {
+      // Pozycja NA KOŃCU listy drugiej strony: maksimum jej kolumny w obrębie
+      // klucza drugiej strony (= `obcy`) + 1. Maksimum wyznaczamy w kodzie, bo
+      // zapytanie graniczne (`order` malejąco + `limit(1)`) opiera się na
+      // szczegółach PostgREST, których harness testowy nie odtwarza — a wynik
+      // „pierwszy wiersz posortowanej partycji" cicho stałby się minimum.
+      // Partycja drugiej strony dla `obcy` jest rozłączna dla każdego
+      // dodawanego `obcy`, więc w obrębie jednego insertu nie ma kolizji.
+      const { data, error } = await klient.from(TABELA).select(ko.kolejnosc).eq(ko.wlasna, obcy);
+      if (error) throw mapujBlad(error, blad);
+      const pozycje = ((data ?? []) as Array<Record<string, unknown>>)
+        .map((w) => w[ko.kolejnosc])
+        .filter((v): v is number => typeof v === "number");
+      const maks = pozycje.length > 0 ? Math.max(...pozycje) : -1;
+      wiersze.push({
+        [k.wlasna]: id,
+        [k.obca]: obcy,
+        [k.kolejnosc]: docelowe.indexOf(obcy),
+        [ko.kolejnosc]: maks + 1,
+      });
+    }
     const { error } = await klient.from(TABELA).insert(wiersze);
     if (error) throw mapujBlad(error, blad);
   }

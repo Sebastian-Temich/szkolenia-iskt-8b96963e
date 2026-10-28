@@ -138,3 +138,105 @@ describe("R1 widoki publiczne (adapter) — dwie niezależne kolejności", () =>
     expect((await szkoleniaTrenera("nowak")).map((s) => s.id)).toEqual(["ai-agents", "genai"]);
   });
 });
+
+/**
+ * Dowód W1b (ISK-70): nowe przypisanie ląduje NA KOŃCU listy DRUGIEJ strony,
+ * a nie na pozycji 0. Pod `DEFAULT 0` nowy wiersz remisował z istniejącym
+ * wierszem drugiej strony stojącym na 0, co łamało zwartość (R7) tej partycji
+ * i czyniło kolejność drugiej strony zależną od rozstrzygnięcia remisu.
+ *
+ * Oracle jest dwuczęściowy i to jest celowe: sama lista po `odczytajPrzypisania`
+ * nie rozstrzyga braku poprawki (wartość `undefined` sortuje się po bajtach za
+ * liczbami, więc wygląda jak „koniec listy"), dlatego obok kolejności asercja
+ * sprawdza WARTOŚĆ zapisaną w kolumnie drugiej strony. Wartości wejściowe są
+ * niezwarte (5 i 9, 4 i 7) po to, żeby `min + 1` dawało kolejność JAWNIE inną —
+ * czyli żeby pomyłka „pierwszy wiersz posortowanej partycji" czerwieniła test.
+ */
+describe("W1b — nowe przypisanie ląduje na końcu listy drugiej strony", () => {
+  function pozycjaDrugiejStrony(szkolenie: string, trener: string, kolumna: string) {
+    const wiersze = (biezacaAtrapa().dane["szkolenie_trener"] ?? []) as Array<
+      Record<string, unknown>
+    >;
+    const wiersz = wiersze.find(
+      (w) => w["szkolenie_id"] === szkolenie && w["trener_id"] === trener,
+    );
+    return wiersz?.[kolumna];
+  }
+
+  it("dodanie trenera do szkolenia dopisuje go na koniec listy szkoleń TEGO trenera", async () => {
+    ustawAtrape(
+      utworzAtrape({
+        szkolenie_trener: [
+          // genai ma już króla; nowak prowadzi ai-agents i python na NIEZWARTYCH pozycjach.
+          {
+            szkolenie_id: "genai",
+            trener_id: "krol",
+            sort_order_trener: 0,
+            sort_order_szkolenie: 0,
+          },
+          {
+            szkolenie_id: "ai-agents",
+            trener_id: "nowak",
+            sort_order_trener: 0,
+            sort_order_szkolenie: 5,
+          },
+          {
+            szkolenie_id: "python",
+            trener_id: "nowak",
+            sort_order_trener: 0,
+            sort_order_szkolenie: 9,
+          },
+        ],
+      }),
+    );
+    expect(await odczytajPrzypisania("trener", "nowak")).toEqual(["ai-agents", "python"]);
+
+    // Akcja po stronie SZKOLENIA: dopisujemy nowaka do genai.
+    await zapiszPrzypisania("szkolenie", "genai", ["krol", "nowak"]);
+
+    // max(5, 9) + 1 = 10 — nie 0 (brak poprawki) i nie 6 (`min + 1`).
+    expect(pozycjaDrugiejStrony("genai", "nowak", "sort_order_szkolenie")).toBe(10);
+    // Lista szkoleń nowaka: genai na KOŃCU; pod `min + 1` wyszłoby ["ai-agents","genai","python"].
+    expect(await odczytajPrzypisania("trener", "nowak")).toEqual(["ai-agents", "python", "genai"]);
+    // Strona, z której zapisywaliśmy, jest uporządkowana zwarcie wg wejścia.
+    expect(await odczytajPrzypisania("szkolenie", "genai")).toEqual(["krol", "nowak"]);
+  });
+
+  it("dodanie szkolenia do trenera dopisuje go na koniec listy trenerów TEGO szkolenia", async () => {
+    ustawAtrape(
+      utworzAtrape({
+        szkolenie_trener: [
+          // genai ma krola i wolska na NIEZWARTYCH pozycjach; nowak prowadzi ai-agents.
+          {
+            szkolenie_id: "genai",
+            trener_id: "krol",
+            sort_order_trener: 4,
+            sort_order_szkolenie: 0,
+          },
+          {
+            szkolenie_id: "genai",
+            trener_id: "wolska",
+            sort_order_trener: 7,
+            sort_order_szkolenie: 0,
+          },
+          {
+            szkolenie_id: "ai-agents",
+            trener_id: "nowak",
+            sort_order_trener: 0,
+            sort_order_szkolenie: 0,
+          },
+        ],
+      }),
+    );
+    expect(await odczytajPrzypisania("szkolenie", "genai")).toEqual(["krol", "wolska"]);
+
+    // Akcja po stronie TRENERA: dopisujemy genai nowakowi.
+    await zapiszPrzypisania("trener", "nowak", ["ai-agents", "genai"]);
+
+    // max(4, 7) + 1 = 8 — nie 0 (brak poprawki) i nie 5 (`min + 1`).
+    expect(pozycjaDrugiejStrony("genai", "nowak", "sort_order_trener")).toBe(8);
+    // Lista trenerów genai: nowak na KOŃCU; pod `min + 1` wyszłoby ["krol","nowak","wolska"].
+    expect(await odczytajPrzypisania("szkolenie", "genai")).toEqual(["krol", "wolska", "nowak"]);
+    expect(await odczytajPrzypisania("trener", "nowak")).toEqual(["ai-agents", "genai"]);
+  });
+});

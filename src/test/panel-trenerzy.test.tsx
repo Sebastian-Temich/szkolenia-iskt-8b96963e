@@ -160,8 +160,18 @@ describe("Przypisania", () => {
 
     await waitFor(() => expect(atrapa().gdzie("szkolenie_trener", "insert")).toHaveLength(1));
     expect(atrapa().gdzie("szkolenie_trener", "insert")[0]?.wiersz).toEqual([
-      { szkolenie_id: "genai", trener_id: "jan-kowalski", sort_order_trener: 0 },
-      { szkolenie_id: "genai", trener_id: "anna-nowak", sort_order_trener: 1 },
+      {
+        szkolenie_id: "genai",
+        trener_id: "jan-kowalski",
+        sort_order_trener: 0,
+        sort_order_szkolenie: 0,
+      },
+      {
+        szkolenie_id: "genai",
+        trener_id: "anna-nowak",
+        sort_order_trener: 1,
+        sort_order_szkolenie: 0,
+      },
     ]);
     expect(atrapa().gdzie("szkolenie_trener", "delete")).toHaveLength(0);
     expect(atrapa().gdzie("szkolenia", "update")).toHaveLength(1);
@@ -178,8 +188,18 @@ describe("Przypisania", () => {
 
     await waitFor(() => expect(atrapa().gdzie("szkolenie_trener", "insert")).toHaveLength(1));
     expect(atrapa().gdzie("szkolenie_trener", "insert")[0]?.wiersz).toEqual([
-      { trener_id: "anna-nowak", szkolenie_id: "genai", sort_order_szkolenie: 0 },
-      { trener_id: "anna-nowak", szkolenie_id: "esg", sort_order_szkolenie: 1 },
+      {
+        trener_id: "anna-nowak",
+        szkolenie_id: "genai",
+        sort_order_szkolenie: 0,
+        sort_order_trener: 0,
+      },
+      {
+        trener_id: "anna-nowak",
+        szkolenie_id: "esg",
+        sort_order_szkolenie: 1,
+        sort_order_trener: 0,
+      },
     ]);
   });
 
@@ -211,7 +231,12 @@ describe("Przypisania", () => {
       { kolumna: "trener_id", operator: "in", wartosc: ["anna-nowak"] },
     ]);
     expect(atrapa().gdzie("szkolenie_trener", "insert")[0]?.wiersz).toEqual([
-      { szkolenie_id: "genai", trener_id: "jan-kowalski", sort_order_trener: 0 },
+      {
+        szkolenie_id: "genai",
+        trener_id: "jan-kowalski",
+        sort_order_trener: 0,
+        sort_order_szkolenie: 0,
+      },
     ]);
   });
 });
