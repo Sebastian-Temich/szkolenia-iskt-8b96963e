@@ -28,7 +28,12 @@ describe("R1/R7 panel — zapis jednej strony nie rusza kolejności drugiej", ()
   const rows = [
     { szkolenie_id: "genai", trener_id: "nowak", sort_order_trener: 0, sort_order_szkolenie: 0 },
     { szkolenie_id: "genai", trener_id: "krol", sort_order_trener: 1, sort_order_szkolenie: 0 },
-    { szkolenie_id: "ai-agents", trener_id: "nowak", sort_order_trener: 0, sort_order_szkolenie: 1 },
+    {
+      szkolenie_id: "ai-agents",
+      trener_id: "nowak",
+      sort_order_trener: 0,
+      sort_order_szkolenie: 1,
+    },
     { szkolenie_id: "python", trener_id: "nowak", sort_order_trener: 0, sort_order_szkolenie: 2 },
   ];
 
@@ -65,14 +70,26 @@ describe("R1/R7 panel — zapis jednej strony nie rusza kolejności drugiej", ()
     ustawAtrape(
       utworzAtrape({
         szkolenie_trener: [
-          { szkolenie_id: "genai", trener_id: "nowak", sort_order_trener: 0, sort_order_szkolenie: 3 },
-          { szkolenie_id: "ai-agents", trener_id: "nowak", sort_order_trener: 0, sort_order_szkolenie: 9 },
+          {
+            szkolenie_id: "genai",
+            trener_id: "nowak",
+            sort_order_trener: 0,
+            sort_order_szkolenie: 3,
+          },
+          {
+            szkolenie_id: "ai-agents",
+            trener_id: "nowak",
+            sort_order_trener: 0,
+            sort_order_szkolenie: 9,
+          },
         ],
       }),
     );
     // Zapis bez zmiany przynależności i bez zmiany kolejności logicznej…
     await zapiszPrzypisania("trener", "nowak", ["genai", "ai-agents"]);
-    const wiersze = (biezacaAtrapa().dane["szkolenie_trener"] ?? []) as Array<Record<string, unknown>>;
+    const wiersze = (biezacaAtrapa().dane["szkolenie_trener"] ?? []) as Array<
+      Record<string, unknown>
+    >;
     const poId = Object.fromEntries(
       wiersze.map((w) => [String(w["szkolenie_id"]), w["sort_order_szkolenie"]]),
     );
@@ -90,9 +107,24 @@ describe("R1 widoki publiczne (adapter) — dwie niezależne kolejności", () =>
         szkolenie_trener: [
           // Kolejność trenerów przy genai (sort_order_trener) jest JAWNIE inna niż
           // kolejność szkoleń nowaka (sort_order_szkolenie), żeby pomylenie kolumn było widoczne.
-          { szkolenie_id: "genai", trener_id: "nowak", sort_order_trener: 0, sort_order_szkolenie: 1 },
-          { szkolenie_id: "genai", trener_id: "krol", sort_order_trener: 1, sort_order_szkolenie: 0 },
-          { szkolenie_id: "ai-agents", trener_id: "nowak", sort_order_trener: 5, sort_order_szkolenie: 0 },
+          {
+            szkolenie_id: "genai",
+            trener_id: "nowak",
+            sort_order_trener: 0,
+            sort_order_szkolenie: 1,
+          },
+          {
+            szkolenie_id: "genai",
+            trener_id: "krol",
+            sort_order_trener: 1,
+            sort_order_szkolenie: 0,
+          },
+          {
+            szkolenie_id: "ai-agents",
+            trener_id: "nowak",
+            sort_order_trener: 5,
+            sort_order_szkolenie: 0,
+          },
         ],
       }),
     ),
