@@ -1,0 +1,197 @@
+
+> test
+> vitest run src/test/panel-szkolenia-usuwanie.test.tsx
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.11 [39m[90m/dev-server[39m
+
+[90mstderr[2m | src/test/panel-szkolenia-usuwanie.test.tsx[2m > [22m[2mUsuwanie szkolenia[2m > [22m[2mpotwierdzenie usuwa tylko szkolenie
+[22m[39mIn HTML, <html> cannot be a child of <div>.
+This will cause a hydration error.
+
+ [31m❯[39m src/test/panel-szkolenia-usuwanie.test.tsx [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 5222[2mms[22m[39m
+[31m     [31m×[31m potwierdzenie usuwa tylko szkolenie[39m[33m 5220[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/test/panel-szkolenia-usuwanie.test.tsx[2m > [22mUsuwanie szkolenia[2m > [22mpotwierdzenie usuwa tylko szkolenie
+[31m[1mAssertionError[22m[39m: expected [ { tabela: 'szkolenia', …(3) }, …(1) ] to have a length of 1 but got 2
+
+Ignored nodes: comments, script, style
+[36m<html[39m
+  [33mlang[39m=[32m"pl"[39m
+[36m>[39m
+  [36m<head>[39m
+    [36m<link[39m
+      [33mdata-precedence[39m=[32m"default"[39m
+      [33mhref[39m=[32m"/src/styles.css"[39m
+      [33mrel[39m=[32m"stylesheet"[39m
+    [36m/>[39m
+    [36m<link[39m
+      [33mdata-precedence[39m=[32m"default"[39m
+      [33mhref[39m=[32m"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"[39m
+      [33mrel[39m=[32m"stylesheet"[39m
+    [36m/>[39m
+    [36m<link[39m
+      [33mas[39m=[32m"style"[39m
+      [33mhref[39m=[32m"/src/styles.css"[39m
+      [33mrel[39m=[32m"preload"[39m
+    [36m/>[39m
+    [36m<link[39m
+      [33mas[39m=[32m"style"[39m
+      [33mhref[39m=[32m"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"[39m
+      [33mrel[39m=[32m"preload"[39m
+    [36m/>[39m
+    [36m<title>[39m
+      [0mSzkolenia — Panel redakcyjny ISKT[0m
+    [36m</title>[39m
+    [36m<meta[39m
+      [33mcharset[39m=[32m"utf-8"[39m
+    [36m/>[39m
+    [36m<meta[39m
+      [33mcontent[39m=[32m"width=device-width, initial-scale=1"[39m
+      [33mname[39m=[32m"viewport"[39m
+    [36m/>[39m
+    [36m<meta[39m
+      [33mcontent[39m=[32m"ISKT"[39m
+      [33mname[39m=[32m"author"[39m
+    [36m/>[39m
+    [36m<meta[39m
+      [33mcontent[39m=[32m"Panel redakcyjny treści serwisu Szkolenia ISKT."[39m
+      [33mname[39m=[32m"description"[39m
+    [36m/>[39m
+    [36m<meta[39m
+      [33mcontent[39m=[32m"Panel redakcyjny — Szkolenia ISKT"[39m
+      [33mproperty[39m=[32m"og:title"[39m
+    [36m/>[39m
+    [36m<meta[39m
+      [33mcontent[39m=[32m"Panel redakcyjny treści serwisu Szkolenia ISKT."[39m
+      [33mproperty[39m=[32m"og:description"[39m
+    [36m/>[39m
+    [36m<meta[39m
+      [33mcontent[39m=[32m"website"[39m
+      [33mproperty[39m=[32m"og:type"[39m
+    [36m/>[39m
+    [36m<meta[39m
+      [33mcontent[39m=[32m"summary"[39m
+      [33mname[39m=[32m"twitter:card"[39m
+    [36m/>[39m
+    [36m<meta[39m
+      [33mcontent[39m=[32m"noindex"[39m
+      [33mname[39m=[32m"robots"[39m
+    [36m/>[39m
+    [36m<link[39m
+      [33mhref[39m=[32m"/favicon.png"[39m
+      [33mrel[39m=[32m"icon"[39m
+      [33mtype[39m=[32m"image/png"[39m
+    [36m/>[39m
+    [36m<link[39m
+      [33mhref[39m=[32m"https://fonts.googleapis.com"[39m
+      [33mrel[39m=[32m"preconnect"[39m
+    [36m/>[39m
+    [36m<link[39m
+      [33mcrossorigin[39m=[32m""[39m
+      [33mhref[39m=[32m"https://fonts.gstatic.com"[39m
+      [33mrel[39m=[32m"preconnect"[39m
+    [36m/>[39m
+  [36m</head>[39m
+  [36m<body[39m
+    [33mstyle[39m=[32m""[39m
+  [36m>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"flex min-h-screen flex-col"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"sticky top-0 z-50 border-b border-border bg-background/82 backdrop-blur-md"[39m
+        [36m>[39m
+          [36m<nav[39m
+            [33maria-label[39m=[32m"Nawigacja główna"[39m
+            [33mclass[39m=[32m"mx-auto flex h-[var(--nav-h)] max-w-[var(--container-max)] items-center justify-between gap-[var(--space-6)] px-[var(--container-pad)]"[39m
+          [36m>[39m
+            [36m<a[39m
+              [33maria-label[39m=[32m"ISKT — strona główna"[39m
+              [33mclass[39m=[32m"flex min-w-0 items-center gap-[var(--space-4)]"[39m
+              [33mhref[39m=[32m"/"[39m
+            [36m>[39m
+              [36m<img[39m
+                [33malt[39m=[32m"ISKT Greenovation"[39m
+                [33mclass[39m=[32m"w-auto max-w-full object-contain h-[var(--logo-h-header)]"[39m
+                [33mheight[39m=[32m"529"[39m
+                [33msrc[39m=[32m"/iskt-logo-transparent.png"[39m
+                [33mwidth[39m=[32m"640"[39m
+              [36m/>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"hidden max-w-[calc(var(--space-32)+var(--space-24))] text-[length:var(--text-logo)] leading-[var(--lh-tight)] font-extrabold tracking-normal text-foreground sm:block"[39m
+              [36m>[39m
+                [0mRozwijaj swoje kompetencje z ISKT[0m
+              [36m</span>[39m
+            [36m</a>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"hidden items-center gap-[var(--space-5)] xl:flex"[39m
+            [36m>[39m
+              [36m<a[39m
+                [33mclass[39m=[32m"whitespace-nowrap text-[length:var(--text-nav)] font-medium text-[var(--ink-800)] hover:text-primary"[39m
+                [33mhref[39m=[32m"/#obszary"[39m
+              [36m>[39m
+                [0mObszary[0m
+              [36m</a>[39m
+              [36m<a[39m
+                [33mclass[39m=[32m"whitespace-nowrap text-[length:var(--text-nav)] font-medium text-[var(--ink-800)] hover:text-primary"[39m
+                [33mhref[39m=[32m"/szkolenia"[39m
+              [36m>[39m
+                [0mKatalog[0m
+              [36m</a>[39m
+              [36m<a[39m
+                [33mclass[39m=[32m"whitespace-nowrap text-[length:var(--text-nav)] font-medium text-[var(--ink-800)] hover:text-primary"[39m
+                [33mhref[39m=[32m"/trenerzy"[39m
+              [36m>[39m
+                [0mNasi Trenerzy[0m
+              [36m</a>[39m
+              [36m<a[39m
+                [33mclass[39m=[32m"whitespace-nowrap text-[length:var(--text-nav)] font-medium text-[var(--ink-800)] hover:text-primary"[39m
+                [33mhref[39m=[32m"/#dofinansowania"[39m
+              [36m>[39m
+                [0mDofinansowania[0m
+              [36m</a>[39m
+              [36m<a[39m
+                [33mclass[39m=[32m"whitespace-nowrap text-[length:var(--text-nav)] font-medium text-[var(--ink-800)] hover:text-primary"[39m
+                [33mhref[39m=[32m"/#kontakt"[39m
+              [36m>[39m
+                [0mKontakt[0m
+              [36m</a>[39m
+              [36m<a[39m
+                [33mclass[39m=[32m"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow py-2 h-[calc(var(--space-10)+var(--space-1))] rounded-pill bg-primary px-[var(--space-5)] text-[length:var(--text-cta)] font-semibold text-primary-foreground shadow-brand transition-colors duration-[var(--dur-fast)] ease-standard hover:bg-[var(--green-800)]"[39m
+                [33mhref[39m=[32m"/#kontakt"[39m
+              [36m>[39m
+                [0mZapisz się [0m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39...
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 1[39m
+[31m+ 2[39m
+
+[36m [2m❯[22m src/test/panel-szkolenia-usuwanie.test.tsx:[2m55:71[22m[39m
+    [90m 53|[39m     [35mconst[39m dialog [33m=[39m [35mawait[39m [34mznajdzDialog[39m()[33m;[39m
+    [90m 54|[39m     fireEvent[33m.[39m[34mclick[39m([34mwithin[39m(dialog)[33m.[39m[34mgetByText[39m([32m"Usuń na stałe"[39m))[33m;[39m
+    [90m 55|[39m     await waitFor(() => expect(atrapa().gdzie("szkolenia", "delete")).…
+    [90m   |[39m                                                                       [31m^[39m
+    [90m 56|[39m     [34mexpect[39m([34matrapa[39m()[33m.[39m[34mgdzie[39m([32m"trenerzy"[39m[33m,[39m [32m"delete"[39m))[33m.[39m[34mtoHaveLength[39m([34m0[39m)[33m;[39m
+    [90m 57|[39m     expect(await screen.findByText("Nie ma jeszcze żadnych szkoleń")).…
+[90m [2m❯[22m runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:[2m47:12[22m[39m
+[90m [2m❯[22m checkCallback node_modules/@testing-library/dom/dist/wait-for.js:[2m124:77[22m[39m
+[90m [2m❯[22m Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:[2m118:16[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 06:50:52
+[2m   Duration [22m 7.06s[2m (transform 567ms, setup 257ms, import 929ms, tests 5.22s, environment 456ms)[22m
+
+
+KOD_WYJSCIA=1
