@@ -1,0 +1,37 @@
+ISK61-BB8B54AA38DA
+
+> lint
+> eslint .
+
+
+/dev-server/src/components/ui/badge.tsx
+  32:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/dev-server/src/components/ui/button.tsx
+  49:18  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/dev-server/src/components/ui/form.tsx
+  163:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/dev-server/src/components/ui/navigation-menu.tsx
+  111:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/dev-server/src/components/ui/sidebar.tsx
+  743:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/dev-server/src/components/ui/toggle.tsx
+  42:18  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/dev-server/src/test/przypisania-kolejnosc.test.ts
+  31:6   error  Replace `·szkolenie_id:·"ai-agents",·trener_id:·"nowak",·sort_order_trener:·0,·sort_order_szkolenie:·1` with `⏎······szkolenie_id:·"ai-agents",⏎······trener_id:·"nowak",⏎······sort_order_trener:·0,⏎······sort_order_szkolenie:·1,⏎···`                                prettier/prettier
+  68:12  error  Replace `·szkolenie_id:·"genai",·trener_id:·"nowak",·sort_order_trener:·0,·sort_order_szkolenie:·3` with `⏎············szkolenie_id:·"genai",⏎············trener_id:·"nowak",⏎············sort_order_trener:·0,⏎············sort_order_szkolenie:·3,⏎·········`          prettier/prettier
+  69:12  error  Replace `·szkolenie_id:·"ai-agents",·trener_id:·"nowak",·sort_order_trener:·0,·sort_order_szkolenie:·9` with `⏎············szkolenie_id:·"ai-agents",⏎············trener_id:·"nowak",⏎············sort_order_trener:·0,⏎············sort_order_szkolenie:·9,⏎·········`  prettier/prettier
+  75:79  error  Replace `Record<string,·unknown>` with `⏎······Record<string,·unknown>⏎····`                                                                                                                                                                                             prettier/prettier
+  93:12  error  Replace `·szkolenie_id:·"genai",·trener_id:·"nowak",·sort_order_trener:·0,·sort_order_szkolenie:·1` with `⏎············szkolenie_id:·"genai",⏎············trener_id:·"nowak",⏎············sort_order_trener:·0,⏎············sort_order_szkolenie:·1,⏎·········`          prettier/prettier
+  94:12  error  Replace `·szkolenie_id:·"genai",·trener_id:·"krol",·sort_order_trener:·1,·sort_order_szkolenie:·0` with `⏎············szkolenie_id:·"genai",⏎············trener_id:·"krol",⏎············sort_order_trener:·1,⏎············sort_order_szkolenie:·0,⏎·········`            prettier/prettier
+  95:12  error  Replace `·szkolenie_id:·"ai-agents",·trener_id:·"nowak",·sort_order_trener:·5,·sort_order_szkolenie:·0` with `⏎············szkolenie_id:·"ai-agents",⏎············trener_id:·"nowak",⏎············sort_order_trener:·5,⏎············sort_order_szkolenie:·0,⏎·········`  prettier/prettier
+
+✖ 13 problems (7 errors, 6 warnings)
+  7 errors and 0 warnings potentially fixable with the `--fix` option.
+
+KOD_WYJSCIA=1
