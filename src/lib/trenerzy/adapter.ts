@@ -33,6 +33,18 @@ export type WierszTrenera = {
 
 type WierszPrzypisania = { szkolenie_id: string; trener_id: string };
 
+/**
+ * Dla każdej strony odczytu: kolumna porządkująca właściwa dla tej strony oraz
+ * identyfikator po drugiej stronie jako rozstrzygnięcie remisu. Filtr `trener_id`
+ * (strona trenera) porządkuje szkolenia po `sort_order_szkolenie`; filtr
+ * `szkolenie_id` (strona szkolenia) porządkuje trenerów po `sort_order_trener`.
+ * Dwie niezależne kolejności — bez tego defekt R1 zostawałby w widokach publicznych.
+ */
+const PORZADEK_RELACJI = {
+  trener_id: { kolejnosc: "sort_order_szkolenie", obca: "szkolenie_id" },
+  szkolenie_id: { kolejnosc: "sort_order_trener", obca: "trener_id" },
+} as const;
+
 const KOMUNIKAT_LISTY = "Nie udało się wczytać listy trenerów.";
 const KOMUNIKAT_PROFILU = "Nie udało się wczytać profilu trenera.";
 const KOMUNIKAT_POWIAZAN = "Nie udało się wczytać powiązanych szkoleń.";
@@ -83,17 +95,19 @@ async function przypisania(
   wartosc: string,
   komunikat: string,
 ): Promise<WierszPrzypisania[]> {
+  const p = PORZADEK_RELACJI[kolumnaFiltra];
   const { data, error } = await klientOdczytu()
     .from(TABELA_PRZYPISAN)
     .select("szkolenie_id,trener_id")
     .eq(kolumnaFiltra, wartosc)
-    .order("sort_order", { ascending: true });
+    .order(p.kolejnosc, { ascending: true })
+    .order(p.obca, { ascending: true });
   if (error) throw bladOdczytu(error, komunikat);
   return (data ?? []) as WierszPrzypisania[];
 }
 
 /**
- * Opublikowane szkolenia prowadzone przez trenera, w kolejności `sort_order` przypisań.
+ * Opublikowane szkolenia prowadzone przez trenera, w kolejności `sort_order_szkolenie`.
  * Encje dociągamy drugim zapytaniem i porządkujemy po identyfikatorach, bo `in (...)`
  * nie obiecuje kolejności.
  */
@@ -104,7 +118,7 @@ export async function szkoleniaTrenera(trenerId: string): Promise<Szkolenie[]> {
   return wKolejnosci(await opublikowaneSzkoleniaPoId(id), id);
 }
 
-/** Opublikowani prowadzący dane szkolenie, w kolejności `sort_order` przypisań. */
+/** Opublikowani prowadzący dane szkolenie, w kolejności `sort_order_trener`. */
 export async function trenerzySzkolenia(szkolenieId: string): Promise<Trener[]> {
   const id = (await przypisania("szkolenie_id", szkolenieId, KOMUNIKAT_PROWADZACYCH)).map(
     (w) => w.trener_id,
