@@ -96,7 +96,14 @@ describe("Lista szkoleń — cztery stany", () => {
           published_at: null,
         }),
       ],
-      szkolenie_trener: [{ szkolenie_id: "genai", trener_id: "anna-nowak", sort_order: 0 }],
+      szkolenie_trener: [
+        {
+          szkolenie_id: "genai",
+          trener_id: "anna-nowak",
+          sort_order_trener: 0,
+          sort_order_szkolenie: 0,
+        },
+      ],
     });
     await zamontujTrase("/panel/szkolenia");
     const wiersz = (await screen.findByText("ESG w praktyce")).closest("tr");
@@ -246,8 +253,18 @@ describe("Publikacja, wycofanie i usuwanie", () => {
     zalogowany({
       szkolenia: [wierszSzkolenia()],
       szkolenie_trener: [
-        { szkolenie_id: "genai", trener_id: "anna-nowak", sort_order: 0 },
-        { szkolenie_id: "genai", trener_id: "jan-kowalski", sort_order: 1 },
+        {
+          szkolenie_id: "genai",
+          trener_id: "anna-nowak",
+          sort_order_trener: 0,
+          sort_order_szkolenie: 0,
+        },
+        {
+          szkolenie_id: "genai",
+          trener_id: "jan-kowalski",
+          sort_order_trener: 1,
+          sort_order_szkolenie: 0,
+        },
       ],
     });
     await zamontujTrase("/panel/szkolenia");
