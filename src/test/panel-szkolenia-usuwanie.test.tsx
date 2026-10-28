@@ -56,5 +56,8 @@ describe("Usuwanie szkolenia", () => {
     expect(atrapa().gdzie("trenerzy", "delete")).toHaveLength(0);
     expect(await screen.findByText("Nie ma jeszcze żadnych szkoleń")).toBeVisible();
     expect(screen.getByText("Wpis został usunięty.")).toBeVisible();
+    expect(atrapa().gdzie("szkolenia", "delete")[0]?.filtry).toEqual([
+      { kolumna: "id", operator: "eq", wartosc: "genai" },
+    ]);
   });
 });
