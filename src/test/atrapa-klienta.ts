@@ -66,13 +66,21 @@ export function wierszZTrenera(t: TrenerMakiety, indeks: number, nadpisz: Wiersz
   };
 }
 
-/** Wiersze relacji M:N wyprowadzone z pola `teach` makiety, w jej kolejności. */
+/**
+ * Wiersze relacji M:N wyprowadzone z pola `teach` makiety, w jej kolejności.
+ * Dwie niezależne kolejności (kontrakt 0006):
+ *  • `sort_order_szkolenie` = pozycja szkolenia na liście danego trenera = indeks w `teach`,
+ *  • `sort_order_trener`    = pozycja trenera na liście danego szkolenia = kolejność, w jakiej
+ *    trenerzy makiety wskazują to szkolenie (licznik per szkolenie_id).
+ */
 export function przypisaniaZMakiety(trenerzy: TrenerMakiety[] = TRENERZY_MAKIETY): Wiersz[] {
+  const licznikTrenerow: Record<string, number> = {};
   return trenerzy.flatMap((t) =>
     t.teach.map((szkolenieId, i) => ({
       szkolenie_id: szkolenieId,
       trener_id: t.id,
-      sort_order: i,
+      sort_order_szkolenie: i,
+      sort_order_trener: (licznikTrenerow[szkolenieId] = (licznikTrenerow[szkolenieId] ?? -1) + 1),
     })),
   );
 }
