@@ -1,6 +1,6 @@
 ---
 etap: 00-analiza
-status: in-progress
+status: review
 iteracja: 0
 akceptacja_wlasciciela: true
 ---
@@ -31,4 +31,4 @@ akceptacja_wlasciciela: true
 ## Checkpoint
 
 - [x] Review etapu dało PASS (zaznacza reviewer, nie autor) — PR #1, commit 985ed79
-- [ ] Właściciel napisał „akceptuję analizę i kierunek”
+- [x] Właściciel napisał „akceptuję analizę i kierunek” (2026-11-12, decyzje.md)
