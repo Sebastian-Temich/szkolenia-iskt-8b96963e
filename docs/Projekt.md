@@ -1,13 +1,13 @@
 ---
 projekt: szkolenia-iskt
 tryb: M
-etap_opis: "Plan"
-postep_etapy: "2/6"
+etap_opis: "Rozpisanie zadań"
+postep_etapy: "3/6"
 postep_zadania: "0/0"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Review etapu plan, potem Twoja akceptacja"
-ostatnia_synchronizacja: 2026-11-12T23:04:30Z
+nastepny_krok: "Start etapu rozpisanie zadań"
+ostatnia_synchronizacja: 2026-11-12T23:07:20Z
 ---
 
 # szkolenia-iskt
@@ -16,10 +16,10 @@ ostatnia_synchronizacja: 2026-11-12T23:04:30Z
 
 ## Gdzie jesteśmy
 
-- **Etap:** Plan
-- **Postęp:** Etapy 2/6 · Zadania 0/0
-- **Co się dzieje:** etap plan w review
-- **Następny krok:** Review etapu plan, potem Twoja akceptacja
+- **Etap:** Rozpisanie zadań
+- **Postęp:** Etapy 3/6 · Zadania 0/0
+- **Co się dzieje:** etap rozpisanie zadań jeszcze nie rozpoczęty
+- **Następny krok:** Start etapu rozpisanie zadań
 
 ## Czeka na Ciebie
 
@@ -42,6 +42,7 @@ Otwartych brak.
 - [Raport analizy](00-analiza/raport.md)
 - [Specyfikacja](00-intake/specyfikacja.md)
 - [Lista startowa](00-intake/lista-startowa.md)
+- [Plan](04-plan/plan.md)
 - [Decyzje](decyzje.md)
 - Karty funkcji: [W-04](00-intake/funkcje/W-04.md)
 - [Historia](historia.md): punkt przekazania, dziennik etapów, wszystkie zadania
