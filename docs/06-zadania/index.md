@@ -5,7 +5,7 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 <!-- sync-status:start -->
 | Zadanie | Tytuł | Status | Iteracja | Kamień milowy | PR | CI |
 |---|---|---|---|---|---|---|
-| #6 | Przejście z bun na pnpm i CI jakości | todo | 0 | M1 Uruchomienie lokalne | - | - |
+| #6 | Przejście z bun na pnpm i CI jakości | done | 1 | M1 Uruchomienie lokalne | #11 merged | pass |
 | #7 | Migracja bazowa 1:1 z chmurą i job bazy w CI | todo | 0 | M1 Uruchomienie lokalne | - | - |
 | #8 | Dane startowe, konta testowe i uruchomienie lokalne z instrukcją | todo | 0 | M1 Uruchomienie lokalne | - | - |
 | #9 | Testy zasad dostępu (pgTAP) | todo | 0 | M1 Uruchomienie lokalne | - | - |

@@ -29,7 +29,9 @@ kolejno, potem uruchomienie serwisu z lokalną bazą dla właściciela.
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
 
-## Wszystkie zadania zrobione (0)
+## Wszystkie zadania zrobione (1)
 
-Jeszcze nic.
+| Zadanie | Kamień | PR | Zamknięte |
+|---|---|---|---|
+| #6 Przejście z bun na pnpm i CI jakości | M1 Uruchomienie lokalne | #11 | 2026-11-12 |
 <!-- historia:end -->
