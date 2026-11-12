@@ -1,7 +1,7 @@
 ---
 etap: 06-zadania
-status: review
-iteracja: 0
+status: in-progress
+iteracja: 2
 akceptacja_wlasciciela: false
 ---
 
