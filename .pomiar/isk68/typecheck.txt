@@ -1,5 +1,0 @@
-
-> typecheck
-> tsc --noEmit
-
-KOD_WYJSCIA=0
