@@ -6,8 +6,8 @@ postep_etapy: "2/6"
 postep_zadania: "0/0"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Agent przygotowuje etap plan"
-ostatnia_synchronizacja: 2026-11-12T23:00:18Z
+nastepny_krok: "Review etapu plan, potem Twoja akceptacja"
+ostatnia_synchronizacja: 2026-11-12T23:04:30Z
 ---
 
 # szkolenia-iskt
@@ -18,8 +18,8 @@ ostatnia_synchronizacja: 2026-11-12T23:00:18Z
 
 - **Etap:** Plan
 - **Postęp:** Etapy 2/6 · Zadania 0/0
-- **Co się dzieje:** etap plan w przygotowaniu
-- **Następny krok:** Agent przygotowuje etap plan
+- **Co się dzieje:** etap plan w review
+- **Następny krok:** Review etapu plan, potem Twoja akceptacja
 
 ## Czeka na Ciebie
 
