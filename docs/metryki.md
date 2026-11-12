@@ -5,6 +5,7 @@ Plik wspólny, aktualizuje orkiestrator. Pomiar poglądowy, służy też do por�
 | Zlecenie | Tryb | Czas | Zadania | Iteracje | Eskalacje | Uwagi |
 |---|---|---|---|---|---|---|
 | #6 Przejście z bun na pnpm i CI jakości | M | 8min | 1 | 1 | 0 | PR #11 |
+| #7 Migracja bazowa 1:1 z chmurą i job bazy w CI | M | 19min | 1 | 1 | 0 | PR #12 |
 
 Eskalacje nie liczą pytań workera (`shctl escalate --typ pytanie`): są w „Uwagach” jako „pytania: N”.
 
