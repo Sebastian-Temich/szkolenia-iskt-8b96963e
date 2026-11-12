@@ -35,7 +35,7 @@ hosting:
   baza: supabase-cloud
   region: eu
   konta: klient
-  zaakceptowany: false
+  zaakceptowany: true
 pochodzenie: adopt
 adopt:
   repo: Sebastian-Temich/szkolenia-iskt-8b96963e
