@@ -1,0 +1,113 @@
+{
+  "lovable": {
+    "wykryto": true,
+    "pliki": [
+      {
+        "plik": ".lovable/project.json",
+        "sygnal": "katalog .lovable"
+      },
+      {
+        "plik": "README.md",
+        "sygnal": "odnośnik lovable.dev"
+      }
+    ],
+    "synchronizacja": {
+      "commity": 209,
+      "ostatni": "2026-10-28T20:27:51+00:00",
+      "aktywna": true
+    }
+  },
+  "supabase": {
+    "wykryto": true,
+    "config_toml": false,
+    "migracje": {
+      "liczba": 0,
+      "pierwsza": null,
+      "ostatnia": null
+    },
+    "funkcje": [],
+    "seed": [],
+    "klienci": [
+      {
+        "plik": "src/lib/supabase/klient.ts",
+        "klucz_z": "env"
+      }
+    ]
+  },
+  "klucze": [
+    {
+      "plik": ".env",
+      "linia": "2",
+      "rodzaj": "sb_publishable",
+      "rola": "anon"
+    }
+  ],
+  "env_w_repo": [
+    ".env"
+  ],
+  "zmienne": [
+    "VITE_SUPABASE_PUBLISHABLE_KEY",
+    "VITE_SUPABASE_URL"
+  ],
+  "rls": {
+    "tabele": [],
+    "bez_rls": []
+  },
+  "dane_osobowe": [],
+  "pakiety": {
+    "menedzer": "bun",
+    "package_json": {
+      "nazwa": "tanstack_start_ts",
+      "skrypty": [
+        "build",
+        "build:dev",
+        "dev",
+        "format",
+        "lint",
+        "preview",
+        "test",
+        "test:watch",
+        "typecheck"
+      ],
+      "zaleznosci": 53,
+      "dev": 22,
+      "frameworki": [
+        "@supabase/supabase-js",
+        "react",
+        "tailwindcss",
+        "typescript",
+        "vite",
+        "vitest"
+      ]
+    }
+  },
+  "ci": [],
+  "testy": [
+    "src/test/app-routing.test.tsx",
+    "src/test/dostepnosc-kontrast.test.ts",
+    "src/test/formularz-kontaktu.test.tsx",
+    "src/test/katalog-widok.test.tsx",
+    "src/test/kategorie-obszarow.test.ts",
+    "src/test/nawigacja-linki.test.tsx",
+    "src/test/oracle-tresci-makiety.test.ts",
+    "src/test/panel-dostep.test.tsx",
+    "src/test/panel-mapowanie.test.ts",
+    "src/test/panel-szkolenia-usuwanie.test.tsx",
+    "src/test/panel-szkolenia.test.tsx",
+    "src/test/panel-trenerzy.test.tsx",
+    "src/test/polecane-szkolenia.test.tsx",
+    "src/test/przypisania-kolejnosc.test.ts",
+    "src/test/publiczne-adresy-i-cena.test.tsx",
+    "src/test/publiczne-izolacja.test.tsx",
+    "src/test/publiczne-trenerzy.test.tsx",
+    "src/test/stany-ui.test.tsx",
+    "src/test/szczegol-bez-dofinansowania.test.tsx",
+    "src/test/szczegol-widok.test.tsx",
+    "src/test/szkolenia-dane.test.ts",
+    "src/test/trasy-walidacja.test.ts",
+    "vitest.config.ts"
+  ],
+  "alarmy": [
+    "🔴 plik env śledzony w repo: .env"
+  ]
+}
