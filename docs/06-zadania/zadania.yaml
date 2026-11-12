@@ -33,7 +33,8 @@ zadania:
       ją na czystej bazie (W-02, W-06). Źródło: docs/04-plan/schemat-chmury.md (odczyt katalogu
       chmury, w tym zapytania do porównania); decyzja: docs/04-plan/adr/ADR-001-baza-1-1-z-chmury-i-testy-rls.md.
       Lokalnie przez shctl db start|reset (stack projektu, porty 55421–55429). Funkcji platformy
-      rls_auto_enable i obiektów poza public nie tworzysz. Poza zakresem: seed i konta (T3), testy
+      rls_auto_enable i obiektów poza public nie tworzysz. W-06/K2 (zepsuta migracja albo test daje
+      czerwony job) sprawdza QA po merge'u: docs/04-plan/plan.md, scenariusz O-9. Poza zakresem: seed i konta (T3), testy
       RLS (T4), poprawki advisora Supabase (Z4), jakikolwiek kontakt z bazą w chmurze.
     kryteria:
       - "W-02/K1: Given pusta baza lokalna, when shctl db reset, then powstają app_role, szkolenia, trenerzy, szkolenie_trener, user_roles (force RLS), funkcje dotknij_updated_at, has_role, is_admin, is_staff, moje_role z search_path '' i ACL jak w schemat-chmury.md, wyzwalacze, polityki i granty (komenda shctl db reset bez błędów)"
@@ -61,13 +62,14 @@ zadania:
       fikcyjni, decyzja właściciela). Konta: redaktor@szkolenia.local z rolą editor i
       bez-roli@szkolenia.local, hasła testowe jawne w README z dopiskiem „tylko lokalnie”. Design: brak
       nowych ekranów; stany to istniejące ekrany z kart F-03 i F-06 w docs/00-analiza/funkcje/.
-      Poza zakresem: zmiany w src/, dane z chmury, testy RLS (T4).
+      Poza zakresem: zmiany w src/, dane z chmury, testy RLS (T4). db_migracja: true, bo seed zmienia
+      stan bazy po shctl db reset (zasada „Baza” w sh-plan: migracja, reset i seed), bez nowej migracji.
     kryteria:
       - "W-03/K1 i W-03/K2: Given shctl db reset, when zapytania SQL po resecie, then 9 opublikowanych szkoleń w kolejności z makiety z cenami i terminami z makiety, 6 opublikowanych trenerów i przypisania z makiety (wynik zapytań w raporcie T-NR)"
       - "W-03/K3: Given seed, when zapytanie do auth.users i user_roles, then istnieją redaktor@szkolenia.local z rolą editor i bez-roli@szkolenia.local bez roli; logowanie hasłem z README przez lokalne API Supabase zwraca sesję dla obu kont (komenda curl na /auth/v1/token w raporcie)"
       - "W-03/K4: seed nie zawiera danych prawdziwych osób ani haseł innych niż testowe z README (przegląd pliku)"
       - "W-04/K4: README.md ma sekcję „Uruchomienie lokalne”: wymagania (Docker, Node LTS przez fnm, pnpm), komendy shctl db start, shctl db reset, wypełnienie .env.local z shctl db status, pnpm dev, adres lokalny, konta testowe z dopiskiem „tylko lokalnie”, shctl db stop i „Gdy coś nie działa” ze shctl db status; bez wartości kluczy chmury; .env.example bez wartości"
-      - "Podpięcie: README prowadzi do tras /, /szkolenia, /trenerzy i /panel serwowanych przez pnpm dev; worker sprawdza w raporcie, że pnpm build przechodzi z .env.local wskazującym lokalny stack (W-04/K1–K3 sprawdza odbiór, patrz „Kryteria do potwierdzenia”)"
+      - "Podpięcie: README prowadzi do tras /, /szkolenia, /trenerzy i /panel serwowanych przez pnpm dev; worker sprawdza w raporcie, że pnpm build przechodzi z .env.local wskazującym lokalny stack (W-04/K1–K3 sprawdza orkiestrator po merge'u i odbiór: docs/04-plan/plan.md, scenariusze odbioru O-4…O-8)"
     pliki: [supabase/seed.sql, README.md, .env.example]
     testy: shctl db reset
     zaleznosci: [T2]
