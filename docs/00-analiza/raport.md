@@ -1,6 +1,6 @@
 # Analiza projektu: szkolenia-iskt
 
-Repo: Sebastian-Temich/szkolenia-iskt-8b96963e · Analiza: 2026-11-12T13:31Z – 2026-11-12T14:05Z (UTC) · Limit: 120 min
+Repo: Sebastian-Temich/szkolenia-iskt-8b96963e · Analiza: 2026-11-12T13:31Z – 2026-11-12T14:25Z (UTC) · Limit: 120 min
 
 Iteracja 2 (2026-11-12T14:00Z): właściciel udostępnił bazę w chmurze do odczytu przez połączenie
 Supabase (MCP). Schemat, zasady dostępu i funkcje przejrzane wyłącznie zapytaniami tylko do odczytu;
@@ -14,8 +14,8 @@ Serwis szkolenia.iskt.pl to publiczna strona oferty szkoleń ISKT (strona głów
 filtrami, szczegół szkolenia z ceną i terminami, lista trenerów i ich profile) oraz panel
 redakcyjny, w którym zalogowany redaktor dodaje, edytuje, publikuje i usuwa szkolenia oraz trenerów
 i przypisuje trenerów do szkoleń. Aplikacja powstała w Lovable w dniach 16–28 października 2026 i
-od tego czasu nikt jej nie zmieniał. Kod jest uporządkowany i dobrze pokryty testami (ostatni pomiar:
-230 testów, wszystkie zielone), ale w repozytorium nie ma żadnej definicji bazy danych: tabele,
+od tego czasu nikt jej nie zmieniał. Kod jest uporządkowany i dobrze pokryty testami (sprawdziliśmy sami:
+230 testów zielonych, typy bez błędów, build działa), ale w repozytorium nie ma żadnej definicji bazy danych: tabele,
 zasady dostępu i funkcje ról istnieją tylko w chmurze. Przejrzeliśmy bazę w chmurze (tylko odczyt):
 jej budowa zgadza się z kodem, a zasady dostępu są poprawne — gość widzi tylko opublikowane treści,
 a zapisywać może wyłącznie konto z rolą redaktora. Baza jest jednak pusta: nie ma w niej ani jednego
@@ -67,6 +67,8 @@ pierwszej migracji, z danymi startowymi z makiet, i uruchomienie lokalne.
 | Formularz kontaktu wygląda na działający, a nic nie wysyła | 🟡 | Na produkcji klienci mogą myśleć, że wysłali zgłoszenie; osobne zlecenie na wysyłkę albo informacja na stronie |
 | Szkolenia bez własnych terminów pokazują terminy domyślne z września i października 2026, czyli już minione | 🟡 | Na produkcji sprawdzić, które szkolenia nie mają własnych terminów; zmiana terminów domyślnych jako pierwsze drobne zlecenie po M1 |
 | Polecane szkolenia na stronie głównej są wybrane na stałe w kodzie (cztery konkretne) | ⚪ | Gdy któreś zostanie wycofane, sekcja pokaże mniej pozycji; wybór polecanych w panelu jako przyszłe zlecenie |
+| Dwie paczki mają znane podatności o wysokiej wadze: serwer deweloperski (dotyczy tylko pracy na komputerze, nie produkcji) i biblioteka walidacji formularzy (dotyczy tylko bardzo dużych danych w panelu) | 🟡 | Aktualizacja jako drobne zlecenie po M1; biblioteka walidacji wymaga zmiany wersji głównej |
+| Około 40 nieużywanych elementów i kilkanaście zbędnych paczek z szablonu Lovable | ⚪ | Usunięcie w drobnym zleceniu: mniej aktualizacji i mniej powierzchni ataku |
 | Część pakietów w wersjach beta lub mocno nieaktualnych | ⚪ | Przegląd w CI, aktualizacje jako drobne zlecenia |
 
 ## Pytania do Ciebie
@@ -78,10 +80,12 @@ Odpowiedz numerem albo „zdecyduj sam” (wtedy obowiązuje propozycja).
    kod. Propozycja: sprawdzasz katalog na produkcji i piszesz, co widać. Skutek: przy starszej wersji
    na produkcji przed przenosinami trzeba będzie wpisać treści do nowej bazy; przy pustej liście
    produkcja jest dziś pusta i warto ocenić, czy to pilne.
-2. Źródło pierwszej migracji. Propozycja: odtwarzamy budowę bazy z odczytu chmury przez połączenie
-   Supabase (tak jak w tej analizie, tylko odczyt) i sprawdzamy ją porównaniem z chmurą po postawieniu
-   lokalnie; zrzutu z Twojego komputera nie potrzebujemy. Skutek: oszczędzasz czas, a zgodność
-   potwierdza porównanie, nie ręczny plik.
+2. Narzędzie do instalowania paczek. Projekt z Lovable używa narzędzia, które nie uruchamia się na
+   naszym serwerze, a zasady pracy agentów dopuszczają tylko jedno inne (to, którego używamy we
+   wszystkich projektach). Propozycja: w adaptacji przechodzimy na narzędzie z naszych zasad, z
+   zapisaną decyzją techniczną. Skutek: agenci uruchomią testy na serwerze; Lovable po synchronizacji
+   może budować inaczej niż dziś, co ma znaczenie tylko wtedy, gdy przed przenosinami na Vercel
+   zechcesz jeszcze publikować w Lovable.
 3. Źródło prawdy dla bazy. Propozycja: od pierwszej migracji każda zmiana bazy to migracja w repo, a
    obecnej bazy w chmurze nie zmieniamy wcale (zostaje do przenosin). Skutek: lokalna baza i przyszła
    nowa baza w Supabase powstaną z tych samych plików.
@@ -109,8 +113,8 @@ automatycznie w GitHubie.
 
 Zakres:
 
-- adaptacja repo do procesu (pliki procesu, CI: lint, typy, testy, build), bez zmian w działaniu
-  aplikacji;
+- adaptacja repo do procesu (pliki procesu, CI: lint, typy, testy, build, zmiana narzędzia do
+  paczek według pytania 2), bez zmian w działaniu aplikacji;
 - pierwsza migracja bazy w repo odtworzona z chmury, dane startowe i lokalne konto redaktora;
 - uruchomienie lokalne: serwis i panel na lokalnej bazie, instrukcja w opisie projektu;
 - testy zasad dostępu na lokalnej bazie: gość nie widzi szkiców, osoba bez roli nic nie zapisuje,
@@ -153,11 +157,26 @@ wejście serwera `src/server.ts`.
 | vite | 8.1.5 | do sprawdzenia | przypięty dokładnie; override `rolldown` 1.2.1 |
 | jsdom | ^20.0.3 | do sprawdzenia | przestarzały (kilka wersji głównych wstecz) |
 | zod | ^3.25.76 | do sprawdzenia | dostępna linia 4.x; aktualizacja opcjonalna |
-| recharts, cmdk, embla-carousel-react, input-otp, react-day-picker, vaul, react-resizable-panels | różne | — | prawdopodobnie nieużywane (komponenty szablonu shadcn), do sprawdzenia |
+| recharts (2.x wycofana), cmdk, embla-carousel-react, input-otp, react-day-picker, vaul, react-resizable-panels, sonner, date-fns | różne | — | nieużywane przez aplikację: importują je tylko nieużywane komponenty `src/components/ui` |
 | @supabase/supabase-js | ^2 | do sprawdzenia | aktualna linia |
 
-Podatności: `bun audit` nie był uruchomiony (bun niedostępny w sandboksie serwera, rejestr pakietów
-poza siecią sesji) — do sprawdzenia w CI w adaptacji.
+Użycie `src/components/ui`: aplikacja importuje tylko `button`, `skeleton`, `badge`, `alert-dialog`,
+`table` (zależności: `@radix-ui/react-slot`, `@radix-ui/react-alert-dialog`,
+`class-variance-authority`, `lucide-react`). Pozostałe ~43 komponenty szablonu shadcn i ich paczki
+(większość `@radix-ui/*`, `recharts`, `cmdk`, `embla-carousel-react`, `input-otp`,
+`react-day-picker`, `vaul`, `react-resizable-panels`, `sonner`, `date-fns`) są martwe.
+
+Podatności (`npm audit` 2026-11-12 na kopii z npm; wersje rozwiązane z zakresów `package.json`, nie z
+`bun.lock`):
+
+| Pakiet | Waga | Zakres | Ocena |
+|---|---|---|---|
+| vite 8.1.5 (przypięty) | high | GHSA-9jrq-w75r-8gcw, GHSA-rq7h-c2jc-7f22, launch-editor ×3 | tylko serwer deweloperski; poprawka vite ≥ 8.3.8 (sprawdzić zgodność z `@lovable.dev/vite-tanstack-config` albo przy przenosinach) |
+| zod 3.25 | high | GHSA-mrhx-c7xc-m3w5 (wyczerpanie pamięci przy dużych kolekcjach) | walidacja formularzy panelu w przeglądarce; poprawka tylko w 4.6.6+ (zmiana wersji głównej) |
+| minimatch przez typescript-eslint | moderate ×7 | GHSA-g3hv-75wg-m249 | tylko lint (dev) |
+
+Ostrzeżenia `deprecated`: recharts 2.x, eslint 9.39, tsconfck, zależności jsdom 20
+(whatwg-encoding, abab, domexception).
 
 ## Architektura obecna
 
@@ -198,17 +217,23 @@ Poza mapą: `/fundamenty` (strona referencyjna systemu wizualnego, noindex, wył
 
 ## Testy i CI
 
-Stan wyjściowy `main` (HEAD `bc7671b`, 2026-10-28) z pomiarów zapisanych przez Lovable w
-`.pomiar/` — lokalnie nie uruchomiono (bun niedostępny w sandboksie serwera, rejestr pakietów
-zablokowany w sesji analizy):
+Stan wyjściowy `main` (HEAD `bc7671b`, 2026-10-28), zmierzony 2026-11-12 na kopii `git archive
+origin/main` (bez `.env`) w scratchpadzie serwera: `npm install --ignore-scripts` (Node z fnm,
+wersje z zakresów `package.json`, bez `bun.lock`), potem skrypty `package.json`. Zgodne z pomiarami
+Lovable w `.pomiar/isk76` i `.pomiar/isk52`:
 
-| Komenda | Wynik | Źródło |
-|---|---|---|
-| `bun run test` (vitest run) | 22 pliki, 230 testów, wszystkie zielone | `.pomiar/isk76/test.txt` (HEAD 08676f6; po nim tylko commity pomiarów i „Changes” bez zmian testów do potwierdzenia w CI) |
-| `bun run typecheck` | kod 0 | `.pomiar/isk76/typecheck.txt` |
-| `bun run lint` | 0 błędów, 6 ostrzeżeń `react-refresh/only-export-components` w `src/components/ui` | `.pomiar/isk52/lint.txt` (starszy pomiar) |
-| `bun run build` | brak pomiaru | do sprawdzenia w CI |
-| E2E `tests/e2e/szkolenia.py` | ręczny scenariusz Playwright w Pythonie (QA), poza CI | `tests/e2e/README.md` |
+| Komenda | Wynik |
+|---|---|
+| `test` (vitest 4.1.12) | 22 pliki, 230 testów, wszystkie zielone (57 s) |
+| `typecheck` (tsc --noEmit) | kod 0 |
+| `lint` (eslint) | 0 błędów, 6 ostrzeżeń `react-refresh/only-export-components` w `src/components/ui` (badge, button, form, navigation-menu, sidebar, toggle) |
+| `build` (vite 8.1.5 + nitro) | zielony; preset nitro `cloudflare-module`, generuje `.output/server/wrangler.json`; ostrzeżenie: `vite-tsconfig-paths` zbędny przy natywnym `resolve.tsconfigPaths` |
+| E2E `tests/e2e/szkolenia.py` | nieuruchomiony: ręczny scenariusz Playwright w Pythonie (QA), poza CI |
+
+Bun na serwerze: `@oven/bun-darwin-x64` i `-baseline` 1.3 kończą się kodem 132 (SIGILL) już na
+`--version` — bun nie działa na tym Macu (w sandboksie sesji), a kontrakt stacku szablonu
+(`AGENTS.md` sh-template-projekt) dopuszcza wyłącznie pnpm. Wniosek: przejście na pnpm w adaptacji
+(pytanie 2), `pnpm import` nie czyta `bun.lock`, więc lock powstaje z zakresów jak w tym pomiarze.
 
 CI: brak `.github/workflows`, `gh run list` na `main` pusty. Kontrakt: 22 pliki testów vitest zielone
 w stanie wyjściowym zostają zielone; pierwszy bieg CI po adaptacji potwierdza listę.
@@ -322,19 +347,22 @@ Tylko nazwy: `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` (wzór w `.env
 | Repo | `.env` śledzony mimo `.gitignore` | 🟡 | `git rm --cached .env` w adaptacji |
 | CI | Brak workflow | 🟡 | CI z adaptacji: lint, typecheck, test, build (bun) |
 | Repo | Katalog `.pomiar/` z wynikami pomiarów QA Lovable (37 plików) | ⚪ | Usunąć albo przenieść podsumowanie do `docs/` |
-| Narzędzia | bun nieuruchamialny w sandboksie serwera (npx bun kończy się kodem 1) | 🟡 | Zainstalować bun na serwerze albo przejść na pnpm (decyzja w adaptacji, ADR przy zmianie) |
+| Narzędzia | bun nie działa na serwerze (SIGILL, także wariant baseline), kontrakt stacku wymaga pnpm | 🟡 | Przejście na pnpm w adaptacji z ADR; `minimumReleaseAge` z `bunfig.toml` przenieść do `pnpm-workspace.yaml`; usunąć `bun.lock`, `bunfig.toml` |
+| Bezpieczeństwo | vite 8.1.5 i zod 3 z podatnościami high (dev server; walidacja w przeglądarce) | 🟡 | Aktualizacja w drobnym zleceniu po M1 |
+| Zależności | ~43 nieużywane komponenty `src/components/ui` i kilkanaście paczek | ⚪ | Usunięcie w drobnym zleceniu |
 | E2E | Scenariusz Playwright w Pythonie poza CI | ⚪ | Przepisać na Playwright TS w CI (zgodnie z procesem) |
 | Build | Zależność od `@lovable.dev/vite-tanstack-config` i nitro beta z celem Cloudflare | 🟡 | Przy przenosinach na Vercel: własna konfiguracja Vite i preset Vercel |
-| Zależności | Prawdopodobnie nieużywane komponenty i paczki szablonu shadcn | ⚪ | Przegląd i usunięcie w drobnym zleceniu |
 | Treści | Formularz kontaktu bez wysyłki, przyciski zapisu prowadzą do niego | 🟡 | Osobne zlecenie (e-mail, RODO) |
 | Dokumentacja | README z szablonu Lovable | ⚪ | README z instrukcją lokalną w M1 |
 | Lint | 6 ostrzeżeń `react-refresh` w `src/components/ui` | ⚪ | Zostawić (kod szablonu) |
 
 ## Nie przeanalizowano
 
-- Uruchomienie testów, lintu, typów i buildu lokalnie: bun niedostępny w sandboksie, rejestr pakietów
-  zablokowany w sesji analizy; stan wyjściowy z `.pomiar/`, potwierdzenie w pierwszym biegu CI.
-- `bun audit` i aktualność wersji pakietów: jak wyżej, do sprawdzenia w CI.
+- Wynik testów z dokładnymi wersjami z `bun.lock` (pomiar na wersjach rozwiązanych przez npm);
+  potwierdzenie w pierwszym biegu CI po adaptacji.
+- Najnowsze wersje pakietów (kolumna „Najnowsza”): `npm outdated` pominięty, aktualizacje i tak idą
+  osobnym zleceniem.
+- Uruchomienie serwisu w przeglądarce na lokalnej bazie: lokalnej bazy jeszcze nie ma (M1).
 - Ustawienia Auth niedostępne przez SQL (rejestracja publiczna, potwierdzanie e-maili, dostawcy) i
   domena w Lovable: do sprawdzenia przy przenosinach albo w panelu przez właściciela.
 - Którą bazę wskazuje opublikowana wersja w Lovable (repo `.env` → ten projekt wg właściciela; wersja
