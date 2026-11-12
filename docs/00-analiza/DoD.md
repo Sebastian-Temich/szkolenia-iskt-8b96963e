@@ -19,7 +19,7 @@ akceptacja_wlasciciela: true
 - [x] Stan wyjściowy testów i CI jest zapisany (które testy są zielone na `main`)
 - [x] Wynik `scripts/adopt/wykryj.sh` jest w raporcie: Lovable, Supabase, klucze, pliki env, RLS, dane osobowe
 - [x] Klient Supabase: klucz w kodzie albo w env i jego rola (anon, service_role); `service_role` w repo jest alarmem 🔴
-- [x] Przegląd RLS według `sh-kat-baza` dla każdej tabeli z migracji (repo nie ma migracji: oczekiwane polityki z kodu, weryfikacja na zrzucie)
+- [x] Przegląd RLS według `sh-kat-baza` dla każdej tabeli z migracji (repo nie ma migracji: przegląd polityk w chmurze przez MCP, tylko odczyt)
 - [x] Zgodność migracji ze schematem w chmurze: wynik porównania ze zrzutem od właściciela albo pytanie o zrzut; przy rozjeździe propozycja migracji wyrównującej
 
 ## Checklisty jakości

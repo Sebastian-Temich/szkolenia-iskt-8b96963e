@@ -1,6 +1,10 @@
 # Analiza projektu: szkolenia-iskt
 
-Repo: Sebastian-Temich/szkolenia-iskt-8b96963e · Analiza: 2026-11-12T13:31Z – 2026-11-12T13:50Z (UTC) · Limit: 120 min
+Repo: Sebastian-Temich/szkolenia-iskt-8b96963e · Analiza: 2026-11-12T13:31Z – 2026-11-12T14:05Z (UTC) · Limit: 120 min
+
+Iteracja 2 (2026-11-12T14:00Z): właściciel udostępnił bazę w chmurze do odczytu przez połączenie
+Supabase (MCP). Schemat, zasady dostępu i funkcje przejrzane wyłącznie zapytaniami tylko do odczytu;
+w chmurze niczego nie zmieniono.
 
 # Dla właściciela
 
@@ -12,9 +16,11 @@ redakcyjny, w którym zalogowany redaktor dodaje, edytuje, publikuje i usuwa szk
 i przypisuje trenerów do szkoleń. Aplikacja powstała w Lovable w dniach 16–28 października 2026 i
 od tego czasu nikt jej nie zmieniał. Kod jest uporządkowany i dobrze pokryty testami (ostatni pomiar:
 230 testów, wszystkie zielone), ale w repozytorium nie ma żadnej definicji bazy danych: tabele,
-zasady dostępu i funkcje ról istnieją tylko w chmurze. Dlatego nie da się dziś postawić aplikacji z
-lokalną bazą ani sprawdzić, czy wersje robocze treści są naprawdę ukryte przed gośćmi. Pierwszym
-krokiem jest zrzut schematu bazy od Ciebie; z niego zrobimy pierwszą migrację w repo i lokalną bazę.
+zasady dostępu i funkcje ról istnieją tylko w chmurze. Przejrzeliśmy bazę w chmurze (tylko odczyt):
+jej budowa zgadza się z kodem, a zasady dostępu są poprawne — gość widzi tylko opublikowane treści,
+a zapisywać może wyłącznie konto z rolą redaktora. Baza jest jednak pusta: nie ma w niej ani jednego
+szkolenia, trenera ani redaktora z rolą. Pierwszym krokiem jest przeniesienie tej budowy do repo jako
+pierwszej migracji, z danymi startowymi z makiet, i uruchomienie lokalne.
 
 ## Co działa
 
@@ -29,14 +35,19 @@ krokiem jest zrzut schematu bazy od Ciebie; z niego zrobimy pierwszą migrację 
   publikacja i wycofanie, usuwanie z potwierdzeniem, przypisania trenerów z kolejnością. Dowód: testy
   panelu (na atrapie bazy, nie na prawdziwej bazie).
 - Wersja produkcyjna działa na Lovable (wg Twojej informacji).
+- Baza w chmurze: cztery tabele (szkolenia, trenerzy, przypisania, role), wszystkie z zasadami
+  dostępu; ukrywanie szkiców i blokada zapisu bez roli działają po stronie bazy, nie tylko w
+  przeglądarce. Dowód: przegląd zasad dostępu w chmurze i porady bezpieczeństwa Supabase.
 
 ## Czego brakuje
 
 - Definicji bazy w repozytorium (tabele, zasady dostępu, funkcje ról, dane startowe): bez tego nie
   ma lokalnej bazy ani przenosin na nowy projekt Supabase.
 - Automatycznych testów w GitHubie (brak CI): testy uruchamiał tylko Lovable i ręcznie QA.
-- Testów na prawdziwej bazie: czy gość nie widzi szkiców i czy osoba bez roli nie może nic zapisać,
-  sprawdzamy dziś tylko na atrapie.
+- Testów na prawdziwej bazie: zasady dostępu są poprawne w przeglądzie, ale testy aplikacji
+  sprawdzają je tylko na atrapie.
+- Treści i redaktorów w bazie w chmurze: wszystkie tabele są puste, a jedyne konto użytkownika nie ma
+  roli redaktora.
 - Wysyłki formularza kontaktu i zapisów na szkolenie (przyciski prowadzą do formularza, który nic nie
   wysyła).
 - Wgrywania zdjęć trenerów (jest tylko pole na adres zdjęcia z internetu).
@@ -46,8 +57,10 @@ krokiem jest zrzut schematu bazy od Ciebie; z niego zrobimy pierwszą migrację 
 
 | Ryzyko | Waga | Co proponujemy |
 |---|---|---|
-| Schemat bazy żyje tylko w chmurze i nie jest w pełni zgodny z tym, co widzi Lovable | 🔴 | Zrzut schematu od Ciebie, z niego pierwsza migracja w repo; od tej pory źródłem prawdy są migracje w repo |
-| Nie wiemy, czy zasady dostępu w bazie ukrywają szkice i blokują zapis osobom bez roli (aplikacja filtruje szkice sama, ale klucz publiczny pozwala pytać bazę bezpośrednio) | 🔴 | Przegląd zasad dostępu na zrzucie i testy na lokalnej bazie przed upublicznieniem repo |
+| Budowa bazy żyje tylko w chmurze, poza repo | 🔴 | Pierwsza migracja w repo odtworzona z bazy w chmurze (odczyt); od tej pory źródłem prawdy są migracje w repo |
+| Baza w chmurze jest pusta: jeśli produkcja na Lovable z niej korzysta, katalog i lista trenerów są puste, a panel nikogo nie wpuści | 🟡 | Sprawdzić, co dziś pokazuje produkcja (pytanie 1); obecnej bazy nie zmieniamy, treści trafią do nowej bazy przy przenosinach |
+| Zasady dostępu są poprawne, ale nic ich nie testuje | 🟡 | Testy zasad dostępu na lokalnej bazie w M1, przed upublicznieniem repo |
+| W bazie w chmurze wyłączona jest ochrona przed hasłami, które wyciekły w innych serwisach | ⚪ | Włączamy w nowym projekcie Supabase przy przenosinach (obecnej bazy nie zmieniamy) |
 | Plik z adresem bazy i kluczem publicznym jest w repozytorium | 🟡 | To klucz publiczny (nie administratora), więc nie trzeba go unieważniać; usuwamy plik z repo w adaptacji, a stara baza i tak zostanie zastąpiona nową |
 | Każda zmiana na głównej gałęzi trafia do edytora Lovable, a przycisk „Publikuj” w Lovable wypuściłby ją na produkcję | 🟡 | Nie pracujemy w Lovable i nie publikujemy bez Twojej decyzji; główna gałąź zawsze stabilna |
 | Brak CI: zmiana może coś zepsuć bez sygnału | 🟡 | CI (lint, typy, testy, build) w adaptacji |
@@ -60,17 +73,18 @@ krokiem jest zrzut schematu bazy od Ciebie; z niego zrobimy pierwszą migrację 
 
 Odpowiedz numerem albo „zdecyduj sam” (wtedy obowiązuje propozycja).
 
-1. Gdzie jest baza: na Twoim własnym koncie Supabase (masz panel i hasło do bazy) czy w Lovable Cloud
-   (baza zarządzana przez Lovable)? Propozycja: własne konto Supabase, zrzut według instrukcji „A”
-   z załącznika na końcu raportu. Skutek: przy Lovable Cloud korzystamy z instrukcji „B”, a
-   przenosiny na nową bazę są jedyną drogą wyjścia z Lovable.
-2. Prośba o zrzut schematu bazy z chmury (sama struktura, bez danych i bez haseł). Propozycja:
-   wykonujesz instrukcję A albo B z załącznika, wrzucasz plik do skrzynki projektu w Obsidianie i
-   piszesz „materiały w skrzynce”. Skutek: bez zrzutu odtworzymy bazę z kodu „na ślepo” i nie
-   sprawdzimy zgodności z chmurą.
-3. Źródło prawdy dla bazy. Propozycja: zrzut staje się pierwszą migracją w repo; każda kolejna zmiana
-   bazy to migracja w repo, a obecnej bazy w chmurze nie zmieniamy wcale (zostaje do przenosin).
-   Skutek: lokalna baza i przyszła nowa baza w Supabase powstaną z tych samych plików.
+1. Co dziś pokazuje produkcja: pełną ofertę czy pustą listę? Baza w chmurze jest pusta, więc pełna
+   oferta oznaczałaby, że opublikowana w Lovable wersja jest starsza i korzysta z danych wpisanych w
+   kod. Propozycja: sprawdzasz katalog na produkcji i piszesz, co widać. Skutek: przy starszej wersji
+   na produkcji przed przenosinami trzeba będzie wpisać treści do nowej bazy; przy pustej liście
+   produkcja jest dziś pusta i warto ocenić, czy to pilne.
+2. Źródło pierwszej migracji. Propozycja: odtwarzamy budowę bazy z odczytu chmury przez połączenie
+   Supabase (tak jak w tej analizie, tylko odczyt) i sprawdzamy ją porównaniem z chmurą po postawieniu
+   lokalnie; zrzutu z Twojego komputera nie potrzebujemy. Skutek: oszczędzasz czas, a zgodność
+   potwierdza porównanie, nie ręczny plik.
+3. Źródło prawdy dla bazy. Propozycja: od pierwszej migracji każda zmiana bazy to migracja w repo, a
+   obecnej bazy w chmurze nie zmieniamy wcale (zostaje do przenosin). Skutek: lokalna baza i przyszła
+   nowa baza w Supabase powstaną z tych samych plików.
 4. Dane startowe lokalnej bazy. Propozycja: obecna oferta (9 szkoleń) i trenerzy z makiet jako dane
    startowe oraz jedno testowe konto redaktora tylko lokalnie. Skutek: lokalnie widać pełny serwis
    bez kopiowania czegokolwiek z chmury.
@@ -97,7 +111,7 @@ Zakres:
 
 - adaptacja repo do procesu (pliki procesu, CI: lint, typy, testy, build), bez zmian w działaniu
   aplikacji;
-- pierwsza migracja bazy w repo ze zrzutu, dane startowe i lokalne konto redaktora;
+- pierwsza migracja bazy w repo odtworzona z chmury, dane startowe i lokalne konto redaktora;
 - uruchomienie lokalne: serwis i panel na lokalnej bazie, instrukcja w opisie projektu;
 - testy zasad dostępu na lokalnej bazie: gość nie widzi szkiców, osoba bez roli nic nie zapisuje,
   redaktor zapisuje; ewentualne poprawki zasad jako migracje;
@@ -108,8 +122,8 @@ Nie obejmuje: zmian w funkcjach, wysyłki formularza, nowego projektu Supabase, 
 jakiejkolwiek publikacji w Lovable. Przenosiny (nowy projekt Supabase z migracji z repo i Vercel)
 planujemy jako ostatnie zadanie całego rozwoju.
 
-Szacunek poglądowy: 4–5 zadań, 1–2 dni kalendarzowe pracy agentów, ok. 30–45 minut Twojego czasu
-(zrzut schematu, odpowiedzi, odbiór).
+Szacunek poglądowy: 4–5 zadań, 1–2 dni kalendarzowe pracy agentów, ok. 20–30 minut Twojego czasu
+(odpowiedzi, sprawdzenie produkcji, odbiór).
 
 ## Decyzja
 
@@ -203,7 +217,9 @@ w stanie wyjściowym zostają zielone; pierwszy bieg CI po adaptacji potwierdza 
 
 Produkcja: hosting Lovable (build nitro, cel Cloudflare), domena szkolenia.iskt.pl wg właściciela.
 Publikacja ręczna przyciskiem w Lovable — tylko właściciel, tylko z jego decyzji. Brak środowiska
-staging i podglądów PR. Agenci nie mają dostępu do produkcji ani do chmury Supabase. Docelowo
+staging i podglądów PR. Agenci nie mają dostępu do produkcji; do bazy w chmurze (projekt Supabase
+`szkolenia-isk`, region eu-central-1, Postgres 17) właściciel udostępnił odczyt przez MCP Supabase
+2026-11-12 — wyłącznie zapytania tylko do odczytu, bez `apply_migration` i bez zapisów. Docelowo
 (ostatnie zadanie): Vercel + nowy projekt Supabase z migracji z repo.
 
 ## Integracje
@@ -232,48 +248,77 @@ Tylko nazwy: `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` (wzór w `.env
   (`.env`, linia 2: klucz publishable). Bez `service_role` w repo. Zalecenie: `git rm --cached .env`
   w adaptacji; unieważnienie klucza nie jest konieczne (anon), stara baza do wygaszenia.
 - Katalog `supabase/`: **nie istnieje** — brak `config.toml`, migracji (0), edge functions, seed. W
-  historii repo nigdy nie było SQL (sprawdzone `git log -S "create table"`). Schemat żyje tylko w
-  chmurze.
-- Schemat odtworzony z kodu (do weryfikacji na zrzucie):
-  - `public.szkolenia`: `id` (text, slug, PK), `sort_order` int (prawdopodobnie unikalny — komunikat
-    dla `23505`), `cat`, `icon`, `title`, `level`, `hours`, `format`, `price` numeric, `badge` null,
-    `fundable` bool, `opis`, `learn` text[], `program` jsonb (`[{n,t}]`), `for_whom`, `terms` text[]
-    null (null = terminy domyślne, `[]` = brak terminów), `status` (`draft`|`published`),
-    `published_at`, `created_at`, `updated_at`.
-  - `public.trenerzy`: `id` (text, PK), `sort_order`, `name`, `initials`, `role`, `areas` text[],
-    `tagline`, `bio`, `experience` jsonb, `education` jsonb, `skills` text[], `photo_url` null,
-    `status`, `published_at`, `created_at`, `updated_at`.
-  - `public.szkolenie_trener`: `szkolenie_id`, `trener_id` (PK złożony?), `sort_order_trener`,
-    `sort_order_szkolenie` (DEFAULT 0); usunięcie szkolenia usuwa przypisania (FK `on delete
-    cascade`?) — test „potwierdzenie usuwa tylko szkolenie”.
-  - Funkcje: `moje_role()` (zwraca role `admin`/`editor`), `is_staff()` (bool); tabela ról
-    (nazwa nieznana, np. `user_roles`) — w kodzie nieużywana wprost.
-- RLS (`sh-kat-baza`) — przegląd niemożliwy bez migracji; oczekiwane polityki i zgłoszenia:
+  historii repo nigdy nie było SQL (sprawdzone `git log -S "create table"`). W chmurze tabela
+  `supabase_migrations` też jest pusta (`list_migrations` = 0): schemat powstał poza migracjami
+  (SQL Editor / Lovable).
+- Schemat w chmurze (odczyt MCP 2026-11-12, `list_tables`, `pg_constraint`, `pg_indexes`,
+  `pg_policies`, `pg_proc`, `information_schema`):
+  - `public.szkolenia` (0 wierszy): `id` text PK z CHECK `^[a-z0-9][a-z0-9-]*$`; `sort_order` int
+    UNIQUE (nie DEFERRABLE) `>= 0`; `cat` CHECK in (`AI`,`ESG`,`Angielski`,`Software`,`B+R`); `icon`
+    CHECK in (`cpu`,`leaf`,`languages`,`code-xml`,`flask-conical`); `title`, `level`, `hours`,
+    `format`, `opis`, `for_whom` text niepuste (CHECK `length(btrim()) > 0`); `price` int `>= 0`;
+    `badge` text null; `fundable` bool default false; `learn` text[] 1–12; `program` jsonb array
+    1–24; `terms` text[] null; `status` text default `draft` CHECK in (`draft`,`published`);
+    `published_at` null; `created_at`, `updated_at` default now(). Indeksy: `cat`, `(status,
+    sort_order)`.
+  - `public.trenerzy` (0 wierszy): `id` jak wyżej; `sort_order` UNIQUE; `name`, `initials`, `role`,
+    `tagline`, `bio` niepuste; `areas` text[] ⊆ kategorie, 1–5; `experience`, `education` jsonb array
+    default `[]`; `skills` text[] default `{}`; `photo_url` null; `status`, `published_at`,
+    `created_at`, `updated_at` jak wyżej. Indeks `(status, sort_order)`.
+  - `public.szkolenie_trener` (0 wierszy): PK `(szkolenie_id, trener_id)`, FK do obu tabel `ON DELETE
+    CASCADE`; `sort_order_trener`, `sort_order_szkolenie` int default 0 `>= 0`; `created_at`.
+    Indeksy po `szkolenie_id` i `trener_id`.
+  - `public.user_roles` (0 wierszy): PK `(user_id, role)`, `user_id` FK → `auth.users ON DELETE
+    CASCADE`, `role` enum `public.app_role` (`admin`,`editor`), `created_at`. RLS włączone, **bez
+    polityk** i bez grantów dla `anon`/`authenticated` — dostęp tylko przez funkcje `security
+    definer` (zamierzone, komentarz tabeli: zapis wyłącznie `service_role`/SQL).
+  - Funkcje (`search_path = ''`, `security definer` poza wyzwalaczem): `is_staff()`, `is_admin()`,
+    `moje_role()` (execute: anon, authenticated), `has_role(uuid, app_role)` (execute tylko
+    `service_role`), `dotknij_updated_at()` (wyzwalacz BEFORE INSERT/UPDATE na `szkolenia` i
+    `trenerzy`: `updated_at = now()`, `published_at` = now() przy pierwszej publikacji, null przy
+    powrocie do `draft`), `rls_auto_enable()` (domyślna funkcja Supabase dla event triggera
+    `ensure_rls`).
+  - Rozszerzenia: `pg_stat_statements`, `pgcrypto`, `uuid-ossp`, `supabase_vault`, `plpgsql`
+    (standard Supabase). Storage: 0 bucketów. Edge Functions: 0. Auth: 1 użytkownik, 0 przypisanych
+    ról.
+- Porównanie z kodem: **zgodne**. Kolumny, typy i nazwy odpowiadają `SzkolenieWiersz`,
+  `TrenerWiersz` i `przypisania-repo.ts`; walidacja panelu jest równa albo ostrzejsza od CHECK
+  (`learn` dokładnie 4 w panelu vs 1–12 w bazie; `price` int ≥ 0; `program` 1–24; `areas` 1–5;
+  wzorzec `id` identyczny). Kod jawnie ustawia `published_at` przy publikacji — wyzwalacz go nie
+  nadpisuje (zmienia tylko null), a przy wycofaniu czyści — spójne. Brak rozjazdu: migracja
+  wyrównująca niepotrzebna.
+- RLS (`sh-kat-baza`), polityki z `pg_policies`; granty: `anon` SELECT, `authenticated`
+  SELECT/INSERT/UPDATE/DELETE na trzech tabelach treści:
 
-| Tabela | Oczekiwana polityka | Zgłoszenie | Waga |
+| Tabela | Polityki | Ocena | Waga |
 |---|---|---|---|
-| `szkolenia` | anon/auth `select` tylko `status = 'published'`; staff (`is_staff()`) pełny CRUD | nieweryfikowalne; aplikacja filtruje szkice sama (test `publiczne-izolacja`), ale klucz publiczny pozwala pytać PostgREST bezpośrednio — szkice muszą być odcięte w RLS | 🔴 do weryfikacji |
-| `trenerzy` | jak wyżej | jak wyżej | 🔴 do weryfikacji |
-| `szkolenie_trener` | anon `select` tylko wierszy, gdzie obie strony opublikowane; staff CRUD | odczyt publiczny bez warunku ujawnia identyfikatory (slugi) szkiców przez relację | 🟡 do weryfikacji |
-| tabela ról | `select` tylko własnych wierszy, zapis tylko admin/serwis | uprawnienia nie mogą wynikać z `user_metadata` (kod ich nie używa — dobrze) | 🔴 do weryfikacji |
-| `moje_role`, `is_staff` | `security definer` z `set search_path`, `execute` dla `authenticated` | do weryfikacji na zrzucie | 🟡 |
-| Auth | rejestracja publiczna wyłączona (panel nie ma rejestracji, ale API Supabase może ją mieć włączoną) | do weryfikacji w konfiguracji Auth | 🟡 |
+| `szkolenia` | `select_publiczne` (anon, authenticated): `status = 'published'`; `select/insert/update/delete_staff` (authenticated): `is_staff()` (update z `with check`) | poprawne: szkice odcięte w bazie, zapis tylko staff | ✅ |
+| `trenerzy` | jak `szkolenia` | poprawne | ✅ |
+| `szkolenie_trener` | `szt_select_publiczne`: oba końce `published` (EXISTS); `szt_*_staff`: `is_staff()` | poprawne: relacja nie ujawnia slugów szkiców | ✅ |
+| `user_roles` | brak polityk, brak grantów dla klienta | poprawne (deny-all; role czytane przez `moje_role()`); brak drogi samonadania | ✅ (advisor INFO `rls_enabled_no_policy` — zamierzone) |
+| `is_staff`, `is_admin`, `moje_role` | `security definer`, `search_path=''`, wołalne przez anon | zwracają wyłącznie dane bieżącego `auth.uid()` (anon: false/pusto) — bez wycieku; advisor WARN 0028/0029 | ⚪ można odebrać `execute` anon w nowej migracji |
+| `rls_auto_enable` | event trigger, wołalny przez RPC | wywołanie poza event triggerem kończy się błędem; standard Supabase | ⚪ |
+| `has_role` | tylko `service_role` | poprawne | ✅ |
+| Auth | advisor: ochrona przed wyciekniętymi hasłami wyłączona; ustawień rejestracji nie da się odczytać przez SQL | 🟡 do ustawienia w nowym projekcie (`config.toml`: `enable_signup = false` lokalnie, ochrona haseł w nowej chmurze) | 🟡 |
+| Wydajność | advisor: wiele permisywnych polityk SELECT dla `authenticated`; nieużywane indeksy (pusta baza) | bez znaczenia przy kilkunastu wierszach | ⚪ |
 
-- Schemat w chmurze: **pytanie o zrzut** (pytanie 2 części „Dla właściciela”, instrukcja
-  `supabase db dump --linked --schema-only`). Plan po zrzucie: `supabase/migrations/<ts>_baza.sql` ze
-  zrzutu (bez danych), porównanie z kodem (kolumny wyżej), przy rozjeździe migracja wyrównująca w
-  repo (nigdy w chmurze); `supabase/seed.sql` z oracle `mock-dane.ts` i
-  `src/test/dane-z-makiety-trenerzy.ts`; lokalny użytkownik redaktora z rolą w seedzie. Zasada:
-  źródłem prawdy są migracje w repo; obecnej bazy w chmurze nie zmieniamy, a nowa produkcja powstanie
-  z migracji. `supabase/config.toml` z blokiem portów 55421–55429 (`docs/konfiguracja.md`) w
-  adaptacji albo zadaniu bazy.
+- Plan migracji (M1): `supabase/migrations/<ts>_baza.sql` odtworzona z katalogu chmury (typ enum,
+  tabele z CHECK i komentarzami, FK, indeksy, funkcje, wyzwalacze, RLS, polityki, granty) — przez
+  MCP tylko do odczytu albo `supabase db dump --schema-only`, jeśli właściciel woli; weryfikacja:
+  te same zapytania katalogowe na lokalnej bazie dają identyczny wynik co w chmurze.
+  `supabase/seed.sql` z oracle `mock-dane.ts` i `src/test/dane-z-makiety-trenerzy.ts` oraz lokalny
+  redaktor z rolą `editor`. Zasada: źródłem prawdy są migracje w repo; obecnej bazy w chmurze nie
+  zmieniamy (ani treści, ani ról), a nowa produkcja powstanie z migracji. `supabase/config.toml` z
+  blokiem portów 55421–55429 (`docs/konfiguracja.md`) w adaptacji albo zadaniu bazy.
 
 ## Dług techniczny
 
 | Obszar | Problem | Waga | Propozycja |
 |---|---|---|---|
-| Baza | Brak migracji, seedu i `config.toml` w repo | 🔴 | Migracja bazowa ze zrzutu, seed, lokalna baza (M1) |
-| Bezpieczeństwo | RLS nieweryfikowalne, testy uprawnień tylko na atrapie | 🔴 | Testy RLS na lokalnej bazie (pgTAP albo testy integracyjne supabase-js) |
+| Baza | Brak migracji, seedu i `config.toml` w repo; w chmurze też brak historii migracji | 🔴 | Migracja bazowa odtworzona z chmury, seed, lokalna baza (M1) |
+| Bezpieczeństwo | RLS poprawne w przeglądzie, ale testy uprawnień tylko na atrapie | 🟡 | Testy RLS na lokalnej bazie (pgTAP albo testy integracyjne supabase-js) |
+| Dane | Baza w chmurze pusta (0 treści, 0 ról) | 🟡 | Ustalić stan produkcji (pytanie 1); treści do nowej bazy przy przenosinach |
+| Baza | `sort_order` UNIQUE bez DEFERRABLE w `szkolenia` i `trenerzy`: zamiana kolejności dwóch wpisów w panelu wymaga pozycji pośredniej | ⚪ | Zostawić (panel pokazuje komunikat duplikatu) albo `DEFERRABLE` w przyszłej migracji |
 | Repo | `.env` śledzony mimo `.gitignore` | 🟡 | `git rm --cached .env` w adaptacji |
 | CI | Brak workflow | 🟡 | CI z adaptacji: lint, typecheck, test, build (bun) |
 | Repo | Katalog `.pomiar/` z wynikami pomiarów QA Lovable (37 plików) | ⚪ | Usunąć albo przenieść podsumowanie do `docs/` |
@@ -290,31 +335,7 @@ Tylko nazwy: `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` (wzór w `.env
 - Uruchomienie testów, lintu, typów i buildu lokalnie: bun niedostępny w sandboksie, rejestr pakietów
   zablokowany w sesji analizy; stan wyjściowy z `.pomiar/`, potwierdzenie w pierwszym biegu CI.
 - `bun audit` i aktualność wersji pakietów: jak wyżej, do sprawdzenia w CI.
-- Zgodność schematu w chmurze z kodem i RLS: czeka na zrzut od właściciela.
-- Konfiguracja Auth w Supabase (rejestracja, potwierdzanie e-maili) i domeny w Lovable: brak dostępu
-  agentów do chmury.
-
-# Załącznik: zrzut schematu bazy (dla właściciela)
-
-Zrzut zawiera tylko strukturę bazy (tabele, zasady dostępu, funkcje), bez danych i bez haseł. Nie
-wysyłaj nam hasła do bazy ani kluczy; plik wynikowy wrzuć do skrzynki projektu (folder
-„SH/Skrzynka/szkolenia-iskt” w Obsidianie) i napisz orkiestratorowi „materiały w skrzynce”.
-
-A. Własne konto Supabase, w Terminalu na swoim komputerze, w dowolnym pustym folderze poza repo:
-
-```sh
-supabase login
-supabase link --project-ref IDENTYFIKATOR_PROJEKTU
-supabase db dump --linked --schema-only -f schemat.sql
-supabase db dump --linked --schema-only --schema auth,storage -f schemat-auth-storage.sql
-```
-
-Identyfikator projektu jest w panelu Supabase (Project Settings → General). Przy `link` narzędzie
-zapyta o hasło do bazy; wpisujesz je tylko w Terminalu. Drugi plik jest opcjonalny (zmiany w
-schematach logowania i plików, np. wyzwalacze na nowych użytkownikach). Dołącz też zrzut ekranu
-ustawień Authentication → Sign In / Providers (czy rejestracja nowych użytkowników jest włączona).
-
-B. Lovable Cloud (bez dostępu do panelu Supabase): w Lovable otwórz Cloud → Database i sprawdź, czy
-jest eksport schematu albo edytor SQL. Jeśli jest edytor SQL, napisz orkiestratorowi — przygotujemy
-zapytanie tylko do odczytu, którego wynik zapiszesz do pliku. Nie proś czatu Lovable o wygenerowanie
-pliku w repo: to zmieniłoby kod i historię.
+- Ustawienia Auth niedostępne przez SQL (rejestracja publiczna, potwierdzanie e-maili, dostawcy) i
+  domena w Lovable: do sprawdzenia przy przenosinach albo w panelu przez właściciela.
+- Którą bazę wskazuje opublikowana wersja w Lovable (repo `.env` → ten projekt wg właściciela; wersja
+  opublikowana może być starsza): pytanie 1 części „Dla właściciela”.
