@@ -58,7 +58,7 @@ pierwszej migracji, z danymi startowymi z makiet, i uruchomienie lokalne.
 | Ryzyko | Waga | Co proponujemy |
 |---|---|---|
 | Budowa bazy żyje tylko w chmurze, poza repo | 🔴 | Pierwsza migracja w repo odtworzona z bazy w chmurze (odczyt); od tej pory źródłem prawdy są migracje w repo |
-| Baza w chmurze jest pusta: jeśli produkcja na Lovable z niej korzysta, katalog i lista trenerów są puste, a panel nikogo nie wpuści | 🟡 | Sprawdzić, co dziś pokazuje produkcja (pytanie 1); obecnej bazy nie zmieniamy, treści trafią do nowej bazy przy przenosinach |
+| Baza w chmurze jest pusta i produkcja na Lovable z niej korzysta: katalog i lista trenerów są dziś puste, a panel nikogo nie wpuści (potwierdzone przez Ciebie) | 🟡 | Obecnej bazy nie zmieniamy; treści trafią do nowej bazy przy przenosinach |
 | Zasady dostępu są poprawne, ale nic ich nie testuje | 🟡 | Testy zasad dostępu na lokalnej bazie w M1, przed upublicznieniem repo |
 | W bazie w chmurze wyłączona jest ochrona przed hasłami, które wyciekły w innych serwisach | ⚪ | Włączamy w nowym projekcie Supabase przy przenosinach (obecnej bazy nie zmieniamy) |
 | Plik z adresem bazy i kluczem publicznym jest w repozytorium | 🟡 | To klucz publiczny (nie administratora), więc nie trzeba go unieważniać; usuwamy plik z repo w adaptacji, a stara baza i tak zostanie zastąpiona nową |
@@ -103,6 +103,17 @@ Odpowiedz numerem albo „zdecyduj sam” (wtedy obowiązuje propozycja).
    publicznym i katalog pomiarów QA z Lovable, a repo upubliczniamy dopiero po bramce bezpieczeństwa
    i testach zasad dostępu na lokalnej bazie. Skutek: klucz publiczny zostaje w historii repo, co
    przy kluczu publicznym i bazie do wygaszenia uznajemy za akceptowalne.
+
+### Twoje odpowiedzi (2026-11-12)
+
+1. Produkcja pokazuje pustą listę szkoleń: opublikowana wersja korzysta z pustej bazy w chmurze.
+   Przyjmujemy to jako stan obecny; treści trafią do nowej bazy przy przenosinach na Vercel.
+2. Zgoda: przejście na narzędzie do paczek z naszych zasad w adaptacji, z zapisaną decyzją techniczną.
+3. Zgoda: każda zmiana bazy to migracja w repo; bazy w chmurze nie zmieniamy do przenosin.
+4. Zgoda: dane startowe z makiet i lokalne konto testowego redaktora.
+5. Zgoda: synchronizacja z Lovable zostaje, publikujesz tylko Ty, po przenosinach odłączamy Lovable.
+6. Zgoda: wysyłka formularza kontaktu jako osobne zlecenie później.
+7. Zgoda: porządki w repo i upublicznienie dopiero po bramce i testach zasad dostępu.
 
 ## Proponowany pierwszy kamień milowy
 
@@ -365,5 +376,5 @@ Tylko nazwy: `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` (wzór w `.env
 - Uruchomienie serwisu w przeglądarce na lokalnej bazie: lokalnej bazy jeszcze nie ma (M1).
 - Ustawienia Auth niedostępne przez SQL (rejestracja publiczna, potwierdzanie e-maili, dostawcy) i
   domena w Lovable: do sprawdzenia przy przenosinach albo w panelu przez właściciela.
-- Którą bazę wskazuje opublikowana wersja w Lovable (repo `.env` → ten projekt wg właściciela; wersja
-  opublikowana może być starsza): pytanie 1 części „Dla właściciela”.
+- (rozstrzygnięte) Opublikowana wersja w Lovable korzysta z pustej bazy w chmurze: właściciel
+  potwierdził pustą listę szkoleń na produkcji (odpowiedź 1, 2026-11-12).
