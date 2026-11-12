@@ -10,6 +10,7 @@ zadań `scripts/sync-status.sh`.
 ## Dziennik etapów
 
 - 2026-11-12 `00-analiza`: review
+- 2026-11-12 `00-intake`: in-progress
 
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
