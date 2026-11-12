@@ -1,0 +1,122 @@
+# Plan: rewizja 7fdfbe6 (docs/04-plan/plan.md, PR #4), rozpisano 2026-11-13T00:10Z (UTC)
+# Specyfikacja: docs/00-intake/specyfikacja.md (rewizja 3bc25da), karta W-04: docs/00-intake/funkcje/W-04.md
+zadania:
+  - id: T1
+    tytul: Przejście z bun na pnpm i CI jakości
+    cel: >-
+      Projekt instaluje się i uruchamia przez pnpm, a każdy PR przechodzi w GitHubie lint, typy,
+      testy i build (W-01, W-06). Decyzja: docs/04-plan/adr/ADR-002-przejscie-z-bun-na-pnpm.md.
+      Szkielet projektu przejętego: aplikacja już istnieje, więc to zadanie ustawia tylko narzędzia
+      i CI, bez zmian w src/. Stan wyjściowy do utrzymania: docs/00-analiza/raport.md, „Testy i CI”
+      (22 pliki, 230 testów, typy 0, lint 0 błędów i 6 ostrzeżeń, build zielony). Poza zakresem:
+      Supabase i job bazy (T2), Playwright E2E, aktualizacje paczek z podatnościami, usuwanie
+      nieużywanych komponentów.
+    kryteria:
+      - "W-01/K1: Given czyste repo, when pnpm install --frozen-lockfile, then instalacja kończy się sukcesem, a bun.lock i bunfig.toml są usunięte z repo (komenda w CI)"
+      - "W-01/K2: Given zainstalowane zależności, when pnpm test, pnpm typecheck, pnpm lint, pnpm build, then wyniki równe stanowi wyjściowemu: 22 pliki i 230 testów zielonych, 0 błędów typów, 0 błędów lintu, build zielony (komendy w CI i lokalnie)"
+      - "W-01/K3: pnpm-workspace.yaml ma minimumReleaseAge 1440 z wyjątkami dla paczek @lovable.dev z bunfig.toml i allowBuilds tylko dla paczek, o które pnpm pyta przy instalacji; overrides rolldown 1.2.1 przeniesione do pnpm.overrides; package.json ma packageManager z wersją pnpm (przegląd pliku)"
+      - "W-06/K1 (jakość) i W-06/K3: .github/workflows/ci.yml ma job jakosc (pnpm install --frozen-lockfile, lint, typecheck, test, build) na runs-on z vars.SH_RUNS_ON albo ubuntu-24.04 jak sh.yml; job jest zielony na PR tego zadania"
+      - "AGENTS.md: wiersz Instalacja w „Stałe dla tego projektu” wskazuje pnpm bez wzmianki o bun (przegląd pliku)"
+    pliki: [package.json, pnpm-lock.yaml, pnpm-workspace.yaml, bun.lock, bunfig.toml, .github/workflows/ci.yml, AGENTS.md]
+    testy: pnpm test
+    zaleznosci: []
+    milestone: M1 Uruchomienie lokalne
+    typ: feature
+    kategoria: ci
+    stack: [react, pnpm]
+    db_migracja: false
+
+  - id: T2
+    tytul: Migracja bazowa 1:1 z chmurą i job bazy w CI
+    cel: >-
+      Budowa bazy trafia do repo jako jedna migracja odtwarzająca 1:1 bazę w chmurze, a CI sprawdza
+      ją na czystej bazie (W-02, W-06). Źródło: docs/04-plan/schemat-chmury.md (odczyt katalogu
+      chmury, w tym zapytania do porównania); decyzja: docs/04-plan/adr/ADR-001-baza-1-1-z-chmury-i-testy-rls.md.
+      Lokalnie przez shctl db start|reset (stack projektu, porty 55421–55429). Funkcji platformy
+      rls_auto_enable i obiektów poza public nie tworzysz. Poza zakresem: seed i konta (T3), testy
+      RLS (T4), poprawki advisora Supabase (Z4), jakikolwiek kontakt z bazą w chmurze.
+    kryteria:
+      - "W-02/K1: Given pusta baza lokalna, when shctl db reset, then powstają app_role, szkolenia, trenerzy, szkolenie_trener, user_roles (force RLS), funkcje dotknij_updated_at, has_role, is_admin, is_staff, moje_role z search_path '' i ACL jak w schemat-chmury.md, wyzwalacze, polityki i granty (komenda shctl db reset bez błędów)"
+      - "W-02/K2: Given baza po resecie, when zapytania katalogowe z sekcji „Zapytania do porównania” schemat-chmury.md, then wyniki w schemacie public są identyczne ze schemat-chmury.md (kolumny w kolejności, ograniczenia, indeksy, polityki, funkcje, ACL tabel i funkcji, komentarze); wyniki i porównanie w raporcie T-NR"
+      - "W-02/K3: supabase/config.toml ma project_id szkolenia-iskt, wszystkie porty z bloku 55421–55429 (api 55421, db 55422, studio 55423, inbucket 55424, inspector 55425, analytics 55427, shadow 55428, pooler 55429) i [auth] enable_signup = false; shctl db start kończy się sukcesem"
+      - "W-06/K1 (baza): .github/workflows/ci.yml ma job baza uruchamiany przy zmianach w supabase/: supabase start, db reset, test db, db lint; job jest zielony na PR tego zadania"
+      - "Migracja zgodna wstecz: aplikacja bez zmian w src/ działa na nowym schemacie (pnpm test zielony)"
+    pliki: [supabase/config.toml, supabase/migrations/, supabase/.gitignore, .github/workflows/ci.yml]
+    testy: shctl db reset
+    zaleznosci: [T1]
+    milestone: M1 Uruchomienie lokalne
+    typ: feature
+    kategoria: baza
+    stack: [supabase]
+    db_migracja: true
+
+  - id: T3
+    tytul: Dane startowe, konta testowe i uruchomienie lokalne z instrukcją
+    cel: >-
+      Właściciel uruchamia serwis i panel na serwerze według instrukcji w README i widzi pełną ofertę
+      z makiet, a panel wpuszcza testowego redaktora (W-03, W-04). Karta:
+      docs/00-intake/funkcje/W-04.md, kryteria W-04/K1–K4; specyfikacja W-03/K1–K4. Dane:
+      src/lib/szkolenia/mock-dane.ts (9 szkoleń, kolejność i terminy z makiety) i
+      src/test/dane-z-makiety-trenerzy.ts (6 trenerów, przypisania do szkoleń z makiety; trenerzy
+      fikcyjni, decyzja właściciela). Konta: redaktor@szkolenia.local z rolą editor i
+      bez-roli@szkolenia.local, hasła testowe jawne w README z dopiskiem „tylko lokalnie”. Design: brak
+      nowych ekranów; stany to istniejące ekrany z kart F-03 i F-06 w docs/00-analiza/funkcje/.
+      Poza zakresem: zmiany w src/, dane z chmury, testy RLS (T4).
+    kryteria:
+      - "W-03/K1 i W-03/K2: Given shctl db reset, when zapytania SQL po resecie, then 9 opublikowanych szkoleń w kolejności z makiety z cenami i terminami z makiety, 6 opublikowanych trenerów i przypisania z makiety (wynik zapytań w raporcie T-NR)"
+      - "W-03/K3: Given seed, when zapytanie do auth.users i user_roles, then istnieją redaktor@szkolenia.local z rolą editor i bez-roli@szkolenia.local bez roli; logowanie hasłem z README przez lokalne API Supabase zwraca sesję dla obu kont (komenda curl na /auth/v1/token w raporcie)"
+      - "W-03/K4: seed nie zawiera danych prawdziwych osób ani haseł innych niż testowe z README (przegląd pliku)"
+      - "W-04/K4: README.md ma sekcję „Uruchomienie lokalne”: wymagania (Docker, Node LTS przez fnm, pnpm), komendy shctl db start, shctl db reset, wypełnienie .env.local z shctl db status, pnpm dev, adres lokalny, konta testowe z dopiskiem „tylko lokalnie”, shctl db stop i „Gdy coś nie działa” ze shctl db status; bez wartości kluczy chmury; .env.example bez wartości"
+      - "Podpięcie: README prowadzi do tras /, /szkolenia, /trenerzy i /panel serwowanych przez pnpm dev; worker sprawdza w raporcie, że pnpm build przechodzi z .env.local wskazującym lokalny stack (W-04/K1–K3 sprawdza odbiór, patrz „Kryteria do potwierdzenia”)"
+    pliki: [supabase/seed.sql, README.md, .env.example]
+    testy: shctl db reset
+    zaleznosci: [T2]
+    milestone: M1 Uruchomienie lokalne
+    typ: feature
+    kategoria: baza
+    stack: [supabase]
+    db_migracja: true
+
+  - id: T4
+    tytul: Testy zasad dostępu (pgTAP)
+    cel: >-
+      Zasady dostępu do bazy są sprawdzane automatycznie lokalnie i w CI, żeby żadna zmiana nie
+      odsłoniła szkiców ani nie pozwoliła na zapis bez roli (W-05). Decyzja i minimalne dowody:
+      docs/04-plan/adr/ADR-001-baza-1-1-z-chmury-i-testy-rls.md, punkt 3; polityki w
+      docs/04-plan/schemat-chmury.md. Testy same tworzą swoje dane (szkic i opublikowane szkolenie i
+      trener, użytkownicy z rolami) i nie zależą od seedu. Poza zakresem: zmiany polityk i migracji
+      (każda różnica z chmurą to eskalacja, nie poprawka), poprawki advisora.
+    kryteria:
+      - "W-05/K1: Given szkolenie i trener w szkicu, when anon i zalogowany bez roli czytają szkolenia, trenerzy i szkolenie_trener, then nie dostają szkiców ani przypisań do szkiców w żadną stronę (pgTAP)"
+      - "W-05/K2: Given zalogowany bez roli, when insert, update albo delete w szkolenia, trenerzy, szkolenie_trener i user_roles, then baza odmawia; anon też nie może pisać (pgTAP)"
+      - "W-05/K3: Given redaktor z rolą editor i admin, when tworzy, publikuje, wycofuje i usuwa szkolenie i trenera oraz zmienia przypisania, then operacje się udają, published_at ustawia się przy publikacji i czyści przy wycofaniu, a user_roles pozostaje nieczytelne i niezapisywalne (pgTAP)"
+      - "W-05/K4: Given dowolne konto, when moje_role() i is_staff(), then tylko własne role; anon dostaje pusty wynik i false; has_role niedostępne dla anon i authenticated (pgTAP)"
+      - "W-05/K5: shctl db test i job baza w CI przechodzą w całości na PR tego zadania"
+    pliki: [supabase/tests/]
+    testy: shctl db test
+    zaleznosci: [T3]
+    milestone: M1 Uruchomienie lokalne
+    typ: feature
+    kategoria: bezpieczenstwo
+    stack: [supabase]
+    db_migracja: false
+
+  - id: T5
+    tytul: Dokumentacja wydania M1 i regresja
+    cel: >-
+      Dokumentacja wydania M1 opisuje, co powstało i jak to sprawdzić, a regresja potwierdza, że
+      serwis działa jak przed M1 (W-07). Karty stanu obecnego: docs/00-analiza/funkcje/F-01…F-08
+      („Zachowanie do zachowania”); stan wyjściowy: docs/00-analiza/raport.md, „Testy i CI”. Poza
+      zakresem: zmiany kodu i README (README należy do T3), adresy stagingu i produkcji (brak w M1).
+    kryteria:
+      - "W-07/K1: Given main po T1–T4, when pnpm test, pnpm typecheck, pnpm lint, pnpm build, then 22 pliki i 230 testów zielonych, 0 błędów, build zielony; git diff od początku M1 nie zawiera zmian funkcjonalnych w src/ (wyniki w docs/wydanie/techniczna/M1.md)"
+      - "W-07/K2: docs/wydanie/techniczna/M1.md potwierdza, że w M1 nie było zapisów do bazy w chmurze ani publikacji w Lovable (przegląd historii PR i decyzji)"
+      - "docs/wydanie/techniczna/M1.md i docs/wydanie/produktowa/M1.md opisują: narzędzia (pnpm), bazę w repo, dane startowe, konta testowe, uruchomienie lokalne, testy RLS, CI, znane ograniczenia (advisor Supabase, Lovable po pnpm) i następne zlecenia (przegląd plików)"
+    pliki: [docs/wydanie/techniczna/M1.md, docs/wydanie/produktowa/M1.md]
+    testy: pnpm test
+    zaleznosci: [T1, T2, T3, T4]
+    milestone: M1 Uruchomienie lokalne
+    typ: docs
+    kategoria: testy
+    stack: [react, supabase]
+    db_migracja: false
