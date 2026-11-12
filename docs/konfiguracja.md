@@ -7,7 +7,7 @@ pochodzenie: adopt
 blok_portow: "55421-55429"
 adopt:
   repo: Sebastian-Temich/szkolenia-iskt-8b96963e
-  widocznosc: private
+  widocznosc: public
   data: 2026-11-12
   analiza_od: "2026-11-12T13:30Z"
   analiza_do: "2026-11-12T15:30Z"
