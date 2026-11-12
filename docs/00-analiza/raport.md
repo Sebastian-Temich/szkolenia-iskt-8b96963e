@@ -25,7 +25,8 @@ pierwszej migracji, z danymi startowymi z makiet, i uruchomienie lokalne.
 ## Co działa
 
 - Strona główna z sekcjami, przełącznikiem „Dla Ciebie / Dla firm”, polecanymi szkoleniami z bazy i
-  formularzem kontaktu (formularz tylko wygląda, niczego nie wysyła). Dowód: testy treści i formularza.
+  formularzem kontaktu (celowo nieaktywny: przycisk wyłączony z komunikatem „Formularz zostanie
+  podłączony w kolejnym etapie.”). Dowód: testy treści i formularza.
 - Katalog szkoleń z filtrem kategorii, wyszukiwaniem i adresem do udostępnienia; stany ładowania,
   pustego wyniku i błędu. Dowód: testy katalogu i scenariusz ręczny QA.
 - Szczegół szkolenia: program, efekty, odbiorcy, cena z dofinansowaniem i bez, terminy, prowadzący,
@@ -48,8 +49,8 @@ pierwszej migracji, z danymi startowymi z makiet, i uruchomienie lokalne.
   sprawdzają je tylko na atrapie.
 - Treści i redaktorów w bazie w chmurze: wszystkie tabele są puste, a jedyne konto użytkownika nie ma
   roli redaktora.
-- Wysyłki formularza kontaktu i zapisów na szkolenie (przyciski prowadzą do formularza, który nic nie
-  wysyła).
+- Wysyłki formularza kontaktu i zapisów na szkolenie (przyciski zapisu prowadzą do formularza, który
+  jest jeszcze nieaktywny).
 - Wgrywania zdjęć trenerów (jest tylko pole na adres zdjęcia z internetu).
 - Instrukcji uruchomienia lokalnego i opisu projektu (opis w repo to szablon Lovable).
 
@@ -64,7 +65,7 @@ pierwszej migracji, z danymi startowymi z makiet, i uruchomienie lokalne.
 | Plik z adresem bazy i kluczem publicznym jest w repozytorium | 🟡 | To klucz publiczny (nie administratora), więc nie trzeba go unieważniać; usuwamy plik z repo w adaptacji, a stara baza i tak zostanie zastąpiona nową |
 | Każda zmiana na głównej gałęzi trafia do edytora Lovable, a przycisk „Publikuj” w Lovable wypuściłby ją na produkcję | 🟡 | Nie pracujemy w Lovable i nie publikujemy bez Twojej decyzji; główna gałąź zawsze stabilna |
 | Brak CI: zmiana może coś zepsuć bez sygnału | 🟡 | CI (lint, typy, testy, build) w adaptacji |
-| Formularz kontaktu wygląda na działający, a nic nie wysyła | 🟡 | Na produkcji klienci mogą myśleć, że wysłali zgłoszenie; osobne zlecenie na wysyłkę albo informacja na stronie |
+| Formularz kontaktu jest nieaktywny (z jawną informacją), więc gość nie ma w serwisie działającej drogi zapisu | 🟡 | Osobne zlecenie na wysyłkę zgłoszeń (Twoja odpowiedź 6) |
 | Szkolenia bez własnych terminów pokazują terminy domyślne z września i października 2026, czyli już minione | 🟡 | Na produkcji sprawdzić, które szkolenia nie mają własnych terminów; zmiana terminów domyślnych jako pierwsze drobne zlecenie po M1 |
 | Polecane szkolenia na stronie głównej są wybrane na stałe w kodzie (cztery konkretne) | ⚪ | Gdy któreś zostanie wycofane, sekcja pokaże mniej pozycji; wybór polecanych w panelu jako przyszłe zlecenie |
 | Dwie paczki mają znane podatności o wysokiej wadze: serwer deweloperski (dotyczy tylko pracy na komputerze, nie produkcji) i biblioteka walidacji formularzy (dotyczy tylko bardzo dużych danych w panelu) | 🟡 | Aktualizacja jako drobne zlecenie po M1; biblioteka walidacji wymaga zmiany wersji głównej |
@@ -96,7 +97,7 @@ Odpowiedz numerem albo „zdecyduj sam” (wtedy obowiązuje propozycja).
    pracuje w edytorze Lovable, a „Publikuj” klikasz tylko Ty po odbiorze zmian; po przenosinach na
    Vercel odłączamy Lovable. Skutek: produkcja nie zmienia się bez Twojej decyzji, a historia w
    Lovable zostaje spójna.
-6. Formularz kontaktu, który nic nie wysyła. Propozycja: w pierwszym etapie bez zmian; wysyłka
+6. Formularz kontaktu, który jest jeszcze nieaktywny. Propozycja: w pierwszym etapie bez zmian; wysyłka
    zgłoszeń (e-mail, zgoda na przetwarzanie danych) to osobne zlecenie, gdy je podasz. Skutek:
    pierwszy etap nie dotyka danych osobowych.
 7. Porządki w repo przed upublicznieniem. Propozycja: w adaptacji usuwamy z repo plik z kluczem
@@ -356,14 +357,14 @@ Tylko nazwy: `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` (wzór w `.env
 | Dane | Baza w chmurze pusta (0 treści, 0 ról) | 🟡 | Ustalić stan produkcji (pytanie 1); treści do nowej bazy przy przenosinach |
 | Baza | `sort_order` UNIQUE bez DEFERRABLE w `szkolenia` i `trenerzy`: zamiana kolejności dwóch wpisów w panelu wymaga pozycji pośredniej | ⚪ | Zostawić (panel pokazuje komunikat duplikatu) albo `DEFERRABLE` w przyszłej migracji |
 | Repo | `.env` śledzony mimo `.gitignore` | 🟡 | `git rm --cached .env` w adaptacji |
-| CI | Brak workflow | 🟡 | CI z adaptacji: lint, typecheck, test, build (bun) |
+| CI | Brak workflow | 🟡 | CI z adaptacji: lint, typecheck, test, build (pnpm, po przejściu z bun — odpowiedź 2) |
 | Repo | Katalog `.pomiar/` z wynikami pomiarów QA Lovable (37 plików) | ⚪ | Usunąć albo przenieść podsumowanie do `docs/` |
 | Narzędzia | bun nie działa na serwerze (SIGILL, także wariant baseline), kontrakt stacku wymaga pnpm | 🟡 | Przejście na pnpm w adaptacji z ADR; `minimumReleaseAge` z `bunfig.toml` przenieść do `pnpm-workspace.yaml`; usunąć `bun.lock`, `bunfig.toml` |
 | Bezpieczeństwo | vite 8.1.5 i zod 3 z podatnościami high (dev server; walidacja w przeglądarce) | 🟡 | Aktualizacja w drobnym zleceniu po M1 |
 | Zależności | ~43 nieużywane komponenty `src/components/ui` i kilkanaście paczek | ⚪ | Usunięcie w drobnym zleceniu |
 | E2E | Scenariusz Playwright w Pythonie poza CI | ⚪ | Przepisać na Playwright TS w CI (zgodnie z procesem) |
 | Build | Zależność od `@lovable.dev/vite-tanstack-config` i nitro beta z celem Cloudflare | 🟡 | Przy przenosinach na Vercel: własna konfiguracja Vite i preset Vercel |
-| Treści | Formularz kontaktu bez wysyłki, przyciski zapisu prowadzą do niego | 🟡 | Osobne zlecenie (e-mail, RODO) |
+| Treści | Formularz kontaktu nieaktywny (przycisk `disabled` z komunikatem), przyciski zapisu prowadzą do niego | 🟡 | Osobne zlecenie (e-mail, RODO) |
 | Dokumentacja | README z szablonu Lovable | ⚪ | README z instrukcją lokalną w M1 |
 | Lint | 6 ostrzeżeń `react-refresh` w `src/components/ui` | ⚪ | Zostawić (kod szablonu) |
 
