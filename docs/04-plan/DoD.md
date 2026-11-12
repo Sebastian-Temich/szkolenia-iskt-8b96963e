@@ -1,6 +1,6 @@
 ---
 etap: 04-plan
-status: todo
+status: in-progress
 iteracja: 0
 akceptacja_wlasciciela: true
 ---
