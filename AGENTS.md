@@ -20,3 +20,15 @@
 - UI states are forced in tests only via vi.mock of the adapter; no URL demo switches in production code.
 - Keep catalog return-filter parsing and default omission in the shared powrot helper, so catalog cards and detail breadcrumbs preserve the same URL state.
 - Keep the Vite pre-load repair for the accidental comment terminator in the supplied CSS prose; repair compiler input only so the owner's stylesheet remains byte-for-byte intact.
+
+## Lovable
+
+Projekt powstał w Lovable, a synchronizacja Lovable z GitHubem zostaje włączona: zmiany z Lovable
+przychodzą na `main` jako commity, a nasze PR wracają do Lovable.
+
+- Nie publikujesz w Lovable (Publish, Share, własna domena) bez decyzji właściciela w `docs/decyzje.md`.
+- Nie wyłączasz synchronizacji z GitHubem i nie zmieniasz ustawień projektu w Lovable.
+- Commit z Lovable na `main` w trakcie zadania to zwykła zmiana `main`: aktualizujesz gałąź zadania
+  przez `gh pr update-branch`, nie cofasz go.
+- Klucz `anon` w `src/integrations/supabase/client.ts` jest publiczny z założenia; klucz
+  `service_role` nigdy nie trafia do kodu frontendu ani repo.

@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "skillOverrides": {
+    "tworca-wymagan": "off",
+    "iskt-softwarehouse-tworca-wymagan": "off",
+    "iskt-planista-realizacji": "off"
+  },
+  "permissions": {
+    "defaultMode": "dontAsk",
+    "allow": [
+      "Edit",
+      "Write",
+      "WebFetch",
+      "WebSearch",
+      "Bash(git *)",
+      "Bash(gh *)",
+      "Bash(pnpm *)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(node *)",
+      "Bash(uv *)",
+      "Bash(fnm list)",
+      "Bash(fnm list *)",
+      "Bash(fnm current)",
+      "Bash(fnm exec *)",
+      "Bash(supabase init)",
+      "Bash(supabase init *)",
+      "Bash(supabase migration *)",
+      "Bash(supabase db diff *)",
+      "Bash(supabase gen types *)",
+      "Bash(gitleaks *)",
+      "Bash(bats *)",
+      "Bash(shellcheck *)",
+      "Bash(bash scripts/check-dod.sh)",
+      "Bash(bash scripts/check-dod.sh *)",
+      "Bash(shctl escalate *)",
+      "Bash(/Users/Shared/sh/bin/shctl escalate *)",
+      "Bash(shctl db *)",
+      "Bash(/Users/Shared/sh/bin/shctl db *)",
+      "Bash(brew install *)",
+      "Bash(ls *)",
+      "Bash(pwd)",
+      "Bash(cat *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(wc *)",
+      "Bash(grep *)",
+      "Bash(sort *)",
+      "Bash(uniq *)",
+      "Bash(cut *)",
+      "Bash(diff *)",
+      "Bash(echo *)",
+      "Bash(which *)",
+      "Bash(command -v *)",
+      "Bash(readlink *)",
+      "Bash(true)",
+      "Bash(mkdir *)",
+      "Bash(touch *)",
+      "Bash(cp *)",
+      "Bash(mv *)",
+      "Bash(rm *)",
+      "Bash(chmod +x *)"
+    ],
+    "deny": [
+      "Skill(tworca-wymagan)",
+      "Skill(iskt-softwarehouse-tworca-wymagan)",
+      "Skill(iskt-planista-realizacji)",
+      "Read(~/Documents/**)",
+      "Edit(~/Documents/**)",
+      "Read(~/Desktop/**)",
+      "Edit(~/Desktop/**)",
+      "Read(~/Downloads/**)",
+      "Edit(~/Downloads/**)",
+      "Read(~/Library/Mobile Documents/**)",
+      "Edit(~/Library/Mobile Documents/**)",
+      "Bash(gh gist *)",
+      "Bash(gh release upload *)",
+      "Bash(git * --no-index*)",
+      "Bash(git * --exec-path*)",
+      "Bash(git --exec-path*)",
+      "Bash(git blame *--contents*)",
+      "Read(**/.env)",
+      "Read(**/.env.local)",
+      "Read(**/.env.*.local)",
+      "Read(**/.env.development*)",
+      "Read(**/.env.test*)",
+      "Read(**/.env.staging*)",
+      "Read(**/.env.prod*)",
+      "Edit(**/.env)",
+      "Edit(**/.env.local)",
+      "Edit(**/.env.*.local)",
+      "Edit(**/.env.development*)",
+      "Edit(**/.env.test*)",
+      "Edit(**/.env.staging*)",
+      "Edit(**/.env.prod*)",
+      "Bash(* .env)",
+      "Bash(* .env *)",
+      "Bash(*.env.local*)",
+      "Bash(*.env.development*)",
+      "Bash(*.env.test*)",
+      "Bash(*.env.staging*)",
+      "Bash(*.env.prod*)",
+      "Edit(docs/Projekt.md)",
+      "Edit(docs/historia.md)",
+      "Edit(docs/decyzje.md)",
+      "Edit(docs/metryki.md)",
+      "Edit(docs/backlog-drobne.md)",
+      "Edit(docs/06-zadania/index.md)",
+      "Edit(CHANGELOG.md)",
+      "Edit(.github/workflows/deploy-prod.yml)",
+      "Edit(.github/workflows/staging.yml)",
+      "Edit(scripts/deploy-prod.sh)",
+      "Edit(.claude/**)",
+      "Bash(git push * production)",
+      "Bash(git push * *:production)",
+      "Bash(git push * *:refs/heads/production)",
+      "Bash(git push * main)",
+      "Bash(git push * *:main)",
+      "Bash(git push * *:refs/heads/main)",
+      "Bash(vercel *)",
+      "Bash(npx vercel *)",
+      "Bash(pnpm exec vercel *)",
+      "Bash(pnpm dlx vercel *)",
+      "Bash(*supabase link*)",
+      "Bash(*supabase db push*)",
+      "Bash(*supabase secrets*)",
+      "Bash(*supabase functions deploy*)",
+      "Bash(git push --force *)",
+      "Bash(git push * --force)",
+      "Bash(git push * --force *)",
+      "Bash(git push -f *)",
+      "Bash(git push * -f)",
+      "Bash(git push * -f *)",
+      "Bash(git push *+*)",
+      "Bash(git push *--delete*)",
+      "Bash(git push * -d *)",
+      "Bash(git push *--mirror*)",
+      "Bash(gh api *-X*)",
+      "Bash(gh api *--method*)",
+      "Bash(gh api *-f *)",
+      "Bash(gh api *-F *)",
+      "Bash(gh api *--field*)",
+      "Bash(gh api *--raw-field*)",
+      "Bash(gh api *--input*)",
+      "Bash(gh secret *)",
+      "Bash(gh variable *)",
+      "Bash(gh auth *)",
+      "Bash(gh repo delete *)",
+      "Bash(gh repo edit *)",
+      "Bash(gh pr merge *)",
+      "Bash(gh pr close *)",
+      "Bash(gh issue close *)",
+      "Bash(gh issue edit *)",
+      "Bash(gh issue delete *)",
+      "Bash(gh workflow *)",
+      "Bash(gh alias *)",
+      "Bash(gh extension *)",
+      "Bash(git -c *)",
+      "Bash(git config *)",
+      "Bash(git -C *)",
+      "Bash(sudo *)",
+      "Bash(rm /*)",
+      "Bash(rm * /*)",
+      "Bash(rm *~*)",
+      "Bash(rm *..*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read|Glob|Grep",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/Shared/sh/bin/odczyt-hook.sh || exit 2",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Read|Edit|Write|MultiEdit|NotebookEdit|Glob|Grep|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/Shared/sh/bin/env-hook.sh || exit 2",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/Shared/sh/bin/gh-plik-hook.sh || exit 2",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "allowUnsandboxedCommands": false,
+    "excludedCommands": [
+      "git push",
+      "git push *",
+      "git fetch",
+      "git fetch *",
+      "git pull",
+      "git pull *",
+      "gh *",
+      "shctl escalate *",
+      "/Users/Shared/sh/bin/shctl escalate *",
+      "shctl db *",
+      "/Users/Shared/sh/bin/shctl db *",
+      "brew install *"
+    ],
+    "network": {
+      "allowedDomains": [
+        "github.com",
+        "api.github.com",
+        "*.githubusercontent.com",
+        "codeload.github.com",
+        "registry.npmjs.org",
+        "cdn.playwright.dev",
+        "playwright.download.prss.microsoft.com",
+        "playwright.azureedge.net"
+      ],
+      "allowLocalBinding": true,
+      "allowUnixSockets": [
+        "~/.docker/run/docker.sock",
+        "/var/run/docker.sock"
+      ],
+      "allowMachLookup": [
+        "com.apple.trustd.agent"
+      ]
+    },
+    "filesystem": {
+      "allowWrite": [
+        "~/Library/pnpm",
+        "~/Library/Caches",
+        "~/.npm",
+        "~/.cache",
+        "/private/tmp/pnpm-store-operation-locks-502",
+        "/private/tmp/pnpm-dir-locks-502",
+        "/private/tmp/pnpm-modules-swaps-502",
+        "/private/tmp/pnpm-verify-deps-install-locks-502"
+      ]
+    }
+  }
+}
