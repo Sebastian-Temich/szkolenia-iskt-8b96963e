@@ -4,3 +4,13 @@ Plik wspólny, aktualizuje orkiestrator. Decyzje workerów przenosi z raportów 
 
 | Data | Źródło | Pytanie | Decyzja |
 |---|---|---|---|
+| 2026-11-12 | orkiestrator | Merge PR #1 (00-analiza) bez CI | repo przejęte nie ma workflow CI; PR zmienia tylko docs/; review PASS dla 985ed79. Cofnięcie: revert commita 55da8d4 na main |
+| 2026-11-12 | orkiestrator | Iteracja review 00-analiza (FAIL 1 istotne, potem PASS) poza shctl stage iter | przed merge'em main nie miał docs/00-analiza/DoD.md, stage iter zwracał kod 3; poprawki tylko zgłoszeń review w PR #1. Cofnięcie: nie dotyczy (zapis faktu); propozycja dla systemu: stage iter i escalate dla etapu 00-analiza przed merge'em |
+| 2026-11-12 | wlasciciel | Odczyt bazy Supabase w chmurze przez MCP, tylko zapytania odczytu | zgoda właściciela 2026-11-12 zamiast zrzutu schematu; źródło pierwszej migracji w M1. Cofnięcie: właściciel odłącza MCP Supabase |
+| 2026-11-12 | wlasciciel | Produkcja Lovable korzysta z pustej bazy w chmurze; stan przyjęty, treści trafią do nowej bazy przy przenosinach | odpowiedź właściciela 1 na pytania analizy, 2026-11-12. Cofnięcie: decyzja właściciela o wypełnieniu obecnej bazy |
+| 2026-11-12 | wlasciciel | Przejście z bun na pnpm w adaptacji, z ADR | bun nie działa na serwerze (SIGILL), kontrakt stacku wymaga pnpm; odpowiedź właściciela 2. Cofnięcie: przywrócenie bun.lock i bunfig.toml z historii |
+| 2026-11-12 | wlasciciel | Źródłem prawdy bazy są migracje w repo; bazy w chmurze nie zmieniamy do przenosin | odpowiedź właściciela 3. Cofnięcie: decyzja właściciela |
+| 2026-11-12 | wlasciciel | Seed lokalny z makiet (9 szkoleń, trenerzy) i lokalne konto testowego redaktora | odpowiedź właściciela 4. Cofnięcie: zmiana seedu w kolejnym zadaniu |
+| 2026-11-12 | wlasciciel | Synchronizacja z Lovable zostaje; publikuje tylko właściciel; odłączenie Lovable po przenosinach na Vercel | odpowiedź właściciela 5. Cofnięcie: decyzja właściciela |
+| 2026-11-12 | wlasciciel | Wysyłka formularza kontaktu poza M1, osobne zlecenie | odpowiedź właściciela 6; M1 bez danych osobowych. Cofnięcie: nowe zlecenie właściciela |
+| 2026-11-12 | wlasciciel | Usunięcie .env i .pomiar w adaptacji; upublicznienie repo po bramce i testach RLS | odpowiedź właściciela 7; klucz w historii to klucz publiczny anon bazy do wygaszenia. Cofnięcie: decyzja właściciela |

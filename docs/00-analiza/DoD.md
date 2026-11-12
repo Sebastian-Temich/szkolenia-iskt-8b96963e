@@ -30,5 +30,5 @@ akceptacja_wlasciciela: true
 
 ## Checkpoint
 
-- [ ] Review etapu dało PASS (zaznacza reviewer, nie autor)
+- [x] Review etapu dało PASS (zaznacza reviewer, nie autor) — PR #1, commit 985ed79
 - [ ] Właściciel napisał „akceptuję analizę i kierunek”
