@@ -175,7 +175,7 @@ Web (TanStack Start: SSR + panel klienta) z lokalnym Supabase.
 ## Hosting
 
 M1 działa lokalnie (bez hostingu). Docelowo, po przenosinach: Vercel + Supabase Cloud (region UE) na
-kontach właściciela — `hosting` w `docs/konfiguracja.md`, `zaakceptowany: false` do checkpointu
+kontach właściciela — `hosting` w `docs/konfiguracja.md`, `zaakceptowany: true` od checkpointu
 specyfikacji. Wybór projektu Supabase dla produkcji (obecny w chmurze czy nowy) rozstrzyga zlecenie
 przenosin.
 
@@ -220,8 +220,8 @@ około 5 zadań. Zlecono 2026-11-12T22:38Z.
 
 | Nr | Karta | Pytanie albo założenie | Proponowana odpowiedź | Źródło (zdecyduj sam, luka bez pytania) |
 |---|---|---|---|---|
-| Z1 | W-04 | Konto testowego redaktora | Adres redaktor@szkolenia.local z prostym hasłem testowym opisanym w instrukcji; działa tylko na bazie lokalnej | luka bez pytania |
-| Z2 | W-04 | Drugie konto bez roli | Tak: gosc@szkolenia.local, do sprawdzenia ekranu „Brak uprawnień” i testów | luka bez pytania |
+| Z1 | W-04 | Konto testowego redaktora | Adres redaktor@szkolenia.local z prostym hasłem testowym opisanym w instrukcji; działa tylko na bazie lokalnej | potwierdzone przez właściciela 2026-11-12 |
+| Z2 | W-04 | Drugie konto bez roli | Tak: bez-roli@szkolenia.local, do sprawdzenia ekranu „Brak uprawnień” i testów | potwierdzone przez właściciela 2026-11-12 |
 | Z3 | W-03 | Dane trenerów z makiet | Fikcyjne osoby, mogą być w danych startowych | potwierdzone przez właściciela 2026-11-12 |
 | Z4 | — | Uwagi z kontroli bezpieczeństwa Supabase | Budowa bazy 1:1 z chmurą w M1, poprawki osobnym zleceniem | luka bez pytania |
 | Z5 | — | Baza docelowa przy przenosinach | Rozstrzyga zlecenie przenosin (obecny projekt w chmurze albo nowy) | luka bez pytania |
