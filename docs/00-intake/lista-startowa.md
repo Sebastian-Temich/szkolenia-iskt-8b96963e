@@ -14,7 +14,7 @@ Format pozycji: `- [ ] CO, PO CO (W-NN), JAK: kroki dla właściciela; GDZIE wpi
 
 ## Konta i dostępy
 
-- [ ] Docker Desktop na serwerze włączony na czas pracy agentów, PO CO: lokalna baza Supabase
+- [x] Docker Desktop na serwerze włączony na czas pracy agentów, PO CO: lokalna baza Supabase
   (W-02, W-03, W-04, W-05), JAK: uruchom Docker Desktop na serwerze i zostaw go włączonego (Docker
   jest zainstalowany; zmiany Docker Desktop robi tylko właściciel); GDZIE: nic do wpisania;
   sprawdzimy: `shctl db start --projekt szkolenia-iskt` po dodaniu `supabase/config.toml` kończy się

@@ -12,6 +12,7 @@ zadań `scripts/sync-status.sh`.
 - 2026-11-12 `00-analiza`: review
 - 2026-11-12 `00-intake`: in-progress
 - 2026-11-12 `00-intake`: review
+- 2026-11-12 `00-intake`: done
 
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->

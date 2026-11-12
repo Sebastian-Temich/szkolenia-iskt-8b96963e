@@ -1,13 +1,13 @@
 ---
 projekt: szkolenia-iskt
 tryb: M
-etap_opis: "Specyfikacja"
-postep_etapy: "1/6"
+etap_opis: "Plan"
+postep_etapy: "2/6"
 postep_zadania: "0/0"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Review etapu specyfikacja, potem Twoja akceptacja"
-ostatnia_synchronizacja: 2026-11-12T22:50:56Z
+nastepny_krok: "Start etapu plan"
+ostatnia_synchronizacja: 2026-11-12T22:59:40Z
 ---
 
 # szkolenia-iskt
@@ -16,10 +16,10 @@ ostatnia_synchronizacja: 2026-11-12T22:50:56Z
 
 ## Gdzie jesteśmy
 
-- **Etap:** Specyfikacja
-- **Postęp:** Etapy 1/6 · Zadania 0/0
-- **Co się dzieje:** etap specyfikacja w review
-- **Następny krok:** Review etapu specyfikacja, potem Twoja akceptacja
+- **Etap:** Plan
+- **Postęp:** Etapy 2/6 · Zadania 0/0
+- **Co się dzieje:** etap plan jeszcze nie rozpoczęty
+- **Następny krok:** Start etapu plan
 
 ## Czeka na Ciebie
 
@@ -40,8 +40,10 @@ Otwartych brak.
 ## Dokumenty
 
 - [Raport analizy](00-analiza/raport.md)
+- [Specyfikacja](00-intake/specyfikacja.md)
 - [Lista startowa](00-intake/lista-startowa.md)
 - [Decyzje](decyzje.md)
+- Karty funkcji: [W-04](00-intake/funkcje/W-04.md)
 - [Historia](historia.md): punkt przekazania, dziennik etapów, wszystkie zadania
 
 ## Zasady projektu
