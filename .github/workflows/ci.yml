@@ -37,3 +37,62 @@ jobs:
         run: pnpm test
       - name: Build
         run: pnpm build
+
+  # Czy zmiana dotyka supabase/ (W-06/K1). Bez akcji zewnętrznych: git diff względem bazy PR albo
+  # poprzedniego stanu main; workflow_dispatch i brak punktu odniesienia uruchamiają job baza zawsze.
+  zmiany:
+    runs-on: ${{ fromJSON(vars.SH_RUNS_ON || '"ubuntu-24.04"') }}
+    timeout-minutes: 5
+    outputs:
+      supabase: ${{ steps.filtr.outputs.supabase }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Zmiany w supabase/
+        id: filtr
+        env:
+          ZDARZENIE: ${{ github.event_name }}
+          BAZA_PR: ${{ github.event.pull_request.base.sha }}
+          PRZED: ${{ github.event.before }}
+        run: |
+          if [ "$ZDARZENIE" = "pull_request" ]; then od="$BAZA_PR"; else od="$PRZED"; fi
+          if [ "$ZDARZENIE" = "workflow_dispatch" ] || [ -z "$od" ] \
+            || ! git cat-file -e "${od}^{commit}" 2>/dev/null; then
+            wynik=true
+          elif [ -n "$(git diff --name-only "$od" HEAD -- supabase/)" ]; then
+            wynik=true
+          else
+            wynik=false
+          fi
+          echo "supabase=$wynik" >> "$GITHUB_OUTPUT"
+          echo "Zmiany w supabase/: $wynik"
+
+  # Baza z repo na czystej instancji (ADR-001, W-02, W-05, W-06): migracje i seed, pgTAP, lint i
+  # advisors. Wersja CLI = wersja na serwerze (plan.md, „Ryzyka”); zmiana razem z serwerem.
+  baza:
+    needs: zmiany
+    if: needs.zmiany.outputs.supabase == 'true'
+    runs-on: ${{ fromJSON(vars.SH_RUNS_ON || '"ubuntu-24.04"') }}
+    timeout-minutes: 30
+    env:
+      SUPABASE_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: supabase/setup-cli@689adcfb80d947100a1eab127289b97d1fb07b13 # v3.2.0
+        with:
+          version: 2.121.0
+      - name: Start (migracje i seed na czystej bazie)
+        run: supabase start
+      - name: Reset bazy (migracje od zera)
+        run: supabase db reset --local
+      - name: Testy pgTAP
+        run: supabase test db --local
+      - name: Lint bazy
+        run: supabase db lint --local --fail-on error
+      - name: Advisors
+        run: supabase db advisors --local --fail-on error
+      - name: Stop
+        if: always()
+        continue-on-error: true
+        run: supabase stop --no-backup
