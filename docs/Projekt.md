@@ -1,13 +1,13 @@
 ---
 projekt: szkolenia-iskt
 tryb: M
-etap_opis: "Rozpisanie zadań"
-postep_etapy: "3/6"
-postep_zadania: "0/0"
+etap_opis: "Realizacja, kamień M1 Uruchomienie lokalne"
+postep_etapy: "4/6"
+postep_zadania: "0/5"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Agent przygotowuje etap rozpisanie zadań"
-ostatnia_synchronizacja: 2026-11-12T23:10:58Z
+nastepny_krok: "Start #6"
+ostatnia_synchronizacja: 2026-11-12T23:13:14Z
 ---
 
 # szkolenia-iskt
@@ -16,10 +16,11 @@ ostatnia_synchronizacja: 2026-11-12T23:10:58Z
 
 ## Gdzie jesteśmy
 
-- **Etap:** Rozpisanie zadań
-- **Postęp:** Etapy 3/6 · Zadania 0/0
-- **Co się dzieje:** etap rozpisanie zadań w przygotowaniu
-- **Następny krok:** Agent przygotowuje etap rozpisanie zadań
+- **Etap:** Realizacja, kamień M1 Uruchomienie lokalne
+- **Postęp:** Etapy 4/6 · Zadania 0/5
+- **Co się dzieje:** nic w toku
+- **Następny krok:** Start #6
+- **Szacowany czas:** brak danych (pierwsze zadania)
 
 ## Czeka na Ciebie
 
@@ -27,7 +28,20 @@ Nic. Agenci pracują sami.
 
 ## Zadania
 
-Nic w toku.
+### Gotowe do startu (1)
+
+| Zadanie | Kamień | Zależności |
+|---|---|---|
+| #6 Przejście z bun na pnpm i CI jakości | M1 Uruchomienie lokalne | brak |
+
+### Zaplanowane (4)
+
+| Zadanie | Kamień | Czeka na |
+|---|---|---|
+| #7 Migracja bazowa 1:1 z chmurą i job bazy w CI | M1 Uruchomienie lokalne | #6 |
+| #8 Dane startowe, konta testowe i uruchomienie lokalne z instrukcją | M1 Uruchomienie lokalne | #7 |
+| #9 Testy zasad dostępu (pgTAP) | M1 Uruchomienie lokalne | #8 |
+| #10 Dokumentacja wydania M1 i regresja | M1 Uruchomienie lokalne | #6, #7, #8, #9 |
 
 ### Zrobione w bieżącym zleceniu (0)
 

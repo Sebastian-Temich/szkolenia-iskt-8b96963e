@@ -5,4 +5,23 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 <!-- sync-status:start -->
 | Zadanie | Tytuł | Status | Iteracja | Kamień milowy | PR | CI |
 |---|---|---|---|---|---|---|
+| #6 | Przejście z bun na pnpm i CI jakości | todo | 0 | M1 Uruchomienie lokalne | - | - |
+| #7 | Migracja bazowa 1:1 z chmurą i job bazy w CI | todo | 0 | M1 Uruchomienie lokalne | - | - |
+| #8 | Dane startowe, konta testowe i uruchomienie lokalne z instrukcją | todo | 0 | M1 Uruchomienie lokalne | - | - |
+| #9 | Testy zasad dostępu (pgTAP) | todo | 0 | M1 Uruchomienie lokalne | - | - |
+| #10 | Dokumentacja wydania M1 i regresja | todo | 0 | M1 Uruchomienie lokalne | - | - |
 <!-- sync-status:end -->
+
+## Mapa zadań z planu
+
+Sekcję uzupełnia `shctl task create`: ID z pliku YAML i numer issue.
+
+<!-- shctl:mapa:start -->
+| ID | Issue | Tytuł | Zależności |
+|---|---|---|---|
+| T1 | #6 | Przejście z bun na pnpm i CI jakości | - |
+| T2 | #7 | Migracja bazowa 1:1 z chmurą i job bazy w CI | #6 |
+| T3 | #8 | Dane startowe, konta testowe i uruchomienie lokalne z instrukcją | #7 |
+| T4 | #9 | Testy zasad dostępu (pgTAP) | #8 |
+| T5 | #10 | Dokumentacja wydania M1 i regresja | #6, #7, #8, #9 |
+<!-- shctl:mapa:end -->
