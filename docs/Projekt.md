@@ -6,8 +6,8 @@ postep_etapy: "3/6"
 postep_zadania: "0/0"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Start etapu rozpisanie zadań"
-ostatnia_synchronizacja: 2026-11-12T23:07:20Z
+nastepny_krok: "Agent przygotowuje etap rozpisanie zadań"
+ostatnia_synchronizacja: 2026-11-12T23:07:36Z
 ---
 
 # szkolenia-iskt
@@ -18,8 +18,8 @@ ostatnia_synchronizacja: 2026-11-12T23:07:20Z
 
 - **Etap:** Rozpisanie zadań
 - **Postęp:** Etapy 3/6 · Zadania 0/0
-- **Co się dzieje:** etap rozpisanie zadań jeszcze nie rozpoczęty
-- **Następny krok:** Start etapu rozpisanie zadań
+- **Co się dzieje:** etap rozpisanie zadań w przygotowaniu
+- **Następny krok:** Agent przygotowuje etap rozpisanie zadań
 
 ## Czeka na Ciebie
 
