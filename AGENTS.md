@@ -58,8 +58,9 @@ Stałe dla tego projektu (z analizy `docs/00-analiza/raport.md`):
 | Typy | `pnpm typecheck` (`tsc --noEmit`) |
 | Testy | `pnpm test` (vitest, jsdom; stan wyjściowy: 22 pliki, 230 testów zielonych) |
 | Build | `pnpm build` |
-| Uruchomienie lokalne | `pnpm dev` (lokalna baza: zadanie M1) |
-| Zmienne | `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` (wzór w `.env.example`) |
+| Uruchomienie lokalne | `shctl db start`, `shctl db reset` (migracje i seed), `pnpm dev`; instrukcja w `README.md` (zadanie M1) |
+| Baza | `supabase/migrations/` (migracja bazowa 1:1 z chmurą, ADR-001), `supabase/seed.sql` (tylko lokalnie i CI), `supabase/tests/` (pgTAP: `shctl db test`); `shctl db` działa poza sandboksem workera, jeden stack naraz |
+| Zmienne | `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` (wzór w `.env.example`; lokalnie wartości z `shctl db status`) |
 
 Zmiana kontraktu wymaga ADR w `docs/04-plan/adr/`.
 
