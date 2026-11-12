@@ -14,20 +14,27 @@ Format pozycji: `- [ ] CO, PO CO (W-NN), JAK: kroki dla właściciela; GDZIE wpi
 
 ## Konta i dostępy
 
+- [ ] Docker Desktop na serwerze włączony na czas pracy agentów, PO CO: lokalna baza Supabase
+  (W-02, W-03, W-04, W-05), JAK: uruchom Docker Desktop na serwerze i zostaw go włączonego (Docker
+  jest zainstalowany; zmiany Docker Desktop robi tylko właściciel); GDZIE: nic do wpisania;
+  sprawdzimy: `shctl db start --projekt szkolenia-iskt` po dodaniu `supabase/config.toml` kończy się
+  sukcesem
+- [-] Konta usług (Supabase w chmurze, Vercel) (nie dotyczy: M1 działa wyłącznie lokalnie; konta
+  wchodzą w zlecenie przenosin)
+
 ## Domeny i DNS
+
+- [-] Domena i DNS (nie dotyczy: brak publikacji w M1)
 
 ## Klucze testowe i zmienne
 
+- [-] Klucze i zmienne (nie dotyczy: `.env.local` wypełnia się kluczami lokalnego stacku z `shctl db
+  status`; brak kluczy chmury)
+
 ## Limity i płatności usług
+
+- [-] GitHub Actions: płatności konta (nie dotyczy: repo publiczne, CI na runnerach GitHuba bez opłat)
 
 ## Materiały
 
-<!-- Przykład (iskt-www, E-005–E-007):
-- [ ] Vercel: Protection Bypass for Automation dla podglądów PR (W-12), JAK: Project → Settings →
-  Deployment Protection → Protection Bypass for Automation → Add; wartość do `.env.local` jako
-  VERCEL_AUTOMATION_BYPASS_SECRET; sprawdzimy: curl -sI na podgląd PR zwraca 200, nie 302
-- [ ] Resend: domena nadawcy zweryfikowana albo CONTACT_TO = adres właściciela konta (W-04), JAK:
-  Resend → Domains → Add domain, rekordy SPF i DKIM w DNS; sprawdzimy: wysyłka testowa na CONTACT_TO
-- [ ] GitHub Actions: płatności konta aktywne i limit wydatków > 0 (CI, wszystkie W), JAK: Settings →
-  Billing and plans → Payment information i Spending limits; sprawdzimy: job e2e startuje na PR
--->
+- [-] Design, teksty, logotypy (nie dotyczy: M1 nie zmienia ekranów; dane startowe z makiet w repo)
