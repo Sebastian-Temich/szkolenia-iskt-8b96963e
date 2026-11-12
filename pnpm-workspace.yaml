@@ -1,0 +1,17 @@
+# Ustawienia pnpm projektu (ADR-002, przejście z bun: odpowiednik bunfig.toml).
+# Ochrona łańcucha dostaw: pomijaj wersje opublikowane mniej niż dobę temu (minuty).
+minimumReleaseAge: 1440
+# Każdy wyjątek omija ochronę dla jednej paczki; te same paczki co w bunfig.toml z Lovable.
+minimumReleaseAgeExclude:
+  - "@lovable.dev/vite-tanstack-config"
+  - "@lovable.dev/mcp-js"
+  - "@lovable.dev/ai-gateway"
+  - "@lovable.dev/email-js"
+  - "@lovable.dev/webhooks-js"
+# Skrypty budowania zależności tylko z tej listy. Pusta: przy instalacji pnpm nie pyta o żadną
+# paczkę (vite 8 i rolldown dostarczają binarki jako paczki opcjonalne, bez postinstall).
+allowBuilds: {}
+# Dawne "overrides" z package.json (bun/npm). pnpm 12 nie czyta pola "pnpm" w package.json,
+# więc pnpm.overrides mieszka tutaj.
+overrides:
+  rolldown: 1.2.1

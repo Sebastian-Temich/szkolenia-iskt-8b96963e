@@ -53,7 +53,7 @@ Stałe dla tego projektu (z analizy `docs/00-analiza/raport.md`):
 |---|---|
 | Typ projektu | Web: publiczny serwis oferty szkoleń + panel redakcyjny |
 | Framework | TanStack Start (React 19, SSR, TanStack Router), Vite 8, Tailwind 4, shadcn/ui, TanStack Query, react-hook-form + zod, Supabase JS v2; build `@lovable.dev/vite-tanstack-config` (nitro, preset `cloudflare-module`) |
-| Instalacja | `pnpm install` po zadaniu przejścia z bun na pnpm (decyzja właściciela 2026-11-12, ADR w tym zadaniu); do tego czasu repo ma `bun.lock`, a bun nie działa na serwerze |
+| Instalacja | `pnpm install` (w CI `pnpm install --frozen-lockfile`); wersja pnpm w `packageManager` w `package.json`, ustawienia (`minimumReleaseAge`, `allowBuilds`, `overrides`) w `pnpm-workspace.yaml` (ADR-002) |
 | Lint | `pnpm lint` (eslint; stan wyjściowy: 0 błędów, 6 ostrzeżeń w `src/components/ui`) |
 | Typy | `pnpm typecheck` (`tsc --noEmit`) |
 | Testy | `pnpm test` (vitest, jsdom; stan wyjściowy: 22 pliki, 230 testów zielonych) |
