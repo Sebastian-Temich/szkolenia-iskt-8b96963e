@@ -5,7 +5,12 @@ zadań `scripts/sync-status.sh`.
 
 ## Punkt przekazania
 
-(brak)
+2026-11-13T00:30Z (UTC). Kamień M1 „Uruchomienie lokalne” startuje: specyfikacja (PR #3) i plan
+(PR #4) zaakceptowane, zadania #6–#10 (T1–T5) założone. Praca nocna z delegacji właściciela
+(`decyzje.md`, 2026-11-13). Zadania w toku: brak; następny dispatch #6 (T1). Eskalacje: brak.
+Wstrzymania: brak. `shctl doctor` 2026-11-12T23:01Z: 0 błędów (Docker, herdr, logowania OK).
+Autoryzacja: wiersz „Autoryzacja planu PR #4” w `decyzje.md`. Następny krok: realizacja T1→T5
+kolejno, potem uruchomienie serwisu z lokalną bazą dla właściciela.
 
 ## Dziennik etapów
 
