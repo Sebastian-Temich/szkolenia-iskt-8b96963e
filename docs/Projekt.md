@@ -6,8 +6,8 @@ postep_etapy: "1/6"
 postep_zadania: "0/0"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Agent przygotowuje etap specyfikacja"
-ostatnia_synchronizacja: 2026-11-12T22:38:09Z
+nastepny_krok: "Review etapu specyfikacja, potem Twoja akceptacja"
+ostatnia_synchronizacja: 2026-11-12T22:50:56Z
 ---
 
 # szkolenia-iskt
@@ -18,8 +18,8 @@ ostatnia_synchronizacja: 2026-11-12T22:38:09Z
 
 - **Etap:** Specyfikacja
 - **Postęp:** Etapy 1/6 · Zadania 0/0
-- **Co się dzieje:** etap specyfikacja w przygotowaniu
-- **Następny krok:** Agent przygotowuje etap specyfikacja
+- **Co się dzieje:** etap specyfikacja w review
+- **Następny krok:** Review etapu specyfikacja, potem Twoja akceptacja
 
 ## Czeka na Ciebie
 
