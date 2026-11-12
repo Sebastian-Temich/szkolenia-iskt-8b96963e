@@ -1,0 +1,39 @@
+# CI projektu: jakość kodu na każdym PR i pushu na main (ADR-002, W-01, W-06).
+# Runner: zmienna repo SH_RUNS_ON (repo prywatne: runner serwera); bez niej ubuntu-24.04 GitHuba,
+# tak samo jak w sh.yml. Wersja pnpm z pola packageManager w package.json.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  jakosc:
+    runs-on: ${{ fromJSON(vars.SH_RUNS_ON || '"ubuntu-24.04"') }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: lts/*
+          cache: pnpm
+      - name: Instalacja
+        run: pnpm install --frozen-lockfile
+      - name: Lint
+        run: pnpm lint
+      - name: Typy
+        run: pnpm typecheck
+      - name: Testy
+        run: pnpm test
+      - name: Build
+        run: pnpm build
