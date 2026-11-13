@@ -3,11 +3,11 @@ projekt: szkolenia-iskt
 tryb: M
 etap_opis: "Realizacja"
 postep_etapy: "6/6"
-postep_zadania: "0/1"
-czeka_na_ciebie: 1
+postep_zadania: "1/2"
+czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Twoja odpowiedź: Odbiór zlecenia S #18 Okno zapisu z nazwą szkolenia na stronie szkolenia (PR #19, review PASS)"
-ostatnia_synchronizacja: 2026-11-13T10:33:43Z
+nastepny_krok: "Start #20"
+ostatnia_synchronizacja: 2026-11-13T10:49:53Z
 ---
 
 # szkolenia-iskt
@@ -17,28 +17,28 @@ ostatnia_synchronizacja: 2026-11-13T10:33:43Z
 ## Gdzie jesteśmy
 
 - **Etap:** Realizacja
-- **Postęp:** Etapy 6/6 · Zadania 0/1 w bieżącym zleceniu (łącznie 6)
-- **Co się dzieje:** #18 Okno zapisu z nazwą szkolenia na stronie szkolenia (review, iteracja 2, od 1 h 41 min)
-- **Następny krok:** Twoja odpowiedź: Odbiór zlecenia S #18 Okno zapisu z nazwą szkolenia na stronie szkolenia (PR #19, review PASS)
-- **Szacowany czas:** ok. 16 min pracy agentów (1 zadań, średnio 16 min na zadanie, 3 równolegle; orientacyjnie)
+- **Postęp:** Etapy 6/6 · Zadania 1/2 w bieżącym zleceniu (łącznie 7)
+- **Co się dzieje:** nic w toku
+- **Następny krok:** Start #20
+- **Szacowany czas:** ok. 31 min pracy agentów (1 zadań, średnio 31 min na zadanie, 3 równolegle; orientacyjnie)
 
 ## Czeka na Ciebie
 
-1. Odbiór zlecenia S #18 Okno zapisu z nazwą szkolenia na stronie szkolenia (PR #19, review PASS) (czeka 0 min)  
-   Wpisz orkiestratorowi: `odbieram #18`  
-   albo: poprawki #18: CO ZMIENIĆ
+Nic. Agenci pracują sami.
 
 ## Zadania
 
-### W realizacji (1)
+### Gotowe do startu (1)
 
-| Zadanie | Kamień | Kto | Iteracja | PR | CI | Od |
-|---|---|---|---|---|---|---|
-| #18 Okno zapisu z nazwą szkolenia na stronie szkolenia | - | review | 2 | #19 | pass | 1 h 41 min |
+| Zadanie | Kamień | Zależności |
+|---|---|---|
+| #20 Testy E2E Playwright w CI (chromium i webkit) | - | brak |
 
-### Zrobione w bieżącym zleceniu (0)
+### Zrobione w bieżącym zleceniu (1)
 
-Jeszcze nic.
+| Zadanie | Kamień | PR |
+|---|---|---|
+| #18 Okno zapisu z nazwą szkolenia na stronie szkolenia | - | #19 |
 
 Wcześniejsze zlecenia (5 zadań): [Historia](historia.md).
 

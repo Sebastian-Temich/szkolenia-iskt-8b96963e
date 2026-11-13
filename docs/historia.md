@@ -39,10 +39,11 @@ odbiór.
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
 
-## Wszystkie zadania zrobione (5)
+## Wszystkie zadania zrobione (6)
 
 | Zadanie | Kamień | PR | Zamknięte |
 |---|---|---|---|
+| #18 Okno zapisu z nazwą szkolenia na stronie szkolenia | - | #19 | 2026-11-13 |
 | #10 Dokumentacja wydania M1 i regresja | M1 Uruchomienie lokalne | #15 | 2026-11-13 |
 | #9 Testy zasad dostępu (pgTAP) | M1 Uruchomienie lokalne | #14 | 2026-11-13 |
 | #8 Dane startowe, konta testowe i uruchomienie lokalne z instrukcją | M1 Uruchomienie lokalne | #13 | 2026-11-13 |
