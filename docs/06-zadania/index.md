@@ -12,7 +12,7 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 | #10 | Dokumentacja wydania M1 i regresja | done | 1 | M1 Uruchomienie lokalne | #15 merged | pass |
 | #18 | Okno zapisu z nazwą szkolenia na stronie szkolenia | done | 2 | - | #19 merged | pass |
 | #20 | Testy E2E Playwright w CI (chromium i webkit) | done | 1 | - | #21 merged | pass |
-| #25 | Migracja uprawnień funkcji ról i jednej zasady odczytu na rolę | todo | 0 | M2 Bezpieczeństwo bazy | - | - |
+| #25 | Migracja uprawnień funkcji ról i jednej zasady odczytu na rolę | done | 2 | M2 Bezpieczeństwo bazy | #28 merged | pass |
 | #26 | Konfiguracja logowania lokalnie i nowe hasła testowe | todo | 0 | M2 Bezpieczeństwo bazy | - | - |
 | #27 | Dokumentacja wydania M2 | todo | 0 | M2 Bezpieczeństwo bazy | - | - |
 <!-- sync-status:end -->
