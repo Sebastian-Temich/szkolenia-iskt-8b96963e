@@ -42,6 +42,7 @@ odbiór.
 
 - 2026-11-13 cykl `M2-bezpieczenstwo`: start (zlecenie_od 2026-11-13T12:08:17Z), cykl M1 w docs/cykle/M1/
 - 2026-11-13 `00-intake`: in-progress
+- 2026-11-13 `00-intake`: review
 
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
