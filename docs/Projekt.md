@@ -4,10 +4,10 @@ tryb: M
 etap_opis: "Odbiór i wydanie"
 postep_etapy: "5/6"
 postep_zadania: "5/5"
-czeka_na_ciebie: 0
+czeka_na_ciebie: 1
 eskalacje: 0
-nastepny_krok: "Agent przygotowuje etap odbiór i wydanie"
-ostatnia_synchronizacja: 2026-11-13T08:45:20Z
+nastepny_krok: "Twoja odpowiedź: Akceptacja: Odbiór i wydanie (PR #17, review PASS)"
+ostatnia_synchronizacja: 2026-11-13T08:48:48Z
 ---
 
 # szkolenia-iskt
@@ -18,12 +18,13 @@ ostatnia_synchronizacja: 2026-11-13T08:45:20Z
 
 - **Etap:** Odbiór i wydanie
 - **Postęp:** Etapy 5/6 · Zadania 5/5
-- **Co się dzieje:** etap odbiór i wydanie w przygotowaniu
-- **Następny krok:** Agent przygotowuje etap odbiór i wydanie
+- **Co się dzieje:** etap odbiór i wydanie w review
+- **Następny krok:** Twoja odpowiedź: Akceptacja: Odbiór i wydanie (PR #17, review PASS)
 
 ## Czeka na Ciebie
 
-Nic. Agenci pracują sami.
+1. Akceptacja: Odbiór i wydanie (PR #17, review PASS) (czeka 0 min)  
+   Wpisz orkiestratorowi: `akceptuję odbiór i wydanie PR #17`
 
 ## Zadania
 
