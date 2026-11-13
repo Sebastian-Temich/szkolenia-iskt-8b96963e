@@ -4,7 +4,7 @@
 -- nieczytelne i niezapisywalne. Każdy krok zapisu sprawdza stan odczytem, bo UPDATE i DELETE
 -- odrzucone przez RLS nie zgłaszają błędu. Dane tworzy test (prefiks t9-), niezależnie od seedu.
 begin;
-select plan(44);
+select plan(46);
 
 insert into auth.users (id, email, aud, role) values
   ('00000000-0000-4000-a000-000000000902', 't9-redaktor@example.com', 'authenticated', 'authenticated'),
@@ -82,9 +82,18 @@ select is(
   'draft true / draft true',
   'editor: po wycofaniu status draft i published_at wyczyszczone'
 );
-select lives_ok(
-  $$delete from public.szkolenie_trener where szkolenie_id = 't9-e-szk' and trener_id = 't9-e-tr'$$,
-  'editor: usuwa przypisanie'
+select is(
+  (select coalesce(string_agg(szkolenie_id || '>' || trener_id || ' ' || sort_order_trener || ' '
+      || sort_order_szkolenie, ','), '-')
+   from public.szkolenie_trener where szkolenie_id = 't9-e-szk'),
+  't9-e-szk>t9-e-tr 3 2',
+  'editor: widzi przypisanie między szkicem szkolenia i szkicem trenera'
+);
+select results_eq(
+  $$delete from public.szkolenie_trener where szkolenie_id = 't9-e-szk' and trener_id = 't9-e-tr'
+    returning szkolenie_id, trener_id$$,
+  $$values ('t9-e-szk'::text, 't9-e-tr'::text)$$,
+  'editor: usuwa przypisanie (DELETE zwraca dokładnie ten wiersz)'
 );
 select is(
   (select count(*)::int from public.szkolenie_trener where szkolenie_id = 't9-e-szk'),
@@ -189,9 +198,18 @@ select is(
   'draft true / draft true',
   'admin: po wycofaniu status draft i published_at wyczyszczone'
 );
-select lives_ok(
-  $$delete from public.szkolenie_trener where szkolenie_id = 't9-a-szk' and trener_id = 't9-a-tr'$$,
-  'admin: usuwa przypisanie'
+select is(
+  (select coalesce(string_agg(szkolenie_id || '>' || trener_id || ' ' || sort_order_trener || ' '
+      || sort_order_szkolenie, ','), '-')
+   from public.szkolenie_trener where szkolenie_id = 't9-a-szk'),
+  't9-a-szk>t9-a-tr 4 5',
+  'admin: widzi przypisanie między szkicem szkolenia i szkicem trenera'
+);
+select results_eq(
+  $$delete from public.szkolenie_trener where szkolenie_id = 't9-a-szk' and trener_id = 't9-a-tr'
+    returning szkolenie_id, trener_id$$,
+  $$values ('t9-a-szk'::text, 't9-a-tr'::text)$$,
+  'admin: usuwa przypisanie (DELETE zwraca dokładnie ten wiersz)'
 );
 select is(
   (select count(*)::int from public.szkolenie_trener where szkolenie_id = 't9-a-szk'),

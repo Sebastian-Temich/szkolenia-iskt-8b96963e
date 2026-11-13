@@ -3,7 +3,7 @@
 -- (anon, user_roles); UPDATE i DELETE bez roli nie trafiają w żaden wiersz (polityka USING is_staff()):
 -- RETURNING jest pusty, a stan danych po próbach bez zmian. Dane tworzy test (prefiks t9-), niezależnie od seedu.
 begin;
-select plan(30);
+select plan(31);
 
 -- Dane testowe (jako postgres). Wiersze opublikowane: konto bez roli je widzi, więc to najtrudniejszy
 -- przypadek dla UPDATE i DELETE.
@@ -171,6 +171,11 @@ select throws_ok(
   $$delete from public.user_roles$$,
   '42501', 'permission denied for table user_roles',
   'anon: DELETE z user_roles odrzucony'
+);
+select throws_ok(
+  $$select * from public.user_roles$$,
+  '42501', 'permission denied for table user_roles',
+  'anon: SELECT z user_roles odrzucony'
 );
 
 reset role;
