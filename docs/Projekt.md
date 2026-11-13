@@ -4,11 +4,11 @@ tryb: M
 cykl: "M2-bezpieczenstwo"
 etap_opis: "Specyfikacja"
 postep_etapy: "1/6"
-postep_zadania: "0/1"
+postep_zadania: "0/0"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Start etapu specyfikacja"
-ostatnia_synchronizacja: 2026-11-13T12:08:41Z
+nastepny_krok: "Agent przygotowuje etap specyfikacja"
+ostatnia_synchronizacja: 2026-11-13T19:34:49Z
 ---
 
 # szkolenia-iskt
@@ -19,10 +19,9 @@ ostatnia_synchronizacja: 2026-11-13T12:08:41Z
 
 - **Etap:** Specyfikacja
 - **Cykl:** M2-bezpieczenstwo (od 2026-11-13); wcześniejsze: [M1](cykle/M1/cykl.md)
-- **Postęp:** Etapy 1/6 · Zadania 0/1 w bieżącym zleceniu (łącznie 7)
-- **Co się dzieje:** #20 Testy E2E Playwright w CI (chromium i webkit) (worker, od 1 h 18 min)
-- **Następny krok:** Start etapu specyfikacja
-- **Szacowany czas:** ok. 31 min pracy agentów (1 zadań, średnio 31 min na zadanie, 3 równolegle; orientacyjnie)
+- **Postęp:** Etapy 1/6 · Zadania 0/0 w bieżącym zleceniu (łącznie 7)
+- **Co się dzieje:** etap specyfikacja w przygotowaniu
+- **Następny krok:** Agent przygotowuje etap specyfikacja
 
 ## Czeka na Ciebie
 
@@ -30,17 +29,13 @@ Nic. Agenci pracują sami.
 
 ## Zadania
 
-### W realizacji (1)
-
-| Zadanie | Kamień | Kto | Iteracja | PR | CI | Od |
-|---|---|---|---|---|---|---|
-| #20 Testy E2E Playwright w CI (chromium i webkit) | - | worker | 1 | #21 | pass | 1 h 18 min |
+Nic w toku.
 
 ### Zrobione w bieżącym zleceniu (0)
 
 Jeszcze nic.
 
-Wcześniejsze zlecenia (6 zadań): [Historia](historia.md).
+Wcześniejsze zlecenia (7 zadań): [Historia](historia.md).
 
 ## Eskalacje i pytania
 

@@ -41,14 +41,16 @@ odbiór.
 ### Cykl M2-bezpieczenstwo
 
 - 2026-11-13 cykl `M2-bezpieczenstwo`: start (zlecenie_od 2026-11-13T12:08:17Z), cykl M1 w docs/cykle/M1/
+- 2026-11-13 `00-intake`: in-progress
 
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
 
-## Wszystkie zadania zrobione (6)
+## Wszystkie zadania zrobione (7)
 
 | Zadanie | Cykl | Kamień | PR | Zamknięte |
 |---|---|---|---|---|
+| #20 Testy E2E Playwright w CI (chromium i webkit) | M1 · S | - | #21 | 2026-11-13 |
 | #18 Okno zapisu z nazwą szkolenia na stronie szkolenia | M1 · S | - | #19 | 2026-11-13 |
 | #10 Dokumentacja wydania M1 i regresja | M1 | M1 Uruchomienie lokalne | #15 | 2026-11-13 |
 | #9 Testy zasad dostępu (pgTAP) | M1 | M1 Uruchomienie lokalne | #14 | 2026-11-13 |

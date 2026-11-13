@@ -10,6 +10,7 @@ Plik wspólny, aktualizuje orkiestrator. Pomiar poglądowy, służy też do por�
 | #9 Testy zasad dostępu (pgTAP) | M | 24min | 1 | 2 | 0 | PR #14 |
 | #10 Dokumentacja wydania M1 i regresja | M | 8min | 1 | 1 | 0 | PR #15 |
 | #18 Okno zapisu z nazwą szkolenia na stronie szkolenia | S | 1h 48min | 1 | 2 | 0 | PR #19 |
+| #20 Testy E2E Playwright w CI (chromium i webkit) | S | 8h 43min | 1 | 1 | 0 | PR #21 |
 
 Eskalacje nie liczą pytań workera (`shctl escalate --typ pytanie`): są w „Uwagach” jako „pytania: N”.
 
@@ -24,3 +25,4 @@ według przyczyny: wymaganie, kod, test, design.
 | review PR #14 (#9 Testy zasad dostępu (pgTAP)) | 0 | 0 | 2 | 0 | 0 |
 | QA M1 | 0 | 0 | 1 | 0 | 0 |
 | review PR #19 (#18 Okno zapisu z nazwą szkolenia na stronie szkolenia) | 0 | 3 | 1 | 0 | 0 |
+| review PR #21 (#20 Testy E2E Playwright w CI (chromium i webkit)) | 0 | 1 | 0 | 0 | 0 |

@@ -11,7 +11,7 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 | #9 | Testy zasad dostępu (pgTAP) | done | 2 | M1 Uruchomienie lokalne | #14 merged | pass |
 | #10 | Dokumentacja wydania M1 i regresja | done | 1 | M1 Uruchomienie lokalne | #15 merged | pass |
 | #18 | Okno zapisu z nazwą szkolenia na stronie szkolenia | done | 2 | - | #19 merged | pass |
-| #20 | Testy E2E Playwright w CI (chromium i webkit) | in-progress | 1 | - | #21 open | pass |
+| #20 | Testy E2E Playwright w CI (chromium i webkit) | done | 1 | - | #21 merged | pass |
 <!-- sync-status:end -->
 
 ## Mapa zadań z planu
