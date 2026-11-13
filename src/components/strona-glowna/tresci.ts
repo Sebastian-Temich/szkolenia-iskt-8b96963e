@@ -229,11 +229,20 @@ export const ZRODLA_DOFINANSOWANIA = [
   },
 ];
 
+/** Obszar formularza dla zapytań firm o szkolenie zamknięte (też domyślny w oknie zapisu #18). */
+export const OBSZAR_SZKOLENIE_ZAMKNIETE = "Szkolenie zamknięte dla zespołu";
+
 export const OPCJE_OBSZARU = [
   "AI i narzędzia generatywne",
   "ESG i zrównoważony rozwój",
   "Język angielski",
   "Rozwój oprogramowania",
   "Projekty B+R",
-  "Szkolenie zamknięte dla zespołu",
+  OBSZAR_SZKOLENIE_ZAMKNIETE,
 ];
+
+/** Okno zapisu na stronie szkolenia (F-04, issue #18): tytuł okna dla wariantu formularza. */
+export const TYTULY_OKNA_ZAPISU: Record<Odbiorca, string> = {
+  individual: "Zapisz się na szkolenie",
+  company: "Zapytaj o termin dla firmy",
+};
