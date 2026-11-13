@@ -3,11 +3,11 @@ projekt: szkolenia-iskt
 tryb: M
 etap_opis: "Realizacja"
 postep_etapy: "6/6"
-postep_zadania: "1/2"
+postep_zadania: "0/1"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Start #20"
-ostatnia_synchronizacja: 2026-11-13T10:49:53Z
+nastepny_krok: "Dokończenie #20"
+ostatnia_synchronizacja: 2026-11-13T10:50:43Z
 ---
 
 # szkolenia-iskt
@@ -17,9 +17,9 @@ ostatnia_synchronizacja: 2026-11-13T10:49:53Z
 ## Gdzie jesteśmy
 
 - **Etap:** Realizacja
-- **Postęp:** Etapy 6/6 · Zadania 1/2 w bieżącym zleceniu (łącznie 7)
-- **Co się dzieje:** nic w toku
-- **Następny krok:** Start #20
+- **Postęp:** Etapy 6/6 · Zadania 0/1 w bieżącym zleceniu (łącznie 7)
+- **Co się dzieje:** #20 Testy E2E Playwright w CI (chromium i webkit) (worker, od 0 min)
+- **Następny krok:** Dokończenie #20
 - **Szacowany czas:** ok. 31 min pracy agentów (1 zadań, średnio 31 min na zadanie, 3 równolegle; orientacyjnie)
 
 ## Czeka na Ciebie
@@ -28,19 +28,17 @@ Nic. Agenci pracują sami.
 
 ## Zadania
 
-### Gotowe do startu (1)
+### W realizacji (1)
 
-| Zadanie | Kamień | Zależności |
-|---|---|---|
-| #20 Testy E2E Playwright w CI (chromium i webkit) | - | brak |
+| Zadanie | Kamień | Kto | Iteracja | PR | CI | Od |
+|---|---|---|---|---|---|---|
+| #20 Testy E2E Playwright w CI (chromium i webkit) | - | worker | 0 | - | - | 0 min |
 
-### Zrobione w bieżącym zleceniu (1)
+### Zrobione w bieżącym zleceniu (0)
 
-| Zadanie | Kamień | PR |
-|---|---|---|
-| #18 Okno zapisu z nazwą szkolenia na stronie szkolenia | - | #19 |
+Jeszcze nic.
 
-Wcześniejsze zlecenia (5 zadań): [Historia](historia.md).
+Wcześniejsze zlecenia (6 zadań): [Historia](historia.md).
 
 ## Eskalacje i pytania
 
