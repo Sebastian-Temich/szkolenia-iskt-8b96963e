@@ -12,6 +12,7 @@ Plik wspólny, aktualizuje orkiestrator. Pomiar poglądowy, służy też do por�
 | #18 Okno zapisu z nazwą szkolenia na stronie szkolenia | S | 1h 48min | 1 | 2 | 0 | PR #19 |
 | #20 Testy E2E Playwright w CI (chromium i webkit) | S | 8h 43min | 1 | 1 | 0 | PR #21 |
 | #25 Migracja uprawnień funkcji ról i jednej zasady odczytu na rolę | M | 37min | 1 | 2 | 0 | PR #28 |
+| #26 Konfiguracja logowania lokalnie i nowe hasła testowe | M | 23min | 1 | 1 | 0 | PR #29 |
 
 Eskalacje nie liczą pytań workera (`shctl escalate --typ pytanie`): są w „Uwagach” jako „pytania: N”.
 

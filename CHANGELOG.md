@@ -12,3 +12,4 @@ Plik wspólny. Aktualizuje go wyłącznie orkiestrator przez `shctl task close`.
 - #18: Okno zapisu z nazwą szkolenia na stronie szkolenia (PR #19)
 - #20: Testy E2E Playwright w CI (chromium i webkit) (PR #21)
 - #25: Migracja uprawnień funkcji ról i jednej zasady odczytu na rolę (PR #28)
+- #26: Konfiguracja logowania lokalnie i nowe hasła testowe (PR #29)
