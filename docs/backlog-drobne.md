@@ -12,3 +12,5 @@ Plik wspólny, aktualizuje orkiestrator. Zgłoszenia ⚪ z review i „Drobne uw
 | 2026-11-13 | T-7 | Ostrzeżenie „no files matched pattern: supabase/seed.sql” zniknie po T3 (seed). | otwarta |
 | 2026-11-13 | T-8 | `site_url` w `supabase/config.toml` to `http://127.0.0.1:3000`, a `pnpm dev` serwuje port 8080. Logowanie hasłem tego nie używa, ale linki z e-maili auth (reset hasła) wskazywałyby zły adres. Poza zakresem (plik spoza listy, porty bloku). | otwarta |
 | 2026-11-13 | T-8 | `shctl db reset` ostrzega „config section [inbucket] is deprecated” (kopia robocza shctl, jak w T-7). | otwarta |
+| 2026-11-13 | T-9 | `shctl db` ostrzega „config section [inbucket] is deprecated” (jak w T-7 i T-8). | otwarta |
+| 2026-11-13 | T-9 | Advisor 0028/0029 (`anon` wywołuje `is_staff`, `is_admin`, `moje_role` jako `security definer`) zostaje 1:1 z chmurą (ADR-001 pkt 4); testy K4 potwierdzają, że funkcje te nie ujawniają cudzych ról. | otwarta |

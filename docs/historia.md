@@ -29,10 +29,11 @@ kolejno, potem uruchomienie serwisu z lokalną bazą dla właściciela.
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
 
-## Wszystkie zadania zrobione (3)
+## Wszystkie zadania zrobione (4)
 
 | Zadanie | Kamień | PR | Zamknięte |
 |---|---|---|---|
+| #9 Testy zasad dostępu (pgTAP) | M1 Uruchomienie lokalne | #14 | 2026-11-13 |
 | #8 Dane startowe, konta testowe i uruchomienie lokalne z instrukcją | M1 Uruchomienie lokalne | #13 | 2026-11-13 |
 | #7 Migracja bazowa 1:1 z chmurą i job bazy w CI | M1 Uruchomienie lokalne | #12 | 2026-11-12 |
 | #6 Przejście z bun na pnpm i CI jakości | M1 Uruchomienie lokalne | #11 | 2026-11-12 |
