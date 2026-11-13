@@ -6,8 +6,8 @@ postep_etapy: "6/6"
 postep_zadania: "0/1"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Start #18"
-ostatnia_synchronizacja: 2026-11-13T08:51:16Z
+nastepny_krok: "Dokończenie #18"
+ostatnia_synchronizacja: 2026-11-13T10:23:11Z
 ---
 
 # szkolenia-iskt
@@ -18,8 +18,8 @@ ostatnia_synchronizacja: 2026-11-13T08:51:16Z
 
 - **Etap:** Realizacja
 - **Postęp:** Etapy 6/6 · Zadania 0/1 w bieżącym zleceniu (łącznie 6)
-- **Co się dzieje:** nic w toku
-- **Następny krok:** Start #18
+- **Co się dzieje:** #18 Okno zapisu z nazwą szkolenia na stronie szkolenia (worker, iteracja 2, od 1 h 31 min)
+- **Następny krok:** Dokończenie #18
 - **Szacowany czas:** ok. 16 min pracy agentów (1 zadań, średnio 16 min na zadanie, 3 równolegle; orientacyjnie)
 
 ## Czeka na Ciebie
@@ -28,11 +28,11 @@ Nic. Agenci pracują sami.
 
 ## Zadania
 
-### Gotowe do startu (1)
+### W realizacji (1)
 
-| Zadanie | Kamień | Zależności |
-|---|---|---|
-| #18 Okno zapisu z nazwą szkolenia na stronie szkolenia | - | brak |
+| Zadanie | Kamień | Kto | Iteracja | PR | CI | Od |
+|---|---|---|---|---|---|---|
+| #18 Okno zapisu z nazwą szkolenia na stronie szkolenia | - | worker | 2 | #19 | pass | 1 h 31 min |
 
 ### Zrobione w bieżącym zleceniu (0)
 
