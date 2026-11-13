@@ -30,3 +30,4 @@ według przyczyny: wymaganie, kod, test, design.
 | review PR #19 (#18 Okno zapisu z nazwą szkolenia na stronie szkolenia) | 0 | 3 | 1 | 0 | 0 |
 | review PR #21 (#20 Testy E2E Playwright w CI (chromium i webkit)) | 0 | 1 | 0 | 0 | 0 |
 | review PR #28 (#25 Migracja uprawnień funkcji ról i jednej zasady odczytu na rolę) | 0 | 0 | 1 | 0 | 0 |
+| QA M2 | 0 | 0 | 0 | 0 | 0 |

@@ -1,6 +1,6 @@
 ---
 etap: wydanie
-status: in-progress
+status: review
 iteracja: 0
 akceptacja_wlasciciela: true
 ---
