@@ -128,6 +128,9 @@ CREATE UNIQUE INDEX user_roles_pkey ON public.user_roles USING btree (user_id, r
 );
 
 -- 4. Polityki: pg_policies (user_roles bez polityk).
+-- M2, ADR-003: różnica wobec chmury — para *_select_publiczne (anon, authenticated) i *_select_staff
+-- (authenticated) zastąpiona przez *_select_anon i *_select_authenticated (jedna zasada SELECT na rolę,
+-- W-09); zasady INSERT, UPDATE, DELETE jak w chmurze.
 select is(
   (select string_agg(tablename || ' ' || policyname || ' ' || permissive || ' ' || cmd || ' '
       || roles::text || ' USING ' || coalesce(qual, '-') || ' CHECK ' || coalesce(with_check, '-'),
@@ -135,27 +138,33 @@ select is(
    from pg_policies where schemaname = 'public'),
   $$szkolenia szkolenia_delete_staff PERMISSIVE DELETE {authenticated} USING is_staff() CHECK -
 szkolenia szkolenia_insert_staff PERMISSIVE INSERT {authenticated} USING - CHECK is_staff()
-szkolenia szkolenia_select_publiczne PERMISSIVE SELECT {anon,authenticated} USING (status = 'published'::text) CHECK -
-szkolenia szkolenia_select_staff PERMISSIVE SELECT {authenticated} USING is_staff() CHECK -
+szkolenia szkolenia_select_anon PERMISSIVE SELECT {anon} USING (status = 'published'::text) CHECK -
+szkolenia szkolenia_select_authenticated PERMISSIVE SELECT {authenticated} USING ((status = 'published'::text) OR ( SELECT is_staff() AS is_staff)) CHECK -
 szkolenia szkolenia_update_staff PERMISSIVE UPDATE {authenticated} USING is_staff() CHECK is_staff()
 szkolenie_trener szt_delete_staff PERMISSIVE DELETE {authenticated} USING is_staff() CHECK -
 szkolenie_trener szt_insert_staff PERMISSIVE INSERT {authenticated} USING - CHECK is_staff()
-szkolenie_trener szt_select_publiczne PERMISSIVE SELECT {anon,authenticated} USING ((EXISTS ( SELECT 1
+szkolenie_trener szt_select_anon PERMISSIVE SELECT {anon} USING ((EXISTS ( SELECT 1
    FROM szkolenia s
   WHERE ((s.id = szkolenie_trener.szkolenie_id) AND (s.status = 'published'::text)))) AND (EXISTS ( SELECT 1
    FROM trenerzy t
   WHERE ((t.id = szkolenie_trener.trener_id) AND (t.status = 'published'::text))))) CHECK -
-szkolenie_trener szt_select_staff PERMISSIVE SELECT {authenticated} USING is_staff() CHECK -
+szkolenie_trener szt_select_authenticated PERMISSIVE SELECT {authenticated} USING (((EXISTS ( SELECT 1
+   FROM szkolenia s
+  WHERE ((s.id = szkolenie_trener.szkolenie_id) AND (s.status = 'published'::text)))) AND (EXISTS ( SELECT 1
+   FROM trenerzy t
+  WHERE ((t.id = szkolenie_trener.trener_id) AND (t.status = 'published'::text))))) OR ( SELECT is_staff() AS is_staff)) CHECK -
 szkolenie_trener szt_update_staff PERMISSIVE UPDATE {authenticated} USING is_staff() CHECK is_staff()
 trenerzy trenerzy_delete_staff PERMISSIVE DELETE {authenticated} USING is_staff() CHECK -
 trenerzy trenerzy_insert_staff PERMISSIVE INSERT {authenticated} USING - CHECK is_staff()
-trenerzy trenerzy_select_publiczne PERMISSIVE SELECT {anon,authenticated} USING (status = 'published'::text) CHECK -
-trenerzy trenerzy_select_staff PERMISSIVE SELECT {authenticated} USING is_staff() CHECK -
+trenerzy trenerzy_select_anon PERMISSIVE SELECT {anon} USING (status = 'published'::text) CHECK -
+trenerzy trenerzy_select_authenticated PERMISSIVE SELECT {authenticated} USING ((status = 'published'::text) OR ( SELECT is_staff() AS is_staff)) CHECK -
 trenerzy trenerzy_update_staff PERMISSIVE UPDATE {authenticated} USING is_staff() CHECK is_staff()$$,
-  'polityki RLS public jak w chmurze'
+  'polityki RLS public jak w chmurze, z różnicą M2, ADR-003 (jedna zasada SELECT na rolę)'
 );
 
 -- 5. Funkcje (bez funkcji platformy rls_auto_enable): security definer, proconfig, ACL, komentarz, definicja.
+-- M2, ADR-003: różnica wobec chmury — is_admin, is_staff, moje_role bez EXECUTE dla PUBLIC i anon (W-08);
+-- reszta (treść, security definer, search_path, komentarze, ACL dotknij_updated_at i has_role) jak w chmurze.
 select is(
   (select string_agg(p.proname || ' secdef=' || p.prosecdef || ' config=' || coalesce(p.proconfig::text, '-')
       || ' acl=' || coalesce(p.proacl::text, '-') || ' comment='
@@ -194,7 +203,7 @@ AS $function$
   );
 $function$
 
-is_admin secdef=true config={"search_path=\"\""} acl={=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres} comment=-
+is_admin secdef=true config={"search_path=\"\""} acl={postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres} comment=-
 CREATE OR REPLACE FUNCTION public.is_admin()
  RETURNS boolean
  LANGUAGE sql
@@ -204,7 +213,7 @@ AS $function$
   select public.has_role((select auth.uid()), 'admin'::public.app_role);
 $function$
 
-is_staff secdef=true config={"search_path=\"\""} acl={=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres} comment=TRUE gdy bieżący użytkownik ma rolę admin lub editor. Brama zapisu treści w politykach RLS.
+is_staff secdef=true config={"search_path=\"\""} acl={postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres} comment=TRUE gdy bieżący użytkownik ma rolę admin lub editor. Brama zapisu treści w politykach RLS.
 CREATE OR REPLACE FUNCTION public.is_staff()
  RETURNS boolean
  LANGUAGE sql
@@ -218,7 +227,7 @@ AS $function$
   );
 $function$
 
-moje_role secdef=true config={"search_path=\"\""} acl={=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres} comment=Zwraca role bieżącego użytkownika. Pozwala panelowi poznać własne uprawnienia bez dostępu do tabeli user_roles.
+moje_role secdef=true config={"search_path=\"\""} acl={postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres} comment=Zwraca role bieżącego użytkownika. Pozwala panelowi poznać własne uprawnienia bez dostępu do tabeli user_roles.
 CREATE OR REPLACE FUNCTION public.moje_role()
  RETURNS SETOF app_role
  LANGUAGE sql
@@ -229,7 +238,7 @@ AS $function$
   where ur.user_id = (select auth.uid());
 $function$
 $$,
-  'funkcje public jak w chmurze (search_path, security definer, ACL, komentarze, treść)'
+  'funkcje public jak w chmurze (search_path, security definer, ACL, komentarze, treść), z różnicą M2, ADR-003 (ACL funkcji ról)'
 );
 
 -- 6. Tabele: RLS, force RLS, ACL, komentarz.

@@ -1,8 +1,9 @@
 -- W-05/K4 (T4, #9; ADR-001 pkt 3): moje_role() i is_staff() zwracają tylko role wywołującego; gość
--- (anon) dostaje pusty wynik i false; has_role() jest niedostępne dla anon i authenticated (EXECUTE
--- tylko postgres i service_role). Dane tworzy test, niezależnie od seedu.
+-- (anon) od M2 (ADR-003, W-08/K1, #25) dostaje odmowę 42501 dla moje_role(), is_staff() i is_admin();
+-- has_role() jest niedostępne dla anon i authenticated (EXECUTE tylko postgres i service_role).
+-- Dane tworzy test, niezależnie od seedu.
 begin;
-select plan(13);
+select plan(17);
 
 insert into auth.users (id, email, aud, role) values
   ('00000000-0000-4000-a000-000000000901', 't9-bez-roli@example.com', 'authenticated', 'authenticated'),
@@ -21,6 +22,7 @@ select is(
   'editor: moje_role() zwraca tylko editor (bez roli admin innego konta)'
 );
 select is(public.is_staff(), true, 'editor: is_staff() = true');
+select is(public.is_admin(), false, 'editor: is_admin() = false (W-08/K2, #25)');
 select throws_ok(
   $$select public.has_role('00000000-0000-4000-a000-000000000903', 'admin')$$,
   '42501', 'permission denied for function has_role',
@@ -37,6 +39,7 @@ select is(
   'admin: moje_role() zwraca tylko admin (bez roli editor innego konta)'
 );
 select is(public.is_staff(), true, 'admin: is_staff() = true');
+select is(public.is_admin(), true, 'admin: is_admin() = true (W-08/K2, #25)');
 select throws_ok(
   $$select public.has_role('00000000-0000-4000-a000-000000000902', 'editor')$$,
   '42501', 'permission denied for function has_role',
@@ -53,6 +56,7 @@ select is(
   'bez roli: moje_role() pusty wynik (nie widzi ról innych kont)'
 );
 select is(public.is_staff(), false, 'bez roli: is_staff() = false');
+select is(public.is_admin(), false, 'bez roli: is_admin() = false (W-08/K2, #25)');
 select throws_ok(
   $$select public.has_role('00000000-0000-4000-a000-000000000902', 'editor')$$,
   '42501', 'permission denied for function has_role',
@@ -60,15 +64,24 @@ select throws_ok(
 );
 reset role;
 
--- Gość (anon).
+-- Gość (anon). M2, ADR-003, W-08/K1 (T6, #25): zamiast pustego wyniku i false — odmowa EXECUTE.
 set local role anon;
 set local "request.jwt.claims" to '{"role":"anon"}';
-select is(
-  (select count(*)::int from public.moje_role()),
-  0,
-  'anon: moje_role() pusty wynik'
+select throws_ok(
+  $$select * from public.moje_role()$$,
+  '42501', 'permission denied for function moje_role',
+  'anon: moje_role() niedostępne (42501)'
 );
-select is(public.is_staff(), false, 'anon: is_staff() = false');
+select throws_ok(
+  $$select public.is_staff()$$,
+  '42501', 'permission denied for function is_staff',
+  'anon: is_staff() niedostępne (42501)'
+);
+select throws_ok(
+  $$select public.is_admin()$$,
+  '42501', 'permission denied for function is_admin',
+  'anon: is_admin() niedostępne (42501)'
+);
 select throws_ok(
   $$select public.has_role('00000000-0000-4000-a000-000000000902', 'editor')$$,
   '42501', 'permission denied for function has_role',
