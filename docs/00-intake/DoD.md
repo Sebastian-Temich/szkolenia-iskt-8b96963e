@@ -29,7 +29,7 @@ akceptacja_wlasciciela: true
 
 ## Checklisty jakości
 
-- [x] Tryb procesu jest zapisany w `konfiguracja.md` z uzasadnieniem w jednym zdaniu
+- [x] Tryb procesu jest zapisany w `konfiguracja.md` z uzasadnieniem w jednym zdaniu (tryb w `konfiguracja.md`, uzasadnienie w `specyfikacja.md`, „Tryb procesu”)
 - [x] Obszary ryzyka są ocenione; każdy na `tak` albo `do ustalenia` ma w specyfikacji „ADR w 04-plan” (ADR pisze sh-plan, nie intake)
 - [x] Kroki ręczne właściciela są wypisane
 - [x] Karty mają części „Dla właściciela” (prosty język, bez kodów i atrybutów) i „Dla wykonawcy”; numeracja W-01, W-02 …

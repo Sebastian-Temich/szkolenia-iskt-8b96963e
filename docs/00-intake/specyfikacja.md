@@ -63,7 +63,7 @@ powierzchnię ataku API.
 - W-08/K2: Given zalogowany redaktor, administrator i konto bez roli, when wywołują te funkcje, then
   wynik jest taki sam jak przed zmianą (pgTAP, testy `rls_funkcje_rol`).
 - W-08/K3: Given serwis i panel, when gość ogląda strony publiczne, a redaktor loguje się do panelu,
-  then działają jak dziś: 230+ testów vitest i testy E2E zielone (panel woła funkcje ról tylko po
+  then działają jak dziś: pełny zestaw vitest i E2E zielony (panel woła funkcje ról tylko po
   zalogowaniu).
 
 ### W-09: Jedna zasada odczytu na rolę (powinno) (bez karty: zmiana zasad dostępu)
@@ -71,8 +71,8 @@ powierzchnię ataku API.
 Jako właściciel chcę jednej zasady odczytu na rolę dla każdej tabeli treści, aby usunąć uwagę
 wydajnościową i uprościć zasady, bez zmiany tego, kto co widzi.
 
-- W-09/K1: Given tabele `szkolenia`, `trenerzy`, `szkolenie_trener`, when advisor wydajności (`db
-  advisors`), then brak `0006_multiple_permissive_policies` (job CI `baza`).
+- W-09/K1: Given tabele `szkolenia`, `trenerzy`, `szkolenie_trener`, when test pgTAP liczy zasady SELECT na rolę w `pg_policies` (i advisor wydajności `db
+  advisors` z poziomem warn), then każda rola ma najwyżej jedną zasadę SELECT na tabelę, brak `0006_multiple_permissive_policies`.
 - W-09/K2: Given szkice i opublikowane treści, when czytają anon, zalogowany bez roli, redaktor,
   administrator, then widoczne wiersze są identyczne jak przed zmianą (pgTAP: istniejące testy
   `rls_odczyt_szkicow`, `rls_redakcja` bez zmian oczekiwań).
@@ -170,6 +170,6 @@ ADR; kolejny cykl M2 (`shctl cykl new`). Zlecono 2026-11-13T19:35Z.
 
 | Nr | Karta | Pytanie albo założenie | Proponowana odpowiedź | Źródło (zdecyduj sam, luka bez pytania) |
 |---|---|---|---|---|
-| Z1 | — | Hasła kont testowych po zaostrzeniu wymagań (W-10/K2) | Nowe hasła testowe spełniające wymagania (np. `Redaktor-lokalnie1`), tylko lokalnie, zaktualizowane w seedzie, README i testach E2E | luka bez pytania |
-| Z2 | — | Czy W-08 wymaga zmian w kodzie panelu | Nie: panel woła `moje_role()`/`is_staff()` tylko z sesją; jeśli testy wykażą inaczej, minimalna poprawka w `src/lib/panel/sesja.ts` w tym samym zadaniu | luka bez pytania |
-| Z3 | — | Kształt zasady odczytu dla `authenticated` | Jedna zasada `status = 'published' OR is_staff()` dla `authenticated` i osobna `status = 'published'` dla `anon`; ostateczny kształt w ADR | luka bez pytania |
+| Z1 | — | Hasła kont testowych po zaostrzeniu wymagań (W-10/K2) | Nowe hasła testowe spełniające wymagania (np. `Redaktor-lokalnie1`), tylko lokalnie, zaktualizowane w seedzie, README i testach E2E | potwierdzone przez właściciela 2026-11-13 |
+| Z2 | — | Czy W-08 wymaga zmian w kodzie panelu | Nie: panel woła `moje_role()`/`is_staff()` tylko z sesją; jeśli testy wykażą inaczej, minimalna poprawka w `src/lib/panel/sesja.ts` w tym samym zadaniu | potwierdzone przez właściciela 2026-11-13 |
+| Z3 | — | Kształt zasady odczytu dla `authenticated` | Jedna zasada `status = 'published' OR is_staff()` dla `authenticated` i osobna `status = 'published'` dla `anon`; ostateczny kształt w ADR | potwierdzone przez właściciela 2026-11-13 |
