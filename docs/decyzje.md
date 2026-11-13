@@ -90,3 +90,4 @@ Plik wspólny, aktualizuje orkiestrator. Decyzje workerów przenosi z raportów 
 | 2026-11-13 | T-20 | - | Plik spoza „Zakresu”: `.gitignore` (dopisane `playwright-report/` i `test-results/`), żeby wyniki lokalnego przebiegu nie trafiły do commita. |
 | 2026-11-13 | T-20 | - | `actions/upload-artifact` przypięty do SHA `v7.0.2` (jak pozostałe akcje w `ci.yml`). |
 | 2026-11-13 | T-20 | Błędy aplikacji wykryte przez axe | `test.fixme` na każdy błąd plus pominięcie w axe tylko elementu z błędem (`exclude` selektora), a nie `fixme` całych testów stron: issue każe oznaczyć błąd `test.fixme` bez poprawki w `src/`, a pominięcie całej strony wyłączyłoby sprawdzanie reszty strony. Próg (serious i critical, reguły domyślne) bez zmian. |
+| 2026-11-13 | wlasciciel | Akceptacja specyfikacji M2-bezpieczenstwo (PR #22) | właściciel 2026-11-13: „akceptuję”; W-08…W-11, założenia Z1–Z3 z propozycjami. Cofnięcie: zmiana specyfikacji nowym PR |
