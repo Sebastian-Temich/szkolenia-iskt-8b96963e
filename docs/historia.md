@@ -18,6 +18,8 @@ odbiór.
 
 ## Dziennik etapów
 
+### Cykl M1
+
 - 2026-11-12 `00-analiza`: review
 - 2026-11-12 `00-intake`: in-progress
 - 2026-11-12 `00-intake`: review
@@ -36,17 +38,21 @@ odbiór.
 - 2026-11-13 `wydanie`: review
 - 2026-11-13 `wydanie`: done
 
+### Cykl M2-bezpieczenstwo
+
+- 2026-11-13 cykl `M2-bezpieczenstwo`: start (zlecenie_od 2026-11-13T12:08:17Z), cykl M1 w docs/cykle/M1/
+
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
 
 ## Wszystkie zadania zrobione (6)
 
-| Zadanie | Kamień | PR | Zamknięte |
-|---|---|---|---|
-| #18 Okno zapisu z nazwą szkolenia na stronie szkolenia | - | #19 | 2026-11-13 |
-| #10 Dokumentacja wydania M1 i regresja | M1 Uruchomienie lokalne | #15 | 2026-11-13 |
-| #9 Testy zasad dostępu (pgTAP) | M1 Uruchomienie lokalne | #14 | 2026-11-13 |
-| #8 Dane startowe, konta testowe i uruchomienie lokalne z instrukcją | M1 Uruchomienie lokalne | #13 | 2026-11-13 |
-| #7 Migracja bazowa 1:1 z chmurą i job bazy w CI | M1 Uruchomienie lokalne | #12 | 2026-11-12 |
-| #6 Przejście z bun na pnpm i CI jakości | M1 Uruchomienie lokalne | #11 | 2026-11-12 |
+| Zadanie | Cykl | Kamień | PR | Zamknięte |
+|---|---|---|---|---|
+| #18 Okno zapisu z nazwą szkolenia na stronie szkolenia | M1 · S | - | #19 | 2026-11-13 |
+| #10 Dokumentacja wydania M1 i regresja | M1 | M1 Uruchomienie lokalne | #15 | 2026-11-13 |
+| #9 Testy zasad dostępu (pgTAP) | M1 | M1 Uruchomienie lokalne | #14 | 2026-11-13 |
+| #8 Dane startowe, konta testowe i uruchomienie lokalne z instrukcją | M1 | M1 Uruchomienie lokalne | #13 | 2026-11-13 |
+| #7 Migracja bazowa 1:1 z chmurą i job bazy w CI | M1 | M1 Uruchomienie lokalne | #12 | 2026-11-12 |
+| #6 Przejście z bun na pnpm i CI jakości | M1 | M1 Uruchomienie lokalne | #11 | 2026-11-12 |
 <!-- historia:end -->

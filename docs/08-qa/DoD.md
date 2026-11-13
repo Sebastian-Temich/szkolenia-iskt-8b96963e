@@ -1,6 +1,6 @@
 ---
 etap: 08-qa
-status: done
+status: todo
 iteracja: 0
 akceptacja_wlasciciela: false
 ---
@@ -9,18 +9,18 @@ akceptacja_wlasciciela: false
 
 ## Dokumentacja
 
-- [x] Raport QA powstał dla każdego kamienia milowego (M1 jedyny kamień planu: `raport-M1.md`)
+- [ ] Raport QA powstał dla każdego kamienia milowego
 
 ## Funkcjonalność
 
-- [-] Testy E2E przechodzą (chromium + webkit) (nie dotyczy: Playwright poza zakresem M1, specyfikacja; uwaga w raporcie M1)
-- [x] Integracja i zgodność z wymaganiami są sprawdzone
-- [x] Błędy z QA są issue i zostały zamknięte (brak błędów 🔴 i 🟡 w M1)
+- [ ] Testy E2E przechodzą (chromium + webkit)
+- [ ] Integracja i zgodność z wymaganiami są sprawdzone
+- [ ] Błędy z QA są issue i zostały zamknięte
 
 ## Checklisty jakości
 
-- [x] Nie ma otwartych zgłoszeń krytycznych ani istotnych
-- [x] Bezpieczeństwo i sekrety są sprawdzone
+- [ ] Nie ma otwartych zgłoszeń krytycznych ani istotnych
+- [ ] Bezpieczeństwo i sekrety są sprawdzone
 
 ## Checkpoint
 
