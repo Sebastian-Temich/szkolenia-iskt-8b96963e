@@ -32,6 +32,7 @@ odbiór.
 - 2026-11-13 `08-qa`: in-progress
 - 2026-11-13 `08-qa`: review
 - 2026-11-13 `08-qa`: done
+- 2026-11-13 `wydanie`: in-progress
 
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->

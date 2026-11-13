@@ -6,8 +6,8 @@ postep_etapy: "5/6"
 postep_zadania: "5/5"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Start etapu odbiór i wydanie"
-ostatnia_synchronizacja: 2026-11-13T08:34:01Z
+nastepny_krok: "Agent przygotowuje etap odbiór i wydanie"
+ostatnia_synchronizacja: 2026-11-13T08:45:20Z
 ---
 
 # szkolenia-iskt
@@ -18,8 +18,8 @@ ostatnia_synchronizacja: 2026-11-13T08:34:01Z
 
 - **Etap:** Odbiór i wydanie
 - **Postęp:** Etapy 5/6 · Zadania 5/5
-- **Co się dzieje:** etap odbiór i wydanie jeszcze nie rozpoczęty
-- **Następny krok:** Start etapu odbiór i wydanie
+- **Co się dzieje:** etap odbiór i wydanie w przygotowaniu
+- **Następny krok:** Agent przygotowuje etap odbiór i wydanie
 
 ## Czeka na Ciebie
 

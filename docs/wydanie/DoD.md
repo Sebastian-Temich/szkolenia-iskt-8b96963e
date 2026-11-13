@@ -1,6 +1,6 @@
 ---
 etap: wydanie
-status: todo
+status: in-progress
 iteracja: 0
 akceptacja_wlasciciela: true
 ---
