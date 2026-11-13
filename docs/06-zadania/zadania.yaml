@@ -1,0 +1,71 @@
+# Plan: rewizja 66deb85 (docs/04-plan/plan.md, cykl M2-bezpieczenstwo, PR #23), rozpisano 2026-11-13 (UTC)
+# Specyfikacja: docs/00-intake/specyfikacja.md (cykl M2), W-08…W-11. ID kontynuują numerację projektu (M1: T1–T5).
+zadania:
+  - id: T6
+    tytul: Migracja uprawnień funkcji ról i jednej zasady odczytu na rolę
+    cel: >-
+      Goście nie wywołują funkcji ról, a każda tabela treści ma jedną zasadę odczytu na rolę, bez
+      zmiany tego, kto co widzi (W-08, W-09, W-11). Decyzja i dowody:
+      docs/04-plan/adr/ADR-003-uprawnienia-funkcji-rol-i-zasady-odczytu.md. Stan wyjściowy schematu:
+      docs/cykle/M1/04-plan/schemat-chmury.md i supabase/migrations/20261112232552_baza.sql. Nowa
+      migracja (expand), bazowej nie zmieniasz. Test zgodności supabase/tests/schemat_chmury.test.sql
+      aktualizujesz o dwie udokumentowane różnice (komentarz „M2, ADR-003”). Bez zmian w src/ —
+      jeśli testy wykażą, że panel woła funkcje ról bez sesji, minimalna poprawka w
+      src/lib/panel/sesja.ts (założenie Z2 specyfikacji). Poza zakresem: config.toml, seed i hasła
+      (T7), dokumentacja wydania (T8), zasady INSERT/UPDATE/DELETE.
+    kryteria:
+      - "W-08/K1: Given rola anon, when wywołuje is_staff(), is_admin() albo moje_role(), then baza odmawia 42501 (pgTAP)"
+      - "W-08/K2: Given redaktor, administrator i konto bez roli, when wywołują te funkcje, then wyniki jak przed zmianą (istniejące testy rls_funkcje_rol z oczekiwaniami dla anon zmienionymi na odmowę)"
+      - "W-09/K1: Given szkolenia, trenerzy, szkolenie_trener, when test pgTAP liczy zasady SELECT na rolę w pg_policies, then każda rola ma najwyżej jedną zasadę na tabelę; supabase db advisors z poziomem warn bez 0006_multiple_permissive_policies (wynik w raporcie)"
+      - "W-09/K2 i W-09/K3: istniejące testy rls_odczyt_szkicow i rls_redakcja przechodzą bez zmian oczekiwań; zasada dla anon nie wywołuje funkcji ról (test anon czyta opublikowane bez błędu)"
+      - "W-11/K1 i W-11/K3: schemat_chmury.test.sql oczekuje zmienionego ACL funkcji ról i nowych nazw zasad z komentarzem M2, ADR-003; shctl db reset, shctl db test i joby CI baza, jakosc, e2e zielone"
+    pliki: [supabase/migrations/, supabase/tests/]
+    testy: shctl db test
+    zaleznosci: []
+    milestone: M2 Bezpieczeństwo bazy
+    typ: feature
+    kategoria: bezpieczenstwo
+    stack: [supabase]
+    db_migracja: true
+
+  - id: T7
+    tytul: Konfiguracja logowania lokalnie i nowe hasła testowe
+    cel: >-
+      Linki logowania lokalnie prowadzą do serwisu, a hasła mają sensowne wymagania; konta testowe
+      działają z nowymi hasłami w seedzie, README i testach E2E (W-10, założenie Z1 specyfikacji).
+      Plan: docs/04-plan/plan.md, scenariusze O-12, O-13. Hasła testowe jawne, tylko lokalnie, np.
+      Redaktor-lokalnie1 i Bez-roli-lokalnie1 (spełniają lower_upper_letters_digits i ≥ 8 znaków).
+      Poza zakresem: ochrona przed wyciekniętymi hasłami (tylko chmura, zlecenie przenosin), porty
+      bloku (bez zmian), migracje i testy RLS (T6).
+    kryteria:
+      - "W-10/K1: supabase/config.toml ma site_url = \"http://localhost:8080\" i additional_redirect_urls z http://localhost:8080 i http://127.0.0.1:8080; porty bez zmian (przegląd pliku)"
+      - "W-10/K2: minimum_password_length = 8 i password_requirements = \"lower_upper_letters_digits\"; seed, README („Konta testowe”) i e2e/ używają nowych haseł; dane_startowe.test.sql sprawdza nowe hasła"
+      - "W-10/K3: shctl db start i shctl db reset przechodzą; logowanie obu kont przez lokalne API z nowymi hasłami zwraca sesję (wynik w raporcie)"
+      - "Joby CI baza, jakosc i e2e zielone (E2E panelu loguje się nowymi hasłami)"
+    pliki: [supabase/config.toml, supabase/seed.sql, supabase/tests/dane_startowe.test.sql, README.md, e2e/]
+    testy: shctl db test
+    zaleznosci: [T6]
+    milestone: M2 Bezpieczeństwo bazy
+    typ: feature
+    kategoria: baza
+    stack: [supabase]
+    db_migracja: true
+
+  - id: T8
+    tytul: Dokumentacja wydania M2
+    cel: >-
+      Dokumentacja wydania M2 opisuje zmiany bezpieczeństwa bazy, jak je sprawdzić i jak je cofnąć
+      (W-11, rezultat kamienia M2 w docs/04-plan/plan.md). Wzór: docs/cykle/M1/wydanie/techniczna/M1.md.
+      Poza zakresem: zmiany kodu, README (T7), baza w chmurze.
+    kryteria:
+      - "docs/wydanie/techniczna/M2.md: lista migracji (bazowa + migracja M2 z fazą expand/contract i zgodnością wstecz), plan rollbacku migracji M2, różnice wobec chmury (ADR-003), wyniki regresji na main (vitest, pgTAP, E2E) (przegląd pliku)"
+      - "docs/wydanie/produktowa/M2.md: co się zmieniło dla właściciela prostym językiem (nowe hasła testowe, brak zmian ekranów) (przegląd pliku)"
+      - "W-11/K2: wyniki CI na main po T6 i T7 zapisane w techniczna/M2.md: joby baza, jakosc, e2e zielone"
+    pliki: [docs/wydanie/techniczna/M2.md, docs/wydanie/produktowa/M2.md]
+    testy: pnpm test
+    zaleznosci: [T6, T7]
+    milestone: M2 Bezpieczeństwo bazy
+    typ: docs
+    kategoria: testy
+    stack: [supabase]
+    db_migracja: false
