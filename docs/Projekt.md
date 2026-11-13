@@ -7,8 +7,8 @@ postep_etapy: "2/6"
 postep_zadania: "0/0"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Review etapu plan, potem Twoja akceptacja"
-ostatnia_synchronizacja: 2026-11-13T20:09:52Z
+nastepny_krok: "Agent przygotowuje etap plan"
+ostatnia_synchronizacja: 2026-11-13T20:17:31Z
 ---
 
 # szkolenia-iskt
@@ -20,8 +20,8 @@ ostatnia_synchronizacja: 2026-11-13T20:09:52Z
 - **Etap:** Plan
 - **Cykl:** M2-bezpieczenstwo (od 2026-11-13); wcześniejsze: [M1](cykle/M1/cykl.md)
 - **Postęp:** Etapy 2/6 · Zadania 0/0 w bieżącym zleceniu (łącznie 7)
-- **Co się dzieje:** etap plan w review
-- **Następny krok:** Review etapu plan, potem Twoja akceptacja
+- **Co się dzieje:** etap plan w przygotowaniu
+- **Następny krok:** Agent przygotowuje etap plan
 
 ## Czeka na Ciebie
 
