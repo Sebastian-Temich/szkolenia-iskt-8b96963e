@@ -48,11 +48,14 @@ zleceniu przenosin; obecnej bazy nie zmieniamy.
 
 | Nr | Kamień milowy | Rezultat | Wymagania | Warunek startu |
 |---|---|---|---|---|
-| M2 | Bezpieczeństwo bazy | Migracja uprawnień i zasad z testami; konfiguracja logowania z nowymi hasłami testowymi; CI zielone | W-08…W-11 | Plan zaakceptowany |
+| M2 | Bezpieczeństwo bazy | Migracja uprawnień i zasad z testami; konfiguracja logowania z nowymi hasłami testowymi; dokumentacja wydania M2 (lista migracji, plan rollbacku); CI zielone | W-08…W-11 | Plan zaakceptowany |
 
-Kamień M2 kontynuuje numerację projektu (M1 w archiwum cyklu). Zadania (rozpisuje 06-zadania,
-ID od T6): migracja uprawnień i zasad z testami pgTAP → konfiguracja logowania, seed, README i E2E.
-Kolejno, bo dzielą jeden stack `shctl db` i test zgodności schematu.
+Kamień M2 kontynuuje numerację projektu (M1 w archiwum cyklu). Szkielet projektu (narzędzia, CI,
+baza z migracji, E2E) powstał w M1 i #20, więc cykl zmiany nie ma zadania szkieletu: pierwsze
+zadanie korzysta z istniejącego. Zadania (rozpisuje 06-zadania, ID od T6): migracja uprawnień i
+zasad z testami pgTAP → konfiguracja logowania, seed, README i E2E → dokumentacja wydania M2
+(`docs/wydanie/techniczna/M2.md`, `produktowa/M2.md`: lista migracji z migracją M2, plan rollbacku,
+różnice wobec chmury). Kolejno, bo dzielą jeden stack `shctl db` i test zgodności schematu.
 
 ## Zadania właściciela
 
