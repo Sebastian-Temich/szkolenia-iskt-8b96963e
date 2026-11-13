@@ -9,18 +9,18 @@ akceptacja_wlasciciela: false
 
 ## Dokumentacja
 
-- [ ] Raport QA powstał dla każdego kamienia milowego
+- [x] Raport QA powstał dla każdego kamienia milowego (M1 jedyny kamień planu: `raport-M1.md`)
 
 ## Funkcjonalność
 
-- [ ] Testy E2E przechodzą (chromium + webkit)
-- [ ] Integracja i zgodność z wymaganiami są sprawdzone
-- [ ] Błędy z QA są issue i zostały zamknięte
+- [-] Testy E2E przechodzą (chromium + webkit) (nie dotyczy: Playwright poza zakresem M1, specyfikacja; uwaga w raporcie M1)
+- [x] Integracja i zgodność z wymaganiami są sprawdzone
+- [x] Błędy z QA są issue i zostały zamknięte (brak błędów 🔴 i 🟡 w M1)
 
 ## Checklisty jakości
 
-- [ ] Nie ma otwartych zgłoszeń krytycznych ani istotnych
-- [ ] Bezpieczeństwo i sekrety są sprawdzone
+- [x] Nie ma otwartych zgłoszeń krytycznych ani istotnych
+- [x] Bezpieczeństwo i sekrety są sprawdzone
 
 ## Checkpoint
 
