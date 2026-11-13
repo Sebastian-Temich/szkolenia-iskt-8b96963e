@@ -21,3 +21,4 @@ według przyczyny: wymaganie, kod, test, design.
 |---|---|---|---|---|---|
 | review PR #13 (#8 Dane startowe, konta testowe i uruchomienie lokalne z instrukcją) | 0 | 0 | 1 | 0 | 0 |
 | review PR #14 (#9 Testy zasad dostępu (pgTAP)) | 0 | 0 | 2 | 0 | 0 |
+| QA M1 | 0 | 0 | 1 | 0 | 0 |

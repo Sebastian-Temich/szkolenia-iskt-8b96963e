@@ -15,3 +15,4 @@ Plik wspólny, aktualizuje orkiestrator. Zgłoszenia ⚪ z review i „Drobne uw
 | 2026-11-13 | T-9 | `shctl db` ostrzega „config section [inbucket] is deprecated” (jak w T-7 i T-8). | otwarta |
 | 2026-11-13 | T-9 | Advisor 0028/0029 (`anon` wywołuje `is_staff`, `is_admin`, `moje_role` jako `security definer`) zostaje 1:1 z chmurą (ADR-001 pkt 4); testy K4 potwierdzają, że funkcje te nie ujawniają cudzych ról. | otwarta |
 | 2026-11-13 | T-10 | `docs/wydanie/DoD.md` wymaga „Wdrożenie przez `scripts/deploy-prod.sh` opisane”; w M1 bez deployu, opisane jako nie dotyczy w sekcji „Wdrożenie”. | otwarta |
+| 2026-11-13 | QA M1 | (przyczyna: test) Brak Playwright i joba CI `e2e` mimo kontraktu stacku; ścieżki UI sprawdzają tylko vitest na atrapie i test ręczny. Osobne zlecenie: Playwright chromium + webkit, smoke `/`, `/szkolenia`, `/trenerzy`, `/panel` na lokalnym Supabase w CI; zastąpić `tests/e2e/szkolenia.py`. | otwarta |

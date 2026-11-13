@@ -64,3 +64,4 @@ Plik wspólny, aktualizuje orkiestrator. Decyzje workerów przenosi z raportów 
 | 2026-11-13 | T-10 | Nazwy plików | `M1.md` w `techniczna/` i `produktowa/` (z issue); `.gitkeep` zostawione. |
 | 2026-11-13 | T-10 | - | Przeczytane spoza „Wejścia”: raporty `docs/07-realizacja/T-6.md`…`T-9.md`, `docs/decyzje.md`, `docs/backlog-drobne.md` (tylko odczyt), `docs/00-analiza/raport.md`, `README.md`, `.github/workflows/ci.yml` i `sh.yml`, szablony wydania, `docs/wydanie/DoD.md`. |
 | 2026-11-13 | wlasciciel | Test ręczny właściciela po M1: serwis lokalny działa poprawnie | właściciel 2026-11-13: „przeprowadziłem test manualny i wszystko wydaje się być ok” (uruchomienie według README, scenariusze O-4…O-8). Cofnięcie: zgłoszenie błędu przy odbiorze |
+| 2026-11-13 | qa | QA M1: E2E chromium/webkit nie dotyczy | Playwright poza zakresem specyfikacji M1; ścieżki UI pokrył test ręczny właściciela (O-4…O-8); PR #16, werdykt PASS. Cofnięcie: zlecenie Playwright E2E |
