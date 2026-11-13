@@ -3,11 +3,11 @@ projekt: szkolenia-iskt
 tryb: M
 etap_opis: "Realizacja, kamień M1 Uruchomienie lokalne"
 postep_etapy: "4/6"
-postep_zadania: "2/5"
+postep_zadania: "3/5"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Start #8"
-ostatnia_synchronizacja: 2026-11-12T23:43:03Z
+nastepny_krok: "Start #9"
+ostatnia_synchronizacja: 2026-11-13T00:07:22Z
 ---
 
 # szkolenia-iskt
@@ -17,10 +17,10 @@ ostatnia_synchronizacja: 2026-11-12T23:43:03Z
 ## Gdzie jesteśmy
 
 - **Etap:** Realizacja, kamień M1 Uruchomienie lokalne
-- **Postęp:** Etapy 4/6 · Zadania 2/5
+- **Postęp:** Etapy 4/6 · Zadania 3/5
 - **Co się dzieje:** nic w toku
-- **Następny krok:** Start #8
-- **Szacowany czas:** ok. 13 min pracy agentów (3 zadań, średnio 13 min na zadanie, 3 równolegle; orientacyjnie)
+- **Następny krok:** Start #9
+- **Szacowany czas:** ok. 16 min pracy agentów (2 zadań, średnio 16 min na zadanie, 3 równolegle; orientacyjnie)
 
 ## Czeka na Ciebie
 
@@ -32,19 +32,19 @@ Nic. Agenci pracują sami.
 
 | Zadanie | Kamień | Zależności |
 |---|---|---|
-| #8 Dane startowe, konta testowe i uruchomienie lokalne z instrukcją | M1 Uruchomienie lokalne | #7 ✓ |
+| #9 Testy zasad dostępu (pgTAP) | M1 Uruchomienie lokalne | #8 ✓ |
 
-### Zaplanowane (2)
+### Zaplanowane (1)
 
 | Zadanie | Kamień | Czeka na |
 |---|---|---|
-| #9 Testy zasad dostępu (pgTAP) | M1 Uruchomienie lokalne | #8 |
-| #10 Dokumentacja wydania M1 i regresja | M1 Uruchomienie lokalne | #8, #9 |
+| #10 Dokumentacja wydania M1 i regresja | M1 Uruchomienie lokalne | #9 |
 
-### Zrobione w bieżącym zleceniu (2)
+### Zrobione w bieżącym zleceniu (3)
 
 | Zadanie | Kamień | PR |
 |---|---|---|
+| #8 Dane startowe, konta testowe i uruchomienie lokalne z instrukcją | M1 Uruchomienie lokalne | #13 |
 | #7 Migracja bazowa 1:1 z chmurą i job bazy w CI | M1 Uruchomienie lokalne | #12 |
 | #6 Przejście z bun na pnpm i CI jakości | M1 Uruchomienie lokalne | #11 |
 

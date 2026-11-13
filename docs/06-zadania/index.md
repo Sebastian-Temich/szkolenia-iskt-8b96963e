@@ -7,7 +7,7 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 |---|---|---|---|---|---|---|
 | #6 | Przejście z bun na pnpm i CI jakości | done | 1 | M1 Uruchomienie lokalne | #11 merged | pass |
 | #7 | Migracja bazowa 1:1 z chmurą i job bazy w CI | done | 1 | M1 Uruchomienie lokalne | #12 merged | pass |
-| #8 | Dane startowe, konta testowe i uruchomienie lokalne z instrukcją | todo | 0 | M1 Uruchomienie lokalne | - | - |
+| #8 | Dane startowe, konta testowe i uruchomienie lokalne z instrukcją | done | 2 | M1 Uruchomienie lokalne | #13 merged | pass |
 | #9 | Testy zasad dostępu (pgTAP) | todo | 0 | M1 Uruchomienie lokalne | - | - |
 | #10 | Dokumentacja wydania M1 i regresja | todo | 0 | M1 Uruchomienie lokalne | - | - |
 <!-- sync-status:end -->

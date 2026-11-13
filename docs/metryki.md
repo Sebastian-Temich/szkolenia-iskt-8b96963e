@@ -6,6 +6,7 @@ Plik wspólny, aktualizuje orkiestrator. Pomiar poglądowy, służy też do por�
 |---|---|---|---|---|---|---|
 | #6 Przejście z bun na pnpm i CI jakości | M | 8min | 1 | 1 | 0 | PR #11 |
 | #7 Migracja bazowa 1:1 z chmurą i job bazy w CI | M | 19min | 1 | 1 | 0 | PR #12 |
+| #8 Dane startowe, konta testowe i uruchomienie lokalne z instrukcją | M | 22min | 1 | 2 | 0 | PR #13 |
 
 Eskalacje nie liczą pytań workera (`shctl escalate --typ pytanie`): są w „Uwagach” jako „pytania: N”.
 
@@ -16,3 +17,4 @@ według przyczyny: wymaganie, kod, test, design.
 
 | Źródło | Wymaganie | Kod | Test | Design | Bez przyczyny |
 |---|---|---|---|---|---|
+| review PR #13 (#8 Dane startowe, konta testowe i uruchomienie lokalne z instrukcją) | 0 | 0 | 1 | 0 | 0 |

@@ -10,3 +10,5 @@ Plik wspólny, aktualizuje orkiestrator. Zgłoszenia ⚪ z review i „Drobne uw
 | 2026-11-13 | T-6 | pnpm 12 wypisuje „Agent skills awaiting approval: @tanstack/react-start, @tanstack/router-plugin. Run "pnpm approve"”: nie zatwierdzałem; nie wpływa na instalację ani testy. | otwarta |
 | 2026-11-13 | T-7 | `shctl db` w kopii roboczej (`/Users/Shared/sh/stan/db/szkolenia-iskt`) zapisuje sekcję `[inbucket]`, więc CLI 2.121.0 ostrzega „config section [inbucket] is deprecated”. To nie jest plik repo. W CLI 3.x ta sekcja będzie błędem. | otwarta |
 | 2026-11-13 | T-7 | Ostrzeżenie „no files matched pattern: supabase/seed.sql” zniknie po T3 (seed). | otwarta |
+| 2026-11-13 | T-8 | `site_url` w `supabase/config.toml` to `http://127.0.0.1:3000`, a `pnpm dev` serwuje port 8080. Logowanie hasłem tego nie używa, ale linki z e-maili auth (reset hasła) wskazywałyby zły adres. Poza zakresem (plik spoza listy, porty bloku). | otwarta |
+| 2026-11-13 | T-8 | `shctl db reset` ostrzega „config section [inbucket] is deprecated” (kopia robocza shctl, jak w T-7). | otwarta |
