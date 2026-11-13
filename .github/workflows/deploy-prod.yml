@@ -1,0 +1,47 @@
+# Ten workflow jest celowo zablokowany. Produkcję wdraża wyłącznie właściciel ze swojego urządzenia
+# przez scripts/deploy-prod.sh.
+#
+# Dlaczego:
+# - GitHub nie oferuje wymaganej akceptacji dla environment w repo prywatnych bez Enterprise;
+# - agenci używają tokenu właściciela, więc bramka po stronie GitHuba ich nie powstrzyma;
+# - na serwerze i w GitHub Secrets nie ma poświadczeń produkcyjnych, więc nie ma ich też tutaj.
+#
+# Nie zdejmuj bramki bez zmiany procesu w sh-system/docs/proces-v1.md.
+
+name: Deploy produkcyjny
+
+on:
+  workflow_dispatch:
+    inputs:
+      wersja:
+        description: Tag lub commit do wdrożenia
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  bramka:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - name: Wdrożenie tylko przez scripts/deploy-prod.sh
+        run: |
+          echo "::error::Deploy z GitHub Actions jest zablokowany. Produkcję wdraża właściciel przez scripts/deploy-prod.sh."
+          exit 1
+
+  deploy:
+    needs: bramka
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.wersja }}
+      - name: Migracje bazy (placeholder)
+        run: echo "Placeholder. Migracje produkcyjne zależne od hostingu projektu."
+      - name: Deploy aplikacji (placeholder)
+        run: echo "Placeholder. Deploy zależny od hostingu projektu."
+      - name: Smoke test (placeholder)
+        run: echo "Placeholder. Test dymny produkcji."
