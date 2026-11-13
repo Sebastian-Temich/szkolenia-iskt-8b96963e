@@ -1,31 +1,27 @@
-import { Link } from "@tanstack/react-router";
 import { ArrowRight, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { terminySzkolenia, type Szkolenie } from "@/lib/szkolenia/adapter";
 import { BlokCeny } from "./BlokCeny";
+import { OknoZapisu } from "./OknoZapisu";
 
-/** Wyświetla zatwierdzoną cenę i terminy; oba CTA prowadzą do kontaktu na stronie głównej. */
+/** Wyświetla zatwierdzoną cenę i terminy; oba CTA otwierają okno zapisu z tym szkoleniem. */
 export function KartaZapisu({ szkolenie }: { szkolenie: Szkolenie }) {
   return (
     <aside className="flex min-h-[var(--karta-zapisu-min-h)] flex-col gap-[var(--space-4)] rounded-lg border border-[var(--border-subtle)] bg-card p-[var(--space-8)] shadow-[var(--shadow-md)] lg:sticky lg:top-[88px]">
       <BlokCeny price={szkolenie.price} wariant="szczegol" />
-      <Button
-        asChild
-        className="h-[54px] w-full whitespace-normal rounded-pill bg-primary px-3 text-[17px] font-semibold text-primary-foreground shadow-[var(--shadow-brand)] hover:bg-[var(--green-800)]"
-      >
-        <Link to="/" hash="kontakt">
+      <OknoZapisu szkolenie={szkolenie} wariant="individual">
+        <Button className="h-[54px] w-full whitespace-normal rounded-pill bg-primary px-3 text-[17px] font-semibold text-primary-foreground shadow-[var(--shadow-brand)] hover:bg-[var(--green-800)]">
           Zapisz się na szkolenie <ArrowRight aria-hidden="true" />
-        </Link>
-      </Button>
-      <Button
-        asChild
-        variant="outline"
-        className="h-12 w-full whitespace-normal rounded-pill border-[1.5px] border-primary px-3 text-primary hover:bg-[var(--green-50)]"
-      >
-        <Link to="/" hash="kontakt">
+        </Button>
+      </OknoZapisu>
+      <OknoZapisu szkolenie={szkolenie} wariant="company">
+        <Button
+          variant="outline"
+          className="h-12 w-full whitespace-normal rounded-pill border-[1.5px] border-primary px-3 text-primary hover:bg-[var(--green-50)]"
+        >
           Zapytaj o termin dla firmy
-        </Link>
-      </Button>
+        </Button>
+      </OknoZapisu>
       <div className="space-y-4 border-t border-[var(--border-subtle)] pt-5">
         <h2 className="text-[13px] font-semibold uppercase tracking-[var(--ls-caps)] text-[var(--green-600)]">
           Najbliższe terminy
