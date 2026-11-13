@@ -5,12 +5,16 @@ zadań `scripts/sync-status.sh`.
 
 ## Punkt przekazania
 
-2026-11-13T00:30Z (UTC). Kamień M1 „Uruchomienie lokalne” startuje: specyfikacja (PR #3) i plan
-(PR #4) zaakceptowane, zadania #6–#10 (T1–T5) założone. Praca nocna z delegacji właściciela
-(`decyzje.md`, 2026-11-13). Zadania w toku: brak; następny dispatch #6 (T1). Eskalacje: brak.
-Wstrzymania: brak. `shctl doctor` 2026-11-12T23:01Z: 0 błędów (Docker, herdr, logowania OK).
-Autoryzacja: wiersz „Autoryzacja planu PR #4” w `decyzje.md`. Następny krok: realizacja T1→T5
-kolejno, potem uruchomienie serwisu z lokalną bazą dla właściciela.
+2026-11-13T00:45Z (UTC). Kamień M1 „Uruchomienie lokalne”: wszystkie zadania zamknięte — #6 pnpm
+i CI (PR #11), #7 migracja bazowa 1:1 z chmurą (PR #12), #8 dane startowe i README (PR #13, 2
+iteracje), #9 testy RLS pgTAP (PR #14, 2 iteracje), #10 dokumentacja wydania (PR #15). Na `main`:
+230 testów vitest zielonych; `shctl db reset` z migracji i seedu, `shctl db test` 119/119. Stack
+`shctl db` działa (porty 55421–55429), `.env.local` w głównej kopii wskazuje bazę lokalną,
+`node_modules` zainstalowane. Serwer `pnpm dev` nie uruchomiony: sandbox orkiestratora blokuje
+nasłuch na porcie (`listen EPERM`) i połączenia z 127.0.0.1. Eskalacje: brak. Wstrzymania: brak.
+`shctl doctor` 2026-11-12T23:01Z: 0 błędów. Autoryzacja: „Autoryzacja planu PR #4”. Następny krok:
+właściciel uruchamia `pnpm dev` (README, „Uruchomienie lokalne”), potem QA kamienia M1 (08-qa) i
+odbiór.
 
 ## Dziennik etapów
 
