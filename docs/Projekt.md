@@ -2,13 +2,13 @@
 projekt: szkolenia-iskt
 tryb: M
 cykl: "M2-bezpieczenstwo"
-etap_opis: "Rozpisanie zadań"
-postep_etapy: "3/6"
-postep_zadania: "0/0"
+etap_opis: "Realizacja, kamień M2 Bezpieczeństwo bazy"
+postep_etapy: "4/6"
+postep_zadania: "0/3"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Review etapu rozpisanie zadań, potem Twoja akceptacja"
-ostatnia_synchronizacja: 2026-11-13T20:35:40Z
+nastepny_krok: "Start #25"
+ostatnia_synchronizacja: 2026-11-13T20:43:33Z
 ---
 
 # szkolenia-iskt
@@ -17,11 +17,12 @@ ostatnia_synchronizacja: 2026-11-13T20:35:40Z
 
 ## Gdzie jesteśmy
 
-- **Etap:** Rozpisanie zadań
+- **Etap:** Realizacja, kamień M2 Bezpieczeństwo bazy
 - **Cykl:** M2-bezpieczenstwo (od 2026-11-13); wcześniejsze: [M1](cykle/M1/cykl.md)
-- **Postęp:** Etapy 3/6 · Zadania 0/0 w bieżącym zleceniu (łącznie 7)
-- **Co się dzieje:** etap rozpisanie zadań w review
-- **Następny krok:** Review etapu rozpisanie zadań, potem Twoja akceptacja
+- **Postęp:** Etapy 4/6 · Zadania 0/3 w bieżącym zleceniu (łącznie 10)
+- **Co się dzieje:** nic w toku
+- **Następny krok:** Start #25
+- **Szacowany czas:** ok. 1 h 41 min pracy agentów (3 zadań, średnio 1 h 41 min na zadanie, 3 równolegle; orientacyjnie)
 
 ## Czeka na Ciebie
 
@@ -29,7 +30,18 @@ Nic. Agenci pracują sami.
 
 ## Zadania
 
-Nic w toku.
+### Gotowe do startu (1)
+
+| Zadanie | Kamień | Zależności |
+|---|---|---|
+| #25 Migracja uprawnień funkcji ról i jednej zasady odczytu na rolę | M2 Bezpieczeństwo bazy | brak |
+
+### Zaplanowane (2)
+
+| Zadanie | Kamień | Czeka na |
+|---|---|---|
+| #26 Konfiguracja logowania lokalnie i nowe hasła testowe | M2 Bezpieczeństwo bazy | #25 |
+| #27 Dokumentacja wydania M2 | M2 Bezpieczeństwo bazy | #25, #26 |
 
 ### Zrobione w bieżącym zleceniu (0)
 

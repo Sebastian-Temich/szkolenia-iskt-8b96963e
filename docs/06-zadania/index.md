@@ -12,6 +12,9 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 | #10 | Dokumentacja wydania M1 i regresja | done | 1 | M1 Uruchomienie lokalne | #15 merged | pass |
 | #18 | Okno zapisu z nazwą szkolenia na stronie szkolenia | done | 2 | - | #19 merged | pass |
 | #20 | Testy E2E Playwright w CI (chromium i webkit) | done | 1 | - | #21 merged | pass |
+| #25 | Migracja uprawnień funkcji ról i jednej zasady odczytu na rolę | todo | 0 | M2 Bezpieczeństwo bazy | - | - |
+| #26 | Konfiguracja logowania lokalnie i nowe hasła testowe | todo | 0 | M2 Bezpieczeństwo bazy | - | - |
+| #27 | Dokumentacja wydania M2 | todo | 0 | M2 Bezpieczeństwo bazy | - | - |
 <!-- sync-status:end -->
 
 ## Mapa zadań z planu
@@ -28,4 +31,7 @@ Sekcję uzupełnia `shctl task create`: ID z pliku YAML i numer issue.
 | T5 | #10 | Dokumentacja wydania M1 i regresja | #6, #7, #8, #9 |
 | S-20261113-okno-zapisu | #18 | Okno zapisu z nazwą szkolenia na stronie szkolenia | - |
 | S-20261113-playwright-e2e | #20 | Testy E2E Playwright w CI (chromium i webkit) | - |
+| T6 | #25 | Migracja uprawnień funkcji ról i jednej zasady odczytu na rolę | - |
+| T7 | #26 | Konfiguracja logowania lokalnie i nowe hasła testowe | #25 |
+| T8 | #27 | Dokumentacja wydania M2 | #25, #26 |
 <!-- shctl:mapa:end -->
