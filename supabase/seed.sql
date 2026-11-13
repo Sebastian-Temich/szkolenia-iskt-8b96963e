@@ -7,7 +7,8 @@
 --   - trenerzy i przypisania: src/test/dane-z-makiety-trenerzy.ts (6 trenerów, pole `teach`);
 --     trenerzy są fikcyjni (decyzja właściciela, docs/decyzje.md 2026-11-12);
 --   - konta testowe: redaktor@szkolenia.local (editor) i bez-roli@szkolenia.local (bez roli),
---     hasła testowe jawne w README.md, „tylko lokalnie”.
+--     hasła testowe jawne w README.md, „tylko lokalnie”; spełniają wymagania haseł z
+--     supabase/config.toml (≥ 8 znaków, małe i wielkie litery, cyfry; W-10/K2, Z1).
 -- Sprawdza to supabase/tests/dane_startowe.test.sql (`shctl db test`, CI `baza`).
 
 -- ---------------------------------------------------------------------------------------------
@@ -196,12 +197,12 @@ insert into auth.users
 values
   ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-00000000e001',
    'authenticated', 'authenticated', 'redaktor@szkolenia.local',
-   extensions.crypt('redaktor-lokalnie', extensions.gen_salt('bf')), now(),
+   extensions.crypt('Redaktor-lokalnie1', extensions.gen_salt('bf')), now(),
    '{"provider":"email","providers":["email"]}', '{}', now(), now(),
    '', '', '', '', '', '', '', ''),
   ('00000000-0000-0000-0000-000000000000', '00000000-0000-4000-8000-00000000e002',
    'authenticated', 'authenticated', 'bez-roli@szkolenia.local',
-   extensions.crypt('bez-roli-lokalnie', extensions.gen_salt('bf')), now(),
+   extensions.crypt('Bez-roli-lokalnie1', extensions.gen_salt('bf')), now(),
    '{"provider":"email","providers":["email"]}', '{}', now(), now(),
    '', '', '', '', '', '', '', '');
 

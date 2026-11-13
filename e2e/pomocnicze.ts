@@ -3,8 +3,8 @@ import { expect, type Page } from "@playwright/test";
 
 /** Konta z `supabase/seed.sql` (tylko baza lokalna i CI; hasła jawne, testowe, README). */
 export const KONTA = {
-  redaktor: { email: "redaktor@szkolenia.local", haslo: "redaktor-lokalnie" },
-  bezRoli: { email: "bez-roli@szkolenia.local", haslo: "bez-roli-lokalnie" },
+  redaktor: { email: "redaktor@szkolenia.local", haslo: "Redaktor-lokalnie1" },
+  bezRoli: { email: "bez-roli@szkolenia.local", haslo: "Bez-roli-lokalnie1" },
 } as const;
 
 /**

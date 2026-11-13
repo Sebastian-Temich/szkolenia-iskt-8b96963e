@@ -81,12 +81,13 @@ Komendy uruchamiasz w katalogu repo (główna kopia albo worktree zadania).
 ### Konta testowe (tylko lokalnie)
 
 Zakłada je `supabase/seed.sql` wyłącznie w bazie lokalnej i w CI. Te hasła są testowe i jawne: tylko
-lokalnie, nigdy w chmurze ani na produkcji.
+lokalnie, nigdy w chmurze ani na produkcji. Spełniają wymagania haseł z `supabase/config.toml`
+(co najmniej 8 znaków, małe i wielkie litery oraz cyfry).
 
 | Konto | Hasło | Rola | Co widać w panelu |
 |---|---|---|---|
-| `redaktor@szkolenia.local` | `redaktor-lokalnie` | `editor` | lista szkoleń i trenerów |
-| `bez-roli@szkolenia.local` | `bez-roli-lokalnie` | brak | ekran „Brak uprawnień” |
+| `redaktor@szkolenia.local` | `Redaktor-lokalnie1` | `editor` | lista szkoleń i trenerów |
+| `bez-roli@szkolenia.local` | `Bez-roli-lokalnie1` | brak | ekran „Brak uprawnień” |
 
 ### Gdy coś nie działa
 
