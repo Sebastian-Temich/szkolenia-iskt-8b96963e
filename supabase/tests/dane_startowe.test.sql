@@ -3,7 +3,7 @@
 -- src/test/dane-z-makiety-trenerzy.ts (6 trenerów, relacja z pola `teach`). Hasła testowe są jawne
 -- w README.md („tylko lokalnie”). `diag` wypisuje wynik zapytań do raportu T-8.
 begin;
-select plan(9);
+select plan(10);
 
 -- 1. W-03/K1: 9 opublikowanych szkoleń w kolejności makiety, z ceną i terminami (NULL = terminy
 --    domyślne z makiety, TERMINY_DOMYSLNE w src/lib/szkolenia/terminy.ts).
@@ -130,13 +130,14 @@ krol -> genai | szkolenie 1 | trener 1$$,
   'W-03/K2: przypisania trenerów do szkoleń z makiety, obie kolejności'
 );
 
--- 6. W-03/K3: dwa konta testowe, potwierdzone, logowanie e-mailem; hasło z README.md.
+-- 6. W-03/K3, W-10/K2: dwa konta testowe, potwierdzone, logowanie e-mailem; hasło z README.md
+--    spełnia wymagania z supabase/config.toml (≥ 8 znaków, małe i wielkie litery, cyfry).
 select is(
   (select string_agg(u.email || ' | ' || u.aud || ' | ' || u.role || ' | '
       || (u.email_confirmed_at is not null) || ' | '
       || (u.encrypted_password = extensions.crypt(
-            case u.email when 'redaktor@szkolenia.local' then 'redaktor-lokalnie'
-                         else 'bez-roli-lokalnie' end, u.encrypted_password)) || ' | '
+            case u.email when 'redaktor@szkolenia.local' then 'Redaktor-lokalnie1'
+                         else 'Bez-roli-lokalnie1' end, u.encrypted_password)) || ' | '
       || coalesce(u.raw_app_meta_data ->> 'provider', '-') || ' | '
       || (select count(*) from auth.identities i
           where i.user_id = u.id and i.provider = 'email' and i.provider_id = u.id::text),
@@ -144,7 +145,16 @@ select is(
    from auth.users u),
   $$bez-roli@szkolenia.local | authenticated | authenticated | true | true | email | 1
 redaktor@szkolenia.local | authenticated | authenticated | true | true | email | 1$$,
-  'W-03/K3: konta redaktor@ i bez-roli@ z hasłami testowymi z README i tożsamością e-mail'
+  'W-03/K3, W-10/K2: konta redaktor@ i bez-roli@ z nowymi hasłami testowymi z README i tożsamością e-mail'
+);
+
+-- 6b. W-10/K2: stare hasła testowe (sprzed zaostrzenia wymagań) już nie pasują do żadnego konta.
+select is(
+  (select count(*)::int from auth.users u
+   where u.encrypted_password = extensions.crypt('redaktor-lokalnie', u.encrypted_password)
+      or u.encrypted_password = extensions.crypt('bez-roli-lokalnie', u.encrypted_password)),
+  0,
+  'W-10/K2: stare hasła testowe redaktor-lokalnie i bez-roli-lokalnie nie logują'
 );
 
 -- 7. W-03/K3: GoTrue odrzuca logowanie, gdy kolumny tokenów są NULL; seed wpisuje puste napisy.
