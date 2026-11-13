@@ -9,18 +9,18 @@ akceptacja_wlasciciela: false
 
 ## Dokumentacja
 
-- [ ] Raport QA powstał dla każdego kamienia milowego
+- [x] Raport QA powstał dla każdego kamienia milowego (M2 jedyny kamień cyklu: `raport-M2.md`)
 
 ## Funkcjonalność
 
-- [ ] Testy E2E przechodzą (chromium + webkit)
-- [ ] Integracja i zgodność z wymaganiami są sprawdzone
-- [ ] Błędy z QA są issue i zostały zamknięte
+- [x] Testy E2E przechodzą (chromium + webkit)
+- [x] Integracja i zgodność z wymaganiami są sprawdzone
+- [x] Błędy z QA są issue i zostały zamknięte (brak błędów 🔴 i 🟡 w M2)
 
 ## Checklisty jakości
 
-- [ ] Nie ma otwartych zgłoszeń krytycznych ani istotnych
-- [ ] Bezpieczeństwo i sekrety są sprawdzone
+- [x] Nie ma otwartych zgłoszeń krytycznych ani istotnych
+- [x] Bezpieczeństwo i sekrety są sprawdzone
 
 ## Checkpoint
 
