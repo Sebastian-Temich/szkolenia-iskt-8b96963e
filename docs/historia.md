@@ -52,6 +52,7 @@ odbiór.
 - 2026-11-13 `06-zadania`: review
 - 2026-11-13 `06-zadania`: done
 - 2026-11-13 `08-qa`: in-progress
+- 2026-11-13 `08-qa`: review
 
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
