@@ -9,3 +9,4 @@ Plik wspólny. Aktualizuje go wyłącznie orkiestrator przez `shctl task close`.
 - #8: Dane startowe, konta testowe i uruchomienie lokalne z instrukcją (PR #13)
 - #9: Testy zasad dostępu (pgTAP) (PR #14)
 - #10: Dokumentacja wydania M1 i regresja (PR #15)
+- #18: Okno zapisu z nazwą szkolenia na stronie szkolenia (PR #19)

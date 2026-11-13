@@ -9,6 +9,7 @@ Plik wspólny, aktualizuje orkiestrator. Pomiar poglądowy, służy też do por�
 | #8 Dane startowe, konta testowe i uruchomienie lokalne z instrukcją | M | 22min | 1 | 2 | 0 | PR #13 |
 | #9 Testy zasad dostępu (pgTAP) | M | 24min | 1 | 2 | 0 | PR #14 |
 | #10 Dokumentacja wydania M1 i regresja | M | 8min | 1 | 1 | 0 | PR #15 |
+| #18 Okno zapisu z nazwą szkolenia na stronie szkolenia | S | 1h 48min | 1 | 2 | 0 | PR #19 |
 
 Eskalacje nie liczą pytań workera (`shctl escalate --typ pytanie`): są w „Uwagach” jako „pytania: N”.
 
@@ -22,3 +23,4 @@ według przyczyny: wymaganie, kod, test, design.
 | review PR #13 (#8 Dane startowe, konta testowe i uruchomienie lokalne z instrukcją) | 0 | 0 | 1 | 0 | 0 |
 | review PR #14 (#9 Testy zasad dostępu (pgTAP)) | 0 | 0 | 2 | 0 | 0 |
 | QA M1 | 0 | 0 | 1 | 0 | 0 |
+| review PR #19 (#18 Okno zapisu z nazwą szkolenia na stronie szkolenia) | 0 | 3 | 1 | 0 | 0 |

@@ -10,7 +10,7 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 | #8 | Dane startowe, konta testowe i uruchomienie lokalne z instrukcją | done | 2 | M1 Uruchomienie lokalne | #13 merged | pass |
 | #9 | Testy zasad dostępu (pgTAP) | done | 2 | M1 Uruchomienie lokalne | #14 merged | pass |
 | #10 | Dokumentacja wydania M1 i regresja | done | 1 | M1 Uruchomienie lokalne | #15 merged | pass |
-| #18 | Okno zapisu z nazwą szkolenia na stronie szkolenia | in-progress | 2 | - | #19 open | pass |
+| #18 | Okno zapisu z nazwą szkolenia na stronie szkolenia | review | 2 | - | #19 open | pass |
 <!-- sync-status:end -->
 
 ## Mapa zadań z planu
