@@ -9,14 +9,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { FormularzKontaktu } from "@/components/strona-glowna/SekcjaKontakt";
-import type { Odbiorca } from "@/components/strona-glowna/tresci";
+import {
+  OBSZAR_SZKOLENIE_ZAMKNIETE,
+  TYTULY_OKNA_ZAPISU,
+  type Odbiorca,
+} from "@/components/strona-glowna/tresci";
 import { listSzkolenia, type Szkolenie } from "@/lib/szkolenia/adapter";
-
-const TYTULY: Record<Odbiorca, string> = {
-  individual: "Zapisz się na szkolenie",
-  company: "Zapytaj o termin dla firmy",
-};
-const OBSZAR_FIRMY = "Szkolenie zamknięte dla zespołu";
 
 type Props = {
   szkolenie: Szkolenie;
@@ -41,7 +39,10 @@ export function OknoZapisu({ szkolenie, wariant, children }: Props) {
     queryFn: () => listSzkolenia(),
     enabled: otwarte,
   });
-  const opcje = opcjeSzkolen(szkolenie, lista.data);
+  // Przy błędzie (także odświeżenia po wcześniejszym sukcesie) React Query trzyma stare dane;
+  // wtedy pole ma wyłącznie bieżące szkolenie, a wybór wraca do niego.
+  const opcje = opcjeSzkolen(szkolenie, lista.isError ? undefined : lista.data);
+  const wartosc = opcje.some((s) => s.id === wybrane) ? wybrane : szkolenie.id;
 
   const zmienOtwarcie = (stan: boolean) => {
     if (stan) {
@@ -57,7 +58,7 @@ export function OknoZapisu({ szkolenie, wariant, children }: Props) {
       <DialogContent className="max-h-[100dvh] max-w-[var(--container-max)] overflow-y-auto rounded-none border-[var(--border-subtle)] bg-card p-[clamp(1.25rem,3vw,2.5rem)] shadow-[var(--shadow-md)] sm:max-h-[calc(100dvh-2rem)] sm:max-w-xl sm:rounded-lg">
         <DialogHeader className="pr-6">
           <DialogTitle className="text-[clamp(1.5rem,3vw,1.9rem)] font-extrabold leading-[1.15] tracking-[var(--ls-tight)]">
-            {TYTULY[odbiorca]}
+            {TYTULY_OKNA_ZAPISU[odbiorca]}
           </DialogTitle>
           <DialogDescription>{szkolenie.title}</DialogDescription>
         </DialogHeader>
@@ -65,8 +66,8 @@ export function OknoZapisu({ szkolenie, wariant, children }: Props) {
           prefiks={`zapis-${wariant}`}
           odbiorca={odbiorca}
           onZmiana={setOdbiorca}
-          obszarPoczatkowy={odbiorca === "company" ? OBSZAR_FIRMY : ""}
-          poleSzkolenia={{ opcje, wartosc: wybrane, onZmiana: setWybrane }}
+          obszarPoczatkowy={odbiorca === "company" ? OBSZAR_SZKOLENIE_ZAMKNIETE : ""}
+          poleSzkolenia={{ opcje, wartosc, onZmiana: setWybrane }}
         />
       </DialogContent>
     </Dialog>

@@ -189,4 +189,65 @@ describe("Okno zapisu na stronie szkolenia (#18)", () => {
     expect([...pole.querySelectorAll("option")].map((o) => o.value)).toEqual(["genai"]);
     expect(pole).toHaveValue("genai");
   });
+
+  it("błąd odświeżenia po wczytanej liście: pole ma tylko bieżące szkolenie i je wybiera", async () => {
+    const { user, router, okno } = await otworzOkno(/Zapisz się na szkolenie/);
+    const pole = await poleSzkolenia(okno);
+    await user.selectOptions(pole, "python");
+    expect(pole).toHaveValue("python");
+
+    const atrapa = biezacaAtrapa();
+    atrapa.sterowanie.tryby["szkolenia"] = "blad";
+    const odczytyPrzed = atrapa.gdzie("szkolenia", "select").length;
+    await act(async () => {
+      await router.options.context.queryClient.refetchQueries({
+        queryKey: ["szkolenia", "okno-zapisu"],
+      });
+    });
+    expect(atrapa.gdzie("szkolenia", "select").length).toBeGreaterThan(odczytyPrzed);
+    await waitFor(() =>
+      expect([...pole.querySelectorAll("option")].map((o) => o.value)).toEqual(["genai"]),
+    );
+    expect(pole).toHaveValue("genai");
+  });
+
+  it("dostępność okna: nazwa z tytułu, etykiety pól, opis wysyłki, pełna szerokość na telefonie", async () => {
+    const { okno } = await otworzOkno(/Zapisz się na szkolenie/);
+    expect(okno).toHaveAccessibleName("Zapisz się na szkolenie");
+    expect(okno).toHaveAccessibleDescription("Generatywne AI dla biznesu");
+    await poleSzkolenia(okno);
+
+    // Każde pole formularza ma dostępną nazwę (widoczna etykieta albo etykieta pola wyboru).
+    const pola = okno.querySelectorAll("input, select, textarea");
+    expect(pola.length).toBeGreaterThan(0);
+    for (const pole of pola) {
+      expect(pole).toHaveAccessibleName();
+    }
+    for (const etykieta of [
+      "Imię i nazwisko",
+      "E-mail",
+      "Telefon",
+      "Szkolenie",
+      "Interesujące szkolenie / obszar",
+      "Wiadomość",
+    ]) {
+      expect(within(okno).getByLabelText(etykieta)).toBeInTheDocument();
+    }
+
+    const wyslij = within(okno).getByRole("button", { name: /Wyślij zgłoszenie/ });
+    expect(wyslij).toHaveAccessibleDescription(KOMUNIKAT);
+
+    // Na małym ekranie okno zajmuje cały ekran i przewija się w środku; od `sm` jest wyśrodkowane.
+    for (const klasa of [
+      "w-full",
+      "max-h-[100dvh]",
+      "overflow-y-auto",
+      "rounded-none",
+      "sm:max-w-xl",
+      "sm:rounded-lg",
+    ]) {
+      expect(okno).toHaveClass(klasa);
+    }
+    expect(okno).not.toHaveClass("max-w-lg");
+  });
 });
