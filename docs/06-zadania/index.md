@@ -14,7 +14,7 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 | #20 | Testy E2E Playwright w CI (chromium i webkit) | done | 1 | - | #21 merged | pass |
 | #25 | Migracja uprawnień funkcji ról i jednej zasady odczytu na rolę | done | 2 | M2 Bezpieczeństwo bazy | #28 merged | pass |
 | #26 | Konfiguracja logowania lokalnie i nowe hasła testowe | done | 1 | M2 Bezpieczeństwo bazy | #29 merged | pass |
-| #27 | Dokumentacja wydania M2 | todo | 0 | M2 Bezpieczeństwo bazy | - | - |
+| #27 | Dokumentacja wydania M2 | done | 1 | M2 Bezpieczeństwo bazy | #30 merged | pass |
 <!-- sync-status:end -->
 
 ## Mapa zadań z planu

@@ -55,10 +55,11 @@ odbiór.
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
 
-## Wszystkie zadania zrobione (9)
+## Wszystkie zadania zrobione (10)
 
 | Zadanie | Cykl | Kamień | PR | Zamknięte |
 |---|---|---|---|---|
+| #27 Dokumentacja wydania M2 | M2-bezpieczenstwo | M2 Bezpieczeństwo bazy | #30 | 2026-11-13 |
 | #26 Konfiguracja logowania lokalnie i nowe hasła testowe | M2-bezpieczenstwo | M2 Bezpieczeństwo bazy | #29 | 2026-11-13 |
 | #25 Migracja uprawnień funkcji ról i jednej zasady odczytu na rolę | M2-bezpieczenstwo | M2 Bezpieczeństwo bazy | #28 | 2026-11-13 |
 | #20 Testy E2E Playwright w CI (chromium i webkit) | M1 · S | - | #21 | 2026-11-13 |
