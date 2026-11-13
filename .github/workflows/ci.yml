@@ -96,3 +96,58 @@ jobs:
         if: always()
         continue-on-error: true
         run: supabase stop --no-backup
+
+  # E2E na PR (AGENTS.md „Testy E2E”, issue #20): lokalny Supabase z migracji i seed jak w jobie
+  # baza, serwis z `pnpm dev` (webServer Playwrighta), chromium i webkit headless. Zmienne bazy to
+  # lokalne klucze demo z `supabase status`, bez sekretów repo.
+  e2e:
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+    runs-on: ${{ fromJSON(vars.SH_RUNS_ON || '"ubuntu-24.04"') }}
+    timeout-minutes: 40
+    env:
+      SUPABASE_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: lts/*
+          cache: pnpm
+      - uses: supabase/setup-cli@689adcfb80d947100a1eab127289b97d1fb07b13 # v3.2.0
+        with:
+          version: 2.121.0
+      - name: Instalacja
+        run: pnpm install --frozen-lockfile
+      - name: Przeglądarki Playwright (chromium, webkit)
+        run: pnpm exec playwright install --with-deps chromium webkit
+      - name: Start bazy (migracje i seed na czystej bazie)
+        run: supabase start
+      - name: Reset bazy (migracje i seed od zera)
+        run: supabase db reset --local
+      - name: Zmienne bazy lokalnej dla serwisu
+        run: |
+          status="$(supabase status -o json)"
+          url="$(jq -r '.API_URL' <<<"$status")"
+          klucz="$(jq -r '.PUBLISHABLE_KEY // .ANON_KEY' <<<"$status")"
+          if [ -z "$url" ] || [ "$url" = "null" ] || [ -z "$klucz" ] || [ "$klucz" = "null" ]; then
+            echo "Brak API_URL albo klucza publicznego w supabase status" >&2
+            exit 1
+          fi
+          {
+            echo "VITE_SUPABASE_URL=$url"
+            echo "VITE_SUPABASE_PUBLISHABLE_KEY=$klucz"
+          } >> "$GITHUB_ENV"
+      - name: Testy E2E (chromium, webkit)
+        run: pnpm exec playwright test --project=chromium --project=webkit
+      - name: Raport Playwright
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
+          if-no-files-found: ignore
+      - name: Stop bazy
+        if: always()
+        continue-on-error: true
+        run: supabase stop --no-backup

@@ -102,4 +102,28 @@ lokalnie, nigdy w chmurze ani na produkcji.
 - `shctl db start` kończy się błędem: włącz Docker Desktop i powtórz. Porty bazy to blok
   55421–55429; `shctl` odmawia, gdy działa baza innego projektu (zatrzymaj ją jej `shctl db stop`).
 
+## Testy
+
+- Lint, typy, testy jednostkowe: `pnpm lint`, `pnpm typecheck`, `pnpm test`.
+- Testy przeglądarkowe (E2E, Playwright, katalog `e2e/`): główne ścieżki serwisu i panelu oraz
+  dostępność (axe, szerokość 375 px) w chromium i webkit. W GitHubie uruchamia je job `e2e` na
+  każdym PR (lokalny Supabase z migracji i seed); raport `playwright-report` jest artefaktem runu.
+
+### E2E lokalnie
+
+Na bazie lokalnej z danymi startowymi (kroki 1–3 z „Uruchomienia lokalnego”):
+
+1. Jednorazowo zainstaluj przeglądarki: `pnpm exec playwright install chromium webkit`.
+2. Uruchom testy. Playwright sam włącza `pnpm dev` na porcie 8080 (albo używa już działającego):
+
+   ```sh
+   pnpm exec playwright test --project=chromium --project=webkit
+   ```
+
+3. Raport po nieudanym przebiegu: `pnpm exec playwright show-report`.
+
+Testy na innym adresie (np. staging) uruchamiasz ze zmienną `BASE_URL`; wtedy Playwright nie
+włącza serwera. Testy zakładają dane z `supabase/seed.sql` (9 szkoleń, 6 trenerów, konta
+testowe), więc po zmianach w bazie lokalnej wykonaj najpierw `shctl db reset`.
+
 Zasady pracy agentów: [AGENTS.md](AGENTS.md).
