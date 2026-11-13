@@ -45,6 +45,7 @@ odbiór.
 - 2026-11-13 `00-intake`: review
 - 2026-11-13 `00-intake`: done
 - 2026-11-13 `04-plan`: in-progress
+- 2026-11-13 `04-plan`: review
 
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
