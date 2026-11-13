@@ -1,6 +1,6 @@
 ---
 etap: 04-plan
-status: in-progress
+status: done
 iteracja: 2
 akceptacja_wlasciciela: true
 ---
@@ -30,8 +30,8 @@ Jeden dokument `plan.md`: krótka architektura i plan kamieni milowych (szablon 
 
 ## Checkpoint
 
-- [ ] Review etapu dało PASS (zaznacza reviewer, nie autor)
-- [ ] Właściciel zaakceptował plan
+- [x] Review etapu dało PASS (zaznacza reviewer, nie autor) — PR #23, commit 1f0f2be
+- [x] Właściciel zaakceptował plan (2026-11-13, decyzje.md)
 <!-- tylko-tryb:L -->
 - [ ] Checkpoint 1 zaliczony
 <!-- /tylko-tryb -->
