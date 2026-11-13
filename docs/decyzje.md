@@ -59,3 +59,7 @@ Plik wspólny, aktualizuje orkiestrator. Decyzje workerów przenosi z raportów 
 | 2026-11-13 | T-9 | „Baza odmawia” dla UPDATE i DELETE bez roli | asercja „0 wierszy” (`is_empty` na `… returning`) i stan danych po próbach, bo RLS filtruje wiersze z USING bez błędu (zachowanie chmury). INSERT i wszystko na `user_roles` oraz zapis anon → `throws_ok` z kodem 42501 i treścią błędu, żeby odróżnić odmowę RLS od braku grantu. |
 | 2026-11-13 | T-9 | K3 „redaktor z rolą editor i admin” | ten sam przebieg dla obu ról (osobne konta), bo obie przechodzą przez `is_staff()`. |
 | 2026-11-13 | T-9 | Kontrola mutacyjna tylko lokalnie, bez śladu w repo | testy pilnują obecnych polityk; mutacje w commicie zmieniałyby zachowanie testów. |
+| 2026-11-13 | T-10 | Punkt odniesienia „od początku M1” dla diffu `src/` | sprawdzone dwa: `2452119` (start M1) i `bc7671b` (ostatni commit Lovable przed adaptacją); oba diffy puste. |
+| 2026-11-13 | T-10 | Dowód builda | CI na `main` zamiast lokalnego builda, bo profil workera blokuje odczyt `.env.local` (T-8); nie obchodziłem sandboxa. |
+| 2026-11-13 | T-10 | Nazwy plików | `M1.md` w `techniczna/` i `produktowa/` (z issue); `.gitkeep` zostawione. |
+| 2026-11-13 | T-10 | - | Przeczytane spoza „Wejścia”: raporty `docs/07-realizacja/T-6.md`…`T-9.md`, `docs/decyzje.md`, `docs/backlog-drobne.md` (tylko odczyt), `docs/00-analiza/raport.md`, `README.md`, `.github/workflows/ci.yml` i `sh.yml`, szablony wydania, `docs/wydanie/DoD.md`. |

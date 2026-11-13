@@ -8,6 +8,7 @@ Plik wspólny, aktualizuje orkiestrator. Pomiar poglądowy, służy też do por�
 | #7 Migracja bazowa 1:1 z chmurą i job bazy w CI | M | 19min | 1 | 1 | 0 | PR #12 |
 | #8 Dane startowe, konta testowe i uruchomienie lokalne z instrukcją | M | 22min | 1 | 2 | 0 | PR #13 |
 | #9 Testy zasad dostępu (pgTAP) | M | 24min | 1 | 2 | 0 | PR #14 |
+| #10 Dokumentacja wydania M1 i regresja | M | 8min | 1 | 1 | 0 | PR #15 |
 
 Eskalacje nie liczą pytań workera (`shctl escalate --typ pytanie`): są w „Uwagach” jako „pytania: N”.
 
