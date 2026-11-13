@@ -1,13 +1,13 @@
 ---
 projekt: szkolenia-iskt
 tryb: M
-etap_opis: "Zakończony"
+etap_opis: "Realizacja"
 postep_etapy: "6/6"
-postep_zadania: "5/5"
+postep_zadania: "0/1"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Brak, zlecenie zakończone"
-ostatnia_synchronizacja: 2026-11-13T08:49:32Z
+nastepny_krok: "Start #18"
+ostatnia_synchronizacja: 2026-11-13T08:51:16Z
 ---
 
 # szkolenia-iskt
@@ -16,28 +16,29 @@ ostatnia_synchronizacja: 2026-11-13T08:49:32Z
 
 ## Gdzie jesteśmy
 
-- **Etap:** Zakończony
-- **Postęp:** Etapy 6/6 · Zadania 5/5
+- **Etap:** Realizacja
+- **Postęp:** Etapy 6/6 · Zadania 0/1 w bieżącym zleceniu (łącznie 6)
 - **Co się dzieje:** nic w toku
-- **Następny krok:** Brak, zlecenie zakończone
+- **Następny krok:** Start #18
+- **Szacowany czas:** ok. 16 min pracy agentów (1 zadań, średnio 16 min na zadanie, 3 równolegle; orientacyjnie)
 
 ## Czeka na Ciebie
 
-Nic. Projekt zakończony.
+Nic. Agenci pracują sami.
 
 ## Zadania
 
-Nic w toku.
+### Gotowe do startu (1)
 
-### Zrobione w bieżącym zleceniu (5)
-
-| Zadanie | Kamień | PR |
+| Zadanie | Kamień | Zależności |
 |---|---|---|
-| #10 Dokumentacja wydania M1 i regresja | M1 Uruchomienie lokalne | #15 |
-| #9 Testy zasad dostępu (pgTAP) | M1 Uruchomienie lokalne | #14 |
-| #8 Dane startowe, konta testowe i uruchomienie lokalne z instrukcją | M1 Uruchomienie lokalne | #13 |
-| #7 Migracja bazowa 1:1 z chmurą i job bazy w CI | M1 Uruchomienie lokalne | #12 |
-| #6 Przejście z bun na pnpm i CI jakości | M1 Uruchomienie lokalne | #11 |
+| #18 Okno zapisu z nazwą szkolenia na stronie szkolenia | - | brak |
+
+### Zrobione w bieżącym zleceniu (0)
+
+Jeszcze nic.
+
+Wcześniejsze zlecenia (5 zadań): [Historia](historia.md).
 
 ## Eskalacje i pytania
 
