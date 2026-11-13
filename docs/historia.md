@@ -29,6 +29,7 @@ odbiór.
 - 2026-11-13 `06-zadania`: review
 - 2026-11-13 `06-zadania`: iteracja 2 (FAIL review PR #5)
 - 2026-11-13 `06-zadania`: done
+- 2026-11-13 `08-qa`: in-progress
 
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
