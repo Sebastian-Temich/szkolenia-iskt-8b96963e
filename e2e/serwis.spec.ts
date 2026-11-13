@@ -89,11 +89,14 @@ test.describe("Szczegół /szkolenia/genai z oknem zapisu (F-04, #18)", () => {
   });
 
   test("pokazuje prowadzących z odnośnikami do profili (O-5)", async ({ page }) => {
-    const prowadzacy = page.locator("section", {
-      has: page.getByRole("heading", { name: "Prowadzący" }),
-    });
-    await expect(prowadzacy.getByRole("link")).toHaveCount(2);
-    await expect(prowadzacy.getByRole("link").first()).toHaveAttribute("href", "/trenerzy/nowak");
+    // Sekcje są zagnieżdżone; najgłębsza z nagłówkiem „Prowadzący” to ostatnie dopasowanie.
+    const prowadzacy = page
+      .locator("section", { has: page.getByRole("heading", { name: "Prowadzący" }) })
+      .last();
+    const profile = prowadzacy.locator('a[href^="/trenerzy/"]');
+    await expect(profile).toHaveCount(2);
+    await expect(profile.nth(0)).toHaveAttribute("href", "/trenerzy/nowak");
+    await expect(profile.nth(1)).toHaveAttribute("href", "/trenerzy/krol");
   });
 
   test("„Zapisz się na szkolenie” otwiera okno z wybranym szkoleniem, bez zmiany adresu", async ({
@@ -156,9 +159,12 @@ test.describe("Trenerzy (O-5)", () => {
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("dr Anna Nowak");
     await expect(page.getByRole("heading", { name: "Doświadczenie zawodowe" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Specjalizacje" })).toBeVisible();
-    const prowadzi = page.locator("section", {
-      has: page.getByRole("heading", { name: "Prowadzi szkolenia" }),
-    });
-    await expect(prowadzi.getByRole("link").first()).toHaveAttribute("href", "/szkolenia/genai");
+    const prowadzi = page
+      .locator("section", { has: page.getByRole("heading", { name: "Prowadzi szkolenia" }) })
+      .last();
+    await expect(prowadzi.locator('a[href^="/szkolenia/"]').first()).toHaveAttribute(
+      "href",
+      "/szkolenia/genai",
+    );
   });
 });

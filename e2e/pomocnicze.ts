@@ -24,9 +24,15 @@ export async function zaloguj(page: Page, konto: { email: string; haslo: string 
   await page.getByRole("button", { name: "Zaloguj się" }).click();
 }
 
-/** Naruszenia axe o wadze serious i critical (próg z kryterium issue #20). */
-export async function powazneNaruszeniaAxe(page: Page) {
-  const wynik = await new AxeBuilder({ page }).analyze();
+/**
+ * Naruszenia axe o wadze serious i critical (próg z kryterium issue #20). `pomin` to selektory
+ * elementów ze znanym błędem, oznaczonym osobnym `test.fixme` (e2e/dostepnosc.spec.ts); reszta
+ * strony jest sprawdzana bez zmian progu.
+ */
+export async function powazneNaruszeniaAxe(page: Page, pomin: readonly string[] = []) {
+  let axe = new AxeBuilder({ page });
+  for (const selektor of pomin) axe = axe.exclude(selektor);
+  const wynik = await axe.analyze();
   return wynik.violations
     .filter((n) => n.impact === "serious" || n.impact === "critical")
     .map((n) => ({

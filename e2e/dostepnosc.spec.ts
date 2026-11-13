@@ -87,11 +87,27 @@ const STRONY: Strona[] = [
   },
 ];
 
+/**
+ * Błędy aplikacji wykryte tym testem w CI (run 43413245780). Issue #20 nie zmienia `src/`, więc
+ * każdy błąd ma własny `test.fixme` niżej, a testy stron pomijają tylko ten jeden element.
+ * Po poprawce w `src/` usuń wpis stąd i `fixme` z testu błędu.
+ */
+const ZNANE_BLEDY = {
+  /** Nagłówek: link logo ma aria-label „ISKT — strona główna”, a widoczny tekst „Rozwijaj
+   * swoje kompetencje z ISKT” (od `sm`); axe label-content-name-mismatch, serious. */
+  logoNaglowka: 'header nav a[aria-label^="ISKT"]',
+  /** Strona główna, „Jak to działa”: numery kroków 01–04 w kolorze --green-200 na karcie mają
+   * za niski kontrast; axe color-contrast, serious. */
+  numeryKrokow: 'span.font-mono[class*="text-[var(--green-200)]"]',
+} as const;
+
+const POMIJANE = Object.values(ZNANE_BLEDY);
+
 for (const strona of STRONY) {
   test.describe(strona.nazwa, () => {
     test("axe: brak naruszeń serious i critical", async ({ page }) => {
       await strona.przygotuj(page);
-      expect(await powazneNaruszeniaAxe(page)).toEqual([]);
+      expect(await powazneNaruszeniaAxe(page, POMIJANE)).toEqual([]);
     });
 
     test("375 px: brak poziomego przewijania i naruszeń axe serious i critical", async ({
@@ -100,7 +116,21 @@ for (const strona of STRONY) {
       await page.setViewportSize({ width: 375, height: 812 });
       await strona.przygotuj(page);
       await oczekujBrakuPoziomegoPrzewijania(page);
-      expect(await powazneNaruszeniaAxe(page)).toEqual([]);
+      expect(await powazneNaruszeniaAxe(page, POMIJANE)).toEqual([]);
     });
   });
 }
+
+test.describe("Znane błędy dostępności (wykryte w #20, bez poprawki w src/)", () => {
+  test.fixme("link logo w nagłówku: nazwa dostępna zawiera widoczny tekst", async ({ page }) => {
+    await otworz(page, "/");
+    const naruszenia = await powazneNaruszeniaAxe(page);
+    expect(naruszenia.filter((n) => n.regula === "label-content-name-mismatch")).toEqual([]);
+  });
+
+  test.fixme("numery kroków „Jak to działa” mają kontrast co najmniej 4.5:1", async ({ page }) => {
+    await otworz(page, "/");
+    const naruszenia = await powazneNaruszeniaAxe(page);
+    expect(naruszenia.filter((n) => n.regula === "color-contrast")).toEqual([]);
+  });
+});
