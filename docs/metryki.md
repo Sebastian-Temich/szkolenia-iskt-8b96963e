@@ -15,6 +15,7 @@ Plik wspólny, aktualizuje orkiestrator. Pomiar poglądowy, służy też do por�
 | #26 Konfiguracja logowania lokalnie i nowe hasła testowe | M | 23min | 1 | 1 | 0 | PR #29 |
 | #27 Dokumentacja wydania M2 | M | 20min | 1 | 1 | 0 | PR #30 |
 | #33 Aktualizacja paczek z podatnościami i usunięcie nieużywanych komponentów szablonu | S | 5h 12min | 1 | 1 | 0 | PR #34 |
+| #35 Poprawka dwóch błędów dostępności z testów E2E (logo w nagłówku, kontrast kroków) | S | 3h 24min | 1 | 1 | 0 | PR #36 |
 
 Eskalacje nie liczą pytań workera (`shctl escalate --typ pytanie`): są w „Uwagach” jako „pytania: N”.
 

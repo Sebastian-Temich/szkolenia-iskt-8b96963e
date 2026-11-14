@@ -37,3 +37,4 @@ Plik wspólny, aktualizuje orkiestrator. Zgłoszenia ⚪ z review i „Drobne uw
 | 2026-11-14 | T-33 | Build na vite 8.3.8 wypisuje 43 ostrzeżenia `MODULE_LEVEL_DIRECTIVE` („use client” w `@tanstack/react-query`) w środowisku nitro; wcześniej ich nie było. Build zielony. | otwarta |
 | 2026-11-14 | T-33 | `pnpm peers check`: niespełniony peer `ocache >=0.3.0` dla `h3@2.0.8` (z nitro) był już w stanie wyjściowym. | otwarta |
 | 2026-11-14 | T-33 | eslint 9.39.5 jest oznaczony w rejestrze jako przestarzały (zalecany 10.x); major eslint poza zakresem. | otwarta |
+| 2026-11-14 | T-35 | `vitest.config.ts` używa `__dirname` (ostrzeżenie Vite o `configLoader: 'native'`). | otwarta |

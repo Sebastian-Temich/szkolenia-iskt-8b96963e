@@ -15,3 +15,4 @@ Plik wspólny. Aktualizuje go wyłącznie orkiestrator przez `shctl task close`.
 - #26: Konfiguracja logowania lokalnie i nowe hasła testowe (PR #29)
 - #27: Dokumentacja wydania M2 (PR #30)
 - #33: Aktualizacja paczek z podatnościami i usunięcie nieużywanych komponentów szablonu (PR #34)
+- #35: Poprawka dwóch błędów dostępności z testów E2E (logo w nagłówku, kontrast kroków) (PR #36)

@@ -4,11 +4,11 @@ tryb: M
 cykl: "M2-bezpieczenstwo"
 etap_opis: "Zakończony"
 postep_etapy: "6/6"
-postep_zadania: "1/1"
+postep_zadania: "2/2"
 czeka_na_ciebie: 0
 eskalacje: 0
 nastepny_krok: "Brak, zlecenie zakończone"
-ostatnia_synchronizacja: 2026-11-14T15:02:44Z
+ostatnia_synchronizacja: 2026-11-14T18:28:37Z
 ---
 
 # szkolenia-iskt
@@ -19,7 +19,7 @@ ostatnia_synchronizacja: 2026-11-14T15:02:44Z
 
 - **Etap:** Zakończony
 - **Cykl:** M2-bezpieczenstwo (od 2026-11-13); wcześniejsze: [M1](cykle/M1/cykl.md)
-- **Postęp:** Etapy 6/6 · Zadania 1/1 w bieżącym zleceniu (łącznie 11)
+- **Postęp:** Etapy 6/6 · Zadania 2/2 w bieżącym zleceniu (łącznie 12)
 - **Co się dzieje:** nic w toku
 - **Następny krok:** Brak, zlecenie zakończone
 
@@ -31,10 +31,11 @@ Nic. Projekt zakończony.
 
 Nic w toku.
 
-### Zrobione w bieżącym zleceniu (1)
+### Zrobione w bieżącym zleceniu (2)
 
 | Zadanie | Kamień | PR |
 |---|---|---|
+| #35 Poprawka dwóch błędów dostępności z testów E2E (logo w nagłówku, kontrast kroków) | - | #36 |
 | #33 Aktualizacja paczek z podatnościami i usunięcie nieużywanych komponentów szablonu | - | #34 |
 
 Wcześniejsze zlecenia (10 zadań): [Historia](historia.md).

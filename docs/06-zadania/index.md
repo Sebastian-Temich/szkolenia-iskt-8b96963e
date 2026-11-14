@@ -16,7 +16,7 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 | #26 | Konfiguracja logowania lokalnie i nowe hasła testowe | done | 1 | M2 Bezpieczeństwo bazy | #29 merged | pass |
 | #27 | Dokumentacja wydania M2 | done | 1 | M2 Bezpieczeństwo bazy | #30 merged | pass |
 | #33 | Aktualizacja paczek z podatnościami i usunięcie nieużywanych komponentów szablonu | done | 1 | - | #34 merged | pass |
-| #35 | Poprawka dwóch błędów dostępności z testów E2E (logo w nagłówku, kontrast kroków) | todo | 0 | - | - | - |
+| #35 | Poprawka dwóch błędów dostępności z testów E2E (logo w nagłówku, kontrast kroków) | done | 1 | - | #36 merged | pass |
 <!-- sync-status:end -->
 
 ## Mapa zadań z planu
