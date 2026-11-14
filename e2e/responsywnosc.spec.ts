@@ -1,10 +1,16 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
-import { KONTA, oczekujBrakuPoziomegoPrzewijania, otworz, zaloguj } from "./pomocnicze";
+import {
+  KONTA,
+  oczekujBrakuPoziomegoPrzewijania,
+  otworz,
+  powazneNaruszeniaAxe,
+  zaloguj,
+} from "./pomocnicze";
 
 /**
  * Responsywność serwisu i panelu na telefonie i tablecie (issue #37). Dla każdej strony i
  * szerokości: brak poziomego przewijania strony (tabele panelu przewijają się we własnym
- * kontenerze), menu nagłówka prowadzi do /szkolenia, przyciski główne mają cel dotykowy
+ * kontenerze od 768 px, a na telefonie listy panelu są kartami: #39), menu nagłówka prowadzi do /szkolenia, przyciski główne mają cel dotykowy
  * co najmniej 44×44 px na telefonie, a okno zapisu mieści się w widoku i da się w nim dojść do
  * przycisku wysłania. W chromium zapisuje zrzut pełnej strony do artefaktu CI
  * „responsywnosc-zrzuty” (katalog test-results/responsywnosc-zrzuty, poza repo).
@@ -141,26 +147,76 @@ const STRONY: Strona[] = [
     przygotuj: async (page) => {
       await zaloguj(page, KONTA.redaktor);
       await expect(page.getByRole("heading", { level: 1, name: "Szkolenia" })).toBeVisible();
-      await expect(page.getByRole("table")).toBeVisible();
       await expect(page.getByText("Generatywne AI dla biznesu").first()).toBeVisible();
     },
-    sprawdz: async (page) => {
-      // Szeroka tabela może przewijać się poziomo, ale tylko we własnym kontenerze.
-      const tabela = page.getByRole("table");
-      const kontener = await tabela.evaluate((t) => {
-        const rodzic = t.parentElement;
-        if (!rodzic) return { overflowX: "brak rodzica", szerokosc: 0, okno: 0 };
-        return {
-          overflowX: getComputedStyle(rodzic).overflowX,
-          szerokosc: rodzic.getBoundingClientRect().right,
-          okno: document.documentElement.clientWidth,
-        };
-      });
-      expect(["auto", "scroll"]).toContain(kontener.overflowX);
-      expect(kontener.szerokosc).toBeLessThanOrEqual(kontener.okno);
+    sprawdz: (page, okno) => sprawdzListePanelu(page, okno, "Lista szkoleń"),
+    przyciski: (page) => akcjePierwszejKarty(page, "Lista szkoleń", "Generatywne AI dla biznesu"),
+  },
+  {
+    nazwa: "/panel/trenerzy lista trenerów (redaktor)",
+    plik: "panel-lista-trenerow",
+    przygotuj: async (page) => {
+      await zaloguj(page, KONTA.redaktor);
+      await expect(page.getByRole("heading", { level: 1, name: "Szkolenia" })).toBeVisible();
+      await otworz(page, "/panel/trenerzy");
+      await expect(page.getByRole("heading", { level: 1, name: "Trenerzy" })).toBeVisible();
+      await expect(page.getByText("dr Anna Nowak").first()).toBeVisible();
     },
+    sprawdz: (page, okno) => sprawdzListePanelu(page, okno, "Lista trenerów"),
+    przyciski: (page) => akcjePierwszejKarty(page, "Lista trenerów", "dr Anna Nowak"),
   },
 ];
+
+/** Szerokość, od której panel pokazuje tabelę zamiast kart (md, issue #39). */
+const SZEROKOSC_TABELI_PANELU = 768;
+
+/**
+ * Lista panelu: na telefonie karty bez tabeli i bez poziomego przewijania kontenera listy
+ * (#39); od 768 px tabela, która może przewijać się poziomo tylko we własnym kontenerze (#37).
+ */
+async function sprawdzListePanelu(page: Page, okno: { width: number }, nazwaListy: string) {
+  if (okno.width < SZEROKOSC_TABELI_PANELU) {
+    const lista = page.getByRole("list", { name: nazwaListy });
+    await expect(lista).toBeVisible();
+    await expect(page.getByRole("table")).toHaveCount(0);
+    const wymiary = await lista.evaluate((el) => ({
+      tresc: el.scrollWidth,
+      szerokosc: el.clientWidth,
+      prawa: el.getBoundingClientRect().right,
+      okno: document.documentElement.clientWidth,
+    }));
+    expect(
+      wymiary.tresc,
+      `lista kart: scrollWidth ${wymiary.tresc} > ${wymiary.szerokosc}`,
+    ).toBeLessThanOrEqual(wymiary.szerokosc);
+    expect(wymiary.prawa).toBeLessThanOrEqual(wymiary.okno);
+    return;
+  }
+  await expect(page.getByRole("list", { name: nazwaListy })).toHaveCount(0);
+  const tabela = page.getByRole("table");
+  await expect(tabela).toBeVisible();
+  const kontener = await tabela.evaluate((t) => {
+    const rodzic = t.parentElement;
+    if (!rodzic) return { overflowX: "brak rodzica", szerokosc: 0, okno: 0 };
+    return {
+      overflowX: getComputedStyle(rodzic).overflowX,
+      szerokosc: rodzic.getBoundingClientRect().right,
+      okno: document.documentElement.clientWidth,
+    };
+  });
+  expect(["auto", "scroll"]).toContain(kontener.overflowX);
+  expect(kontener.szerokosc).toBeLessThanOrEqual(kontener.okno);
+}
+
+/** Akcje pierwszej karty listy panelu (cele dotykowe ≥ 44×44 px na telefonie, #39). */
+function akcjePierwszejKarty(page: Page, nazwaListy: string, nazwa: string): Locator[] {
+  const karta = page.getByRole("list", { name: nazwaListy }).getByRole("listitem").first();
+  return [
+    karta.getByRole("link", { name: `Edytuj: ${nazwa}` }),
+    karta.getByRole("button", { name: `Wycofaj: ${nazwa}` }),
+    karta.getByRole("button", { name: `Usuń: ${nazwa}` }),
+  ];
+}
 
 async function oczekujCeluDotykowego(przycisk: Locator, minimum = MIN_CEL_DOTYKOWY) {
   await expect(przycisk).toBeVisible();
@@ -217,6 +273,48 @@ for (const szerokosc of SZEROKOSCI) {
           await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
           await expect(nawigacja).toHaveCount(0);
         }
+      });
+    }
+  });
+}
+
+/** Panel na telefonie: karty zamiast tabeli (issue #39). */
+for (const szerokosc of SZEROKOSCI) {
+  test.describe(`Panel: lista szkoleń ${szerokosc.nazwa} (#39)`, () => {
+    test.use({ viewport: { width: szerokosc.width, height: szerokosc.height } });
+
+    if (szerokosc.width < SZEROKOSC_TABELI_PANELU) {
+      test("karty bez tabeli; pierwsza karta ma tytuł i kategorię, a edycja otwiera formularz", async ({
+        page,
+      }) => {
+        await zaloguj(page, KONTA.redaktor);
+        const lista = page.getByRole("list", { name: "Lista szkoleń" });
+        await expect(lista).toBeVisible();
+        await expect(page.getByRole("table")).toHaveCount(0);
+        const karta = lista.getByRole("listitem").first();
+        await expect(
+          karta.getByRole("heading", { level: 2, name: "Generatywne AI dla biznesu" }),
+        ).toBeVisible();
+        await expect(karta.getByText("AI", { exact: true })).toBeVisible();
+        await karta.getByRole("link", { name: "Edytuj: Generatywne AI dla biznesu" }).click();
+        await expect(page).toHaveURL(/\/panel\/szkolenia\/genai$/);
+        await expect(
+          page.getByRole("heading", { level: 1, name: "Edycja: Generatywne AI dla biznesu" }),
+        ).toBeVisible();
+      });
+    } else {
+      test("tabela zamiast kart", async ({ page }) => {
+        await zaloguj(page, KONTA.redaktor);
+        await expect(page.getByRole("table")).toBeVisible();
+        await expect(page.getByRole("list", { name: "Lista szkoleń" })).toHaveCount(0);
+      });
+    }
+
+    if (szerokosc.width === 390) {
+      test("axe: lista kart bez naruszeń serious i critical", async ({ page }) => {
+        await zaloguj(page, KONTA.redaktor);
+        await expect(page.getByRole("list", { name: "Lista szkoleń" })).toBeVisible();
+        expect(await powazneNaruszeniaAxe(page)).toEqual([]);
       });
     }
   });
