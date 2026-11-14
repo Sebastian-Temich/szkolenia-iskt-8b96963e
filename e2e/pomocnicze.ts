@@ -43,13 +43,35 @@ export async function powazneNaruszeniaAxe(page: Page, pomin: readonly string[] 
     }));
 }
 
-/** Szerokość dokumentu nie przekracza szerokości okna, czyli nie ma poziomego przewijania. */
+/**
+ * Szerokość dokumentu nie przekracza szerokości okna, czyli nie ma poziomego przewijania.
+ * Komunikat błędu wymienia elementy wystające poza okno (bez przyciętych przez przodka
+ * z `overflow` innym niż `visible`), żeby z logu CI było wiadomo, co poprawić (#37).
+ */
 export async function oczekujBrakuPoziomegoPrzewijania(page: Page) {
-  const wymiary = await page.evaluate(() => ({
-    dokument: document.documentElement.scrollWidth,
-    okno: document.documentElement.clientWidth,
-  }));
-  expect(wymiary.dokument, `scrollWidth ${wymiary.dokument} > ${wymiary.okno}`).toBeLessThanOrEqual(
-    wymiary.okno,
-  );
+  const wymiary = await page.evaluate(() => {
+    const okno = document.documentElement.clientWidth;
+    const przyciety = (el: Element) => {
+      for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) {
+        if (getComputedStyle(p).overflowX !== "visible") return true;
+      }
+      return false;
+    };
+    const opis = (el: Element) => {
+      const klasy = typeof el.className === "string" ? el.className.slice(0, 80) : "";
+      const tekst = (el.textContent ?? "").trim().slice(0, 40);
+      const r = el.getBoundingClientRect();
+      return `<${el.tagName.toLowerCase()} class="${klasy}"> „${tekst}” ${Math.round(r.left)}–${Math.round(r.right)} px`;
+    };
+    const wystajace = Array.from(document.body.querySelectorAll("*"))
+      .filter((el) => el.getBoundingClientRect().right > okno + 0.5 && !przyciety(el))
+      .filter((el, _, lista) => !lista.some((inny) => inny !== el && el.contains(inny)))
+      .slice(0, 5)
+      .map(opis);
+    return { dokument: document.documentElement.scrollWidth, okno, wystajace };
+  });
+  expect(
+    wymiary.dokument,
+    `scrollWidth ${wymiary.dokument} > ${wymiary.okno}; wystają: ${wymiary.wystajace.join("; ") || "brak"}`,
+  ).toBeLessThanOrEqual(wymiary.okno);
 }

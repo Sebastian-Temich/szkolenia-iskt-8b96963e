@@ -67,7 +67,7 @@ export function Header() {
         <Button
           variant="ghost"
           size="icon"
-          className="shrink-0 text-primary xl:hidden"
+          className="h-11 w-11 shrink-0 text-primary xl:hidden"
           aria-label={isOpen ? "Zamknij menu" : "Otwórz menu"}
           aria-expanded={isOpen}
           aria-controls="mobile-navigation"
@@ -89,7 +89,7 @@ export function Header() {
                 to={to}
                 {...(hash ? { hash } : {})}
                 onClick={() => setIsOpen(false)}
-                className="text-sm font-medium text-foreground hover:text-primary"
+                className="-my-2 py-2 text-sm font-medium text-foreground hover:text-primary"
               >
                 {label}
               </Link>
