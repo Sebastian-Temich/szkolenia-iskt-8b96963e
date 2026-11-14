@@ -125,6 +125,8 @@ const STRONY: Strona[] = [
       await otworz(page, "/trenerzy/nowak");
       await expect(page.getByRole("heading", { level: 1 })).toHaveText("dr Anna Nowak");
     },
+    // #41: „Zapytaj o termin” to teraz przycisk okna zgłoszenia, nie link.
+    przyciski: (page) => [page.getByRole("button", { name: /Zapytaj o termin/ })],
   },
   {
     nazwa: "/panel (logowanie)",
