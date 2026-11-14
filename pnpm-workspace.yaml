@@ -16,3 +16,6 @@ allowBuilds: {}
 overrides:
   # Jedna wersja rolldown dla vite i nitro; zakres zgodny z vite 8.3.x (~1.2.18).
   rolldown: 1.2.19
+  # typescript-eslint 8.72.2 (najnowszy) wymaga minimatch ^10.2.2, a 10.x ma GHSA-g3hv-75wg-m249
+  # (poprawka od 11.0.1). API bez zmian; usuń, gdy typescript-eslint podniesie zależność.
+  "@typescript-eslint/typescript-estree>minimatch": ^11.0.8
