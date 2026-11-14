@@ -16,6 +16,7 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 | #26 | Konfiguracja logowania lokalnie i nowe hasła testowe | done | 1 | M2 Bezpieczeństwo bazy | #29 merged | pass |
 | #27 | Dokumentacja wydania M2 | done | 1 | M2 Bezpieczeństwo bazy | #30 merged | pass |
 | #33 | Aktualizacja paczek z podatnościami i usunięcie nieużywanych komponentów szablonu | done | 1 | - | #34 merged | pass |
+| #35 | Poprawka dwóch błędów dostępności z testów E2E (logo w nagłówku, kontrast kroków) | todo | 0 | - | - | - |
 <!-- sync-status:end -->
 
 ## Mapa zadań z planu
@@ -36,4 +37,5 @@ Sekcję uzupełnia `shctl task create`: ID z pliku YAML i numer issue.
 | T7 | #26 | Konfiguracja logowania lokalnie i nowe hasła testowe | #25 |
 | T8 | #27 | Dokumentacja wydania M2 | #25, #26 |
 | S-20261114-paczki | #33 | Aktualizacja paczek z podatnościami i usunięcie nieużywanych komponentów szablonu | - |
+| S-20261114-dostepnosc | #35 | Poprawka dwóch błędów dostępności z testów E2E (logo w nagłówku, kontrast kroków) | - |
 <!-- shctl:mapa:end -->
