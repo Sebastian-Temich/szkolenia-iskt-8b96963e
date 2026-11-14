@@ -4,11 +4,11 @@ tryb: M
 cykl: "M2-bezpieczenstwo"
 etap_opis: "Zakończony"
 postep_etapy: "6/6"
-postep_zadania: "3/3"
+postep_zadania: "1/1"
 czeka_na_ciebie: 0
 eskalacje: 0
 nastepny_krok: "Brak, zlecenie zakończone"
-ostatnia_synchronizacja: 2026-11-14T09:47:25Z
+ostatnia_synchronizacja: 2026-11-14T15:02:44Z
 ---
 
 # szkolenia-iskt
@@ -19,7 +19,7 @@ ostatnia_synchronizacja: 2026-11-14T09:47:25Z
 
 - **Etap:** Zakończony
 - **Cykl:** M2-bezpieczenstwo (od 2026-11-13); wcześniejsze: [M1](cykle/M1/cykl.md)
-- **Postęp:** Etapy 6/6 · Zadania 3/3 w bieżącym zleceniu (łącznie 10)
+- **Postęp:** Etapy 6/6 · Zadania 1/1 w bieżącym zleceniu (łącznie 11)
 - **Co się dzieje:** nic w toku
 - **Następny krok:** Brak, zlecenie zakończone
 
@@ -31,15 +31,13 @@ Nic. Projekt zakończony.
 
 Nic w toku.
 
-### Zrobione w bieżącym zleceniu (3)
+### Zrobione w bieżącym zleceniu (1)
 
 | Zadanie | Kamień | PR |
 |---|---|---|
-| #27 Dokumentacja wydania M2 | M2 Bezpieczeństwo bazy | #30 |
-| #26 Konfiguracja logowania lokalnie i nowe hasła testowe | M2 Bezpieczeństwo bazy | #29 |
-| #25 Migracja uprawnień funkcji ról i jednej zasady odczytu na rolę | M2 Bezpieczeństwo bazy | #28 |
+| #33 Aktualizacja paczek z podatnościami i usunięcie nieużywanych komponentów szablonu | - | #34 |
 
-Wcześniejsze zlecenia (7 zadań): [Historia](historia.md).
+Wcześniejsze zlecenia (10 zadań): [Historia](historia.md).
 
 ## Eskalacje i pytania
 

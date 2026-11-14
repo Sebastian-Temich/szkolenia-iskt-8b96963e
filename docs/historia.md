@@ -61,10 +61,11 @@ odbiór.
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
 
-## Wszystkie zadania zrobione (10)
+## Wszystkie zadania zrobione (11)
 
 | Zadanie | Cykl | Kamień | PR | Zamknięte |
 |---|---|---|---|---|
+| #33 Aktualizacja paczek z podatnościami i usunięcie nieużywanych komponentów szablonu | M2-bezpieczenstwo · S | - | #34 | 2026-11-14 |
 | #27 Dokumentacja wydania M2 | M2-bezpieczenstwo | M2 Bezpieczeństwo bazy | #30 | 2026-11-13 |
 | #26 Konfiguracja logowania lokalnie i nowe hasła testowe | M2-bezpieczenstwo | M2 Bezpieczeństwo bazy | #29 | 2026-11-13 |
 | #25 Migracja uprawnień funkcji ról i jednej zasady odczytu na rolę | M2-bezpieczenstwo | M2 Bezpieczeństwo bazy | #28 | 2026-11-13 |

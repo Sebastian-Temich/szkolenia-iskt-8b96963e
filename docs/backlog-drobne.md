@@ -31,3 +31,9 @@ Plik wspólny, aktualizuje orkiestrator. Zgłoszenia ⚪ z review i „Drobne uw
 | 2026-11-13 | T-26 | `docs/decyzje.md` (wpis T-8 z 2026-11-13) ma stare hasła testowe; orkiestrator może dopisać nowszą decyzję przy zamknięciu tego zadania. | otwarta |
 | 2026-11-13 | T-27 | Job `e2e` nie biegnie na pushu na `main`, więc kryterium „e2e zielone na `main`” da się spełnić tylko pośrednio (PR) albo ręcznym `workflow_dispatch` orkiestratora. | otwarta |
 | 2026-11-13 | T-27 | ADR-003 ma status „proponowana”, choć plan zaakceptowano i migracja jest na `main`. | otwarta |
+| 2026-11-14 | T-33 | `src/hooks/use-mobile.tsx` używał tylko usunięty `sidebar.tsx`; plik jest poza „Zakresem” issue, więc zostaje jako martwy kod do usunięcia osobno. | otwarta |
+| 2026-11-14 | T-33 | vite 8.3.8 ostrzega przy testach o `__dirname` w `vitest.config.ts` (`configLoader: 'native'`, zalecane `import.meta.dirname`); plik poza zakresem. | otwarta |
+| 2026-11-14 | T-33 | `src/components/ui/sheet.tsx` (też z „Close”) usunięty jako nieużywany. | otwarta |
+| 2026-11-14 | T-33 | Build na vite 8.3.8 wypisuje 43 ostrzeżenia `MODULE_LEVEL_DIRECTIVE` („use client” w `@tanstack/react-query`) w środowisku nitro; wcześniej ich nie było. Build zielony. | otwarta |
+| 2026-11-14 | T-33 | `pnpm peers check`: niespełniony peer `ocache >=0.3.0` dla `h3@2.0.8` (z nitro) był już w stanie wyjściowym. | otwarta |
+| 2026-11-14 | T-33 | eslint 9.39.5 jest oznaczony w rejestrze jako przestarzały (zalecany 10.x); major eslint poza zakresem. | otwarta |

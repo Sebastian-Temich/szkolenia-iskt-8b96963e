@@ -14,6 +14,7 @@ Plik wspólny, aktualizuje orkiestrator. Pomiar poglądowy, służy też do por�
 | #25 Migracja uprawnień funkcji ról i jednej zasady odczytu na rolę | M | 37min | 1 | 2 | 0 | PR #28 |
 | #26 Konfiguracja logowania lokalnie i nowe hasła testowe | M | 23min | 1 | 1 | 0 | PR #29 |
 | #27 Dokumentacja wydania M2 | M | 20min | 1 | 1 | 0 | PR #30 |
+| #33 Aktualizacja paczek z podatnościami i usunięcie nieużywanych komponentów szablonu | S | 5h 12min | 1 | 1 | 0 | PR #34 |
 
 Eskalacje nie liczą pytań workera (`shctl escalate --typ pytanie`): są w „Uwagach” jako „pytania: N”.
 
