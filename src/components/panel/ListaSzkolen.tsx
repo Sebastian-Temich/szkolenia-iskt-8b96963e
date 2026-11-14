@@ -11,7 +11,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { formatujKwote } from "@/lib/szkolenia/adapter";
+import type { StatusTresci } from "@/lib/panel/typy";
 import {
   listaSzkolen,
   publikujSzkolenie,
@@ -22,6 +24,7 @@ import { liczPrzypisania, liczbyPrzypisan } from "@/lib/panel/przypisania-repo";
 import { AkcjeWiersza, TrescEdycji } from "./AkcjeWiersza";
 import { DialogUsuwania } from "./DialogUsuwania";
 import { FiltryListy, type FiltrStatusu } from "./FiltryListy";
+import { KartaPozycji, ListaKart } from "./KartyListy";
 import { KLUCZE } from "./klucze";
 import { BladListy, PlakietkaStatusu, PustaLista, SzkieletListy } from "./StanyListy";
 import { useAkcjeTresci } from "./useAkcjeTresci";
@@ -52,6 +55,22 @@ export function ListaSzkolen() {
       skutek: `Usuniesz szkolenie ${nazwa}. Zniknie ${n} przypisań do trenerów. Sami trenerzy zostaną nietknięci.`,
     }),
   });
+  const telefon = useIsMobile();
+  const akcjeDla = (s: { id: string; title: string; status: StatusTresci }, karta: boolean) => (
+    <AkcjeWiersza
+      nazwa={s.title}
+      status={s.status}
+      trwa={akcje.trwa}
+      karta={karta}
+      edytuj={
+        <Link to="/panel/szkolenia/$id" params={{ id: s.id }}>
+          <TrescEdycji />
+        </Link>
+      }
+      onPrzelacz={() => void akcje.przelaczStatus(s.id, s.title, s.status)}
+      onUsun={() => void akcje.przygotujUsuniecie(s.id, s.title)}
+    />
+  );
 
   return (
     <section aria-labelledby="naglowek-szkolen" className="flex flex-col gap-5">
@@ -103,49 +122,56 @@ export function ListaSzkolen() {
           >
             Wyniki: {lista.data.length}
           </p>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Kolejność</TableHead>
-                <TableHead>Identyfikator</TableHead>
-                <TableHead>Tytuł</TableHead>
-                <TableHead>Kategoria</TableHead>
-                <TableHead>Cena</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Trenerzy</TableHead>
-                <TableHead className="text-right">Akcje</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
+          {telefon ? (
+            <ListaKart etykieta="Lista szkoleń">
               {lista.data.map((s) => (
-                <TableRow key={s.id}>
-                  <TableCell>{s.sortOrder}</TableCell>
-                  <TableCell className="font-mono text-xs">{s.id}</TableCell>
-                  <TableCell className="font-medium">{s.title}</TableCell>
-                  <TableCell>{s.cat}</TableCell>
-                  <TableCell className="whitespace-nowrap">{formatujKwote(s.price)}</TableCell>
-                  <TableCell>
-                    <PlakietkaStatusu status={s.status} />
-                  </TableCell>
-                  <TableCell>{liczby.data?.[s.id] ?? 0}</TableCell>
-                  <TableCell>
-                    <AkcjeWiersza
-                      nazwa={s.title}
-                      status={s.status}
-                      trwa={akcje.trwa}
-                      edytuj={
-                        <Link to="/panel/szkolenia/$id" params={{ id: s.id }}>
-                          <TrescEdycji />
-                        </Link>
-                      }
-                      onPrzelacz={() => void akcje.przelaczStatus(s.id, s.title, s.status)}
-                      onUsun={() => void akcje.przygotujUsuniecie(s.id, s.title)}
-                    />
-                  </TableCell>
-                </TableRow>
+                <KartaPozycji
+                  key={s.id}
+                  tytul={s.title}
+                  pola={[
+                    { etykieta: "Kolejność", wartosc: s.sortOrder },
+                    { etykieta: "Identyfikator", wartosc: s.id, klasa: "font-mono text-xs" },
+                    { etykieta: "Kategoria", wartosc: s.cat },
+                    { etykieta: "Cena", wartosc: formatujKwote(s.price) },
+                    { etykieta: "Status", wartosc: <PlakietkaStatusu status={s.status} /> },
+                    { etykieta: "Trenerzy", wartosc: liczby.data?.[s.id] ?? 0 },
+                  ]}
+                  akcje={akcjeDla(s, true)}
+                />
               ))}
-            </TableBody>
-          </Table>
+            </ListaKart>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Kolejność</TableHead>
+                  <TableHead>Identyfikator</TableHead>
+                  <TableHead>Tytuł</TableHead>
+                  <TableHead>Kategoria</TableHead>
+                  <TableHead>Cena</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Trenerzy</TableHead>
+                  <TableHead className="text-right">Akcje</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {lista.data.map((s) => (
+                  <TableRow key={s.id}>
+                    <TableCell>{s.sortOrder}</TableCell>
+                    <TableCell className="font-mono text-xs">{s.id}</TableCell>
+                    <TableCell className="font-medium">{s.title}</TableCell>
+                    <TableCell>{s.cat}</TableCell>
+                    <TableCell className="whitespace-nowrap">{formatujKwote(s.price)}</TableCell>
+                    <TableCell>
+                      <PlakietkaStatusu status={s.status} />
+                    </TableCell>
+                    <TableCell>{liczby.data?.[s.id] ?? 0}</TableCell>
+                    <TableCell>{akcjeDla(s, false)}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </>
       )}
       <DialogUsuwania
