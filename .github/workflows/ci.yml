@@ -147,6 +147,16 @@ jobs:
           path: playwright-report/
           retention-days: 14
           if-no-files-found: ignore
+      # Zrzuty pełnych stron z e2e/responsywnosc.spec.ts (chromium, issue #37) do obejrzenia
+      # przez właściciela; tylko artefakt CI, nie trafiają do repo.
+      - name: Zrzuty responsywności
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: responsywnosc-zrzuty
+          path: test-results/responsywnosc-zrzuty/
+          retention-days: 14
+          if-no-files-found: warn
       - name: Stop bazy
         if: always()
         continue-on-error: true
