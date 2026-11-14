@@ -155,9 +155,10 @@ describe("Okno zapisu na stronie szkolenia (#18)", () => {
     expect(przycisk).toHaveFocus();
   });
 
-  it("przycisk zamknięcia zamyka okno, a fokus wraca na „Zapytaj o termin dla firmy”", async () => {
+  it("przycisk „Zamknij” zamyka okno, a fokus wraca na „Zapytaj o termin dla firmy”", async () => {
     const { user, przycisk, okno } = await otworzOkno(/Zapytaj o termin dla firmy/);
-    await user.click(within(okno).getByRole("button", { name: "Close" }));
+    // Etykieta po polsku: issue #33 (backlog T-18).
+    await user.click(within(okno).getByRole("button", { name: "Zamknij" }));
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
     expect(przycisk).toHaveFocus();
   });

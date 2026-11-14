@@ -11,7 +11,11 @@ import { PoleFormularza } from "./pola";
 import { KLASY_INPUT, ariaPola } from "./pola-klasy";
 
 const schemat = z.object({
-  email: z.string().trim().min(1, "Wpisz adres e-mail.").email("Wpisz poprawny adres e-mail."),
+  email: z
+    .string()
+    .trim()
+    .min(1, "Wpisz adres e-mail.")
+    .pipe(z.email("Wpisz poprawny adres e-mail.")),
   haslo: z.string().min(1, "Wpisz hasło."),
 });
 type Dane = z.infer<typeof schemat>;
