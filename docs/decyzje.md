@@ -108,3 +108,4 @@ Plik wspólny, aktualizuje orkiestrator. Decyzje workerów przenosi z raportów 
 | 2026-11-13 | T-27 | Hasła testowe w dokumentacji produktowej | odsyłacz do `README.md` zamiast powtarzania haseł, żeby było jedno miejsce do aktualizacji. |
 | 2026-11-13 | T-27 | Rollback migracji M2 | dwie drogi: `git revert` dla baz budowanych od zera i nowa migracja wycofująca (szkic SQL w dokumencie) dla bazy, na której M2 już jest, bo istniejących migracji się nie zmienia. |
 | 2026-11-13 | T-27 | - | Dodatkowo przeczytane poza „Zakresem”: ADR-003, migracje i testy w `supabase/`, raporty T-25 i T-26, `docs/04-plan/plan.md`, specyfikacja, `README.md` (nagłówki), `.github/workflows/ci.yml` (warunek joba `e2e`), logi CI. |
+| 2026-11-14 | wlasciciel | Odbiór M2 „Bezpieczeństwo bazy” | właściciel 2026-11-14: „sprawdziłem, odbieram M2” (logowanie nowym hasłem po shctl db reset, QA M2 PASS, review wydania PASS PR #32). Cofnięcie: poprawki nowym zleceniem |
