@@ -4,11 +4,11 @@ tryb: M
 cykl: "M3-formularze-resend"
 etap_opis: "Specyfikacja"
 postep_etapy: "1/6"
-postep_zadania: "0/1"
+postep_zadania: "0/2"
 czeka_na_ciebie: 1
 eskalacje: 0
 nastepny_krok: "Twoja odpowiedź: Odbiór zlecenia S #39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów (PR #40, review PASS)"
-ostatnia_synchronizacja: 2026-11-14T20:13:08Z
+ostatnia_synchronizacja: 2026-11-14T20:39:24Z
 ---
 
 # szkolenia-iskt
@@ -19,24 +19,25 @@ ostatnia_synchronizacja: 2026-11-14T20:13:08Z
 
 - **Etap:** Specyfikacja
 - **Cykl:** M3-formularze-resend (od 2026-11-14); wcześniejsze: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md)
-- **Postęp:** Etapy 1/6 · Zadania 0/1 w bieżącym zleceniu (łącznie 14)
-- **Co się dzieje:** #39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów (review, od 30 min)
+- **Postęp:** Etapy 1/6 · Zadania 0/2 w bieżącym zleceniu (łącznie 15)
+- **Co się dzieje:** #39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów (review, od 56 min); #41 Okno zapytania na profilu trenera i porządki w dokumentacji wydań (worker, od 24 min)
 - **Następny krok:** Twoja odpowiedź: Odbiór zlecenia S #39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów (PR #40, review PASS)
-- **Szacowany czas:** ok. 1 h 46 min pracy agentów (1 zadań, średnio 1 h 46 min na zadanie, 3 równolegle; orientacyjnie)
+- **Szacowany czas:** ok. 1 h 46 min pracy agentów (2 zadań, średnio 1 h 46 min na zadanie, 3 równolegle; orientacyjnie)
 
 ## Czeka na Ciebie
 
-1. Odbiór zlecenia S #39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów (PR #40, review PASS) (czeka 2 min)  
+1. Odbiór zlecenia S #39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów (PR #40, review PASS) (czeka 28 min)  
    Wpisz orkiestratorowi: `odbieram #39`  
    albo: poprawki #39: CO ZMIENIĆ
 
 ## Zadania
 
-### W realizacji (1)
+### W realizacji (2)
 
 | Zadanie | Kamień | Kto | Iteracja | PR | CI | Od |
 |---|---|---|---|---|---|---|
-| #39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów | - | review | 1 | #40 | pass | 30 min |
+| #39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów | - | review | 1 | #40 | pass | 56 min |
+| #41 Okno zapytania na profilu trenera i porządki w dokumentacji wydań | - | worker | 1 | #42 | pending | 24 min |
 
 ### Zrobione w bieżącym zleceniu (0)
 

@@ -19,7 +19,7 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 | #35 | Poprawka dwóch błędów dostępności z testów E2E (logo w nagłówku, kontrast kroków) | done | 1 | - | #36 merged | pass |
 | #37 | Przegląd i poprawki responsywności (telefon i tablet) z testami E2E | done | 2 | - | #38 merged | pass |
 | #39 | Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów | review | 1 | - | #40 open | pass |
-| #41 | Okno zapytania na profilu trenera i porządki w dokumentacji wydań | todo | 0 | - | - | - |
+| #41 | Okno zapytania na profilu trenera i porządki w dokumentacji wydań | in-progress | 1 | - | #42 open | pending |
 <!-- sync-status:end -->
 
 ## Mapa zadań z planu
