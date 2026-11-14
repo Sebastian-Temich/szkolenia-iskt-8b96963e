@@ -61,10 +61,11 @@ odbiór.
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
 
-## Wszystkie zadania zrobione (12)
+## Wszystkie zadania zrobione (13)
 
 | Zadanie | Cykl | Kamień | PR | Zamknięte |
 |---|---|---|---|---|
+| #37 Przegląd i poprawki responsywności (telefon i tablet) z testami E2E | M2-bezpieczenstwo · S | - | #38 | 2026-11-14 |
 | #35 Poprawka dwóch błędów dostępności z testów E2E (logo w nagłówku, kontrast kroków) | M2-bezpieczenstwo · S | - | #36 | 2026-11-14 |
 | #33 Aktualizacja paczek z podatnościami i usunięcie nieużywanych komponentów szablonu | M2-bezpieczenstwo · S | - | #34 | 2026-11-14 |
 | #27 Dokumentacja wydania M2 | M2-bezpieczenstwo | M2 Bezpieczeństwo bazy | #30 | 2026-11-13 |

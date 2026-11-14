@@ -38,3 +38,7 @@ Plik wspólny, aktualizuje orkiestrator. Zgłoszenia ⚪ z review i „Drobne uw
 | 2026-11-14 | T-33 | `pnpm peers check`: niespełniony peer `ocache >=0.3.0` dla `h3@2.0.8` (z nitro) był już w stanie wyjściowym. | otwarta |
 | 2026-11-14 | T-33 | eslint 9.39.5 jest oznaczony w rejestrze jako przestarzały (zalecany 10.x); major eslint poza zakresem. | otwarta |
 | 2026-11-14 | T-35 | `vitest.config.ts` używa `__dirname` (ostrzeżenie Vite o `configLoader: 'native'`). | otwarta |
+| 2026-11-14 | T-37 | Lista szkoleń panelu na telefonie: kolumna akcji zawija przyciski w trzy linie, przez co wiersze mają ok. 90 px wysokości, a część kolumn jest widoczna dopiero po przewinięciu tabeli. Zgodne z issue (tabela przewija się we własnym kontenerze); widok kart na telefonie to zmiana designu. | otwarta |
+| 2026-11-14 | T-37 | Na 1024 px nagłówek pokazuje tylko menu (pełna nawigacja od `xl`), zostawiając pusty środek paska; zmiana progu to decyzja designu. | otwarta |
+| 2026-11-14 | T-37 | Przyciski akcji w panelu („Wyloguj”, „Edytuj”, „Publikuj”, „Usuń”) mają 32 px wysokości. | otwarta |
+| 2026-11-14 | T-37 | `vitest.config.ts` używa `__dirname` (ostrzeżenie Vite o `configLoader: 'native'`). | otwarta |

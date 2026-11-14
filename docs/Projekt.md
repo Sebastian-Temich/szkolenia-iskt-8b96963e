@@ -2,13 +2,13 @@
 projekt: szkolenia-iskt
 tryb: M
 cykl: "M2-bezpieczenstwo"
-etap_opis: "Zakończony"
+etap_opis: "Realizacja"
 postep_etapy: "6/6"
-postep_zadania: "2/2"
+postep_zadania: "3/4"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Brak, zlecenie zakończone"
-ostatnia_synchronizacja: 2026-11-14T18:28:37Z
+nastepny_krok: "Start #39"
+ostatnia_synchronizacja: 2026-11-14T19:42:40Z
 ---
 
 # szkolenia-iskt
@@ -17,24 +17,30 @@ ostatnia_synchronizacja: 2026-11-14T18:28:37Z
 
 ## Gdzie jesteśmy
 
-- **Etap:** Zakończony
+- **Etap:** Realizacja
 - **Cykl:** M2-bezpieczenstwo (od 2026-11-13); wcześniejsze: [M1](cykle/M1/cykl.md)
-- **Postęp:** Etapy 6/6 · Zadania 2/2 w bieżącym zleceniu (łącznie 12)
+- **Postęp:** Etapy 6/6 · Zadania 3/4 w bieżącym zleceniu (łącznie 14)
 - **Co się dzieje:** nic w toku
-- **Następny krok:** Brak, zlecenie zakończone
+- **Następny krok:** Start #39
+- **Szacowany czas:** ok. 1 h 46 min pracy agentów (1 zadań, średnio 1 h 46 min na zadanie, 3 równolegle; orientacyjnie)
 
 ## Czeka na Ciebie
 
-Nic. Projekt zakończony.
+Nic. Agenci pracują sami.
 
 ## Zadania
 
-Nic w toku.
+### Gotowe do startu (1)
 
-### Zrobione w bieżącym zleceniu (2)
+| Zadanie | Kamień | Zależności |
+|---|---|---|
+| #39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów | - | brak |
+
+### Zrobione w bieżącym zleceniu (3)
 
 | Zadanie | Kamień | PR |
 |---|---|---|
+| #37 Przegląd i poprawki responsywności (telefon i tablet) z testami E2E | - | #38 |
 | #35 Poprawka dwóch błędów dostępności z testów E2E (logo w nagłówku, kontrast kroków) | - | #36 |
 | #33 Aktualizacja paczek z podatnościami i usunięcie nieużywanych komponentów szablonu | - | #34 |
 

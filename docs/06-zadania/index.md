@@ -17,7 +17,8 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 | #27 | Dokumentacja wydania M2 | done | 1 | M2 Bezpieczeństwo bazy | #30 merged | pass |
 | #33 | Aktualizacja paczek z podatnościami i usunięcie nieużywanych komponentów szablonu | done | 1 | - | #34 merged | pass |
 | #35 | Poprawka dwóch błędów dostępności z testów E2E (logo w nagłówku, kontrast kroków) | done | 1 | - | #36 merged | pass |
-| #37 | Przegląd i poprawki responsywności (telefon i tablet) z testami E2E | todo | 0 | - | - | - |
+| #37 | Przegląd i poprawki responsywności (telefon i tablet) z testami E2E | done | 2 | - | #38 merged | pass |
+| #39 | Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów | todo | 0 | - | - | - |
 <!-- sync-status:end -->
 
 ## Mapa zadań z planu
@@ -40,4 +41,5 @@ Sekcję uzupełnia `shctl task create`: ID z pliku YAML i numer issue.
 | S-20261114-paczki | #33 | Aktualizacja paczek z podatnościami i usunięcie nieużywanych komponentów szablonu | - |
 | S-20261114-dostepnosc | #35 | Poprawka dwóch błędów dostępności z testów E2E (logo w nagłówku, kontrast kroków) | - |
 | S-20261114-responsywnosc | #37 | Przegląd i poprawki responsywności (telefon i tablet) z testami E2E | - |
+| S-20261114-panel-karty | #39 | Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów | - |
 <!-- shctl:mapa:end -->
