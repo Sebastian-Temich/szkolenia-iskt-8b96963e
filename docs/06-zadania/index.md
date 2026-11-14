@@ -15,6 +15,7 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 | #25 | Migracja uprawnień funkcji ról i jednej zasady odczytu na rolę | done | 2 | M2 Bezpieczeństwo bazy | #28 merged | pass |
 | #26 | Konfiguracja logowania lokalnie i nowe hasła testowe | done | 1 | M2 Bezpieczeństwo bazy | #29 merged | pass |
 | #27 | Dokumentacja wydania M2 | done | 1 | M2 Bezpieczeństwo bazy | #30 merged | pass |
+| #33 | Aktualizacja paczek z podatnościami i usunięcie nieużywanych komponentów szablonu | todo | 0 | - | - | - |
 <!-- sync-status:end -->
 
 ## Mapa zadań z planu
@@ -34,4 +35,5 @@ Sekcję uzupełnia `shctl task create`: ID z pliku YAML i numer issue.
 | T6 | #25 | Migracja uprawnień funkcji ról i jednej zasady odczytu na rolę | - |
 | T7 | #26 | Konfiguracja logowania lokalnie i nowe hasła testowe | #25 |
 | T8 | #27 | Dokumentacja wydania M2 | #25, #26 |
+| S-20261114-paczki | #33 | Aktualizacja paczek z podatnościami i usunięcie nieużywanych komponentów szablonu | - |
 <!-- shctl:mapa:end -->
