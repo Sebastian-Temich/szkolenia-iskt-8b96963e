@@ -67,7 +67,7 @@ export function Header() {
         <Button
           variant="ghost"
           size="icon"
-          className="shrink-0 text-primary xl:hidden"
+          className="h-11 w-11 shrink-0 text-primary xl:hidden"
           aria-label={isOpen ? "Zamknij menu" : "Otwórz menu"}
           aria-expanded={isOpen}
           aria-controls="mobile-navigation"

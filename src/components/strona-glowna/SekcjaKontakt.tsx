@@ -21,7 +21,7 @@ export function SekcjaKontakt({ odbiorca, onZmiana }: Props) {
       aria-labelledby="kontakt-naglowek"
       className="scroll-mt-[calc(var(--space-16)+var(--space-6))] bg-[var(--surface-muted)] py-[var(--section-pad-y)]"
     >
-      <div className="mx-auto grid max-w-[var(--container-max)] items-start gap-[clamp(2rem,4vw,4rem)] px-[var(--container-pad)] lg:grid-cols-[0.9fr_1.1fr]">
+      <div className="mx-auto grid max-w-[var(--container-max)] grid-cols-1 items-start gap-[clamp(2rem,4vw,4rem)] px-[var(--container-pad)] lg:grid-cols-[0.9fr_1.1fr]">
         <div className="flex flex-col gap-4">
           <Eyebrow>Zgłoszenie</Eyebrow>
           <h2

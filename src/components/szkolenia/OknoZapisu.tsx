@@ -55,7 +55,7 @@ export function OknoZapisu({ szkolenie, wariant, children }: Props) {
   return (
     <Dialog open={otwarte} onOpenChange={zmienOtwarcie}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="max-h-[100dvh] max-w-[var(--container-max)] overflow-y-auto rounded-none border-[var(--border-subtle)] bg-card p-[clamp(1.25rem,3vw,2.5rem)] shadow-[var(--shadow-md)] sm:max-h-[calc(100dvh-2rem)] sm:max-w-xl sm:rounded-lg">
+      <DialogContent className="grid-cols-1 max-h-[100dvh] max-w-[var(--container-max)] overflow-y-auto rounded-none border-[var(--border-subtle)] bg-card p-[clamp(1.25rem,3vw,2.5rem)] shadow-[var(--shadow-md)] sm:max-h-[calc(100dvh-2rem)] sm:max-w-xl sm:rounded-lg">
         <DialogHeader className="pr-6">
           <DialogTitle className="text-[clamp(1.5rem,3vw,1.9rem)] font-extrabold leading-[1.15] tracking-[var(--ls-tight)]">
             {TYTULY_OKNA_ZAPISU[odbiorca]}

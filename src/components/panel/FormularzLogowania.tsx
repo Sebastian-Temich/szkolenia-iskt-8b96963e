@@ -67,7 +67,7 @@ export function FormularzLogowania({ onZalogowano }: { onZalogowano: (s: SesjaPa
             {...register("haslo")}
           />
         </PoleFormularza>
-        <Button type="submit" disabled={formState.isSubmitting} className="rounded-pill">
+        <Button type="submit" disabled={formState.isSubmitting} className="h-11 rounded-pill">
           <LogIn aria-hidden="true" />
           {formState.isSubmitting ? "Logujemy…" : "Zaloguj się"}
         </Button>

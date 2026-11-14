@@ -86,8 +86,19 @@ const STRONY: Strona[] = [
           return poza.length ? poza.join(", ") : "mieści się";
         })
         .toBe("mieści się");
+      // Formularz w oknie nie może być szerszy od okna (poziome przewijanie wewnątrz okna).
+      const szerokosci = await okno.evaluate((el) => ({
+        tresc: el.scrollWidth,
+        okno: el.clientWidth,
+      }));
+      expect(
+        szerokosci.tresc,
+        `okno zapisu: scrollWidth ${szerokosci.tresc} > ${szerokosci.okno}`,
+      ).toBeLessThanOrEqual(szerokosci.okno);
+      // Gość przewija okno do końca formularza; przycisk wysłania musi być wtedy cały widoczny.
+      // (scrollIntoViewIfNeeded dosuwa przycisk do krawędzi i zostawia ułamek piksela poza nią.)
+      await okno.evaluate((el) => el.scrollTo({ top: el.scrollHeight }));
       const wyslij = okno.getByRole("button", { name: /Wyślij zgłoszenie/ });
-      await wyslij.scrollIntoViewIfNeeded();
       await expect(wyslij).toBeInViewport({ ratio: 1 });
       await page.keyboard.press("Escape");
       await expect(page.getByRole("dialog")).toHaveCount(0);
