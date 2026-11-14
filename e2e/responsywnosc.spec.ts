@@ -19,6 +19,8 @@ const SZEROKOSCI = [
 
 /** Najmniejszy cel dotykowy przycisku głównego na telefonie (kryterium issue #37). */
 const MIN_CEL_DOTYKOWY = 44;
+/** Najmniejszy cel kliknięcia linku (lista kontrolna frontendu, punkt 5; review #37). */
+const MIN_CEL_LINKU = 24;
 /** Szerokość, od której nagłówek pokazuje pełną nawigację zamiast menu (klasa `xl:`). */
 const SZEROKOSC_PELNEJ_NAWIGACJI = 1280;
 const KATALOG_ZRZUTOW = "test-results/responsywnosc-zrzuty";
@@ -160,14 +162,14 @@ const STRONY: Strona[] = [
   },
 ];
 
-async function oczekujCeluDotykowego(przycisk: Locator) {
+async function oczekujCeluDotykowego(przycisk: Locator, minimum = MIN_CEL_DOTYKOWY) {
   await expect(przycisk).toBeVisible();
   const box = await przycisk.boundingBox();
   expect(box, "przycisk bez wymiarów").not.toBeNull();
   if (!box) return;
   const opis = `${Math.round(box.width)}×${Math.round(box.height)} px`;
-  expect(box.width, `szerokość celu ${opis}`).toBeGreaterThanOrEqual(MIN_CEL_DOTYKOWY);
-  expect(box.height, `wysokość celu ${opis}`).toBeGreaterThanOrEqual(MIN_CEL_DOTYKOWY);
+  expect(box.width, `szerokość celu ${opis}`).toBeGreaterThanOrEqual(minimum);
+  expect(box.height, `wysokość celu ${opis}`).toBeGreaterThanOrEqual(minimum);
 }
 
 for (const szerokosc of SZEROKOSCI) {
@@ -204,6 +206,12 @@ for (const szerokosc of SZEROKOSCI) {
           const nawigacja = page.getByRole("navigation", { name: "Nawigacja mobilna" });
           await expect(nawigacja).toBeVisible();
           await oczekujBrakuPoziomegoPrzewijania(page);
+          // Review #37 (iteracja 2): linki menu mają cel kliknięcia co najmniej 24×24 px.
+          const linki = nawigacja.getByRole("link");
+          await expect(linki).toHaveCount(6);
+          for (const link of await linki.all()) {
+            await oczekujCeluDotykowego(link, MIN_CEL_LINKU);
+          }
           await nawigacja.getByRole("link", { name: "Katalog", exact: true }).click();
           await expect(page).toHaveURL(/\/szkolenia(\?.*)?$/);
           await expect(page.getByRole("heading", { level: 1 })).toBeVisible();

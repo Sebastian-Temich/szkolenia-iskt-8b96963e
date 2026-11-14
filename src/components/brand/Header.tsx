@@ -89,7 +89,7 @@ export function Header() {
                 to={to}
                 {...(hash ? { hash } : {})}
                 onClick={() => setIsOpen(false)}
-                className="text-sm font-medium text-foreground hover:text-primary"
+                className="-my-2 py-2 text-sm font-medium text-foreground hover:text-primary"
               >
                 {label}
               </Link>
