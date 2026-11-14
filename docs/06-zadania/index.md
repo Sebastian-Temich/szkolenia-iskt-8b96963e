@@ -18,7 +18,7 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 | #33 | Aktualizacja paczek z podatnościami i usunięcie nieużywanych komponentów szablonu | done | 1 | - | #34 merged | pass |
 | #35 | Poprawka dwóch błędów dostępności z testów E2E (logo w nagłówku, kontrast kroków) | done | 1 | - | #36 merged | pass |
 | #37 | Przegląd i poprawki responsywności (telefon i tablet) z testami E2E | done | 2 | - | #38 merged | pass |
-| #39 | Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów | todo | 0 | - | - | - |
+| #39 | Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów | review | 1 | - | #40 open | pass |
 <!-- sync-status:end -->
 
 ## Mapa zadań z planu

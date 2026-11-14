@@ -1,14 +1,14 @@
 ---
 projekt: szkolenia-iskt
 tryb: M
-cykl: "M2-bezpieczenstwo"
-etap_opis: "Realizacja"
-postep_etapy: "6/6"
-postep_zadania: "3/4"
-czeka_na_ciebie: 0
+cykl: "M3-formularze-resend"
+etap_opis: "Specyfikacja"
+postep_etapy: "1/6"
+postep_zadania: "0/1"
+czeka_na_ciebie: 1
 eskalacje: 0
-nastepny_krok: "Start #39"
-ostatnia_synchronizacja: 2026-11-14T19:42:40Z
+nastepny_krok: "Twoja odpowiedź: Odbiór zlecenia S #39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów (PR #40, review PASS)"
+ostatnia_synchronizacja: 2026-11-14T20:13:08Z
 ---
 
 # szkolenia-iskt
@@ -17,34 +17,32 @@ ostatnia_synchronizacja: 2026-11-14T19:42:40Z
 
 ## Gdzie jesteśmy
 
-- **Etap:** Realizacja
-- **Cykl:** M2-bezpieczenstwo (od 2026-11-13); wcześniejsze: [M1](cykle/M1/cykl.md)
-- **Postęp:** Etapy 6/6 · Zadania 3/4 w bieżącym zleceniu (łącznie 14)
-- **Co się dzieje:** nic w toku
-- **Następny krok:** Start #39
+- **Etap:** Specyfikacja
+- **Cykl:** M3-formularze-resend (od 2026-11-14); wcześniejsze: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md)
+- **Postęp:** Etapy 1/6 · Zadania 0/1 w bieżącym zleceniu (łącznie 14)
+- **Co się dzieje:** #39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów (review, od 30 min)
+- **Następny krok:** Twoja odpowiedź: Odbiór zlecenia S #39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów (PR #40, review PASS)
 - **Szacowany czas:** ok. 1 h 46 min pracy agentów (1 zadań, średnio 1 h 46 min na zadanie, 3 równolegle; orientacyjnie)
 
 ## Czeka na Ciebie
 
-Nic. Agenci pracują sami.
+1. Odbiór zlecenia S #39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów (PR #40, review PASS) (czeka 2 min)  
+   Wpisz orkiestratorowi: `odbieram #39`  
+   albo: poprawki #39: CO ZMIENIĆ
 
 ## Zadania
 
-### Gotowe do startu (1)
+### W realizacji (1)
 
-| Zadanie | Kamień | Zależności |
-|---|---|---|
-| #39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów | - | brak |
+| Zadanie | Kamień | Kto | Iteracja | PR | CI | Od |
+|---|---|---|---|---|---|---|
+| #39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów | - | review | 1 | #40 | pass | 30 min |
 
-### Zrobione w bieżącym zleceniu (3)
+### Zrobione w bieżącym zleceniu (0)
 
-| Zadanie | Kamień | PR |
-|---|---|---|
-| #37 Przegląd i poprawki responsywności (telefon i tablet) z testami E2E | - | #38 |
-| #35 Poprawka dwóch błędów dostępności z testów E2E (logo w nagłówku, kontrast kroków) | - | #36 |
-| #33 Aktualizacja paczek z podatnościami i usunięcie nieużywanych komponentów szablonu | - | #34 |
+Jeszcze nic.
 
-Wcześniejsze zlecenia (10 zadań): [Historia](historia.md).
+Wcześniejsze zlecenia (13 zadań): [Historia](historia.md).
 
 ## Eskalacje i pytania
 
@@ -53,12 +51,8 @@ Otwartych brak.
 ## Dokumenty
 
 - [Raport analizy](00-analiza/raport.md)
-- [Specyfikacja](00-intake/specyfikacja.md)
-- [Lista startowa](00-intake/lista-startowa.md)
-- [Plan](04-plan/plan.md)
 - [Decyzje](decyzje.md)
-- [Raport QA M2](08-qa/raport-M2.md)
-- Poprzednie cykle: [M1](cykle/M1/cykl.md)
+- Poprzednie cykle: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md)
 - [Historia](historia.md): punkt przekazania, dziennik etapów, wszystkie zadania
 
 ## Zasady projektu

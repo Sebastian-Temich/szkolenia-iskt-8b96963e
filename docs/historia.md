@@ -58,6 +58,10 @@ odbiór.
 - 2026-11-13 `wydanie`: review
 - 2026-11-14 `wydanie`: done
 
+### Cykl M3-formularze-resend
+
+- 2026-11-14 cykl `M3-formularze-resend`: start (zlecenie_od 2026-11-14T20:12:41Z), cykl M2-bezpieczenstwo w docs/cykle/M2-bezpieczenstwo/
+
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
 
