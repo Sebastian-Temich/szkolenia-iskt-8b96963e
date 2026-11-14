@@ -1,6 +1,6 @@
 # ADR-003: Uprawnienia funkcji ról i jedna zasada odczytu na rolę
 
-Status: proponowana
+Status: zaakceptowana (2026-11-13, akceptacja planu M2, PR #23, `docs/decyzje.md`)
 Data: 2026-11-13
 
 ## Kontekst
