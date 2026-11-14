@@ -28,9 +28,7 @@ export function JakToDziala({ odbiorca }: { odbiorca: Odbiorca }) {
                 <span className="inline-flex size-12 items-center justify-center rounded-md bg-primary text-primary-foreground">
                   <Ikona aria-hidden="true" />
                 </span>
-                <span className="font-mono text-[22px] font-semibold text-[var(--green-200)]">
-                  {nr}
-                </span>
+                <span className="font-mono text-[22px] font-semibold text-primary">{nr}</span>
               </div>
               <h3 className="text-[1.15rem] font-bold tracking-[var(--ls-tight)]">{tytul}</h3>
               <p className="text-[14.5px] text-muted-foreground">{opis}</p>

@@ -121,7 +121,8 @@ Na bazie lokalnej z danymi startowymi (kroki 1–3 z „Uruchomienia lokalnego�
    pnpm exec playwright test --project=chromium --project=webkit
    ```
 
-3. Raport po nieudanym przebiegu: `pnpm exec playwright show-report`.
+3. Raport HTML (zapisywany po każdym przebiegu do `playwright-report/`, także lokalnie):
+   `pnpm exec playwright show-report`.
 
 Testy na innym adresie (np. staging) uruchamiasz ze zmienną `BASE_URL`; wtedy Playwright nie
 włącza serwera. Testy zakładają dane z `supabase/seed.sql` (9 szkoleń, 6 trenerów, konta

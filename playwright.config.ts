@@ -18,7 +18,8 @@ export default defineConfig({
   workers: 1,
   timeout: 60_000,
   expect: { timeout: 15_000 },
-  reporter: wCi ? [["list"], ["html", { open: "never" }]] : [["list"]],
+  // Raport HTML także lokalnie (#35): README każe go otwierać `playwright show-report`.
+  reporter: [["list"], ["html", { open: "never" }]],
   use: {
     baseURL,
     headless: true,
