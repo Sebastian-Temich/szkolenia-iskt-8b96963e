@@ -10,7 +10,10 @@ const NIEPUSTE = "To pole jest wymagane.";
 const tekst = () => z.string().trim().min(1, NIEPUSTE);
 const liczbaNieujemna = (nazwa: string) =>
   z
-    .number({ invalid_type_error: `Podaj ${nazwa} jako liczbę.`, required_error: NIEPUSTE })
+    .number({
+      // Jak required_error/invalid_type_error z zod 3: brak wartości albo zły typ (także NaN).
+      error: (iss) => (iss.input === undefined ? NIEPUSTE : `Podaj ${nazwa} jako liczbę.`),
+    })
     .int(`${nazwa[0]?.toUpperCase()}${nazwa.slice(1)} musi być liczbą całkowitą.`)
     .min(0, `${nazwa[0]?.toUpperCase()}${nazwa.slice(1)} nie może być ujemna.`);
 
@@ -43,8 +46,8 @@ export const schematSzkolenia = z
   .object({
     id: identyfikator,
     sortOrder: liczbaNieujemna("kolejność"),
-    cat: z.enum(KATEGORIE_SZKOLEN, { errorMap: () => ({ message: "Wybierz kategorię." }) }),
-    icon: z.enum(IKONY_OBSZAROW, { errorMap: () => ({ message: "Wybierz ikonę." }) }),
+    cat: z.enum(KATEGORIE_SZKOLEN, { error: "Wybierz kategorię." }),
+    icon: z.enum(IKONY_OBSZAROW, { error: "Wybierz ikonę." }),
     title: tekst(),
     level: tekst(),
     hours: tekst(),

@@ -14,4 +14,5 @@ allowBuilds: {}
 # Dawne "overrides" z package.json (bun/npm). pnpm 12 nie czyta pola "pnpm" w package.json,
 # więc pnpm.overrides mieszka tutaj.
 overrides:
-  rolldown: 1.2.1
+  # Jedna wersja rolldown dla vite i nitro; zakres zgodny z vite 8.3.x (~1.2.18).
+  rolldown: 1.2.19
