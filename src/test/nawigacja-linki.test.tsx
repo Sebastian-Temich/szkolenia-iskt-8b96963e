@@ -78,7 +78,18 @@ describe("Nawigacja główna", () => {
       (a) => a.getAttribute("href") === "/",
     );
     expect(naStrone).toHaveLength(1);
-    expect(naStrone[0]?.getAttribute("aria-label")).toBe("ISKT — strona główna");
+    expect(naStrone[0]?.textContent).toContain("Rozwijaj swoje kompetencje z ISKT");
+  });
+
+  it("#35: nazwa dostępna linku logo zawiera widoczny tekst logo (axe label-content-name-mismatch)", async () => {
+    const { container } = await zamontujTrase("/szkolenia");
+    const nawigacja = within(
+      container.querySelector("nav[aria-label='Nawigacja główna']") as HTMLElement,
+    );
+    const logo = nawigacja.getByRole("link", {
+      name: /^Rozwijaj swoje kompetencje z ISKT\b.*strona główna$/,
+    });
+    expect(logo.getAttribute("href")).toBe("/");
   });
 
   it("nawigacja mobilna ma te same cele co desktopowa", async () => {

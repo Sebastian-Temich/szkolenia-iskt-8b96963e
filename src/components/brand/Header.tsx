@@ -40,7 +40,7 @@ export function Header() {
           to="/"
           onClick={() => setIsOpen(false)}
           className="flex min-w-0 items-center gap-[var(--space-4)]"
-          aria-label="ISKT — strona główna"
+          aria-label="Rozwijaj swoje kompetencje z ISKT — strona główna"
         >
           <Logo className="h-[var(--logo-h-header)]" />
           <span className="hidden max-w-[calc(var(--space-32)+var(--space-24))] text-[length:var(--text-logo)] leading-[var(--lh-tight)] font-extrabold tracking-normal text-foreground sm:block">
