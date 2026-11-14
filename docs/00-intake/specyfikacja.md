@@ -143,7 +143,7 @@ nie musi nic dostarczać do `docs/00-intake/zrodla/` poza akceptacją treści po
 | AI przetwarzające dane użytkowników | nie | Brak |
 | Migracje bazy produkcyjnej | nie | Brak zmian w `supabase/` |
 | Upload plików, integracje zewnętrzne | tak | ADR w 04-plan: integracja Resend. Wiadomo: domena iskt.pl zweryfikowana, klucz po stronie serwera. Plan rozstrzyga: limit czasu (10 s), obsługa błędów, limit zgłoszeń przy hostingu bezserwerowym (pamięć procesu czy trwały licznik), atrapa Resend w testach |
-| Płatne usługi, sekrety, nowe konta | tak | Krok ręczny właściciela: klucz Resend tylko w `.env.local` (decyzja 2026-11-14), plan Resend potwierdzony na liście startowej; w produkcji nowy klucz w Vercel (zlecenie 6) |
+| Płatne usługi, sekrety, nowe konta | tak | ADR w 04-plan: integracja Resend (ten sam ADR co integracje zewnętrzne), część „Sekrety i limity usługi”. Wiadomo: klucz Resend tylko w `.env.local` właściciela (decyzja 2026-11-14), w produkcji nowy klucz w Vercel (zlecenie 6); plan Resend potwierdza właściciel na liście startowej. Plan rozstrzyga: nazwy zmiennych serwerowych i ich wpis w `.env.example` bez wartości, zachowanie bez klucza (stan błędu W-12), brak klucza w CI (atrapa), zachowanie przy wyczerpaniu limitu planu Resend. Krok ręczny właściciela: klucz i plan |
 
 ## Szacunek poglądowy
 

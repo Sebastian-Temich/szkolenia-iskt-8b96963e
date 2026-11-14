@@ -15,7 +15,8 @@ Cykl M3 wymienia tylko nowe rzeczy zewnętrzne (poprzednie: `docs/cykle/*/00-int
 
 - [ ] Konto Resend z domeną nadawcy iskt.pl, PO CO: wysyłka zgłoszeń (W-12), JAK: domena iskt.pl
   ma w panelu Resend (Domains) status „Verified” (właściciel potwierdził 2026-11-14); GDZIE: panel
-  Resend; JAK sprawdzimy: lokalna wysyłka testowego zgłoszenia dochodzi na adres odbiorcy.
+  Resend; JAK sprawdzimy: właściciel potwierdza status „Verified” domeny iskt.pl w panelu (przed
+  realizacją, bez aplikacji). Dostarczenie zgłoszenia z formularza sprawdza odbiór W-12 (W-12/K10).
 
 ## Domeny i DNS
 
@@ -28,13 +29,17 @@ Cykl M3 wymienia tylko nowe rzeczy zewnętrzne (poprzednie: `docs/cykle/*/00-int
   właściciel sam wpisuje klucz (Resend → API Keys, uprawnienie „Sending access” dla domeny iskt.pl)
   jako `RESEND_API_KEY` w `.env.local`; nazwa bez przedrostka `VITE_`, więc klucz nie trafia do
   przeglądarki; wartość nigdy w repo, docs, issue ani logach (decyzje.md 2026-11-14); GDZIE:
-  `/Users/Shared/sh/projekty/szkolenia-iskt/.env.local`; JAK sprawdzimy: wysyłka testowego zgłoszenia
-  lokalnie dochodzi na biuro@iskt.pl (sprawdzenie ręczne właściciela).
+  `/Users/Shared/sh/projekty/szkolenia-iskt/.env.local`; JAK sprawdzimy (przed realizacją, bez
+  aplikacji i bez wypisywania wartości): klucz widnieje w panelu Resend (API Keys) z dostępem do
+  wysyłki dla iskt.pl, a w terminalu właściciela `grep -c '^RESEND_API_KEY=' .env.local` w katalogu
+  projektu zwraca 1. Dostarczenie zgłoszenia z formularza sprawdza odbiór W-12 (W-12/K10).
 - [ ] Adres odbiorcy i nadawcy, PO CO: e-mail do biura (W-12), JAK: odbiorca biuro@iskt.pl
   (decyzja 2026-11-14, później zmiana na szkolenia@iskt.pl samą zmienną), nadawca
   „Szkolenia ISKT” formularz@iskt.pl (odpowiedź 5); GDZIE: `.env.local` jako `ZGLOSZENIA_ODBIORCA`
-  i `ZGLOSZENIA_NADAWCA` (nazwy w `.env.example`, ostateczne ustala plan); JAK sprawdzimy: e-mail
-  testowy ma tego nadawcę i trafia do tego odbiorcy.
+  i `ZGLOSZENIA_NADAWCA` (nazwy w `.env.example`, ostateczne ustala plan); JAK sprawdzimy (przed
+  realizacją): właściciel potwierdza oba adresy w rozmowie (odbiorca potwierdzony 2026-11-14, nadawca
+  w odpowiedzi 5), a orkiestrator zapisuje je w decyzje.md. Nadawcę i odbiorcę w e-mailu sprawdza
+  odbiór W-12 (W-12/K10).
 - [-] Klucze produkcyjne w Vercel (nie dotyczy: zlecenie 6; właściciel wpisze nowy klucz Resend w
   Vercel, decyzja 2026-11-14)
 
