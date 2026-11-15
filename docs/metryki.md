@@ -21,6 +21,7 @@ Plik wspólny, aktualizuje orkiestrator. Pomiar poglądowy, służy też do por�
 | #41 Okno zapytania na profilu trenera i porządki w dokumentacji wydań | S | 11h 38min | 1 | 1 | 0 | PR #42 |
 | #46 Wysyłka zgłoszenia z formularza przez Resend | M | 2h 3min | 1 | 2 | 1 | PR #49 |
 | #47 Polityka prywatności i informacja o danych przy formularzu | M | 35min | 1 | 1 | 0 | PR #50 |
+| #48 Dokumentacja wydania M3 | M | 17min | 1 | 1 | 0 | PR #51 |
 
 Eskalacje nie liczą pytań workera (`shctl escalate --typ pytanie`): są w „Uwagach” jako „pytania: N”.
 

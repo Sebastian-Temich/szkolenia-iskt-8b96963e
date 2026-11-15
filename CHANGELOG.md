@@ -21,3 +21,4 @@ Plik wspólny. Aktualizuje go wyłącznie orkiestrator przez `shctl task close`.
 - #41: Okno zapytania na profilu trenera i porządki w dokumentacji wydań (PR #42)
 - #46: Wysyłka zgłoszenia z formularza przez Resend (PR #49)
 - #47: Polityka prywatności i informacja o danych przy formularzu (PR #50)
+- #48: Dokumentacja wydania M3 (PR #51)

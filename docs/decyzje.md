@@ -162,3 +162,7 @@ Plik wspólny, aktualizuje orkiestrator. Decyzje workerów przenosi z raportów 
 | 2026-11-15 | T-47 | Tekst `Eyebrow` strony polityki (karta mówi tylko „Eyebrow jak sekcje strony głównej”) | „Ochrona danych”, w module treści. |
 | 2026-11-15 | T-47 | Dopisek „(otwiera się w nowej karcie)” w oknie | tylko dla czytników ekranu (`sr-only`), żeby nowa karta nie zaskoczyła użytkownika czytnika; widoczny tekst zgodny z kartą. |
 | 2026-11-15 | T-47 | Sekcja 6 szkicu to jeden akapit | na stronie też jeden akapit (zgodność tekstu 1:1 ze szkicem). |
+| 2026-11-15 | T-48 | Skąd dowód E2E dla `main`, skoro job `e2e` nie biegnie na pushu? | Z runów PR #49 (43746359723) i #50 (43749223028); gałąź #50 zawiera `b7284b6`, więc run #50 (184 passed) to kod M3 w całości. Tak samo jak w dokumentacji M2. |
+| 2026-11-15 | T-48 | Gdzie plik dokumentacji? | `docs/wydanie/techniczna/M3.md` i `produktowa/M3.md` według issue; wzór M2 jest już w archiwum `docs/cykle/M2-bezpieczenstwo/wydanie/`. |
+| 2026-11-15 | T-48 | Czerwony `check-dod` (workflow `SH`) na `b7284b6` (kod 141, SIGPIPE, bez wskazania pola) | opisany w „Znanych ograniczeniach” jako niestabilność; kolejne runy `SH` na `main` zielone. Nie diagnozowany (poza zakresem). |
+| 2026-11-15 | T-48 | Rollback M3 | `git revert` w odwrotnej kolejności (`67a1e56`, potem `b7284b6`), bo polityka zmienia ten sam `SekcjaKontakt.tsx`; szybkie wyłączenie przez brak `RESEND_API_KEY`. |
