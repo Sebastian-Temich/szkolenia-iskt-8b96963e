@@ -59,3 +59,4 @@ Plik wspólny, aktualizuje orkiestrator. Zgłoszenia ⚪ z review i „Drobne uw
 | 2026-11-15 | T-48 | `scripts/check-dod.sh` zakończył się kodem 141 (SIGPIPE) w CI na `b7284b6` (run 43748409982) bez komunikatu; prawdopodobnie `grep -q` albo `head` w potoku przy `set -o pipefail`. Warto sprawdzić. | otwarta |
 | 2026-11-15 | QA M3 | (przyczyna: wymaganie) Polityka prywatności pokazuje dane firmy (adres siedziby, KRS, NIP) jako „[do uzupełnienia]”; właściciel podaje je przed odbiorem M3 albo przed publikacją; zmiana tylko w `src/lib/polityka/`. | otwarta |
 | 2026-11-15 | QA M3 | (przyczyna: test) Prawdziwa wysyłka przez Resend (W-12/K10, O-17) sprawdzalna tylko ręcznie przez właściciela; CI sprawdza atrapę. | otwarta |
+| 2026-11-15 | review PR #53 | `docs/wydanie/techniczna/M3.md`, wiersz #48 T11: „ten PR” i pusta kolumna squasha; wpisać PR #51 i commit 1ea6fd8. | otwarta |
