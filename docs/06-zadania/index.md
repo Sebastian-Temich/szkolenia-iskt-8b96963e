@@ -23,6 +23,7 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 | #46 | Wysyłka zgłoszenia z formularza przez Resend | done | 2 | M3 Wysyłka zgłoszeń | #49 merged | pass |
 | #47 | Polityka prywatności i informacja o danych przy formularzu | done | 1 | M3 Wysyłka zgłoszeń | #50 merged | pass |
 | #48 | Dokumentacja wydania M3 | done | 1 | M3 Wysyłka zgłoszeń | #51 merged | pass |
+| #54 | Dane firmy w polityce i kontakcie, dofinansowanie do 95%, Certyfikat/Egzamin | todo | 0 | - | - | - |
 <!-- sync-status:end -->
 
 ## Mapa zadań z planu
@@ -50,4 +51,5 @@ Sekcję uzupełnia `shctl task create`: ID z pliku YAML i numer issue.
 | T9 | #46 | Wysyłka zgłoszenia z formularza przez Resend | - |
 | T10 | #47 | Polityka prywatności i informacja o danych przy formularzu | #46 |
 | T11 | #48 | Dokumentacja wydania M3 | #46, #47 |
+| S-20261115-dane-firmy-tresci | #54 | Dane firmy w polityce i kontakcie, dofinansowanie do 95%, Certyfikat/Egzamin | - |
 <!-- shctl:mapa:end -->
