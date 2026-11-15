@@ -40,7 +40,10 @@ prawdziwej wysyłki w CI.
   bez `VITE_`; nazwy w `.env.example`, wartości tylko w `.env.local` właściciela (ADR-004 pkt 3).
 - Dane osobowe: tylko w e-mailu do biura; brak zapisu; logi z białą listą pól; escapowanie treści i
   tematu; informacja o przetwarzaniu i polityka prywatności (W-13, W-14, ADR-004 pkt 5).
-- Nadużycia: pole-pułapka i limit 5 zgłoszeń na 10 minut (ADR-004 pkt 4).
+- Nadużycia: pole-pułapka, limit 5 zgłoszeń na 10 minut na adres (adres z połączenia albo z
+  nagłówka platformy, nigdy z `x-forwarded-for` od klienta) i limit globalny 50 wysyłek na godzinę
+  chroniący plan Resend (ADR-004 pkt 4). Kryteria T9 obejmują test, że podrobiony
+  `x-forwarded-for` nie zeruje limitu.
 
 ### Środowiska i droga na produkcję
 
@@ -98,7 +101,7 @@ szkieletu: pierwsze zadanie korzysta z istniejącego. Zadania (rozpisuje 06-zada
 | O-18 | Walidacja | Wyślij formularz z pustymi polami i złym e-mailem | Komunikaty przy polach, fokus na pierwszym błędzie, brak wysyłki | W-12 | M3 |
 | O-19 | Błąd usługi | E2E z udawaną odpowiedzią błędu funkcji serwerowej | Komunikat z szkolenia@iskt.pl, dane zostają w polach | W-12 | M3 |
 | O-20 | Okno firmy i profil trenera | E2E: „Zapytaj o termin dla firmy” na `/szkolenia/genai` i „Zapytaj o termin” na profilu trenera | Żądanie z `zrodlo` = firma, „Dziękujemy!” | W-12 | M3 |
-| O-21 | Spam | Test serwera: pułapka wypełniona; 6 zgłoszeń w 10 min | Pułapka: sukces bez wysyłki; szóste: komunikat o zbyt wielu próbach | W-12 | M3 |
+| O-21 | Spam | Test serwera: pułapka wypełniona; 6 zgłoszeń w 10 min, także ze zmienianym `x-forwarded-for`; 51 wysyłek w godzinie | Pułapka: sukces bez wysyłki; szóste i 51.: komunikat o zbyt wielu próbach | W-12 | M3 |
 | O-22 | Polityka prywatności | Stopka → „Polityka prywatności”; odnośnik w zgodzie w oknie | Strona z treścią zaakceptowaną przez właściciela; w oknie nowa karta | W-13 | M3 |
 | O-23 | Logi bez danych osobowych | Test serwera dla sukcesu, błędu i odrzucenia | Logi bez imienia, e-maila, telefonu i treści | W-14 | M3 |
 | O-24 | Regresja | CI na `main`: `jakosc`, `e2e` (z responsywnością i dostępnością) | Zielone | W-12, W-13 | M3 |

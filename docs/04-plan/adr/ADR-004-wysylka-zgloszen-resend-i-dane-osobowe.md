@@ -28,21 +28,32 @@ zmiany w zleceniu 6), lokalnie `pnpm dev`. Produkcja na Lovable zostaje bez kluc
    Bez nowej zależności; adres API stały w kodzie, w testach atrapa `fetch`.
 3. **Sekrety i ustawienia (zmienne serwerowe, bez przedrostka `VITE_`).** `RESEND_API_KEY` (sekret),
    `ZGLOSZENIA_ODBIORCA` (teraz biuro@iskt.pl), `ZGLOSZENIA_NADAWCA` (`Szkolenia ISKT
-   <formularz@iskt.pl>`). Nazwy w `.env.example` bez wartości. Wartości lokalnie tylko w `.env.local`
+   <formularz@iskt.pl>`), opcjonalnie `ZGLOSZENIA_NAGLOWEK_IP` (pkt 4, pusta lokalnie). Nazwy w `.env.example` bez wartości. Wartości lokalnie tylko w `.env.local`
    właściciela (decyzje.md 2026-11-14); w produkcji w Vercel (zlecenie 6, nowy klucz). Brak którejś
    zmiennej: wynik „konfiguracja” (kod 503, stan „Błąd po naszej stronie”), bez wywołania Resend. W CI
    i u workera klucza nie ma: testy używają atrapy, a prawdziwą wysyłkę sprawdza właściciel (W-12/K10).
    Wyczerpany limit planu Resend (odpowiedź 429 od Resend) to ten sam stan błędu usługi z logiem
    `powod=resend status=429`. `shctl task dispatch` kopiuje `.env.local` do worktree workera, więc
-   klucz może tam być: handler dostaje konfigurację jako parametr (odczyt `process.env` tylko w
+   plik z kluczem tam jest, choć worker nie może go czytać (hook `.env*`), a specyfikacja („Typ
+   projektu”) mówi w tym sensie, że worker nie ma klucza. Klucz może jednak wczytać proces aplikacji
+   uruchomiony w worktree, dlatego handler dostaje konfigurację jako parametr (odczyt `process.env` tylko w
    cienkiej warstwie funkcji serwerowej), testy przekazują konfigurację testową i atrapę `fetch`, a
    worker nie wysyła zgłoszeń z `pnpm dev`. Żaden test ani przebieg CI nie wysyła prawdziwego e-maila.
 4. **Ochrona przed spamem.** Pole-pułapka o neutralnej nazwie (np. `strona_www`), ukryte wizualnie i
    przed czytnikami; wypełnione → udawany sukces bez wysyłki. Limit 5 zgłoszeń na 10 minut na adres IP
-   klienta (pierwszy adres z `x-forwarded-for`, inaczej adres połączenia), liczony w pamięci procesu
-   (mapa skrót adresu → znaczniki czasu, okno przesuwne, czyszczenie starych wpisów). Klucz mapy to skrót
-   SHA-256 adresu, a adres nie trafia do logów. Ograniczenie: na hostingu bezserwerowym licznik jest per
-   instancja, więc limit jest przybliżony; trwały licznik (np. tabela w Supabase albo magazyn KV)
+   klienta, liczony w pamięci procesu (mapa skrót adresu → znaczniki czasu, okno przesuwne,
+   czyszczenie starych wpisów). Klucz mapy to skrót SHA-256 adresu, a adres nie trafia do logów.
+   **Źródło adresu nie pochodzi od klienta:** nagłówka `x-forwarded-for` (i innych ustawianych przez
+   klienta) nie czytamy. Domyślnie adres połączenia (gniazdo; lokalnie `pnpm dev`). Za zaufanym proxy
+   adres bierzemy wyłącznie z nagłówka platformy wskazanego zmienną serwerową
+   `ZGLOSZENIA_NAGLOWEK_IP` (np. `x-vercel-forwarded-for` na Vercel, `cf-connecting-ip` na Cloudflare),
+   który platforma nadpisuje; ustawia ją zlecenie 6 razem z hostingiem. Brak adresu: wspólny klucz
+   „nieznany” (limit działa zbiorczo). **Limit globalny:** dodatkowo najwyżej 50 wysyłek na godzinę na
+   instancję, po przekroczeniu stan „Za dużo prób”; chroni plan Resend (100 e-maili dziennie) przed
+   wyczerpaniem nawet przy rozproszonych adresach. Testy: podrobiony `x-forwarded-for` zmieniany w
+   każdym żądaniu nie zeruje limitu; nagłówek platformy jest czytany tylko przy ustawionej zmiennej;
+   limit globalny odcina 51. wysyłkę w godzinie. Ograniczenie: na hostingu bezserwerowym liczniki są
+   per instancja, więc limity są przybliżone; trwały licznik (np. tabela w Supabase albo magazyn KV)
    rozstrzyga zlecenie 6 razem z hostingiem.
 5. **Dane osobowe.** Imię i nazwisko, e-mail, telefon i treść wiadomości trafiają tylko do e-maila
    przez Resend; aplikacja ich nie zapisuje (bez bazy, bez plików, bez pamięci poza czasem żądania;
@@ -52,7 +63,8 @@ zmiany w zleceniu 6), lokalnie `pnpm dev`. Produkcja na Lovable zostaje bez kluc
    skrzynce biura i u dostawcy opisuje polityka prywatności (W-13), akceptowana przez właściciela.
 6. **Testy.** Vitest: schemat (każde pole, wartości graniczne), budowa e-maila (temat R4 dla
    `kontakt`, `zapis`, `firma`, escapowanie), limit (5 przejść, 6. odmowa, okno 10 min z kontrolą
-   czasu), handler serwerowy z atrapą `fetch` (sukces, błąd, przekroczenie czasu, brak konfiguracji,
+   czasu, podrobiony `x-forwarded-for` bez wpływu, nagłówek platformy tylko przy
+   `ZGLOSZENIA_NAGLOWEK_IP`, limit globalny 50/h), handler serwerowy z atrapą `fetch` (sukces, błąd, przekroczenie czasu, brak konfiguracji,
    pułapka, logi bez danych osobowych). Playwright (chromium, webkit): formularz w czterech miejscach,
    walidacja, stany; żądanie do funkcji serwerowej przechwycone przez `page.route` (sprawdzenie
    `zrodlo` i pól, odpowiedź udawana: sukces, błąd, limit), bez prawdziwej wysyłki.
