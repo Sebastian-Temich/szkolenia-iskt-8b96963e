@@ -13,10 +13,16 @@ import { atrapaMakiety, biezacaAtrapa } from "./atrapa-klienta";
  * Montowanie na `document`, jak w okno-zapisu.test.tsx (fokus między portalem a stroną).
  */
 vi.mock("@/lib/supabase/klient", async () => (await import("./atrapa-klienta")).modulKlienta);
+const wyslij = vi.hoisted(() => vi.fn());
+vi.mock("@/lib/zgloszenia/wyslij", () => ({ wyslijZgloszenie: wyslij }));
 
 let korzen: Root | null = null;
 
-beforeEach(() => atrapaMakiety());
+beforeEach(() => {
+  atrapaMakiety();
+  wyslij.mockReset();
+  wyslij.mockResolvedValue({ wynik: "ok" });
+});
 
 afterEach(() => {
   act(() => korzen?.unmount());
@@ -110,11 +116,38 @@ describe("Okno zapytania na profilu trenera (#41)", () => {
     expect(przycisk).toHaveFocus();
   });
 
-  it("wysyłka zostaje zablokowana jak w oknie z #18", async () => {
-    const { okno } = await otworzOkno("/trenerzy/zielinska");
-    expect(within(okno).getByRole("button", { name: /Wyślij zgłoszenie/ })).toBeDisabled();
-    expect(
-      within(okno).getByText("Formularz zostanie podłączony w kolejnym etapie."),
-    ).toBeInTheDocument();
+  it("#46: wysyłka z profilu trenera ma źródło firma, szkolenie trenera i wiadomość", async () => {
+    const { user, okno } = await otworzOkno("/trenerzy/zielinska");
+    await poleSzkolenia(okno);
+    expect(within(okno).queryByText(/Formularz zostanie podłączony/)).toBeNull();
+    await user.type(within(okno).getByLabelText("Imię i nazwisko"), "Janina Testowa");
+    await user.type(within(okno).getByLabelText("E-mail"), "janina@example.com");
+    await user.type(within(okno).getByLabelText("Telefon"), "600 111 222");
+    await user.click(within(okno).getByRole("checkbox", { name: /Wyrażam zgodę/ }));
+    await user.click(within(okno).getByRole("button", { name: "Wyślij zgłoszenie" }));
+    expect(await within(okno).findByRole("heading", { name: "Dziękujemy!" })).toBeInTheDocument();
+    expect(wyslij).toHaveBeenCalledTimes(1);
+    expect(wyslij.mock.calls[0]?.[0].data).toMatchObject({
+      zrodlo: "firma",
+      odbiorca: "company",
+      szkolenie: "grants",
+      szkolenieTytul: "Pozyskiwanie grantów B+R",
+      obszar: "Szkolenie zamknięte dla zespołu",
+      wiadomosc: "Pytanie o szkolenie z trenerem: dr Magdalena Zielińska",
+    });
+  });
+
+  it("#46: trener z kilkoma szkoleniami bez wyboru: komunikat „Wybierz szkolenie.” i fokus", async () => {
+    const { user, okno } = await otworzOkno("/trenerzy/nowak");
+    await poleSzkolenia(okno);
+    await user.type(within(okno).getByLabelText("Imię i nazwisko"), "Janina Testowa");
+    await user.type(within(okno).getByLabelText("E-mail"), "janina@example.com");
+    await user.type(within(okno).getByLabelText("Telefon"), "600 111 222");
+    await user.click(within(okno).getByRole("checkbox", { name: /Wyrażam zgodę/ }));
+    await user.click(within(okno).getByRole("button", { name: "Wyślij zgłoszenie" }));
+    const pole = within(okno).getByLabelText("Szkolenie");
+    expect(pole).toHaveFocus();
+    expect(pole).toHaveAccessibleDescription("Wybierz szkolenie.");
+    expect(wyslij).not.toHaveBeenCalled();
   });
 });

@@ -4,10 +4,13 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { SekcjaKontakt } from "@/components/strona-glowna/SekcjaKontakt";
 
 /**
- * Najmocniejszy wymóg etapu: formularz renderuje się wizualnie, nie wysyła niczego
- * i nie udaje, że wysłał. R6: asercja na brak konkretnego napisu nie może upaść, bo tego
- * napisu nigdy w kodzie nie było — więc sprawdzamy mechanizm, nie napis.
+ * Wygląd i pola formularza kontaktu (F-02). Do #46 formularz był nieaktywny; „Było → ma być”
+ * z karty W-12 zastąpiło testy blokady testami wysyłki w formularz-wysylka.test.tsx. Tu zostaje:
+ * pusty formularz nie dotyka sieci ani funkcji serwerowej i nie udaje sukcesu.
  */
+const wyslij = vi.hoisted(() => vi.fn());
+vi.mock("@/lib/zgloszenia/wyslij", () => ({ wyslijZgloszenie: wyslij }));
+
 let zapytaniaSieciowe: string[] = [];
 
 beforeEach(() => {
@@ -25,49 +28,27 @@ afterEach(() => {
 const zamontuj = (odbiorca: "individual" | "company" = "individual") =>
   render(<SekcjaKontakt odbiorca={odbiorca} onZmiana={() => undefined} />);
 
-describe("Formularz kontaktowy — nie wysyła i nie udaje", () => {
-  it("przycisk wysyłki jest nieaktywny", () => {
+describe("Formularz kontaktowy — pola i pusty formularz", () => {
+  it("przycisk wysyłki jest aktywny, bez napisu o niepodłączeniu (#46)", () => {
     zamontuj();
-    expect(screen.getByRole("button", { name: /Wyślij zgłoszenie/ })).toBeDisabled();
+    expect(screen.getByRole("button", { name: /Wyślij zgłoszenie/ })).toBeEnabled();
+    expect(screen.queryByText(/Formularz zostanie podłączony/)).toBeNull();
   });
 
-  it("pokazuje jawny komunikat o niepodłączeniu, powiązany z przyciskiem", () => {
-    zamontuj();
-    const komunikat = screen.getByText("Formularz zostanie podłączony w kolejnym etapie.");
-    expect(komunikat).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Wyślij zgłoszenie/ })).toHaveAttribute(
-      "aria-describedby",
-      komunikat.id,
-    );
-  });
-
-  it("próba wysłania nie zmienia widoku ani o jeden węzeł", () => {
-    const { container } = zamontuj();
-    const formularz = container.querySelector("form");
-    expect(formularz).not.toBeNull();
-    const przed = container.innerHTML;
-    fireEvent.submit(formularz as HTMLFormElement);
-    expect(container.innerHTML).toBe(przed);
-  });
-
-  it("nie wykonuje żadnego zapytania sieciowego przy próbie wysłania", async () => {
+  it("pusty formularz: brak zapytania sieciowego i wywołania funkcji serwerowej", async () => {
     const user = userEvent.setup();
     const { container } = zamontuj();
     fireEvent.submit(container.querySelector("form") as HTMLFormElement);
     await user.click(screen.getByRole("button", { name: /Wyślij zgłoszenie/ }));
     expect(zapytaniaSieciowe).toEqual([]);
+    expect(wyslij).not.toHaveBeenCalled();
   });
 
-  it("nie renderuje żadnego stanu sukcesu — ani przed, ani po próbie wysłania", () => {
+  it("pusty formularz nie udaje sukcesu", () => {
     const { container } = zamontuj();
-    expect(screen.getByRole("button", { name: /Wyślij zgłoszenie/ })).toBeDisabled();
-    expect(
-      screen.getByText("Formularz zostanie podłączony w kolejnym etapie."),
-    ).toBeInTheDocument();
     fireEvent.submit(container.querySelector("form") as HTMLFormElement);
-    expect(container.querySelector('[role="status"]')).toBeNull();
-    expect(container.querySelector('[role="alert"]')).toBeNull();
-    for (const falsz of [/Dziękujemy/i, /Wysłano/i, /Skontaktujemy się/i, /Wyślij kolejne/i]) {
+    expect(container.querySelector("form")).not.toBeNull();
+    for (const falsz of [/Dziękujemy/i, /Zgłoszenie dotarło/i]) {
       expect(screen.queryByText(falsz)).toBeNull();
     }
   });

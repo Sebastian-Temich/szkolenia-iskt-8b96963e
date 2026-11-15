@@ -113,7 +113,8 @@ test.describe("Szczegół /szkolenia/genai z oknem zapisu (F-04, #18)", () => {
       "aria-pressed",
       "true",
     );
-    await expect(okno.getByRole("button", { name: /Wyślij zgłoszenie/ })).toBeDisabled();
+    // #46: przycisk działa (wysyłkę sprawdza e2e/zgloszenia.spec.ts).
+    await expect(okno.getByRole("button", { name: /Wyślij zgłoszenie/ })).toBeEnabled();
     await expect(page).toHaveURL(/\/szkolenia\/genai$/);
   });
 
@@ -187,7 +188,7 @@ test.describe("Okno zapytania na profilu trenera (#41)", () => {
     await expect(okno.getByLabel("Wiadomość")).toHaveValue(
       "Pytanie o szkolenie z trenerem: dr Magdalena Zielińska",
     );
-    await expect(okno.getByRole("button", { name: /Wyślij zgłoszenie/ })).toBeDisabled();
+    await expect(okno.getByRole("button", { name: /Wyślij zgłoszenie/ })).toBeEnabled();
     await expect(page).toHaveURL(/\/trenerzy\/zielinska$/);
   });
 
