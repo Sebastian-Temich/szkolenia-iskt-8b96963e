@@ -5,10 +5,10 @@ cykl: "M3-formularze-resend"
 etap_opis: "Realizacja, kamień M3 Wysyłka zgłoszeń"
 postep_etapy: "4/6"
 postep_zadania: "1/4"
-czeka_na_ciebie: 0
-eskalacje: 0
-nastepny_krok: "Start #46"
-ostatnia_synchronizacja: 2026-11-15T16:40:11Z
+czeka_na_ciebie: 1
+eskalacje: 1
+nastepny_krok: "Twoja odpowiedź: E-001 (#46): limit napraw CI"
+ostatnia_synchronizacja: 2026-11-15T18:01:56Z
 ---
 
 # szkolenia-iskt
@@ -20,21 +20,23 @@ ostatnia_synchronizacja: 2026-11-15T16:40:11Z
 - **Etap:** Realizacja, kamień M3 Wysyłka zgłoszeń
 - **Cykl:** M3-formularze-resend (od 2026-11-14); wcześniejsze: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md)
 - **Postęp:** Etapy 4/6 · Zadania 1/4 w bieżącym zleceniu (łącznie 18)
-- **Co się dzieje:** nic w toku
-- **Następny krok:** Start #46
+- **Co się dzieje:** #46 Wysyłka zgłoszenia z formularza przez Resend (eskalacja, iteracja 2, od 1 h 21 min)
+- **Następny krok:** Twoja odpowiedź: E-001 (#46): limit napraw CI
 - **Szacowany czas:** ok. 3 h 7 min pracy agentów (3 zadań, średnio 3 h 7 min na zadanie, 3 równolegle; orientacyjnie)
 
 ## Czeka na Ciebie
 
-Nic. Agenci pracują sami.
+1. E-001 (#46): limit napraw CI (czeka 0 min)  
+   Wpisz orkiestratorowi: `E-001: A`  
+   A: jedna dodatkowa naprawa CI tylko tej asercji/komunikatu; B: usunąć komunikat noscript z kryteriów i asercji (przycisk i tak wyłączony bez JS); C: zatrzymać zadanie
 
 ## Zadania
 
-### Gotowe do startu (1)
+### W realizacji (1)
 
-| Zadanie | Kamień | Zależności |
-|---|---|---|
-| #46 Wysyłka zgłoszenia z formularza przez Resend | M3 Wysyłka zgłoszeń | brak |
+| Zadanie | Kamień | Kto | Iteracja | PR | CI | Od |
+|---|---|---|---|---|---|---|
+| #46 Wysyłka zgłoszenia z formularza przez Resend | M3 Wysyłka zgłoszeń | eskalacja | 2 | #49 | pending | 1 h 21 min |
 
 ### Zaplanowane (2)
 
@@ -53,7 +55,9 @@ Wcześniejsze zlecenia (14 zadań): [Historia](historia.md).
 
 ## Eskalacje i pytania
 
-Otwartych brak.
+| Nr | Rodzaj | Dotyczy | Powód |
+|---|---|---|---|
+| E-001 | eskalacja | #46 | limit napraw CI |
 
 ## Dokumenty
 
