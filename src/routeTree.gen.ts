@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FundamentyRouteImport } from './routes/fundamenty'
 import { Route as PanelRouteImport } from './routes/panel'
+import { Route as PolitykaPrywatnosciRouteImport } from './routes/polityka-prywatnosci'
 import { Route as PanelIndexRouteImport } from './routes/panel/index'
 import { Route as SzkoleniaIndexRouteImport } from './routes/szkolenia/index'
 import { Route as SzkoleniaIdRouteImport } from './routes/szkolenia/$id'
@@ -37,6 +38,11 @@ const FundamentyRoute = FundamentyRouteImport.update({
 const PanelRoute = PanelRouteImport.update({
   id: '/panel',
   path: '/panel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PolitykaPrywatnosciRoute = PolitykaPrywatnosciRouteImport.update({
+  id: '/polityka-prywatnosci',
+  path: '/polityka-prywatnosci',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PanelIndexRoute = PanelIndexRouteImport.update({
@@ -99,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/fundamenty': typeof FundamentyRoute
   '/panel': typeof PanelRouteWithChildren
+  '/polityka-prywatnosci': typeof PolitykaPrywatnosciRoute
   '/szkolenia/$id': typeof SzkoleniaIdRoute
   '/trenerzy/$id': typeof TrenerzyIdRoute
   '/panel/': typeof PanelIndexRoute
@@ -114,6 +121,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/fundamenty': typeof FundamentyRoute
+  '/polityka-prywatnosci': typeof PolitykaPrywatnosciRoute
   '/szkolenia/$id': typeof SzkoleniaIdRoute
   '/trenerzy/$id': typeof TrenerzyIdRoute
   '/panel': typeof PanelIndexRoute
@@ -131,6 +139,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/fundamenty': typeof FundamentyRoute
   '/panel': typeof PanelRouteWithChildren
+  '/polityka-prywatnosci': typeof PolitykaPrywatnosciRoute
   '/szkolenia/$id': typeof SzkoleniaIdRoute
   '/trenerzy/$id': typeof TrenerzyIdRoute
   '/panel/': typeof PanelIndexRoute
@@ -149,6 +158,7 @@ export interface FileRouteTypes {
     | '/'
     | '/fundamenty'
     | '/panel'
+    | '/polityka-prywatnosci'
     | '/szkolenia/$id'
     | '/trenerzy/$id'
     | '/panel/'
@@ -164,6 +174,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/fundamenty'
+    | '/polityka-prywatnosci'
     | '/szkolenia/$id'
     | '/trenerzy/$id'
     | '/panel'
@@ -180,6 +191,7 @@ export interface FileRouteTypes {
     | '/'
     | '/fundamenty'
     | '/panel'
+    | '/polityka-prywatnosci'
     | '/szkolenia/$id'
     | '/trenerzy/$id'
     | '/panel/'
@@ -197,6 +209,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FundamentyRoute: typeof FundamentyRoute
   PanelRoute: typeof PanelRouteWithChildren
+  PolitykaPrywatnosciRoute: typeof PolitykaPrywatnosciRoute
   SzkoleniaIdRoute: typeof SzkoleniaIdRoute
   TrenerzyIdRoute: typeof TrenerzyIdRoute
   SzkoleniaIndexRoute: typeof SzkoleniaIndexRoute
@@ -224,6 +237,13 @@ declare module '@tanstack/react-router' {
       path: '/panel'
       fullPath: '/panel'
       preLoaderRoute: typeof PanelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/polityka-prywatnosci': {
+      id: '/polityka-prywatnosci'
+      path: '/polityka-prywatnosci'
+      fullPath: '/polityka-prywatnosci'
+      preLoaderRoute: typeof PolitykaPrywatnosciRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/panel/': {
@@ -332,6 +352,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FundamentyRoute: FundamentyRoute,
   PanelRoute: PanelRouteWithChildren,
+  PolitykaPrywatnosciRoute: PolitykaPrywatnosciRoute,
   SzkoleniaIdRoute: SzkoleniaIdRoute,
   TrenerzyIdRoute: TrenerzyIdRoute,
   SzkoleniaIndexRoute: SzkoleniaIndexRoute,

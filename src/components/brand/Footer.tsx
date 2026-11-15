@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { ADRES_POLITYKI, STOPKA } from "@/lib/polityka/tresc";
 import { Logo } from "./Logo";
 
 /**
@@ -87,7 +88,12 @@ export function Footer() {
         </div>
         <div className="flex flex-wrap justify-between gap-[var(--space-3)] pt-[var(--space-6)] text-[length:var(--text-footer-bottom)] text-[var(--text-secondary)]">
           <p>© 2026 ISKT Greenovation Sp. z o.o. Wszelkie prawa zastrzeżone.</p>
-          <p>Polityka prywatności · Regulamin</p>
+          <p>
+            <Link to={ADRES_POLITYKI} className="hover:text-primary">
+              {STOPKA.odnosnik}
+            </Link>
+            {STOPKA.reszta}
+          </p>
         </div>
       </div>
     </footer>

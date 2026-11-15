@@ -75,6 +75,15 @@ const STRONY: Strona[] = [
     },
   },
   {
+    nazwa: "/polityka-prywatnosci (#47)",
+    przygotuj: async (page) => {
+      await otworz(page, "/polityka-prywatnosci");
+      await expect(
+        page.getByRole("heading", { level: 1, name: "Polityka prywatności" }),
+      ).toBeVisible();
+    },
+  },
+  {
     nazwa: "/panel (logowanie)",
     przygotuj: async (page) => {
       await otworz(page, "/panel");
@@ -114,6 +123,17 @@ for (const strona of STRONY) {
     });
   });
 }
+
+/** W-13/K3 (#47): polityka prywatności przy 360 px, najwęższej szerokości z kryterium. */
+test("/polityka-prywatnosci 360 px: brak poziomego przewijania i naruszeń axe serious i critical", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 360, height: 740 });
+  await otworz(page, "/polityka-prywatnosci");
+  await expect(page.getByRole("heading", { level: 1, name: "Polityka prywatności" })).toBeVisible();
+  await oczekujBrakuPoziomegoPrzewijania(page);
+  expect(await powazneNaruszeniaAxe(page)).toEqual([]);
+});
 
 /** Regresje błędów wykrytych w #20 (CI run 43413245780) i poprawionych w #35. */
 test.describe("Regresje dostępności (#35)", () => {
