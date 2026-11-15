@@ -68,10 +68,11 @@ odbiór.
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
 
-## Wszystkie zadania zrobione (14)
+## Wszystkie zadania zrobione (15)
 
 | Zadanie | Cykl | Kamień | PR | Zamknięte |
 |---|---|---|---|---|
+| #41 Okno zapytania na profilu trenera i porządki w dokumentacji wydań | M3-formularze-resend · S | - | #42 | 2026-11-15 |
 | #39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów | M2-bezpieczenstwo · S | - | #40 | 2026-11-15 |
 | #37 Przegląd i poprawki responsywności (telefon i tablet) z testami E2E | M2-bezpieczenstwo · S | - | #38 | 2026-11-14 |
 | #35 Poprawka dwóch błędów dostępności z testów E2E (logo w nagłówku, kontrast kroków) | M2-bezpieczenstwo · S | - | #36 | 2026-11-14 |

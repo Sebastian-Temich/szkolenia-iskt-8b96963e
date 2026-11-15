@@ -44,3 +44,7 @@ Plik wspólny, aktualizuje orkiestrator. Zgłoszenia ⚪ z review i „Drobne uw
 | 2026-11-14 | T-37 | `vitest.config.ts` używa `__dirname` (ostrzeżenie Vite o `configLoader: 'native'`). | otwarta |
 | 2026-11-15 | T-39 | `useIsMobile` czyta `window.innerWidth` zamiast `mql.matches`; działa, ale test jednostkowy musi ustawiać `innerWidth`, nie atrapę `matchMedia`. | otwarta |
 | 2026-11-15 | review PR #40 | Etykiety pól kart powielają teksty nagłówków tabeli bezpośrednio w komponentach; analogicznie w ListaTrenerow.tsx. Przenieś wspólne etykiety do pliku treści, aby zmiana nazwy kolumny zachowywała spójność obu widoków (punkt 9 listy frontend). (`src/components/panel/ListaSzkolen.tsx:133`) | otwarta |
+| 2026-11-15 | T-41 | `OknoZapisu` obsługuje teraz także zapytanie z profilu trenera; nazwa komponentu („zapisu”) jest węższa niż jego użycie. Zmiana nazwy w osobnym porządku. | otwarta |
+| 2026-11-15 | T-41 | ADR-001 i ADR-002 też mają status „proponowana”, choć plan M1 zaakceptowano (`decyzje.md`, 2026-11-13); issue obejmowało tylko ADR-003. | otwarta |
+| 2026-11-15 | T-41 | Raport QA M1 (`docs/cykle/M1/08-qa/raport-M1.md`, W-05) pisze o „5 plikach pgTAP RLS”, a plików `rls_*` w M1 były 4 (razem 6 z `schemat_chmury` i `dane_startowe`); raport QA poza zakresem. | otwarta |
+| 2026-11-15 | review PR #42 | Tekst „Pytanie o szkolenie z trenerem: …” (oraz „Wybierz…” w OknoZapisu.tsx) jest wpisany w komponent zamiast w plik treści (lista kontrolna frontend pkt 9). Przenieś go do modułu treści. (`src/components/trenerzy/ProfilTrenera.tsx:176`) | otwarta |
