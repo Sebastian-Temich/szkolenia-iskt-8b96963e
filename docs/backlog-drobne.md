@@ -57,3 +57,5 @@ Plik wspólny, aktualizuje orkiestrator. Zgłoszenia ⚪ z review i „Drobne uw
 | 2026-11-15 | T-47 | `pnpm build` w sandboxie workera zawsze pada na `.env.local`, więc `routeTree.gen.ts` przy nowej trasie trzeba edytować ręcznie (już opisane w T-46, „Propozycje dla systemu”). | otwarta |
 | 2026-11-15 | review PR #50 | Etykieta „Ostatnia aktualizacja:” wpisana w komponent; przenieść do modułu treści polityki (lista frontend pkt 9). (`src/routes/polityka-prywatnosci.tsx:28`) | otwarta |
 | 2026-11-15 | T-48 | `scripts/check-dod.sh` zakończył się kodem 141 (SIGPIPE) w CI na `b7284b6` (run 43748409982) bez komunikatu; prawdopodobnie `grep -q` albo `head` w potoku przy `set -o pipefail`. Warto sprawdzić. | otwarta |
+| 2026-11-15 | QA M3 | (przyczyna: wymaganie) Polityka prywatności pokazuje dane firmy (adres siedziby, KRS, NIP) jako „[do uzupełnienia]”; właściciel podaje je przed odbiorem M3 albo przed publikacją; zmiana tylko w `src/lib/polityka/`. | otwarta |
+| 2026-11-15 | QA M3 | (przyczyna: test) Prawdziwa wysyłka przez Resend (W-12/K10, O-17) sprawdzalna tylko ręcznie przez właściciela; CI sprawdza atrapę. | otwarta |

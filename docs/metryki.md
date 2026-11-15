@@ -44,3 +44,4 @@ według przyczyny: wymaganie, kod, test, design.
 | review PR #42 (#41 Okno zapytania na profilu trenera i porządki w dokumentacji wydań) | 0 | 1 | 0 | 0 | 0 |
 | review PR #49 (#46 Wysyłka zgłoszenia z formularza przez Resend) | 0 | 3 | 0 | 0 | 0 |
 | review PR #50 (#47 Polityka prywatności i informacja o danych przy formularzu) | 0 | 1 | 0 | 0 | 0 |
+| QA M3 | 1 | 0 | 1 | 0 | 0 |

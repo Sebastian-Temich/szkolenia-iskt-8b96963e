@@ -3,12 +3,12 @@ projekt: szkolenia-iskt
 tryb: M
 cykl: "M3-formularze-resend"
 etap_opis: "Odbiór i wydanie"
-postep_etapy: "4/6"
+postep_etapy: "5/6"
 postep_zadania: "4/4"
 czeka_na_ciebie: 0
 eskalacje: 0
 nastepny_krok: "Start etapu odbiór i wydanie"
-ostatnia_synchronizacja: 2026-11-15T19:38:26Z
+ostatnia_synchronizacja: 2026-11-15T20:06:31Z
 ---
 
 # szkolenia-iskt
@@ -19,7 +19,7 @@ ostatnia_synchronizacja: 2026-11-15T19:38:26Z
 
 - **Etap:** Odbiór i wydanie
 - **Cykl:** M3-formularze-resend (od 2026-11-14); wcześniejsze: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md)
-- **Postęp:** Etapy 4/6 · Zadania 4/4 w bieżącym zleceniu (łącznie 18)
+- **Postęp:** Etapy 5/6 · Zadania 4/4 w bieżącym zleceniu (łącznie 18)
 - **Co się dzieje:** etap odbiór i wydanie jeszcze nie rozpoczęty
 - **Następny krok:** Start etapu odbiór i wydanie
 
@@ -55,6 +55,7 @@ Zamknięte (1): [E-001](07-realizacja/escalations/E-001.md).
 - [Lista startowa](00-intake/lista-startowa.md)
 - [Plan](04-plan/plan.md)
 - [Decyzje](decyzje.md)
+- [Raport QA M3](08-qa/raport-M3.md)
 - Karty funkcji: [W-12](00-intake/funkcje/W-12.md), [W-13](00-intake/funkcje/W-13.md)
 - Poprzednie cykle: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md)
 - [Historia](historia.md): punkt przekazania, dziennik etapów, wszystkie zadania
