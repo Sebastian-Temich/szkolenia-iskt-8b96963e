@@ -20,6 +20,9 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 | #37 | Przegląd i poprawki responsywności (telefon i tablet) z testami E2E | done | 2 | - | #38 merged | pass |
 | #39 | Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów | done | 1 | - | #40 merged | pass |
 | #41 | Okno zapytania na profilu trenera i porządki w dokumentacji wydań | done | 1 | - | #42 merged | pass |
+| #46 | Wysyłka zgłoszenia z formularza przez Resend | todo | 0 | M3 Wysyłka zgłoszeń | - | - |
+| #47 | Polityka prywatności i informacja o danych przy formularzu | todo | 0 | M3 Wysyłka zgłoszeń | - | - |
+| #48 | Dokumentacja wydania M3 | todo | 0 | M3 Wysyłka zgłoszeń | - | - |
 <!-- sync-status:end -->
 
 ## Mapa zadań z planu
@@ -44,4 +47,7 @@ Sekcję uzupełnia `shctl task create`: ID z pliku YAML i numer issue.
 | S-20261114-responsywnosc | #37 | Przegląd i poprawki responsywności (telefon i tablet) z testami E2E | - |
 | S-20261114-panel-karty | #39 | Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów | - |
 | S-20261114-drobne | #41 | Okno zapytania na profilu trenera i porządki w dokumentacji wydań | - |
+| T9 | #46 | Wysyłka zgłoszenia z formularza przez Resend | - |
+| T10 | #47 | Polityka prywatności i informacja o danych przy formularzu | #46 |
+| T11 | #48 | Dokumentacja wydania M3 | #46, #47 |
 <!-- shctl:mapa:end -->

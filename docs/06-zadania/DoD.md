@@ -1,6 +1,6 @@
 ---
 etap: 06-zadania
-status: review
+status: done
 iteracja: 0
 akceptacja_wlasciciela: false
 ---
@@ -9,7 +9,7 @@ akceptacja_wlasciciela: false
 
 ## Dokumentacja
 
-- [x] `zadania.yaml` jest kompletny, a `index.md` zsynchronizowany z issue (plik kompletny: `shctl task create --dry-run` kod 0; issue i `index.md` zakłada orkiestrator przez `shctl task create` na `main` po merge'u)
+- [x] `zadania.yaml` jest kompletny, a `index.md` zsynchronizowany z issue (plik kompletny: `shctl task create --dry-run` kod 0; issue #46–#48 i `index.md` założone przez `shctl task create` na `main`)
 
 ## Funkcjonalność
 
@@ -27,4 +27,4 @@ akceptacja_wlasciciela: false
 
 ## Checkpoint
 
-- [ ] Review etapu dało PASS (zaznacza reviewer, nie autor)
+- [x] Review etapu dało PASS (zaznacza reviewer, nie autor) — PR #45, commit b2ff403
