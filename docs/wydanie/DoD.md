@@ -1,6 +1,6 @@
 ---
 etap: wydanie
-status: review
+status: done
 iteracja: 0
 akceptacja_wlasciciela: true
 ---
@@ -29,8 +29,8 @@ akceptacja_wlasciciela: true
 
 ## Checkpoint
 
-- [ ] Review etapu dało PASS (zaznacza reviewer, nie autor)
-- [ ] Właściciel odebrał projekt
+- [x] Review etapu dało PASS (zaznacza reviewer, nie autor) — PR #53, commit 4548b93
+- [x] Właściciel odebrał projekt („Odbieram”, 2026-11-15, decyzje.md)
 <!-- tylko-tryb:L -->
 - [ ] Checkpoint 2 zaliczony
 <!-- /tylko-tryb -->
