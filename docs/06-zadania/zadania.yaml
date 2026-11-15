@@ -1,0 +1,81 @@
+# Plan: rewizja c28d038 (docs/04-plan/plan.md, cykl M3-formularze-resend, PR #44), rozpisano 2026-11-15 (UTC)
+# Specyfikacja: docs/00-intake/specyfikacja.md (cykl M3, rewizja 592d399), W-12…W-14. ID kontynuują numerację projektu (M1: T1–T5, M2: T6–T8).
+zadania:
+  - id: T9
+    tytul: Wysyłka zgłoszenia z formularza przez Resend
+    cel: >-
+      Osoba zainteresowana szkoleniem wysyła zgłoszenie z formularza na stronie głównej, w oknie
+      „Zapisz się na szkolenie”, „Zapytaj o termin dla firmy” i z profilu trenera, a biuro dostaje
+      e-mail ze wszystkimi danymi (W-12, W-14). Karta: docs/00-intake/funkcje/W-12.md, kryteria
+      W-12/K1–K9 (K10 to test ręczny właściciela, scenariusz O-17). Decyzja i dowody:
+      docs/04-plan/adr/ADR-004-wysylka-zgloszen-resend-i-dane-osobowe.md (funkcja serwerowa
+      createServerFn w src/lib/zgloszenia/, Resend przez fetch z limitem 10 s, zmienne serwerowe bez
+      VITE_, pułapka, limit 5/10 min z adresu połączenia albo nagłówka platformy, nigdy z
+      x-forwarded-for, limit globalny 50/h, logi z białą listą, konfiguracja jako parametr handlera).
+      Rozważ też limit dobowy 80 wysyłek (backlog review PR #44) i zapisz decyzję w raporcie.
+      Design: istniejący formularz w src/components/strona-glowna/SekcjaKontakt.tsx i
+      src/components/szkolenia/OknoZapisu.tsx; stany wysyłki brak w designie, teksty w karcie W-12,
+      wygląd z tokenów src/styles.css (bez zmian pliku). Nie wysyłasz prawdziwych e-maili: testy z
+      atrapą fetch i page.route; .env.local z kluczem nie jest do odczytu. Poza zakresem: polityka
+      prywatności i odnośniki (T10), zapis w bazie, e-mail do zgłaszającego, CAPTCHA, zmiany w supabase/.
+    kryteria:
+      - "Podpięcie: formularz wysyła przez funkcję serwerową wyslijZgloszenie z /#kontakt, z okna na /szkolenia/$id (oba warianty) i z okna na /trenerzy/$id; napis „Formularz zostanie podłączony w kolejnym etapie.” usunięty; W-12/K8: e2e przechwytuje żądanie (page.route) i sprawdza zrodlo kontakt, zapis, firma, firma oraz „Dziękujemy!” w chromium i webkit"
+      - "W-12/K1, W-12/K7: test serwera z atrapą fetch: jedno wywołanie Resend z from, to z konfiguracji, reply_to = e-mail zgłaszającego, tematem R4 i treścią ze wszystkimi polami; HTML i emoji escapowane, temat bez nowej linii"
+      - "W-12/K2, W-12/K6: puste albo błędne pole daje komunikat przy polu z karty, fokus na pierwszym błędnym polu, brak wywołania funkcji; w trakcie wysyłki przycisk „Wysyłam…” zablokowany i jedno wywołanie (testy jednostkowe i e2e)"
+      - "W-12/K3, W-12/K4, W-12/K5: test serwera: błąd Resend, przekroczenie 10 s i brak konfiguracji dają stan błędu z szkolenia@iskt.pl i dane zostają w polach; wypełniona pułapka daje sukces bez wywołania; szóste zgłoszenie w 10 min (także ze zmienianym x-forwarded-for) i 51. wysyłka w godzinie dają „Za dużo prób”"
+      - "W-12/K9, W-14: test serwera sprawdza, że wywołania loggera dla sukcesu, błędu i odrzucenia nie zawierają imienia, e-maila, telefonu ani treści; brak zapisu do bazy (żadnego wywołania klienta Supabase w module)"
+      - "Zmienne RESEND_API_KEY, ZGLOSZENIA_ODBIORCA, ZGLOSZENIA_NADAWCA, ZGLOSZENIA_NAGLOWEK_IP w .env.example bez wartości i opisane w README (uruchomienie lokalne); pnpm lint, pnpm typecheck, pnpm test i pnpm build przechodzą; job e2e zielony; axe bez serious/critical przy stanach formularza"
+    pliki: [src/lib/zgloszenia/, src/components/strona-glowna/SekcjaKontakt.tsx, src/components/strona-glowna/tresci.ts, src/components/szkolenia/OknoZapisu.tsx, src/components/trenerzy/ProfilTrenera.tsx, src/test/, e2e/, .env.example, README.md, package.json, pnpm-lock.yaml]
+    testy: pnpm test src/test
+    zaleznosci: []
+    milestone: M3 Wysyłka zgłoszeń
+    typ: feature
+    kategoria: integracje
+    stack: [react]
+    db_migracja: false
+
+  - id: T10
+    tytul: Polityka prywatności i informacja o danych przy formularzu
+    cel: >-
+      Osoba wysyłająca zgłoszenie wie, kto i po co przetwarza jej dane: informacja pod zgodą,
+      odnośnik do nowej strony /polityka-prywatnosci i odnośnik w stopce (W-13). Karta:
+      docs/00-intake/funkcje/W-13.md, kryteria W-13/K1–K3 (K4 to akceptacja treści przez
+      właściciela, już udzielona 2026-11-15). Treść: docs/00-intake/zrodla/polityka-prywatnosci.md
+      (szkic zaakceptowany), w osobnym module treści; pola danych firmy (adres siedziby, KRS, NIP)
+      właściciel poda później: zostaw je jako widoczne pola „[do uzupełnienia]” w jednym miejscu
+      modułu treści i zapisz to w raporcie. Design: brak makiety, prosta strona tekstowa w systemie
+      marki (kontener strony, Eyebrow jak sekcje strony głównej). Poza zakresem: regulamin, baner
+      cookie, logika wysyłki (T9).
+    kryteria:
+      - "Podpięcie: trasa /polityka-prywatnosci w routingu; W-13/K1: e2e z / klika „Polityka prywatności” w stopce i widzi nagłówek „Polityka prywatności” z treścią szkicu, w chromium i webkit"
+      - "W-13/K2: w formularzu sekcji kontaktu i okna zapisu pod zgodą jest informacja o administratorze, a „polityką prywatności” to odnośnik do /polityka-prywatnosci; w oknie otwiera nową kartę (test jednostkowy)"
+      - "W-13/K3: /polityka-prywatnosci przy 360 px bez poziomego przewijania i bez naruszeń axe serious/critical (e2e/responsywnosc.spec.ts i e2e/dostepnosc.spec.ts)"
+      - "Treść polityki tylko w module treści (bez tekstu w komponencie), z datą aktualizacji; pnpm lint, pnpm typecheck, pnpm test bez błędów; job e2e zielony"
+    pliki: [src/routes/polityka-prywatnosci.tsx, src/lib/polityka/, src/components/brand/Footer.tsx, src/components/strona-glowna/SekcjaKontakt.tsx, src/components/strona-glowna/tresci.ts, src/test/, e2e/]
+    testy: pnpm test src/test
+    zaleznosci: [T9]
+    milestone: M3 Wysyłka zgłoszeń
+    typ: feature
+    kategoria: frontend
+    stack: [react]
+    db_migracja: false
+
+  - id: T11
+    tytul: Dokumentacja wydania M3
+    cel: >-
+      Dokumentacja wydania M3 opisuje wysyłkę zgłoszeń, politykę prywatności, zmienne, test ręczny
+      właściciela i znane ograniczenia (W-12…W-14, rezultat kamienia M3 w docs/04-plan/plan.md).
+      Wzór: docs/cykle/M2-bezpieczenstwo/wydanie/techniczna/M2.md i produktowa/M2.md. Poza zakresem:
+      zmiany kodu, wdrożenie (zlecenie 6).
+    kryteria:
+      - "docs/wydanie/techniczna/M3.md: architektura wysyłki (ADR-004), zmienne serwerowe bez wartości, limity i ich ograniczenie per instancja (do zlecenia 6, w tym ZGLOSZENIA_NAGLOWEK_IP obowiązkowa za proxy), brak migracji, wyniki CI na main po T9 i T10 (jakosc, e2e) (przegląd pliku)"
+      - "docs/wydanie/produktowa/M3.md: co się zmieniło dla właściciela prostym językiem, instrukcja testu na skrzynce (O-17) i lista „do uzupełnienia” (dane firmy w polityce) (przegląd pliku)"
+      - "Odesłanie do scripts/deploy-prod.sh i docs/proces.md jako przyszłej ścieżki wdrożenia; bash scripts/check-dod.sh przechodzi"
+    pliki: [docs/wydanie/techniczna/M3.md, docs/wydanie/produktowa/M3.md]
+    testy: pnpm test
+    zaleznosci: [T9, T10]
+    milestone: M3 Wysyłka zgłoszeń
+    typ: docs
+    kategoria: testy
+    stack: [react]
+    db_migracja: false
