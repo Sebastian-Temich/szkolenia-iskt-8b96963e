@@ -13,7 +13,7 @@ Cykl M3 wymienia tylko nowe rzeczy zewnętrzne (poprzednie: `docs/cykle/*/00-int
 
 ## Konta i dostępy
 
-- [ ] Konto Resend z domeną nadawcy iskt.pl, PO CO: wysyłka zgłoszeń (W-12), JAK: domena iskt.pl
+- [x] Konto Resend z domeną nadawcy iskt.pl, PO CO: wysyłka zgłoszeń (W-12), JAK: domena iskt.pl
   ma w panelu Resend (Domains) status „Verified” (właściciel potwierdził 2026-11-14); GDZIE: panel
   Resend; JAK sprawdzimy: właściciel potwierdza status „Verified” domeny iskt.pl w panelu (przed
   realizacją, bez aplikacji). Dostarczenie zgłoszenia z formularza sprawdza odbiór W-12 (W-12/K10).
@@ -33,7 +33,7 @@ Cykl M3 wymienia tylko nowe rzeczy zewnętrzne (poprzednie: `docs/cykle/*/00-int
   aplikacji i bez wypisywania wartości): klucz widnieje w panelu Resend (API Keys) z dostępem do
   wysyłki dla iskt.pl, a w terminalu właściciela `grep -c '^RESEND_API_KEY=' .env.local` w katalogu
   projektu zwraca 1. Dostarczenie zgłoszenia z formularza sprawdza odbiór W-12 (W-12/K10).
-- [ ] Adres odbiorcy i nadawcy, PO CO: e-mail do biura (W-12), JAK: odbiorca biuro@iskt.pl
+- [x] Adres odbiorcy i nadawcy, PO CO: e-mail do biura (W-12), JAK: odbiorca biuro@iskt.pl
   (decyzja 2026-11-14, później zmiana na szkolenia@iskt.pl samą zmienną), nadawca
   „Szkolenia ISKT” formularz@iskt.pl (odpowiedź 5); GDZIE: `.env.local` jako `ZGLOSZENIA_ODBIORCA`
   i `ZGLOSZENIA_NADAWCA` (nazwy w `.env.example`, ostateczne ustala plan); JAK sprawdzimy (przed
