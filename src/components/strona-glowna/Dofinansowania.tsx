@@ -24,7 +24,7 @@ export function Dofinansowania() {
               id="dofinansowania-naglowek"
               className="text-[clamp(2rem,3.4vw,2.6rem)] font-extrabold leading-[1.1] tracking-[var(--ls-tight)] text-[var(--text-on-brand)]"
             >
-              Zapłać nawet o 80% mniej
+              Zapłać nawet o 95% mniej
             </h2>
             <p className="text-lg text-[var(--text-on-brand)]/90">
               Większość naszych szkoleń kwalifikuje się do publicznych źródeł finansowania. Pomożemy

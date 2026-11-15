@@ -4,6 +4,10 @@
  * z materiałem właściciela, a nie z pamięcią autora ani z innym testem.
  *
  * Plik jest danymi, nie konfiguracją - nie edytuj go, żeby test przeszedl.
+ *
+ * Wyjątek: zmiany treści zlecone przez właściciela po makiecie (decyzje.md 2026-11-15,
+ * issue #54): dofinansowanie do 95% zamiast poprzedniej wartości i „Certyfikat/Egzamin”
+ * zamiast „Certyfikat ISKT” w potwierdzeniach hero.
  */
 export const MAKIETA = {
   categories: [
@@ -44,7 +48,7 @@ export const MAKIETA = {
       icon: "graduation-cap",
       desc: "Zdobądź certyfikat i realne umiejętności. Elastyczne terminy, dostęp online, mentoring.",
       bullets: [
-        "Dofinansowanie BUR do 80%",
+        "Dofinansowanie BUR do 95%",
         "Certyfikat ukończenia",
         "Nagrania i materiały",
         "Płatność w ratach",
@@ -116,13 +120,13 @@ export const MAKIETA = {
       tag: "KFS",
       icon: "banknote",
       t: "Krajowy Fundusz Szkoleniowy",
-      d: "Nawet do 100% kosztów dla mikroprzedsiębiorstw i 80% dla pozostałych firm.",
+      d: "Nawet do 100% kosztów dla mikroprzedsiębiorstw i 95% dla pozostałych firm.",
     },
     {
       tag: "BUR",
       icon: "wallet",
       t: "Baza Usług Rozwojowych",
-      d: "Dofinansowanie z funduszy unijnych — do 80% wartości usługi rozwojowej.",
+      d: "Dofinansowanie z funduszy unijnych — do 95% wartości usługi rozwojowej.",
     },
     {
       tag: "EFS",
@@ -141,9 +145,9 @@ export const MAKIETA = {
   },
   heroSub: {
     individual:
-      "Praktyczne szkolenia z AI, ESG, oprogramowania i języka angielskiego — prowadzone przez ekspertów. Ucz się w swoim tempie, z dofinansowaniem nawet do 80%.",
+      "Praktyczne szkolenia z AI, ESG, oprogramowania i języka angielskiego — prowadzone przez ekspertów. Ucz się w swoim tempie, z dofinansowaniem nawet do 95%.",
     company:
-      "Szkolenia szyte na miarę Twojej organizacji — AI, ESG, software i angielski biznesowy. Stacjonarnie lub online, z dofinansowaniem nawet do 80%.",
+      "Szkolenia szyte na miarę Twojej organizacji — AI, ESG, software i angielski biznesowy. Stacjonarnie lub online, z dofinansowaniem nawet do 95%.",
   },
   heroCta: {
     individual: "Zapisz się na szkolenie",
@@ -167,12 +171,12 @@ export const MAKIETA = {
   },
   featured: ["genai", "esg", "fullstack", "eng-b2"],
   heroChecks: [
-    "Dofinansowanie do 80%",
-    "Certyfikat ISKT",
+    "Dofinansowanie do 95%",
+    "Certyfikat/Egzamin",
     "Zajęcia z ekspertami",
-    "Dofinansowanie do 80%",
-    "Certyfikat ISKT",
-    "Dofinansowanie do 80%",
+    "Dofinansowanie do 95%",
+    "Certyfikat/Egzamin",
+    "Dofinansowanie do 95%",
   ],
   selectOptions: [
     "Wybierz…",

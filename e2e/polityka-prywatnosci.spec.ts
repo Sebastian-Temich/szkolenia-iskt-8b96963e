@@ -28,3 +28,18 @@ test("W-13/K1: odnośnik w stopce strony głównej otwiera politykę prywatnośc
   ).toBeVisible();
   await expect(page.getByText(/Prezesa Urzędu Ochrony Danych Osobowych/)).toBeVisible();
 });
+
+/** Issue #54: dane firmy podane przez właściciela zamiast pól „[do uzupełnienia]”. */
+test("#54: polityka pokazuje siedzibę, NIP, REGON i telefon, bez „[do uzupełnienia]” i KRS", async ({
+  page,
+}) => {
+  await otworz(page, "/polityka-prywatnosci");
+  const administrator = page.getByText(/Administratorem danych osobowych jest/);
+  await expect(administrator).toContainText("adres: Żory, Polska");
+  await expect(administrator).toContainText("NIP: 6511752112");
+  await expect(administrator).toContainText("REGON: 543251405");
+  await expect(administrator).toContainText("tel. +48 504 083 825");
+  const tresc = page.locator("article");
+  await expect(tresc).not.toContainText("[do uzupełnienia]");
+  await expect(tresc).not.toContainText("KRS");
+});

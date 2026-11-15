@@ -1,6 +1,6 @@
 export const UDZIAL_WLASNY = 0.2;
 export const TEKST_DOFINANSOWANIA = "z dofinansowaniem";
-export const NOTA_CENY = "za osobę · dofinansowanie do 80%";
+export const NOTA_CENY = "za osobę · dofinansowanie do 95%";
 
 /**
  * Formatuje kwotę PLN z separatorem tysięcy U+202F i spacją nierozdzielającą U+00A0

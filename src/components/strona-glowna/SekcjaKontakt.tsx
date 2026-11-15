@@ -12,6 +12,7 @@ import {
 import { wyslijZgloszenie } from "@/lib/zgloszenia/wyslij";
 import {
   ADRES_POLITYKI,
+  DANE_FIRMY,
   INFORMACJA_POD_FORMULARZEM,
   NOWA_KARTA,
   ZGODA,
@@ -57,10 +58,9 @@ export function SekcjaKontakt({ odbiorca, onZmiana }: Props) {
               <span className={IKONA}>
                 <Phone className="size-5" aria-hidden="true" />
               </span>
-              <span>
-                +48 32 000 00 00
-                <span className="block text-xs text-muted-foreground">Numer przykładowy</span>
-              </span>
+              <a href={DANE_FIRMY.telefonHref} className="hover:text-primary">
+                {DANE_FIRMY.telefon}
+              </a>
             </li>
             <li className="flex items-center gap-3">
               <span className={IKONA}>

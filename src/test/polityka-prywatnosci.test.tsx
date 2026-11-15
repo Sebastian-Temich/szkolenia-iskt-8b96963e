@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { SekcjaKontakt } from "@/components/strona-glowna/SekcjaKontakt";
 import { OknoZapisu } from "@/components/szkolenia/OknoZapisu";
-import { ADRES_POLITYKI, DANE_FIRMY, DO_UZUPELNIENIA, POLITYKA } from "@/lib/polityka/tresc";
+import { ADRES_POLITYKI, DANE_FIRMY, POLITYKA } from "@/lib/polityka/tresc";
 import { zamontujTrase } from "./harness-routera";
 import { atrapaMakiety } from "./atrapa-klienta";
 import userEvent from "@testing-library/user-event";
@@ -52,7 +52,7 @@ describe("Trasa /polityka-prywatnosci (W-13/K1)", () => {
     }
   });
 
-  it("treść strony to tekst szkicu właściciela (akapity poza danymi do uzupełnienia)", async () => {
+  it("treść strony to tekst szkicu właściciela (akapity poza danymi firmy)", async () => {
     const { container } = await zamontujTrase(ADRES_POLITYKI);
     await screen.findByRole("heading", { level: 1, name: "Polityka prywatności" });
     const tekstStrony = bezSpacji(container.querySelector("article")?.textContent ?? "");
@@ -61,10 +61,12 @@ describe("Trasa /polityka-prywatnosci (W-13/K1)", () => {
       .split(/\n\s*\n|\n(?=- )/)
       .map((f) => bezSpacji(f.replace(/^- /, "")))
       .filter((f) => f && !f.startsWith("#") && !f.startsWith("Ostatnia aktualizacja"))
-      // Pole „[pełny adres, KRS, NIP — …]” zastępują na stronie pola „[do uzupełnienia]”,
-      // więc z akapitu z nawiasem porównujemy części przed nim i po nim.
+      // Pole „[pełny adres, KRS, NIP — …]” zastępują na stronie dane firmy (#54), więc z akapitu
+      // z nawiasem porównujemy części przed nim i po nim. Po e-mailu administratora strona
+      // dopisuje telefon (#54), dlatego kropka kończąca fragment nie jest porównywana.
       .flatMap((f) => f.split(/ ?\[[^\]]*\]\.? ?/))
-      .filter((f) => f.length > 0);
+      .filter((f) => f.length > 0)
+      .map((f) => f.replace(/\.$/, ""));
     // 7 akapitów, 2 punkty listy w sekcji 3; akapit administratora dzieli się na 2 części.
     expect(fragmenty).toHaveLength(10);
     for (const fragment of fragmenty) {
@@ -72,15 +74,27 @@ describe("Trasa /polityka-prywatnosci (W-13/K1)", () => {
     }
   });
 
-  it("dane firmy do uzupełnienia są widoczne jako „[do uzupełnienia]” i pochodzą z jednego miejsca", async () => {
-    expect(DANE_FIRMY.adres).toBe(DO_UZUPELNIENIA);
-    expect(DANE_FIRMY.krs).toBe(DO_UZUPELNIENIA);
-    expect(DANE_FIRMY.nip).toBe(DO_UZUPELNIENIA);
+  it("dane firmy (siedziba, NIP, REGON, telefon) pochodzą z jednego miejsca i są widoczne na stronie (#54)", async () => {
+    expect(DANE_FIRMY).toMatchObject({
+      adres: "Żory, Polska",
+      nip: "6511752112",
+      regon: "543251405",
+      telefon: "+48 504 083 825",
+    });
+    expect(DANE_FIRMY).not.toHaveProperty("krs");
     await zamontujTrase(ADRES_POLITYKI);
     const sekcja = await screen.findByText(/Administratorem danych osobowych jest/);
     expect(sekcja.textContent).toBe(
-      "Administratorem danych osobowych jest ISKT Greenovation Sp. z o.o. z siedzibą w Żorach (adres: [do uzupełnienia], KRS: [do uzupełnienia], NIP: [do uzupełnienia]). Kontakt w sprawach danych osobowych: szkolenia@iskt.pl.",
+      "Administratorem danych osobowych jest ISKT Greenovation Sp. z o.o. z siedzibą w Żorach (adres: Żory, Polska, NIP: 6511752112, REGON: 543251405). Kontakt w sprawach danych osobowych: szkolenia@iskt.pl, tel. +48 504 083 825.",
     );
+  });
+
+  it("strona nie zawiera „[do uzupełnienia]” ani „KRS” (#54)", async () => {
+    const { container } = await zamontujTrase(ADRES_POLITYKI);
+    await screen.findByRole("heading", { level: 1, name: "Polityka prywatności" });
+    const tekstStrony = container.querySelector("article")?.textContent ?? "";
+    expect(tekstStrony).not.toContain("[do uzupełnienia]");
+    expect(tekstStrony).not.toContain("KRS");
   });
 
   it("treść polityki nie jest wpisana w komponent trasy", () => {
@@ -98,6 +112,15 @@ describe("Stopka (W-13/K1)", () => {
     );
     expect(stopka.queryByRole("link", { name: /Regulamin/ })).toBeNull();
     expect(stopka.getByText(/Regulamin/)).toBeInTheDocument();
+  });
+
+  it("telefon w stopce to odnośnik tel:+48504083825 bez dopisku „Numer przykładowy” (#54)", async () => {
+    const { container } = await zamontujTrase("/szkolenia");
+    const element = container.querySelector("footer") as HTMLElement;
+    const telefon = within(element).getByRole("link", { name: "+48 504 083 825" });
+    expect(telefon.getAttribute("href")).toBe("tel:+48504083825");
+    expect(element.textContent).not.toContain("Numer przykładowy");
+    expect(element.textContent).not.toContain("32 000 00 00");
   });
 
   it("klik w odnośnik stopki otwiera stronę polityki", async () => {

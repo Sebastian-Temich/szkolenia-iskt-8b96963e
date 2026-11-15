@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ADRES_POLITYKI, STOPKA } from "@/lib/polityka/tresc";
+import { ADRES_POLITYKI, DANE_FIRMY, STOPKA } from "@/lib/polityka/tresc";
 import { Logo } from "./Logo";
 
 /**
@@ -79,8 +79,9 @@ export function Footer() {
             <ul className="mt-[var(--space-5)] space-y-[var(--space-3)] text-sm text-muted-foreground">
               <li className="break-words">szkolenia@iskt.pl</li>
               <li>
-                +48 32 000 00 00
-                <span className="block text-xs">Numer przykładowy</span>
+                <a href={DANE_FIRMY.telefonHref} className="hover:text-primary">
+                  {DANE_FIRMY.telefon}
+                </a>
               </li>
               <li>Żory, woj. śląskie</li>
             </ul>

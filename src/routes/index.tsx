@@ -11,7 +11,7 @@ import type { Odbiorca } from "@/components/strona-glowna/tresci";
 
 const TITLE = "Szkolenia ISKT — rozwijaj kompetencje przyszłości";
 const DESCRIPTION =
-  "Praktyczne szkolenia z AI, ESG, oprogramowania i języka angielskiego — prowadzone przez ekspertów, z dofinansowaniem nawet do 80%.";
+  "Praktyczne szkolenia z AI, ESG, oprogramowania i języka angielskiego — prowadzone przez ekspertów, z dofinansowaniem nawet do 95%.";
 
 export const Route = createFileRoute("/")({
   head: () => ({

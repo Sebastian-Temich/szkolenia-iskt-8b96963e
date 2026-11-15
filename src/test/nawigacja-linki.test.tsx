@@ -41,6 +41,8 @@ const CELE_STOPKI: [string, string][] = [
   ["Szkolenia zamknięte", "/#kontakt"],
   ["Dofinansowania", "/#dofinansowania"],
   ["Audyt kompetencji", "/#kontakt"],
+  // Issue #54: telefon firmy w kolumnie „Kontakt” jest odnośnikiem tel:.
+  ["+48 504 083 825", "tel:+48504083825"],
 ];
 
 afterEach(cleanup);

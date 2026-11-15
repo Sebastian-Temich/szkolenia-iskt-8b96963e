@@ -23,8 +23,8 @@ import { IKONY_SZKOLEN } from "@/components/szkolenia/ikony";
 export type Odbiorca = "individual" | "company";
 
 export const POTWIERDZENIA_HERO = [
-  "Dofinansowanie do 80%",
-  "Certyfikat ISKT",
+  "Dofinansowanie do 95%",
+  "Certyfikat/Egzamin",
   "Zajęcia z ekspertami",
 ];
 
@@ -35,14 +35,14 @@ export function trescHero(odbiorca: Odbiorca) {
         eyebrow: "Szkolenia ISKT",
         naglowek: "Rozwijaj kompetencje przyszłości.",
         wsparcie:
-          "Praktyczne szkolenia z AI, ESG, oprogramowania i języka angielskiego — prowadzone przez ekspertów. Ucz się w swoim tempie, z dofinansowaniem nawet do 80%.",
+          "Praktyczne szkolenia z AI, ESG, oprogramowania i języka angielskiego — prowadzone przez ekspertów. Ucz się w swoim tempie, z dofinansowaniem nawet do 95%.",
         cta: "Zapisz się na szkolenie",
       }
     : {
         eyebrow: "Szkolenia dla firm",
         naglowek: "Podnieś kompetencje całego zespołu.",
         wsparcie:
-          "Szkolenia szyte na miarę Twojej organizacji — AI, ESG, software i angielski biznesowy. Stacjonarnie lub online, z dofinansowaniem nawet do 80%.",
+          "Szkolenia szyte na miarę Twojej organizacji — AI, ESG, software i angielski biznesowy. Stacjonarnie lub online, z dofinansowaniem nawet do 95%.",
         cta: "Zapytaj o szkolenie dla firmy",
       };
 }
@@ -193,7 +193,7 @@ export const SCIEZKI = {
     tytul: "Dla osób indywidualnych",
     opis: "Zdobądź certyfikat i realne umiejętności. Elastyczne terminy, dostęp online, mentoring.",
     punkty: [
-      "Dofinansowanie BUR do 80%",
+      "Dofinansowanie BUR do 95%",
       "Certyfikat ukończenia",
       "Nagrania i materiały",
       "Płatność w ratach",
@@ -213,13 +213,13 @@ export const ZRODLA_DOFINANSOWANIA = [
     skrot: "KFS",
     ikona: Banknote,
     tytul: "Krajowy Fundusz Szkoleniowy",
-    opis: "Nawet do 100% kosztów dla mikroprzedsiębiorstw i 80% dla pozostałych firm.",
+    opis: "Nawet do 100% kosztów dla mikroprzedsiębiorstw i 95% dla pozostałych firm.",
   },
   {
     skrot: "BUR",
     ikona: Wallet,
     tytul: "Baza Usług Rozwojowych",
-    opis: "Dofinansowanie z funduszy unijnych — do 80% wartości usługi rozwojowej.",
+    opis: "Dofinansowanie z funduszy unijnych — do 95% wartości usługi rozwojowej.",
   },
   {
     skrot: "EFS",

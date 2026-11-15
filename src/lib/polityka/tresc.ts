@@ -7,21 +7,22 @@
 /** Adres strony polityki (W-13, Z4). */
 export const ADRES_POLITYKI = "/polityka-prywatnosci" as const;
 
-/** Znacznik pola, które właściciel uzupełni później (issue #47). */
-export const DO_UZUPELNIENIA = "[do uzupełnienia]";
-
 /**
- * Dane rejestrowe firmy: JEDYNE miejsce do uzupełnienia przez właściciela. Do tego czasu są
- * widoczne na stronie jako „[do uzupełnienia]”.
+ * Dane rejestrowe i kontaktowe firmy: JEDYNE miejsce tych danych w serwisie (polityka, stopka,
+ * sekcja kontaktu). Wartości podane przez właściciela 2026-11-15 (issue #54).
  */
 export const DANE_FIRMY = {
   nazwa: "ISKT Greenovation Sp. z o.o.",
   /** Miejscownik nazwy miejscowości: „z siedzibą w …”. */
   siedziba: "Żorach",
-  adres: DO_UZUPELNIENIA,
-  krs: DO_UZUPELNIENIA,
-  nip: DO_UZUPELNIENIA,
+  adres: "Żory, Polska",
+  nip: "6511752112",
+  regon: "543251405",
   email: "szkolenia@iskt.pl",
+  /** Telefon w zapisie do wyświetlenia. */
+  telefon: "+48 504 083 825",
+  /** Ten sam telefon jako adres odnośnika. */
+  telefonHref: "tel:+48504083825",
 } as const;
 
 export type SekcjaPolityki = {
@@ -39,7 +40,7 @@ export type SekcjaPolityki = {
 export const POLITYKA = {
   tytul: "Polityka prywatności",
   eyebrow: "Ochrona danych",
-  /** Data aktualizacji: dzień akceptacji szkicu przez właściciela i wdrożenia strony. */
+  /** Data aktualizacji: dzień wdrożenia danych firmy (issue #54). */
   aktualizacjaIso: "2026-11-15",
   aktualizacjaTekst: "15 listopada 2026",
   sekcje: [
@@ -48,8 +49,8 @@ export const POLITYKA = {
       tytul: "1. Administrator danych",
       akapity: [
         `Administratorem danych osobowych jest ${DANE_FIRMY.nazwa} z siedzibą w ${DANE_FIRMY.siedziba}` +
-          ` (adres: ${DANE_FIRMY.adres}, KRS: ${DANE_FIRMY.krs}, NIP: ${DANE_FIRMY.nip}).` +
-          ` Kontakt w sprawach danych osobowych: ${DANE_FIRMY.email}.`,
+          ` (adres: ${DANE_FIRMY.adres}, NIP: ${DANE_FIRMY.nip}, REGON: ${DANE_FIRMY.regon}).` +
+          ` Kontakt w sprawach danych osobowych: ${DANE_FIRMY.email}, tel. ${DANE_FIRMY.telefon}.`,
       ],
     },
     {
