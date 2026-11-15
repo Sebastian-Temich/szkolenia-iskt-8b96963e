@@ -17,37 +17,49 @@ import {
 import { listSzkolenia, type Szkolenie } from "@/lib/szkolenia/adapter";
 
 type Props = {
-  szkolenie: Szkolenie;
+  /**
+   * Szkolenie wybrane na starcie. Bez niego (profil trenera z żadnym albo kilkoma szkoleniami,
+   * #41) pole „Szkolenie” zaczyna od pustej pozycji „Wybierz…”.
+   */
+  szkolenie?: Szkolenie | undefined;
   /** Wariant, w którym okno się otwiera; gość może go przełączyć w formularzu. */
   wariant: Odbiorca;
+  /** Opis pod tytułem okna; domyślnie tytuł szkolenia. */
+  opis?: string;
+  /** Wstępna treść pola „Wiadomość”, do edycji. */
+  wiadomoscPoczatkowa?: string | undefined;
   /** Przycisk otwierający okno; po zamknięciu fokus wraca na niego. */
   children: ReactNode;
 };
 
+/** Wartość pustej pozycji pola „Szkolenie”. */
+const BEZ_WYBORU = "";
+
 /**
- * Okno zapisu na stronie szkolenia (F-04, issue #18): formularz kontaktu z polem „Szkolenie”
- * ustawionym na oglądane szkolenie. Adres strony się nie zmienia, a wysyłka jest zablokowana
- * jak w formularzu strony głównej (F-02).
+ * Okno zapisu (F-04, issue #18) na stronie szkolenia i okno zapytania na profilu trenera
+ * (F-05, issue #41): formularz kontaktu z polem „Szkolenie”. Adres strony się nie zmienia, a
+ * wysyłka jest zablokowana jak w formularzu strony głównej (F-02).
  */
-export function OknoZapisu({ szkolenie, wariant, children }: Props) {
+export function OknoZapisu({ szkolenie, wariant, opis, wiadomoscPoczatkowa, children }: Props) {
+  const domyslne = szkolenie?.id ?? BEZ_WYBORU;
   const [otwarte, setOtwarte] = useState(false);
   const [odbiorca, setOdbiorca] = useState<Odbiorca>(wariant);
-  const [wybrane, setWybrane] = useState(szkolenie.id);
-  // Listę pobieramy dopiero po otwarciu okna, żeby strona szkolenia nie płaciła za nią z góry.
+  const [wybrane, setWybrane] = useState(domyslne);
+  // Listę pobieramy dopiero po otwarciu okna, żeby strona nie płaciła za nią z góry.
   const lista = useQuery({
     queryKey: ["szkolenia", "okno-zapisu"],
     queryFn: () => listSzkolenia(),
     enabled: otwarte,
   });
   // Przy błędzie (także odświeżenia po wcześniejszym sukcesie) React Query trzyma stare dane;
-  // wtedy pole ma wyłącznie bieżące szkolenie, a wybór wraca do niego.
+  // wtedy pole ma wyłącznie pozycję startową, a wybór wraca do niej.
   const opcje = opcjeSzkolen(szkolenie, lista.isError ? undefined : lista.data);
-  const wartosc = opcje.some((s) => s.id === wybrane) ? wybrane : szkolenie.id;
+  const wartosc = opcje.some((s) => s.id === wybrane) ? wybrane : domyslne;
 
   const zmienOtwarcie = (stan: boolean) => {
     if (stan) {
       setOdbiorca(wariant);
-      setWybrane(szkolenie.id);
+      setWybrane(domyslne);
     }
     setOtwarte(stan);
   };
@@ -60,7 +72,7 @@ export function OknoZapisu({ szkolenie, wariant, children }: Props) {
           <DialogTitle className="text-[clamp(1.5rem,3vw,1.9rem)] font-extrabold leading-[1.15] tracking-[var(--ls-tight)]">
             {TYTULY_OKNA_ZAPISU[odbiorca]}
           </DialogTitle>
-          <DialogDescription>{szkolenie.title}</DialogDescription>
+          <DialogDescription>{opis ?? szkolenie?.title}</DialogDescription>
         </DialogHeader>
         <FormularzKontaktu
           prefiks={`zapis-${wariant}`}
@@ -68,6 +80,7 @@ export function OknoZapisu({ szkolenie, wariant, children }: Props) {
           onZmiana={setOdbiorca}
           obszarPoczatkowy={odbiorca === "company" ? OBSZAR_SZKOLENIE_ZAMKNIETE : ""}
           poleSzkolenia={{ opcje, wartosc, onZmiana: setWybrane }}
+          wiadomoscPoczatkowa={wiadomoscPoczatkowa}
         />
       </DialogContent>
     </Dialog>
@@ -75,11 +88,13 @@ export function OknoZapisu({ szkolenie, wariant, children }: Props) {
 }
 
 /**
- * Opublikowane szkolenia do wyboru. Bez listy (ładowanie albo błąd) zostaje samo bieżące
- * szkolenie, żeby pole nigdy nie było puste ani nie traciło wyboru.
+ * Opublikowane szkolenia do wyboru. Bez listy (ładowanie albo błąd) zostaje sama pozycja
+ * startowa (bieżące szkolenie albo „Wybierz…”), żeby pole nigdy nie było puste ani nie traciło
+ * wyboru.
  */
-function opcjeSzkolen(biezace: Szkolenie, lista: Szkolenie[] | undefined) {
+function opcjeSzkolen(biezace: Szkolenie | undefined, lista: Szkolenie[] | undefined) {
   const opcje = (lista ?? []).map((s) => ({ id: s.id, title: s.title }));
+  if (!biezace) return [{ id: BEZ_WYBORU, title: "Wybierz…" }, ...opcje];
   return opcje.some((s) => s.id === biezace.id)
     ? opcje
     : [{ id: biezace.id, title: biezace.title }, ...opcje];

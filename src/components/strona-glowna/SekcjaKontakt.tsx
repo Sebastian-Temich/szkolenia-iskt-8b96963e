@@ -70,6 +70,8 @@ type PropsFormularza = Props & {
   obszarPoczatkowy?: string;
   /** Pole „Szkolenie” przed listą obszarów; sekcja strony głównej go nie ma. */
   poleSzkolenia?: PoleSzkolenia;
+  /** Wstępna treść pola „Wiadomość” do edycji (okno zapytania na profilu trenera, #41). */
+  wiadomoscPoczatkowa?: string | undefined;
 };
 
 export type PoleSzkolenia = {
@@ -88,6 +90,7 @@ export function FormularzKontaktu({
   prefiks = "kontakt",
   obszarPoczatkowy = "",
   poleSzkolenia,
+  wiadomoscPoczatkowa,
 }: PropsFormularza) {
   const id = (pole: string) => `${prefiks}-${pole}`;
   return (
@@ -186,6 +189,7 @@ export function FormularzKontaktu({
           id={id("wiadomosc")}
           name="wiadomosc"
           rows={3}
+          defaultValue={wiadomoscPoczatkowa}
           placeholder="Napisz, czego potrzebujesz…"
           className={`resize-y py-3 ${KLASA_POLA}`}
         />

@@ -212,6 +212,28 @@ describe("Okno zapisu na stronie szkolenia (#18)", () => {
     expect(pole).toHaveValue("genai");
   });
 
+  it("po błędzie i ponownym wczytaniu listy pole wraca do wyboru gościa (#41, review PR #19)", async () => {
+    const { user, router, okno } = await otworzOkno(/Zapisz się na szkolenie/);
+    const pole = await poleSzkolenia(okno);
+    await user.selectOptions(pole, "python");
+
+    const atrapa = biezacaAtrapa();
+    const odswiez = () =>
+      act(async () => {
+        await router.options.context.queryClient.refetchQueries({
+          queryKey: ["szkolenia", "okno-zapisu"],
+        });
+      });
+    atrapa.sterowanie.tryby["szkolenia"] = "blad";
+    await odswiez();
+    await waitFor(() => expect(pole).toHaveValue("genai"));
+
+    atrapa.sterowanie.tryby["szkolenia"] = "ok";
+    await odswiez();
+    await waitFor(() => expect(pole.querySelectorAll("option").length).toBeGreaterThan(1));
+    expect(pole).toHaveValue("python");
+  });
+
   it("dostępność okna: nazwa z tytułu, etykiety pól, opis wysyłki, pełna szerokość na telefonie", async () => {
     const { okno } = await otworzOkno(/Zapisz się na szkolenie/);
     expect(okno).toHaveAccessibleName("Zapisz się na szkolenie");

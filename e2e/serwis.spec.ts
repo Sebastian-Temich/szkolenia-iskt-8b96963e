@@ -168,3 +168,46 @@ test.describe("Trenerzy (O-5)", () => {
     );
   });
 });
+
+test.describe("Okno zapytania na profilu trenera (#41)", () => {
+  test("trener z jednym szkoleniem: okno Firma z wybranym szkoleniem i wiadomością", async ({
+    page,
+  }) => {
+    await otworz(page, "/trenerzy/zielinska");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("dr Magdalena Zielińska");
+    await page.getByRole("button", { name: /Zapytaj o termin/ }).click();
+    const okno = page.getByRole("dialog", { name: "Zapytaj o termin dla firmy" });
+    await expect(okno).toBeVisible();
+    await expect(okno.getByRole("button", { name: "Firma" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    const pole = okno.getByLabel("Szkolenie", { exact: true });
+    await expect(pole).toHaveValue("grants");
+    await expect(okno.getByLabel("Wiadomość")).toHaveValue(
+      "Pytanie o szkolenie z trenerem: dr Magdalena Zielińska",
+    );
+    await expect(okno.getByRole("button", { name: /Wyślij zgłoszenie/ })).toBeDisabled();
+    await expect(page).toHaveURL(/\/trenerzy\/zielinska$/);
+  });
+
+  test("trener z kilkoma szkoleniami: pole Szkolenie puste, Esc oddaje fokus przyciskowi", async ({
+    page,
+  }) => {
+    await otworz(page, "/trenerzy/nowak");
+    const przycisk = page.getByRole("button", { name: /Zapytaj o termin/ });
+    await przycisk.click();
+    const okno = page.getByRole("dialog", { name: "Zapytaj o termin dla firmy" });
+    await expect(okno).toBeVisible();
+    const pole = okno.getByLabel("Szkolenie", { exact: true });
+    await expect(pole.locator("option")).toHaveCount(10);
+    await expect(pole).toHaveValue("");
+    await expect(okno.getByLabel("Wiadomość")).toHaveValue(
+      "Pytanie o szkolenie z trenerem: dr Anna Nowak",
+    );
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    await expect(przycisk).toBeFocused();
+    await expect(page).toHaveURL(/\/trenerzy\/nowak$/);
+  });
+});

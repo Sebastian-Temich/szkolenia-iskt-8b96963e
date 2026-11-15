@@ -65,6 +65,16 @@ const STRONY: Strona[] = [
     },
   },
   {
+    nazwa: "/trenerzy/nowak z otwartym oknem zapytania (#41)",
+    przygotuj: async (page) => {
+      await otworz(page, "/trenerzy/nowak");
+      await page.getByRole("button", { name: /Zapytaj o termin/ }).click();
+      const okno = page.getByRole("dialog", { name: "Zapytaj o termin dla firmy" });
+      await expect(okno).toBeVisible();
+      await expect(okno.getByLabel("Szkolenie", { exact: true }).locator("option")).toHaveCount(10);
+    },
+  },
+  {
     nazwa: "/panel (logowanie)",
     przygotuj: async (page) => {
       await otworz(page, "/panel");

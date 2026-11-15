@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Award, Check } from "lucide-react";
+import { OknoZapisu } from "@/components/szkolenia/OknoZapisu";
 import { Button } from "@/components/ui/button";
 import type { Szkolenie } from "@/lib/szkolenia/typy";
 import type { Trener } from "@/lib/trenerzy/typy";
@@ -166,14 +167,21 @@ export function ProfilTrenera({ trener, szkolenia }: { trener: Trener; szkolenia
             <p className="mt-2.5 text-sm leading-[var(--lh-relaxed)] text-white/85">
               Zapytaj o dostępne terminy szkoleń otwartych i zamkniętych.
             </p>
-            <Button
-              asChild
-              className="mt-4 h-[46px] w-full whitespace-normal rounded-pill bg-white px-3 text-[15px] font-bold text-[var(--green-800)] hover:bg-[var(--green-50)]"
+            {/* F-05, #41: to samo okno co „Zapytaj o termin dla firmy” na stronie szkolenia.
+                Jedyne szkolenie trenera jest wybrane; przy żadnym albo kilku pole jest puste. */}
+            <OknoZapisu
+              wariant="company"
+              szkolenie={szkolenia.length === 1 ? szkolenia[0] : undefined}
+              opis={trener.name}
+              wiadomoscPoczatkowa={`Pytanie o szkolenie z trenerem: ${trener.name}`}
             >
-              <Link to="/" hash="kontakt">
+              <Button
+                type="button"
+                className="mt-4 h-[46px] w-full whitespace-normal rounded-pill bg-white px-3 text-[15px] font-bold text-[var(--green-800)] hover:bg-[var(--green-50)]"
+              >
                 Zapytaj o termin <ArrowRight aria-hidden="true" />
-              </Link>
-            </Button>
+              </Button>
+            </OknoZapisu>
           </aside>
         </div>
       </section>
