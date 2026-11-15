@@ -17,3 +17,4 @@ Plik wspólny. Aktualizuje go wyłącznie orkiestrator przez `shctl task close`.
 - #33: Aktualizacja paczek z podatnościami i usunięcie nieużywanych komponentów szablonu (PR #34)
 - #35: Poprawka dwóch błędów dostępności z testów E2E (logo w nagłówku, kontrast kroków) (PR #36)
 - #37: Przegląd i poprawki responsywności (telefon i tablet) z testami E2E (PR #38)
+- #39: Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów (PR #40)

@@ -42,3 +42,5 @@ Plik wspólny, aktualizuje orkiestrator. Zgłoszenia ⚪ z review i „Drobne uw
 | 2026-11-14 | T-37 | Na 1024 px nagłówek pokazuje tylko menu (pełna nawigacja od `xl`), zostawiając pusty środek paska; zmiana progu to decyzja designu. | otwarta |
 | 2026-11-14 | T-37 | Przyciski akcji w panelu („Wyloguj”, „Edytuj”, „Publikuj”, „Usuń”) mają 32 px wysokości. | otwarta |
 | 2026-11-14 | T-37 | `vitest.config.ts` używa `__dirname` (ostrzeżenie Vite o `configLoader: 'native'`). | otwarta |
+| 2026-11-15 | T-39 | `useIsMobile` czyta `window.innerWidth` zamiast `mql.matches`; działa, ale test jednostkowy musi ustawiać `innerWidth`, nie atrapę `matchMedia`. | otwarta |
+| 2026-11-15 | review PR #40 | Etykiety pól kart powielają teksty nagłówków tabeli bezpośrednio w komponentach; analogicznie w ListaTrenerow.tsx. Przenieś wspólne etykiety do pliku treści, aby zmiana nazwy kolumny zachowywała spójność obu widoków (punkt 9 listy frontend). (`src/components/panel/ListaSzkolen.tsx:133`) | otwarta |

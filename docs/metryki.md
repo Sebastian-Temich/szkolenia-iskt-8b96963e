@@ -17,6 +17,7 @@ Plik wspólny, aktualizuje orkiestrator. Pomiar poglądowy, służy też do por�
 | #33 Aktualizacja paczek z podatnościami i usunięcie nieużywanych komponentów szablonu | S | 5h 12min | 1 | 1 | 0 | PR #34 |
 | #35 Poprawka dwóch błędów dostępności z testów E2E (logo w nagłówku, kontrast kroków) | S | 3h 24min | 1 | 1 | 0 | PR #36 |
 | #37 Przegląd i poprawki responsywności (telefon i tablet) z testami E2E | S | 1h 11min | 1 | 2 | 0 | PR #38 |
+| #39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów | S | 12h 9min | 1 | 1 | 0 | PR #40 |
 
 Eskalacje nie liczą pytań workera (`shctl escalate --typ pytanie`): są w „Uwagach” jako „pytania: N”.
 
@@ -35,3 +36,4 @@ według przyczyny: wymaganie, kod, test, design.
 | review PR #28 (#25 Migracja uprawnień funkcji ról i jednej zasady odczytu na rolę) | 0 | 0 | 1 | 0 | 0 |
 | QA M2 | 0 | 0 | 0 | 0 | 0 |
 | review PR #38 (#37 Przegląd i poprawki responsywności (telefon i tablet) z testami E2E) | 0 | 1 | 0 | 0 | 0 |
+| review PR #40 (#39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów) | 0 | 1 | 0 | 0 | 0 |
