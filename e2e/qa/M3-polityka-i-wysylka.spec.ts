@@ -34,11 +34,16 @@ test("M3: polityka z okna zapisu w nowej karcie nie gubi danych, wysyłka kończ
 
   const [karta] = await Promise.all([
     context.waitForEvent("page"),
-    okno.getByRole("link", { name: /polityk/i }).first().click(),
+    okno
+      .getByRole("link", { name: /polityk/i })
+      .first()
+      .click(),
   ]);
   await karta.waitForLoadState();
   await expect(karta).toHaveURL(/\/polityka-prywatnosci$/);
-  await expect(karta.getByRole("heading", { name: "Polityka prywatności", level: 1 })).toBeVisible();
+  await expect(
+    karta.getByRole("heading", { name: "Polityka prywatności", level: 1 }),
+  ).toBeVisible();
   await karta.close();
 
   await expect(okno).toBeVisible();
