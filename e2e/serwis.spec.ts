@@ -32,8 +32,8 @@ test.describe("Dane firmy i dofinansowanie (#54)", () => {
     page,
   }) => {
     await otworz(page, "/");
-    await expect(page.getByText("Dofinansowanie do 95%").first()).toBeVisible();
-    await expect(page.getByText("Certyfikat/Egzamin").first()).toBeVisible();
+    await expect(page.getByText("Dofinansowanie do 95%", { exact: true }).first()).toBeVisible();
+    await expect(page.getByText("Certyfikat/Egzamin", { exact: true }).first()).toBeVisible();
     await expect(
       page.getByRole("heading", { level: 2, name: "Zapłać nawet o 95% mniej" }),
     ).toBeVisible();
@@ -52,8 +52,8 @@ test.describe("Dane firmy i dofinansowanie (#54)", () => {
     await expect(page.getByRole("status")).toHaveText("9 szkoleń");
     await expect(page.locator("body")).not.toContainText(OSIEMDZIESIAT);
     await otworz(page, "/szkolenia/genai");
-    await expect(page.getByText("Dofinansowanie do 95%")).toBeVisible();
-    await expect(page.getByText("za osobę · dofinansowanie do 95%")).toBeVisible();
+    await expect(page.getByText("Dofinansowanie do 95%", { exact: true })).toBeVisible();
+    await expect(page.getByText("za osobę · dofinansowanie do 95%", { exact: true })).toBeVisible();
     await expect(page.locator("body")).not.toContainText(OSIEMDZIESIAT);
   });
 });
