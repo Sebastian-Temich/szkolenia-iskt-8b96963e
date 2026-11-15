@@ -25,7 +25,7 @@ Cykl M3 wymienia tylko nowe rzeczy zewnętrzne (poprzednie: `docs/cykle/*/00-int
 
 ## Klucze testowe i zmienne
 
-- [ ] Klucz API Resend do pracy lokalnej, PO CO: wysyłka zgłoszeń z serwera aplikacji (W-12), JAK:
+- [x] Klucz API Resend do pracy lokalnej, PO CO: wysyłka zgłoszeń z serwera aplikacji (W-12), JAK:
   właściciel sam wpisuje klucz (Resend → API Keys, uprawnienie „Sending access” dla domeny iskt.pl)
   jako `RESEND_API_KEY` w `.env.local`; nazwa bez przedrostka `VITE_`, więc klucz nie trafia do
   przeglądarki; wartość nigdy w repo, docs, issue ani logach (decyzje.md 2026-11-14); GDZIE:
