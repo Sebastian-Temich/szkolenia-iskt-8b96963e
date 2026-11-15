@@ -77,10 +77,11 @@ odbiór.
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
 
-## Wszystkie zadania zrobione (16)
+## Wszystkie zadania zrobione (17)
 
 | Zadanie | Cykl | Kamień | PR | Zamknięte |
 |---|---|---|---|---|
+| #47 Polityka prywatności i informacja o danych przy formularzu | M3-formularze-resend | M3 Wysyłka zgłoszeń | #50 | 2026-11-15 |
 | #46 Wysyłka zgłoszenia z formularza przez Resend | M3-formularze-resend | M3 Wysyłka zgłoszeń | #49 | 2026-11-15 |
 | #41 Okno zapytania na profilu trenera i porządki w dokumentacji wydań | M3-formularze-resend · S | - | #42 | 2026-11-15 |
 | #39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów | M2-bezpieczenstwo · S | - | #40 | 2026-11-15 |

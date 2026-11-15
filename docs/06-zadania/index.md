@@ -21,7 +21,7 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 | #39 | Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów | done | 1 | - | #40 merged | pass |
 | #41 | Okno zapytania na profilu trenera i porządki w dokumentacji wydań | done | 1 | - | #42 merged | pass |
 | #46 | Wysyłka zgłoszenia z formularza przez Resend | done | 2 | M3 Wysyłka zgłoszeń | #49 merged | pass |
-| #47 | Polityka prywatności i informacja o danych przy formularzu | todo | 0 | M3 Wysyłka zgłoszeń | - | - |
+| #47 | Polityka prywatności i informacja o danych przy formularzu | done | 1 | M3 Wysyłka zgłoszeń | #50 merged | pass |
 | #48 | Dokumentacja wydania M3 | todo | 0 | M3 Wysyłka zgłoszeń | - | - |
 <!-- sync-status:end -->
 

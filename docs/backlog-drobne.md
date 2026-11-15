@@ -54,3 +54,5 @@ Plik wspólny, aktualizuje orkiestrator. Zgłoszenia ⚪ z review i „Drobne uw
 | 2026-11-15 | review PR #45 | T9 (#46): limit dobowy 80 wysyłek jest opcją bez kryterium; decyzję worker zapisuje w raporcie, a trwała ochrona planu Resend wchodzi do zlecenia 6 (trwały licznik). | otwarta |
 | 2026-11-15 | T-46 | `vitest.config.ts` używa `__dirname`; Vite ostrzega o przyszłym `configLoader: 'native'` (zamiana na `import.meta.dirname`). Poza zakresem. | otwarta |
 | 2026-11-15 | T-46 | Treść „Dziękujemy!” i limit 2 dni roboczych w karcie mają status Z2 „do potwierdzenia”; wdrożone zgodnie z proponowaną odpowiedzią karty. | otwarta |
+| 2026-11-15 | T-47 | `pnpm build` w sandboxie workera zawsze pada na `.env.local`, więc `routeTree.gen.ts` przy nowej trasie trzeba edytować ręcznie (już opisane w T-46, „Propozycje dla systemu”). | otwarta |
+| 2026-11-15 | review PR #50 | Etykieta „Ostatnia aktualizacja:” wpisana w komponent; przenieść do modułu treści polityki (lista frontend pkt 9). (`src/routes/polityka-prywatnosci.tsx:28`) | otwarta |

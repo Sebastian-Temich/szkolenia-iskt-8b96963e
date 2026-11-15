@@ -20,3 +20,4 @@ Plik wspólny. Aktualizuje go wyłącznie orkiestrator przez `shctl task close`.
 - #39: Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów (PR #40)
 - #41: Okno zapytania na profilu trenera i porządki w dokumentacji wydań (PR #42)
 - #46: Wysyłka zgłoszenia z formularza przez Resend (PR #49)
+- #47: Polityka prywatności i informacja o danych przy formularzu (PR #50)

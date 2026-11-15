@@ -4,11 +4,11 @@ tryb: M
 cykl: "M3-formularze-resend"
 etap_opis: "Realizacja, kamień M3 Wysyłka zgłoszeń"
 postep_etapy: "4/6"
-postep_zadania: "2/4"
+postep_zadania: "3/4"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Start #47"
-ostatnia_synchronizacja: 2026-11-15T18:44:26Z
+nastepny_krok: "Start #48"
+ostatnia_synchronizacja: 2026-11-15T19:20:11Z
 ---
 
 # szkolenia-iskt
@@ -19,10 +19,10 @@ ostatnia_synchronizacja: 2026-11-15T18:44:26Z
 
 - **Etap:** Realizacja, kamień M3 Wysyłka zgłoszeń
 - **Cykl:** M3-formularze-resend (od 2026-11-14); wcześniejsze: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md)
-- **Postęp:** Etapy 4/6 · Zadania 2/4 w bieżącym zleceniu (łącznie 18)
+- **Postęp:** Etapy 4/6 · Zadania 3/4 w bieżącym zleceniu (łącznie 18)
 - **Co się dzieje:** nic w toku
-- **Następny krok:** Start #47
-- **Szacowany czas:** ok. 3 h 3 min pracy agentów (2 zadań, średnio 3 h 3 min na zadanie, 3 równolegle; orientacyjnie)
+- **Następny krok:** Start #48
+- **Szacowany czas:** ok. 2 h 54 min pracy agentów (1 zadań, średnio 2 h 54 min na zadanie, 3 równolegle; orientacyjnie)
 
 ## Czeka na Ciebie
 
@@ -34,18 +34,13 @@ Nic. Agenci pracują sami.
 
 | Zadanie | Kamień | Zależności |
 |---|---|---|
-| #47 Polityka prywatności i informacja o danych przy formularzu | M3 Wysyłka zgłoszeń | #46 ✓ |
+| #48 Dokumentacja wydania M3 | M3 Wysyłka zgłoszeń | #46 ✓, #47 ✓ |
 
-### Zaplanowane (1)
-
-| Zadanie | Kamień | Czeka na |
-|---|---|---|
-| #48 Dokumentacja wydania M3 | M3 Wysyłka zgłoszeń | #47 |
-
-### Zrobione w bieżącym zleceniu (2)
+### Zrobione w bieżącym zleceniu (3)
 
 | Zadanie | Kamień | PR |
 |---|---|---|
+| #47 Polityka prywatności i informacja o danych przy formularzu | M3 Wysyłka zgłoszeń | #50 |
 | #46 Wysyłka zgłoszenia z formularza przez Resend | M3 Wysyłka zgłoszeń | #49 |
 | #41 Okno zapytania na profilu trenera i porządki w dokumentacji wydań | - | #42 |
 
