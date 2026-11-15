@@ -20,7 +20,7 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 | #37 | Przegląd i poprawki responsywności (telefon i tablet) z testami E2E | done | 2 | - | #38 merged | pass |
 | #39 | Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów | done | 1 | - | #40 merged | pass |
 | #41 | Okno zapytania na profilu trenera i porządki w dokumentacji wydań | done | 1 | - | #42 merged | pass |
-| #46 | Wysyłka zgłoszenia z formularza przez Resend | escalated | 2 | M3 Wysyłka zgłoszeń | #49 open | pending |
+| #46 | Wysyłka zgłoszenia z formularza przez Resend | review | 2 | M3 Wysyłka zgłoszeń | #49 open | fail |
 | #47 | Polityka prywatności i informacja o danych przy formularzu | todo | 0 | M3 Wysyłka zgłoszeń | - | - |
 | #48 | Dokumentacja wydania M3 | todo | 0 | M3 Wysyłka zgłoszeń | - | - |
 <!-- sync-status:end -->
