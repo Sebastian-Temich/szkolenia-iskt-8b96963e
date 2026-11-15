@@ -229,17 +229,38 @@ export const ZRODLA_DOFINANSOWANIA = [
   },
 ];
 
-/** Obszar formularza dla zapytań firm o szkolenie zamknięte (też domyślny w oknie zapisu #18). */
-export const OBSZAR_SZKOLENIE_ZAMKNIETE = "Szkolenie zamknięte dla zespołu";
+/**
+ * Obszary formularza żyją w schemacie zgłoszenia (#46), bo ten sam schemat sprawdza je na
+ * serwerze; tu tylko je udostępniamy widokom.
+ */
+import { OBSZAR_SZKOLENIE_ZAMKNIETE, OPCJE_OBSZARU } from "@/lib/zgloszenia/schemat";
+export { OBSZAR_SZKOLENIE_ZAMKNIETE, OPCJE_OBSZARU };
 
-export const OPCJE_OBSZARU = [
-  "AI i narzędzia generatywne",
-  "ESG i zrównoważony rozwój",
-  "Język angielski",
-  "Rozwój oprogramowania",
-  "Projekty B+R",
-  OBSZAR_SZKOLENIE_ZAMKNIETE,
-];
+/**
+ * Obszar formularza dopasowany do kategorii szkolenia (W-12, stan „Pusty”: „w oknie wybrane
+ * szkolenie i dopasowany obszar”; review PR #49). Klucz po kategorii, więc literówka wywala typy.
+ */
+export const OBSZAR_KATEGORII: Record<KategoriaSzkolenia, (typeof OPCJE_OBSZARU)[number]> = {
+  AI: "AI i narzędzia generatywne",
+  ESG: "ESG i zrównoważony rozwój",
+  Angielski: "Język angielski",
+  Software: "Rozwój oprogramowania",
+  "B+R": "Projekty B+R",
+};
+
+/** Teksty stanów wysyłki z karty W-12 („Stany ekranu”). */
+export const TEKSTY_WYSYLKI = {
+  wysylam: "Wysyłam…",
+  sukcesNaglowek: "Dziękujemy!",
+  sukcesTekst: "Zgłoszenie dotarło do nas. Odezwiemy się w ciągu 2 dni roboczych.",
+  bladDanych: "Uzupełnij zaznaczone pola.",
+  bladSerwera:
+    "Nie udało się wysłać zgłoszenia. Spróbuj ponownie za chwilę albo napisz do nas: szkolenia@iskt.pl.",
+  limit:
+    "Wysłano już kilka zgłoszeń. Spróbuj ponownie za kilka minut albo napisz do nas: szkolenia@iskt.pl.",
+  bezSkryptu:
+    "Wysłanie formularza wymaga włączonego JavaScriptu. Napisz do nas: szkolenia@iskt.pl.",
+} as const;
 
 /** Okno zapisu na stronie szkolenia (F-04, issue #18): tytuł okna dla wariantu formularza. */
 export const TYTULY_OKNA_ZAPISU: Record<Odbiorca, string> = {

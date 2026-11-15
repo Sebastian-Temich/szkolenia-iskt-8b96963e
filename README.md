@@ -60,6 +60,24 @@ Komendy uruchamiasz w katalogu repo (główna kopia albo worktree zadania).
 
    Wpisujesz tylko wartości bazy lokalnej. Kluczy z chmury nie wpisujesz.
 
+   Wysyłka formularza zgłoszenia (W-12, ADR-004) potrzebuje zmiennych serwerowych, bez przedrostka
+   `VITE_`, czytanych wyłącznie przez funkcję serwerową `src/lib/zgloszenia/wyslij.ts`:
+
+   ```sh
+   RESEND_API_KEY=          # sekret: klucz API Resend właściciela, tylko w .env.local
+   ZGLOSZENIA_ODBIORCA=     # adres biura, który dostaje zgłoszenia (teraz biuro@iskt.pl)
+   ZGLOSZENIA_NADAWCA=      # nadawca e-maila: Szkolenia ISKT <formularz@iskt.pl>
+   ZGLOSZENIA_NAGLOWEK_IP=  # lokalnie puste; na hostingu nagłówek platformy z adresem klienta
+   ```
+
+   - Bez którejś z trzech pierwszych formularz pokazuje komunikat błędu z adresem
+     szkolenia@iskt.pl i nie wysyła e-maila.
+   - `ZGLOSZENIA_NAGLOWEK_IP` ustawia się dopiero za zaufanym proxy (np. `x-vercel-forwarded-for`
+     na Vercel, `cf-connecting-ip` na Cloudflare). Pusta: limit 5 zgłoszeń na 10 minut liczony
+     z adresu połączenia. Nagłówka `x-forwarded-for` aplikacja nie czyta nigdy.
+   - `pnpm dev` wczytuje te zmienne z `.env.local` przy pierwszej wysyłce. Każda wysyłka z
+     `pnpm dev` z kluczem to prawdziwy e-mail do biura; testy i CI używają atrapy.
+
 4. Uruchom serwis:
 
    ```sh

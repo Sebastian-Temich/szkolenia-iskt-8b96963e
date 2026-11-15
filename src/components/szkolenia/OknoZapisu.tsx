@@ -1,7 +1,9 @@
 import { useState, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -10,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { FormularzKontaktu } from "@/components/strona-glowna/SekcjaKontakt";
 import {
+  OBSZAR_KATEGORII,
   OBSZAR_SZKOLENIE_ZAMKNIETE,
   TYTULY_OKNA_ZAPISU,
   type Odbiorca,
@@ -37,8 +40,10 @@ const BEZ_WYBORU = "";
 
 /**
  * Okno zapisu (F-04, issue #18) na stronie szkolenia i okno zapytania na profilu trenera
- * (F-05, issue #41): formularz kontaktu z polem „Szkolenie”. Adres strony się nie zmienia, a
- * wysyłka jest zablokowana jak w formularzu strony głównej (F-02).
+ * (F-05, issue #41): formularz kontaktu z polem „Szkolenie”. Adres strony się nie zmienia.
+ * Źródło zgłoszenia (W-12, R4) wynika z wariantu, w którym okno się otwiera: „Zapisz się” to
+ * `zapis`, „Zapytaj o termin dla firmy” (też z profilu trenera) to `firma`, niezależnie od
+ * przełącznika odbiorcy w formularzu. Po zamknięciu okna formularz zaczyna od nowa (#46).
  */
 export function OknoZapisu({ szkolenie, wariant, opis, wiadomoscPoczatkowa, children }: Props) {
   const domyslne = szkolenie?.id ?? BEZ_WYBORU;
@@ -53,8 +58,20 @@ export function OknoZapisu({ szkolenie, wariant, opis, wiadomoscPoczatkowa, chil
   });
   // Przy błędzie (także odświeżenia po wcześniejszym sukcesie) React Query trzyma stare dane;
   // wtedy pole ma wyłącznie pozycję startową, a wybór wraca do niej.
-  const opcje = opcjeSzkolen(szkolenie, lista.isError ? undefined : lista.data);
+  const dostepne = lista.isError ? undefined : lista.data;
+  const opcje = opcjeSzkolen(szkolenie, dostepne);
   const wartosc = opcje.some((s) => s.id === wybrane) ? wybrane : domyslne;
+  // Obszar z góry według kategorii wybranego szkolenia (W-12, review PR #49); dla firm zostaje
+  // „Szkolenie zamknięte dla zespołu” (#18), bez wybranego szkolenia „Wybierz…”.
+  const wybraneSzkolenie = [...(szkolenie ? [szkolenie] : []), ...(dostepne ?? [])].find(
+    (s) => s.id === wartosc,
+  );
+  const obszarPoczatkowy =
+    odbiorca === "company"
+      ? OBSZAR_SZKOLENIE_ZAMKNIETE
+      : wybraneSzkolenie
+        ? OBSZAR_KATEGORII[wybraneSzkolenie.cat]
+        : "";
 
   const zmienOtwarcie = (stan: boolean) => {
     if (stan) {
@@ -75,10 +92,21 @@ export function OknoZapisu({ szkolenie, wariant, opis, wiadomoscPoczatkowa, chil
           <DialogDescription>{opis ?? szkolenie?.title}</DialogDescription>
         </DialogHeader>
         <FormularzKontaktu
+          zrodlo={wariant === "company" ? "firma" : "zapis"}
+          akcjaPoSukcesie={
+            <DialogClose asChild>
+              <Button
+                type="button"
+                className="mt-2 h-[46px] w-full rounded-pill bg-primary text-[15px] font-semibold text-primary-foreground"
+              >
+                Zamknij
+              </Button>
+            </DialogClose>
+          }
           prefiks={`zapis-${wariant}`}
           odbiorca={odbiorca}
           onZmiana={setOdbiorca}
-          obszarPoczatkowy={odbiorca === "company" ? OBSZAR_SZKOLENIE_ZAMKNIETE : ""}
+          obszarPoczatkowy={obszarPoczatkowy}
           poleSzkolenia={{ opcje, wartosc, onZmiana: setWybrane }}
           wiadomoscPoczatkowa={wiadomoscPoczatkowa}
         />

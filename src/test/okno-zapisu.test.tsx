@@ -1,4 +1,4 @@
-import { act, fireEvent, screen, waitFor, within } from "@testing-library/react";
+import { act, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { RouterProvider } from "@tanstack/react-router";
 import { createRoot, type Root } from "react-dom/client";
@@ -18,10 +18,17 @@ import { atrapaMakiety, biezacaAtrapa } from "./atrapa-klienta";
  * z korzeniem na `document` fokus wraca na przycisk tak jak w przeglądarce.
  */
 vi.mock("@/lib/supabase/klient", async () => (await import("./atrapa-klienta")).modulKlienta);
+// #46: funkcja serwerowa wysyłki to granica sieci; w teście atrapa z wynikiem „ok”.
+const wyslij = vi.hoisted(() => vi.fn());
+vi.mock("@/lib/zgloszenia/wyslij", () => ({ wyslijZgloszenie: wyslij }));
 
 let korzen: Root | null = null;
 
-beforeEach(() => atrapaMakiety());
+beforeEach(() => {
+  atrapaMakiety();
+  wyslij.mockReset();
+  wyslij.mockResolvedValue({ wynik: "ok" });
+});
 
 afterEach(() => {
   act(() => korzen?.unmount());
@@ -37,7 +44,16 @@ async function zamontujTrase(sciezka: string) {
   return { router };
 }
 
-const KOMUNIKAT = "Formularz zostanie podłączony w kolejnym etapie.";
+type Uzytkownik = ReturnType<typeof userEvent.setup>;
+
+/** Wypełnia pola osobowe okna; szkolenie i obszar zostają z ustawień okna. */
+async function wypelnijOkno(user: Uzytkownik, okno: HTMLElement) {
+  await user.type(within(okno).getByLabelText("Imię i nazwisko"), "Janina Testowa");
+  await user.type(within(okno).getByLabelText("E-mail"), "janina@example.com");
+  await user.type(within(okno).getByLabelText("Telefon"), "600 111 222");
+  await user.type(within(okno).getByLabelText("Wiadomość"), "Proszę o najbliższy termin.");
+  await user.click(within(okno).getByRole("checkbox", { name: /Wyrażam zgodę/ }));
+}
 
 async function otworzOkno(nazwaPrzycisku: RegExp, sciezka = "/szkolenia/genai") {
   const user = userEvent.setup();
@@ -73,7 +89,19 @@ describe("Okno zapisu na stronie szkolenia (#18)", () => {
       "aria-pressed",
       "true",
     );
-    expect(within(okno).getByLabelText("Interesujące szkolenie / obszar")).toHaveValue("");
+    // #46, review PR #49: obszar z góry według kategorii szkolenia (W-12, stan „Pusty”).
+    expect(within(okno).getByLabelText("Interesujące szkolenie / obszar")).toHaveValue(
+      "AI i narzędzia generatywne",
+    );
+  });
+
+  it("#46 zmiana szkolenia w oknie „Zapisz się” ustawia obszar według jego kategorii", async () => {
+    const { user, okno } = await otworzOkno(/Zapisz się na szkolenie/);
+    const pole = await poleSzkolenia(okno);
+    await user.selectOptions(pole, "python");
+    expect(within(okno).getByLabelText("Interesujące szkolenie / obszar")).toHaveValue(
+      "Rozwój oprogramowania",
+    );
   });
 
   it("okno ma pola formularza kontaktu z widoczną etykietą", async () => {
@@ -118,34 +146,68 @@ describe("Okno zapisu na stronie szkolenia (#18)", () => {
     expect(pole).toHaveValue("python");
   });
 
-  it("przycisk „Wyślij zgłoszenie” jest nieaktywny z komunikatem, bez sieci i bez sukcesu", async () => {
+  it("#46 „Zapisz się”: wysyła źródło zapis z wybranym szkoleniem i obszarem z góry, bez zapisu do bazy, potem „Dziękujemy!”", async () => {
     const { user, okno } = await otworzOkno(/Zapisz się na szkolenie/);
     await poleSzkolenia(okno);
-    const zapytania: string[] = [];
-    vi.stubGlobal("fetch", (...args: unknown[]) => {
-      zapytania.push(String(args[0]));
-      throw new Error("test: okno zapisu nie ma prawa wołać sieci");
-    });
+    await wypelnijOkno(user, okno);
     const atrapa = biezacaAtrapa();
     const wywolaniaPrzed = atrapa.wywolania.length;
-
-    const wyslij = within(okno).getByRole("button", { name: /Wyślij zgłoszenie/ });
-    expect(wyslij).toBeDisabled();
-    const komunikat = within(okno).getByText(KOMUNIKAT);
-    expect(wyslij).toHaveAttribute("aria-describedby", komunikat.id);
-
-    const formularz = okno.querySelector("form") as HTMLFormElement;
-    const przed = formularz.innerHTML;
-    fireEvent.submit(formularz);
-    await user.click(wyslij);
-    expect(formularz.innerHTML).toBe(przed);
-    expect(zapytania).toEqual([]);
+    await user.click(within(okno).getByRole("button", { name: "Wyślij zgłoszenie" }));
+    expect(await within(okno).findByRole("heading", { name: "Dziękujemy!" })).toBeInTheDocument();
+    expect(wyslij).toHaveBeenCalledTimes(1);
+    expect(wyslij.mock.calls[0]?.[0].data).toMatchObject({
+      zrodlo: "zapis",
+      odbiorca: "individual",
+      szkolenie: "genai",
+      szkolenieTytul: "Generatywne AI dla biznesu",
+      obszar: "AI i narzędzia generatywne",
+    });
+    // R6: wysyłka nie dotyka bazy (żadnego nowego wywołania klienta Supabase).
     expect(atrapa.wywolania.length).toBe(wywolaniaPrzed);
-    expect(okno.querySelector('[role="status"]')).toBeNull();
-    expect(okno.querySelector('[role="alert"]')).toBeNull();
-    for (const falsz of [/Dziękujemy/i, /Wysłano/i, /Skontaktujemy się/i]) {
-      expect(within(okno).queryByText(falsz)).toBeNull();
-    }
+  });
+
+  it("#46 „Zapytaj o termin dla firmy”: źródło firma także po przełączeniu na osobę indywidualną", async () => {
+    const { user, okno } = await otworzOkno(/Zapytaj o termin dla firmy/);
+    await poleSzkolenia(okno);
+    await user.click(within(okno).getByRole("button", { name: "Osoba indywidualna" }));
+    await user.selectOptions(
+      within(okno).getByLabelText("Interesujące szkolenie / obszar"),
+      "Projekty B+R",
+    );
+    await wypelnijOkno(user, okno);
+    await user.click(within(okno).getByRole("button", { name: "Wyślij zgłoszenie" }));
+    await within(okno).findByRole("heading", { name: "Dziękujemy!" });
+    expect(wyslij.mock.calls[0]?.[0].data).toMatchObject({
+      zrodlo: "firma",
+      odbiorca: "individual",
+      szkolenie: "genai",
+    });
+  });
+
+  it("#46 po sukcesie „Zamknij” zamyka okno, a ponowne otwarcie pokazuje pusty formularz", async () => {
+    const { user, przycisk, okno } = await otworzOkno(/Zapytaj o termin dla firmy/);
+    await poleSzkolenia(okno);
+    await wypelnijOkno(user, okno);
+    await user.click(within(okno).getByRole("button", { name: "Wyślij zgłoszenie" }));
+    await within(okno).findByRole("heading", { name: "Dziękujemy!" });
+    const zamknij = within(okno)
+      .getAllByRole("button", { name: "Zamknij" })
+      .find((b) => b.textContent === "Zamknij");
+    if (!zamknij) throw new Error("test: brak widocznego przycisku Zamknij");
+    await user.click(zamknij);
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+    await user.click(przycisk);
+    const ponownie = await screen.findByRole("dialog");
+    expect(within(ponownie).getByLabelText("Imię i nazwisko")).toHaveValue("");
+    expect(within(ponownie).getByRole("button", { name: "Wyślij zgłoszenie" })).toBeEnabled();
+  });
+
+  it("#46 pusty formularz w oknie: fokus na imieniu, bez wywołania", async () => {
+    const { user, okno } = await otworzOkno(/Zapisz się na szkolenie/);
+    await poleSzkolenia(okno);
+    await user.click(within(okno).getByRole("button", { name: "Wyślij zgłoszenie" }));
+    expect(within(okno).getByLabelText("Imię i nazwisko")).toHaveFocus();
+    expect(wyslij).not.toHaveBeenCalled();
   });
 
   it("Esc zamyka okno, a fokus wraca na „Zapisz się na szkolenie”", async () => {
@@ -234,7 +296,7 @@ describe("Okno zapisu na stronie szkolenia (#18)", () => {
     expect(pole).toHaveValue("python");
   });
 
-  it("dostępność okna: nazwa z tytułu, etykiety pól, opis wysyłki, pełna szerokość na telefonie", async () => {
+  it("dostępność okna: nazwa z tytułu, etykiety pól, aktywna wysyłka, pełna szerokość na telefonie", async () => {
     const { okno } = await otworzOkno(/Zapisz się na szkolenie/);
     expect(okno).toHaveAccessibleName("Zapisz się na szkolenie");
     expect(okno).toHaveAccessibleDescription("Generatywne AI dla biznesu");
@@ -257,8 +319,7 @@ describe("Okno zapisu na stronie szkolenia (#18)", () => {
       expect(within(okno).getByLabelText(etykieta)).toBeInTheDocument();
     }
 
-    const wyslij = within(okno).getByRole("button", { name: /Wyślij zgłoszenie/ });
-    expect(wyslij).toHaveAccessibleDescription(KOMUNIKAT);
+    expect(within(okno).getByRole("button", { name: "Wyślij zgłoszenie" })).toBeEnabled();
 
     // Na małym ekranie okno zajmuje cały ekran i przewija się w środku; od `sm` jest wyśrodkowane.
     for (const klasa of [
