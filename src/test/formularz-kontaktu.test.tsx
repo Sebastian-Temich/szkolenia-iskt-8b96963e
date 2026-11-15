@@ -39,9 +39,18 @@ describe("Formularz bez JavaScriptu (review PR #49)", () => {
     const przycisk = dokument.querySelector('button[type="submit"]');
     expect(przycisk?.textContent).toBe("Wyślij zgłoszenie");
     expect(przycisk?.hasAttribute("disabled")).toBe(true);
-    expect(dokument.querySelector("noscript")?.textContent).toBe(
+    // E-001: komunikat jest zwykłym tekstem HTML z serwera (nie <noscript>), więc widzi go
+    // przeglądarka bez JavaScriptu.
+    expect(dokument.querySelector("noscript")).toBeNull();
+    expect(dokument.querySelector("form")?.textContent).toContain(
       "Wysłanie formularza wymaga włączonego JavaScriptu. Napisz do nas: szkolenia@iskt.pl.",
     );
+  });
+
+  it("E-001: po hydratacji komunikat o JavaScripcie znika, a przycisk jest aktywny", () => {
+    zamontuj();
+    expect(screen.queryByText(/wymaga włączonego JavaScriptu/)).toBeNull();
+    expect(screen.getByRole("button", { name: "Wyślij zgłoszenie" })).toBeEnabled();
   });
 });
 

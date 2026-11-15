@@ -378,9 +378,11 @@ export function FormularzKontaktu({
       >
         {wysylanie ? TEKSTY_WYSYLKI.wysylam : "Wyślij zgłoszenie"}
       </Button>
-      <noscript>
+      {/* E-001: zamiast <noscript> (strumieniowy SSR wysyłał go pusty) zwykły akapit w HTML z
+          serwera, usuwany po hydratacji razem z odblokowaniem przycisku. Bez JS zostaje widoczny. */}
+      {!aktywny && (
         <p className="text-center text-[13px] text-muted-foreground">{TEKSTY_WYSYLKI.bezSkryptu}</p>
-      </noscript>
+      )}
     </form>
   );
 }
