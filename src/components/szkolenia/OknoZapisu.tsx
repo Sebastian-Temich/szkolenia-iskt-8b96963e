@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { FormularzKontaktu } from "@/components/strona-glowna/SekcjaKontakt";
 import {
+  OBSZAR_KATEGORII,
   OBSZAR_SZKOLENIE_ZAMKNIETE,
   TYTULY_OKNA_ZAPISU,
   type Odbiorca,
@@ -57,8 +58,20 @@ export function OknoZapisu({ szkolenie, wariant, opis, wiadomoscPoczatkowa, chil
   });
   // Przy błędzie (także odświeżenia po wcześniejszym sukcesie) React Query trzyma stare dane;
   // wtedy pole ma wyłącznie pozycję startową, a wybór wraca do niej.
-  const opcje = opcjeSzkolen(szkolenie, lista.isError ? undefined : lista.data);
+  const dostepne = lista.isError ? undefined : lista.data;
+  const opcje = opcjeSzkolen(szkolenie, dostepne);
   const wartosc = opcje.some((s) => s.id === wybrane) ? wybrane : domyslne;
+  // Obszar z góry według kategorii wybranego szkolenia (W-12, review PR #49); dla firm zostaje
+  // „Szkolenie zamknięte dla zespołu” (#18), bez wybranego szkolenia „Wybierz…”.
+  const wybraneSzkolenie = [...(szkolenie ? [szkolenie] : []), ...(dostepne ?? [])].find(
+    (s) => s.id === wartosc,
+  );
+  const obszarPoczatkowy =
+    odbiorca === "company"
+      ? OBSZAR_SZKOLENIE_ZAMKNIETE
+      : wybraneSzkolenie
+        ? OBSZAR_KATEGORII[wybraneSzkolenie.cat]
+        : "";
 
   const zmienOtwarcie = (stan: boolean) => {
     if (stan) {
@@ -93,7 +106,7 @@ export function OknoZapisu({ szkolenie, wariant, opis, wiadomoscPoczatkowa, chil
           prefiks={`zapis-${wariant}`}
           odbiorca={odbiorca}
           onZmiana={setOdbiorca}
-          obszarPoczatkowy={odbiorca === "company" ? OBSZAR_SZKOLENIE_ZAMKNIETE : ""}
+          obszarPoczatkowy={obszarPoczatkowy}
           poleSzkolenia={{ opcje, wartosc, onZmiana: setWybrane }}
           wiadomoscPoczatkowa={wiadomoscPoczatkowa}
         />

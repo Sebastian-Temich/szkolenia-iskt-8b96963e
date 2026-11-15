@@ -125,6 +125,11 @@ export function FormularzKontaktu({
   const [bledy, setBledy] = useState<Bledy>({});
   const trwa = useRef(false);
   const podziekowanie = useRef<HTMLHeadingElement>(null);
+  // Review PR #49: SSR renderuje przycisk wyłączony; włącza go dopiero kod w przeglądarce po
+  // hydratacji. Bez JavaScriptu (i przed hydratacją) formularz nie wysyła się natywnie.
+  const [aktywny, setAktywny] = useState(false);
+
+  useEffect(() => setAktywny(true), []);
 
   useEffect(() => {
     if (stan === "sukces") podziekowanie.current?.focus();
@@ -209,6 +214,9 @@ export function FormularzKontaktu({
 
   return (
     <form
+      // `post` bez `action`: gdyby formularz mimo wszystko wysłał się natywnie, dane idą w treści
+      // żądania, nigdy w adresie, historii przeglądarki ani logach adresów (review PR #49).
+      method="post"
       onSubmit={(event) => void wyslij(event)}
       noValidate
       aria-busy={wysylanie}
@@ -365,7 +373,7 @@ export function FormularzKontaktu({
       </p>
       <Button
         type="submit"
-        disabled={wysylanie}
+        disabled={!aktywny || wysylanie}
         className="mt-1 h-[54px] w-full rounded-pill bg-primary text-[17px] font-semibold text-primary-foreground shadow-[var(--shadow-brand)]"
       >
         {wysylanie ? TEKSTY_WYSYLKI.wysylam : "Wyślij zgłoszenie"}

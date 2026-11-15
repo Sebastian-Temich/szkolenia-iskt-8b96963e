@@ -1,5 +1,6 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderToString } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { SekcjaKontakt } from "@/components/strona-glowna/SekcjaKontakt";
 
@@ -27,6 +28,19 @@ afterEach(() => {
 
 const zamontuj = (odbiorca: "individual" | "company" = "individual") =>
   render(<SekcjaKontakt odbiorca={odbiorca} onZmiana={() => undefined} />);
+
+describe("Formularz bez JavaScriptu (review PR #49)", () => {
+  it("HTML z serwera: przycisk wyłączony, formularz method=post bez action", () => {
+    const html = renderToString(<SekcjaKontakt odbiorca="individual" onZmiana={() => undefined} />);
+    const dokument = new DOMParser().parseFromString(html, "text/html");
+    const formularz = dokument.querySelector("form");
+    expect(formularz?.getAttribute("method")).toBe("post");
+    expect(formularz?.hasAttribute("action")).toBe(false);
+    const przycisk = dokument.querySelector('button[type="submit"]');
+    expect(przycisk?.textContent).toBe("Wyślij zgłoszenie");
+    expect(przycisk?.hasAttribute("disabled")).toBe(true);
+  });
+});
 
 describe("Formularz kontaktowy — pola i pusty formularz", () => {
   it("przycisk wysyłki jest aktywny, bez napisu o niepodłączeniu (#46)", () => {

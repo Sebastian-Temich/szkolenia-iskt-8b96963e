@@ -178,6 +178,46 @@ describe("W-12/K3: błąd usługi i konfiguracji", () => {
     expect(linieLogu).toEqual(["zgloszenie blad zrodlo=zapis powod=resend status=timeout"]);
   });
 
+  it("review PR #49: nagłówki 200, ale treść nie dochodzi w limicie czasu: błąd (502), nie sukces", async () => {
+    const wolnaTresc = vi.fn(async (_url: RequestInfo | URL, init?: RequestInit) => ({
+      ok: true,
+      status: 200,
+      json: () =>
+        new Promise((_, odrzuc) => {
+          init?.signal?.addEventListener("abort", () => odrzuc(init.signal?.reason));
+        }),
+    }));
+    const odp = await obsluzZgloszenie(
+      poprawne(),
+      kontekst({ fetch: wolnaTresc as unknown as typeof fetch, limitCzasuMs: 20 }),
+    );
+    expect(odp).toEqual({ status: 502, tresc: { wynik: "blad" } });
+    expect(linieLogu).toEqual(["zgloszenie blad zrodlo=zapis powod=resend status=timeout"]);
+  });
+
+  it("review PR #49: zerwane połączenie przy odczycie treści po 200: błąd (502)", async () => {
+    const zerwana = vi.fn(async () => ({
+      ok: true,
+      status: 200,
+      json: () => Promise.reject(new TypeError("terminated")),
+    }));
+    const odp = await obsluzZgloszenie(
+      poprawne(),
+      kontekst({ fetch: zerwana as unknown as typeof fetch }),
+    );
+    expect(odp).toEqual({ status: 502, tresc: { wynik: "blad" } });
+    expect(linieLogu).toEqual(["zgloszenie blad zrodlo=zapis powod=resend status=siec"]);
+  });
+
+  it("200 z treścią, która nie jest JSON-em: e-mail przyjęty, sukces bez id", async () => {
+    const odp = await obsluzZgloszenie(
+      poprawne(),
+      kontekst({ fetch: atrapaFetch(() => new Response("nie json", { status: 200 })).fn }),
+    );
+    expect(odp.status).toBe(200);
+    expect(linieLogu).toEqual(["zgloszenie wyslane zrodlo=zapis"]);
+  });
+
   it("domyślny limit czasu to 10 s (AbortSignal.timeout(10000))", async () => {
     const timeout = vi.spyOn(AbortSignal, "timeout");
     await obsluzZgloszenie(poprawne(), kontekst());

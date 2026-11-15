@@ -85,7 +85,11 @@ test.describe("W-12/K8: wysyłka z czterech miejsc ze źródłem zgłoszenia", (
       /Zapisz się na szkolenie/,
       "Zapisz się na szkolenie",
     );
-    await wypelnij(okno, "AI i narzędzia generatywne");
+    // Review PR #49: obszar ustawiony z góry według kategorii szkolenia, bez ręcznego wyboru.
+    await expect(okno.getByLabel("Interesujące szkolenie / obszar")).toHaveValue(
+      "AI i narzędzia generatywne",
+    );
+    await wypelnij(okno);
     await okno.getByRole("button", { name: "Wyślij zgłoszenie" }).click();
     await expect(okno.getByRole("heading", { name: "Dziękujemy!" })).toBeVisible();
     expect(wysylka.zrodla).toEqual([["zapis"]]);
@@ -173,6 +177,49 @@ test.describe("W-12/K2, K6: walidacja i trwająca wysyłka", () => {
     await expect(formularz.getByRole("heading", { name: "Dziękujemy!" })).toBeVisible();
     expect(wysylka.liczba()).toBe(1);
     expect(await powazneNaruszeniaAxe(page)).toEqual([]);
+  });
+});
+
+test.describe("Bez JavaScriptu (review PR #49)", () => {
+  test.use({ javaScriptEnabled: false });
+
+  test("/#kontakt: przycisk wyłączony, Enter i klik nie wysyłają danych ani nie dopisują ich do adresu", async ({
+    page,
+  }) => {
+    const zadania: { url: string; metoda: string; tresc: string }[] = [];
+    page.on("request", (r) =>
+      zadania.push({ url: r.url(), metoda: r.method(), tresc: r.postData() ?? "" }),
+    );
+    await otworz(page, "/");
+    const adresPrzed = page.url();
+    const formularz = sekcjaKontaktu(page);
+    await expect(formularz.locator("form")).toHaveAttribute("method", "post");
+    await expect(formularz.locator("form")).not.toHaveAttribute("action", /.*/);
+    const przycisk = formularz.getByRole("button", { name: "Wyślij zgłoszenie" });
+    await expect(przycisk).toBeDisabled();
+    await expect(
+      formularz.getByText(
+        "Wysłanie formularza wymaga włączonego JavaScriptu. Napisz do nas: szkolenia@iskt.pl.",
+      ),
+    ).toBeVisible();
+
+    const zadaniaPrzed = zadania.length;
+    await formularz.getByLabel("Imię i nazwisko").fill("Janina Testowa");
+    await formularz.getByLabel("E-mail").fill("janina@example.com");
+    await formularz.getByLabel("Telefon").fill("+48 600 111 222");
+    await formularz.getByLabel("Wiadomość").fill("Proszę o informację o terminie.");
+    await formularz.getByLabel("E-mail").press("Enter");
+    await przycisk.click({ force: true });
+    await page.waitForLoadState("networkidle");
+
+    expect(page.url()).toBe(adresPrzed);
+    expect(page.url()).not.toContain("janina");
+    const poWypelnieniu = zadania.slice(zadaniaPrzed);
+    expect(poWypelnieniu.filter((z) => z.metoda !== "GET")).toEqual([]);
+    for (const z of poWypelnieniu) {
+      expect(`${z.url} ${z.tresc}`).not.toMatch(/janina|Testowa|600|Prosz/i);
+    }
+    await expect(formularz.getByLabel("Imię i nazwisko")).toHaveValue("Janina Testowa");
   });
 });
 

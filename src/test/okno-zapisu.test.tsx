@@ -89,7 +89,19 @@ describe("Okno zapisu na stronie szkolenia (#18)", () => {
       "aria-pressed",
       "true",
     );
-    expect(within(okno).getByLabelText("Interesujące szkolenie / obszar")).toHaveValue("");
+    // #46, review PR #49: obszar z góry według kategorii szkolenia (W-12, stan „Pusty”).
+    expect(within(okno).getByLabelText("Interesujące szkolenie / obszar")).toHaveValue(
+      "AI i narzędzia generatywne",
+    );
+  });
+
+  it("#46 zmiana szkolenia w oknie „Zapisz się” ustawia obszar według jego kategorii", async () => {
+    const { user, okno } = await otworzOkno(/Zapisz się na szkolenie/);
+    const pole = await poleSzkolenia(okno);
+    await user.selectOptions(pole, "python");
+    expect(within(okno).getByLabelText("Interesujące szkolenie / obszar")).toHaveValue(
+      "Rozwój oprogramowania",
+    );
   });
 
   it("okno ma pola formularza kontaktu z widoczną etykietą", async () => {
@@ -134,13 +146,9 @@ describe("Okno zapisu na stronie szkolenia (#18)", () => {
     expect(pole).toHaveValue("python");
   });
 
-  it("#46 „Zapisz się”: wysyła źródło zapis z wybranym szkoleniem, bez zapisu do bazy, potem „Dziękujemy!”", async () => {
+  it("#46 „Zapisz się”: wysyła źródło zapis z wybranym szkoleniem i obszarem z góry, bez zapisu do bazy, potem „Dziękujemy!”", async () => {
     const { user, okno } = await otworzOkno(/Zapisz się na szkolenie/);
     await poleSzkolenia(okno);
-    await user.selectOptions(
-      within(okno).getByLabelText("Interesujące szkolenie / obszar"),
-      "AI i narzędzia generatywne",
-    );
     await wypelnijOkno(user, okno);
     const atrapa = biezacaAtrapa();
     const wywolaniaPrzed = atrapa.wywolania.length;

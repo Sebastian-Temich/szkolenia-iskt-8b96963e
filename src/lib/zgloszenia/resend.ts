@@ -44,19 +44,24 @@ export async function wyslijPrzezResend(
       signal: AbortSignal.timeout(limitCzasuMs),
     });
   } catch (blad) {
-    const nazwa = blad instanceof Error ? blad.name : "";
-    return {
-      ok: false,
-      status: nazwa === "TimeoutError" || nazwa === "AbortError" ? "timeout" : "siec",
-    };
+    return { ok: false, status: bladTransportu(blad) };
   }
   if (!odpowiedz.ok) return { ok: false, status: odpowiedz.status };
+  // Odczyt treści też podlega limitowi 10 s i może zerwać połączenie (review PR #49): wtedy błąd,
+  // nie sukces. Tylko treść, która nie jest JSON-em, po 200 oznacza przyjęty e-mail bez id.
   let id: string | undefined;
   try {
-    const tresc = (await odpowiedz.json()) as { id?: unknown };
-    id = typeof tresc.id === "string" ? tresc.id : undefined;
-  } catch {
+    const tresc = (await odpowiedz.json()) as { id?: unknown } | null;
+    id = typeof tresc?.id === "string" ? tresc.id : undefined;
+  } catch (blad) {
+    if (!(blad instanceof SyntaxError)) return { ok: false, status: bladTransportu(blad) };
     id = undefined;
   }
   return { ok: true, id };
+}
+
+/** Przekroczenie limitu czasu albo inny błąd transportu (sieć, zerwane połączenie). */
+function bladTransportu(blad: unknown): "timeout" | "siec" {
+  const nazwa = blad instanceof Error ? blad.name : "";
+  return nazwa === "TimeoutError" || nazwa === "AbortError" ? "timeout" : "siec";
 }

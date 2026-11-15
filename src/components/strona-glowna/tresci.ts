@@ -233,7 +233,20 @@ export const ZRODLA_DOFINANSOWANIA = [
  * Obszary formularza żyją w schemacie zgłoszenia (#46), bo ten sam schemat sprawdza je na
  * serwerze; tu tylko je udostępniamy widokom.
  */
-export { OBSZAR_SZKOLENIE_ZAMKNIETE, OPCJE_OBSZARU } from "@/lib/zgloszenia/schemat";
+import { OBSZAR_SZKOLENIE_ZAMKNIETE, OPCJE_OBSZARU } from "@/lib/zgloszenia/schemat";
+export { OBSZAR_SZKOLENIE_ZAMKNIETE, OPCJE_OBSZARU };
+
+/**
+ * Obszar formularza dopasowany do kategorii szkolenia (W-12, stan „Pusty”: „w oknie wybrane
+ * szkolenie i dopasowany obszar”; review PR #49). Klucz po kategorii, więc literówka wywala typy.
+ */
+export const OBSZAR_KATEGORII: Record<KategoriaSzkolenia, (typeof OPCJE_OBSZARU)[number]> = {
+  AI: "AI i narzędzia generatywne",
+  ESG: "ESG i zrównoważony rozwój",
+  Angielski: "Język angielski",
+  Software: "Rozwój oprogramowania",
+  "B+R": "Projekty B+R",
+};
 
 /** Teksty stanów wysyłki z karty W-12 („Stany ekranu”). */
 export const TEKSTY_WYSYLKI = {
