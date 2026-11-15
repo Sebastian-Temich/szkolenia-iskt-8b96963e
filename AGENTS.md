@@ -60,7 +60,8 @@ Stałe dla tego projektu (z analizy `docs/00-analiza/raport.md`):
 | Build | `pnpm build` |
 | Uruchomienie lokalne | `shctl db start`, `shctl db reset` (migracje i seed), `pnpm dev`; instrukcja w `README.md` (zadanie M1) |
 | Baza | `supabase/migrations/` (migracja bazowa 1:1 z chmurą, ADR-001), `supabase/seed.sql` (tylko lokalnie i CI), `supabase/tests/` (pgTAP: `shctl db test`); `shctl db` działa poza sandboksem workera, jeden stack naraz |
-| Zmienne | `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` (wzór w `.env.example`; lokalnie wartości z `shctl db status`) |
+| Zmienne | `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` (wzór w `.env.example`; lokalnie wartości z `shctl db status`); serwerowe, bez `VITE_` (ADR-004): `RESEND_API_KEY` (sekret, tylko `.env.local` właściciela), `ZGLOSZENIA_ODBIORCA`, `ZGLOSZENIA_NADAWCA` |
+| Funkcje serwerowe | TanStack Start `createServerFn` w `src/lib/*/` (pierwsza: `src/lib/zgloszenia/`, wysyłka przez Resend, ADR-004); sekrety czyta tylko kod serwerowy; testy z atrapą `fetch`, bez prawdziwej wysyłki |
 
 Zmiana kontraktu wymaga ADR w `docs/04-plan/adr/`.
 
