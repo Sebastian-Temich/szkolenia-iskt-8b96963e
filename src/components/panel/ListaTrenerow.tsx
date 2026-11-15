@@ -11,6 +11,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useIsMobile } from "@/hooks/use-mobile";
+import type { StatusTresci } from "@/lib/panel/typy";
 import {
   listaTrenerow,
   publikujTrenera,
@@ -21,6 +23,7 @@ import { liczPrzypisania, liczbyPrzypisan } from "@/lib/panel/przypisania-repo";
 import { AkcjeWiersza, TrescEdycji } from "./AkcjeWiersza";
 import { DialogUsuwania } from "./DialogUsuwania";
 import { FiltryListy, type FiltrStatusu } from "./FiltryListy";
+import { KartaPozycji, ListaKart } from "./KartyListy";
 import { KLUCZE } from "./klucze";
 import { BladListy, PlakietkaStatusu, PustaLista, SzkieletListy } from "./StanyListy";
 import { useAkcjeTresci } from "./useAkcjeTresci";
@@ -51,6 +54,22 @@ export function ListaTrenerow() {
       skutek: `Usuniesz trenera ${nazwa}. Zniknie ${n} przypisań do szkoleń. Same szkolenia zostaną nietknięte.`,
     }),
   });
+  const telefon = useIsMobile();
+  const akcjeDla = (t: { id: string; name: string; status: StatusTresci }, karta: boolean) => (
+    <AkcjeWiersza
+      nazwa={t.name}
+      status={t.status}
+      trwa={akcje.trwa}
+      karta={karta}
+      edytuj={
+        <Link to="/panel/trenerzy/$id" params={{ id: t.id }}>
+          <TrescEdycji />
+        </Link>
+      }
+      onPrzelacz={() => void akcje.przelaczStatus(t.id, t.name, t.status)}
+      onUsun={() => void akcje.przygotujUsuniecie(t.id, t.name)}
+    />
+  );
 
   return (
     <section aria-labelledby="naglowek-trenerow" className="flex flex-col gap-5">
@@ -102,49 +121,56 @@ export function ListaTrenerow() {
           >
             Wyniki: {lista.data.length}
           </p>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Kolejność</TableHead>
-                <TableHead>Identyfikator</TableHead>
-                <TableHead>Imię i nazwisko</TableHead>
-                <TableHead>Rola</TableHead>
-                <TableHead>Obszary</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Szkolenia</TableHead>
-                <TableHead className="text-right">Akcje</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
+          {telefon ? (
+            <ListaKart etykieta="Lista trenerów">
               {lista.data.map((t) => (
-                <TableRow key={t.id}>
-                  <TableCell>{t.sortOrder}</TableCell>
-                  <TableCell className="font-mono text-xs">{t.id}</TableCell>
-                  <TableCell className="font-medium">{t.name}</TableCell>
-                  <TableCell>{t.role}</TableCell>
-                  <TableCell>{t.areas.join(", ")}</TableCell>
-                  <TableCell>
-                    <PlakietkaStatusu status={t.status} />
-                  </TableCell>
-                  <TableCell>{liczby.data?.[t.id] ?? 0}</TableCell>
-                  <TableCell>
-                    <AkcjeWiersza
-                      nazwa={t.name}
-                      status={t.status}
-                      trwa={akcje.trwa}
-                      edytuj={
-                        <Link to="/panel/trenerzy/$id" params={{ id: t.id }}>
-                          <TrescEdycji />
-                        </Link>
-                      }
-                      onPrzelacz={() => void akcje.przelaczStatus(t.id, t.name, t.status)}
-                      onUsun={() => void akcje.przygotujUsuniecie(t.id, t.name)}
-                    />
-                  </TableCell>
-                </TableRow>
+                <KartaPozycji
+                  key={t.id}
+                  tytul={t.name}
+                  pola={[
+                    { etykieta: "Kolejność", wartosc: t.sortOrder },
+                    { etykieta: "Identyfikator", wartosc: t.id, klasa: "font-mono text-xs" },
+                    { etykieta: "Rola", wartosc: t.role },
+                    { etykieta: "Obszary", wartosc: t.areas.join(", ") },
+                    { etykieta: "Status", wartosc: <PlakietkaStatusu status={t.status} /> },
+                    { etykieta: "Szkolenia", wartosc: liczby.data?.[t.id] ?? 0 },
+                  ]}
+                  akcje={akcjeDla(t, true)}
+                />
               ))}
-            </TableBody>
-          </Table>
+            </ListaKart>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Kolejność</TableHead>
+                  <TableHead>Identyfikator</TableHead>
+                  <TableHead>Imię i nazwisko</TableHead>
+                  <TableHead>Rola</TableHead>
+                  <TableHead>Obszary</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Szkolenia</TableHead>
+                  <TableHead className="text-right">Akcje</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {lista.data.map((t) => (
+                  <TableRow key={t.id}>
+                    <TableCell>{t.sortOrder}</TableCell>
+                    <TableCell className="font-mono text-xs">{t.id}</TableCell>
+                    <TableCell className="font-medium">{t.name}</TableCell>
+                    <TableCell>{t.role}</TableCell>
+                    <TableCell>{t.areas.join(", ")}</TableCell>
+                    <TableCell>
+                      <PlakietkaStatusu status={t.status} />
+                    </TableCell>
+                    <TableCell>{liczby.data?.[t.id] ?? 0}</TableCell>
+                    <TableCell>{akcjeDla(t, false)}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </>
       )}
       <DialogUsuwania

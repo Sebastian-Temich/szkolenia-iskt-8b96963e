@@ -3,7 +3,13 @@ import { Eye, EyeOff, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { StatusTresci } from "@/lib/panel/typy";
 
-/** Akcje wiersza listy: edycja (link), publikacja albo wycofanie, usunięcie. */
+/** Cel dotykowy akcji na karcie (telefon): co najmniej 44×44 px (issue #39). */
+const KLASA_DOTYKOWA = "min-h-11 min-w-11";
+
+/**
+ * Akcje wiersza listy: edycja (link), publikacja albo wycofanie, usunięcie. `karta` układa je
+ * na karcie telefonu z celami dotykowymi ≥ 44×44 px; etykiety i nazwy dostępne bez zmian.
+ */
 export function AkcjeWiersza(props: {
   nazwa: string;
   status: StatusTresci;
@@ -11,16 +17,25 @@ export function AkcjeWiersza(props: {
   trwa: boolean;
   onPrzelacz: () => void;
   onUsun: () => void;
+  karta?: boolean;
 }) {
+  const dotyk = props.karta ? KLASA_DOTYKOWA : undefined;
   return (
-    <div className="flex flex-wrap justify-end gap-1">
-      <Button asChild variant="ghost" size="sm" aria-label={`Edytuj: ${props.nazwa}`}>
+    <div className={`flex flex-wrap gap-1 ${props.karta ? "justify-start" : "justify-end"}`}>
+      <Button
+        asChild
+        variant="ghost"
+        size="sm"
+        className={dotyk}
+        aria-label={`Edytuj: ${props.nazwa}`}
+      >
         {props.edytuj}
       </Button>
       <Button
         type="button"
         variant="ghost"
         size="sm"
+        className={dotyk}
         disabled={props.trwa}
         onClick={props.onPrzelacz}
         aria-label={`${props.status === "published" ? "Wycofaj" : "Publikuj"}: ${props.nazwa}`}
@@ -32,7 +47,7 @@ export function AkcjeWiersza(props: {
         type="button"
         variant="ghost"
         size="sm"
-        className="text-destructive"
+        className={props.karta ? `text-destructive ${KLASA_DOTYKOWA}` : "text-destructive"}
         disabled={props.trwa}
         onClick={props.onUsun}
         aria-label={`Usuń: ${props.nazwa}`}
