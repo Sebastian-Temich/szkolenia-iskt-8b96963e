@@ -8,7 +8,7 @@ postep_zadania: "1/1"
 czeka_na_ciebie: 3
 eskalacje: 0
 nastepny_krok: "Twoja odpowiedź: Lista startowa: Klucz API Resend do pracy lokalnej, PO CO: wysyłka zgłoszeń z serwera aplikacji (W-12), JAK:"
-ostatnia_synchronizacja: 2026-11-15T07:58:11Z
+ostatnia_synchronizacja: 2026-11-15T07:58:35Z
 ---
 
 # szkolenia-iskt
@@ -20,7 +20,7 @@ ostatnia_synchronizacja: 2026-11-15T07:58:11Z
 - **Etap:** Plan
 - **Cykl:** M3-formularze-resend (od 2026-11-14); wcześniejsze: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md)
 - **Postęp:** Etapy 2/6 · Zadania 1/1 w bieżącym zleceniu (łącznie 15)
-- **Co się dzieje:** etap plan jeszcze nie rozpoczęty
+- **Co się dzieje:** etap plan w przygotowaniu
 - **Następny krok:** Twoja odpowiedź: Lista startowa: Klucz API Resend do pracy lokalnej, PO CO: wysyłka zgłoszeń z serwera aplikacji (W-12), JAK:
 
 ## Czeka na Ciebie
