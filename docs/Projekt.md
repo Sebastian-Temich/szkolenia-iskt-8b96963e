@@ -4,11 +4,11 @@ tryb: M
 cykl: "M3-formularze-resend"
 etap_opis: "Realizacja, kamień M3 Wysyłka zgłoszeń"
 postep_etapy: "4/6"
-postep_zadania: "1/4"
+postep_zadania: "2/4"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Dokończenie #46"
-ostatnia_synchronizacja: 2026-11-15T18:20:43Z
+nastepny_krok: "Start #47"
+ostatnia_synchronizacja: 2026-11-15T18:44:26Z
 ---
 
 # szkolenia-iskt
@@ -19,10 +19,10 @@ ostatnia_synchronizacja: 2026-11-15T18:20:43Z
 
 - **Etap:** Realizacja, kamień M3 Wysyłka zgłoszeń
 - **Cykl:** M3-formularze-resend (od 2026-11-14); wcześniejsze: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md)
-- **Postęp:** Etapy 4/6 · Zadania 1/4 w bieżącym zleceniu (łącznie 18)
-- **Co się dzieje:** #46 Wysyłka zgłoszenia z formularza przez Resend (review, iteracja 2, od 1 h 40 min)
-- **Następny krok:** Dokończenie #46
-- **Szacowany czas:** ok. 3 h 7 min pracy agentów (3 zadań, średnio 3 h 7 min na zadanie, 3 równolegle; orientacyjnie)
+- **Postęp:** Etapy 4/6 · Zadania 2/4 w bieżącym zleceniu (łącznie 18)
+- **Co się dzieje:** nic w toku
+- **Następny krok:** Start #47
+- **Szacowany czas:** ok. 3 h 3 min pracy agentów (2 zadań, średnio 3 h 3 min na zadanie, 3 równolegle; orientacyjnie)
 
 ## Czeka na Ciebie
 
@@ -30,23 +30,23 @@ Nic. Agenci pracują sami.
 
 ## Zadania
 
-### W realizacji (1)
+### Gotowe do startu (1)
 
-| Zadanie | Kamień | Kto | Iteracja | PR | CI | Od |
-|---|---|---|---|---|---|---|
-| #46 Wysyłka zgłoszenia z formularza przez Resend | M3 Wysyłka zgłoszeń | review | 2 | #49 | fail | 1 h 40 min |
+| Zadanie | Kamień | Zależności |
+|---|---|---|
+| #47 Polityka prywatności i informacja o danych przy formularzu | M3 Wysyłka zgłoszeń | #46 ✓ |
 
-### Zaplanowane (2)
+### Zaplanowane (1)
 
 | Zadanie | Kamień | Czeka na |
 |---|---|---|
-| #47 Polityka prywatności i informacja o danych przy formularzu | M3 Wysyłka zgłoszeń | #46 |
-| #48 Dokumentacja wydania M3 | M3 Wysyłka zgłoszeń | #46, #47 |
+| #48 Dokumentacja wydania M3 | M3 Wysyłka zgłoszeń | #47 |
 
-### Zrobione w bieżącym zleceniu (1)
+### Zrobione w bieżącym zleceniu (2)
 
 | Zadanie | Kamień | PR |
 |---|---|---|
+| #46 Wysyłka zgłoszenia z formularza przez Resend | M3 Wysyłka zgłoszeń | #49 |
 | #41 Okno zapytania na profilu trenera i porządki w dokumentacji wydań | - | #42 |
 
 Wcześniejsze zlecenia (14 zadań): [Historia](historia.md).

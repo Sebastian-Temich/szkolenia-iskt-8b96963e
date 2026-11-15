@@ -52,3 +52,5 @@ Plik wspólny, aktualizuje orkiestrator. Zgłoszenia ⚪ z review i „Drobne uw
 | 2026-11-15 | review PR #44 | Zlecenie 6: `ZGLOSZENIA_NAGLOWEK_IP` obowiązkowa na produkcji za proxy (Vercel), inaczej wszyscy dzielą jeden limit; ewentualnie log ostrzeżenia przy jej braku. (`docs/04-plan/adr/ADR-004-…md:50`) | otwarta |
 | 2026-11-15 | review PR #45 | T10 (#47): W-13/K2 wymaga nowej karty dla odnośnika w oknie zapisu, a `src/components/szkolenia/OknoZapisu.tsx` nie ma w `pliki`; worker może poszerzyć zakres o ten plik decyzją w raporcie albo rozpoznać wariant okna po istniejących propsach. | otwarta |
 | 2026-11-15 | review PR #45 | T9 (#46): limit dobowy 80 wysyłek jest opcją bez kryterium; decyzję worker zapisuje w raporcie, a trwała ochrona planu Resend wchodzi do zlecenia 6 (trwały licznik). | otwarta |
+| 2026-11-15 | T-46 | `vitest.config.ts` używa `__dirname`; Vite ostrzega o przyszłym `configLoader: 'native'` (zamiana na `import.meta.dirname`). Poza zakresem. | otwarta |
+| 2026-11-15 | T-46 | Treść „Dziękujemy!” i limit 2 dni roboczych w karcie mają status Z2 „do potwierdzenia”; wdrożone zgodnie z proponowaną odpowiedzią karty. | otwarta |

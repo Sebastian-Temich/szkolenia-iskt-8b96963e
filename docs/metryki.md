@@ -19,6 +19,7 @@ Plik wspólny, aktualizuje orkiestrator. Pomiar poglądowy, służy też do por�
 | #37 Przegląd i poprawki responsywności (telefon i tablet) z testami E2E | S | 1h 11min | 1 | 2 | 0 | PR #38 |
 | #39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów | S | 12h 9min | 1 | 1 | 0 | PR #40 |
 | #41 Okno zapytania na profilu trenera i porządki w dokumentacji wydań | S | 11h 38min | 1 | 1 | 0 | PR #42 |
+| #46 Wysyłka zgłoszenia z formularza przez Resend | M | 2h 3min | 1 | 2 | 1 | PR #49 |
 
 Eskalacje nie liczą pytań workera (`shctl escalate --typ pytanie`): są w „Uwagach” jako „pytania: N”.
 
@@ -39,3 +40,4 @@ według przyczyny: wymaganie, kod, test, design.
 | review PR #38 (#37 Przegląd i poprawki responsywności (telefon i tablet) z testami E2E) | 0 | 1 | 0 | 0 | 0 |
 | review PR #40 (#39 Panel na telefonie - karty zamiast tabeli na listach szkoleń i trenerów) | 0 | 1 | 0 | 0 | 0 |
 | review PR #42 (#41 Okno zapytania na profilu trenera i porządki w dokumentacji wydań) | 0 | 1 | 0 | 0 | 0 |
+| review PR #49 (#46 Wysyłka zgłoszenia z formularza przez Resend) | 0 | 3 | 0 | 0 | 0 |
