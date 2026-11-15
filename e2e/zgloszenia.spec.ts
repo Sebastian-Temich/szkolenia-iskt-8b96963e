@@ -5,7 +5,7 @@ import { otworz, powazneNaruszeniaAxe } from "./pomocnicze";
  * Issue #46 (W-12): wysyłka zgłoszenia z czterech miejsc. Żądanie do funkcji serwerowej
  * (`/_serverFn/…`) przechwytuje `page.route` i odpowiada udawanym wynikiem, więc żaden e-mail nie
  * wychodzi, a w CI nie jest potrzebny klucz Resend (ADR-004 pkt 6). Odpowiedź to zwykły JSON
- * (`content-type: application/json`), który klient funkcji serwerowej zwraca bez zmian.
+ * (`content-type: application/json`) w kopercie `{ result }`, jak odpowiedź funkcji serwerowej.
  */
 
 const ZRODLA = ["kontakt", "zapis", "firma"] as const;
@@ -28,10 +28,12 @@ async function przechwycWysylke(
     const tresc = route.request().postData() ?? "";
     zrodla.push(ZRODLA.filter((z) => tresc.includes(`"${z}"`)));
     if (opoznienie) await opoznienie;
+    // Klient funkcji serwerowej bierze wynik z pola `result` odpowiedzi (koperta
+    // `{ result, error, context }`, start-client-core `createServerFn.js`), nie z całej treści.
     await route.fulfill({
       status: odpowiedz.status ?? 200,
       contentType: "application/json",
-      body: JSON.stringify(odpowiedz.wynik),
+      body: JSON.stringify({ result: odpowiedz.wynik }),
     });
   });
   return { zrodla, liczba: () => zrodla.length };

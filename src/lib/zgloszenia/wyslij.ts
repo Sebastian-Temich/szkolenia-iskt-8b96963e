@@ -27,7 +27,7 @@ function wczytajEnvDeweloperski() {
 }
 
 export const wyslijZgloszenie = createServerFn({ method: "POST" })
-  .inputValidator((dane: unknown) => dane)
+  .validator((dane: unknown) => dane)
   .handler(async ({ data }): Promise<WynikZgloszenia> => {
     const { getRequest, getRequestIP, setResponseStatus } =
       await import("@tanstack/react-start/server");
