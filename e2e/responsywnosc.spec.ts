@@ -135,6 +135,17 @@ const STRONY: Strona[] = [
     przyciski: (page) => [page.getByRole("button", { name: /Zapytaj o termin/ })],
   },
   {
+    // W-13/K3 (#47): strona polityki prywatności, m.in. przy 360 px.
+    nazwa: "/polityka-prywatnosci",
+    plik: "polityka-prywatnosci",
+    przygotuj: async (page) => {
+      await otworz(page, "/polityka-prywatnosci");
+      await expect(
+        page.getByRole("heading", { level: 1, name: "Polityka prywatności" }),
+      ).toBeVisible();
+    },
+  },
+  {
     nazwa: "/panel (logowanie)",
     plik: "panel-logowanie",
     przygotuj: async (page) => {

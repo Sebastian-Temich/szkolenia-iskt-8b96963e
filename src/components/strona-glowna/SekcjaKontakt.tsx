@@ -10,6 +10,12 @@ import {
   type Zrodlo,
 } from "@/lib/zgloszenia/schemat";
 import { wyslijZgloszenie } from "@/lib/zgloszenia/wyslij";
+import {
+  ADRES_POLITYKI,
+  INFORMACJA_POD_FORMULARZEM,
+  NOWA_KARTA,
+  ZGODA,
+} from "@/lib/polityka/tresc";
 import { PrzelacznikOdbiorcy } from "./PrzelacznikOdbiorcy";
 import { OPCJE_OBSZARU, TEKSTY_WYSYLKI, trescKontaktu, type Odbiorca } from "./tresci";
 
@@ -72,6 +78,23 @@ export function SekcjaKontakt({ odbiorca, onZmiana }: Props) {
   );
 }
 
+/**
+ * Odnośnik do polityki prywatności (W-13). Zwykłe `<a>`, nie `Link` routera: formularz działa
+ * też poza kontekstem routera (testy komponentu), a w oknie i tak otwiera nową kartę.
+ */
+function OdnosnikPolityki({ nowaKarta, children }: { nowaKarta: boolean; children: string }) {
+  return (
+    <a
+      href={ADRES_POLITYKI}
+      className="font-medium text-primary underline underline-offset-2 hover:no-underline"
+      {...(nowaKarta ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
+      {children}
+      {nowaKarta && <span className="sr-only">{NOWA_KARTA}</span>}
+    </a>
+  );
+}
+
 type PropsFormularza = Props & {
   /** Miejsce formularza (W-12, pole `zrodlo`): ustawia je aplikacja, nie użytkownik. */
   zrodlo?: Zrodlo;
@@ -121,6 +144,9 @@ export function FormularzKontaktu({
   akcjaPoSukcesie,
 }: PropsFormularza) {
   const id = (pole: string) => `${prefiks}-${pole}`;
+  // W-13: w oknie (zapis, firma) odnośnik do polityki otwiera nową kartę, żeby nie zgubić
+  // wpisanych danych; w sekcji strony głównej zostaje w tej samej karcie.
+  const politykaWNowejKarcie = zrodlo !== "kontakt";
   const [stan, setStan] = useState<Stan>("edycja");
   const [bledy, setBledy] = useState<Bledy>({});
   const trwa = useRef(false);
@@ -342,11 +368,19 @@ export function FormularzKontaktu({
             {...aria("zgoda")}
           />
           <label htmlFor={id("zgoda")} className="text-[13.5px] text-muted-foreground">
-            Wyrażam zgodę na kontakt w sprawie zgłoszenia zgodnie z polityką prywatności ISKT
-            Greenovation.
+            {ZGODA.przed}
+            <OdnosnikPolityki nowaKarta={politykaWNowejKarcie}>{ZGODA.odnosnik}</OdnosnikPolityki>
+            {ZGODA.po}
           </label>
         </div>
         {komunikat("zgoda")}
+        <p className="text-[13px] text-muted-foreground">
+          {INFORMACJA_POD_FORMULARZEM.tekst}
+          <OdnosnikPolityki nowaKarta={politykaWNowejKarcie}>
+            {INFORMACJA_POD_FORMULARZEM.odnosnik}
+          </OdnosnikPolityki>
+          {INFORMACJA_POD_FORMULARZEM.koniec}
+        </p>
       </div>
       {/* Pole-pułapka (R8): poza ekranem i poza drzewem dostępności, bez fokusu z klawiatury. */}
       <div aria-hidden="true" className="sr-only">
