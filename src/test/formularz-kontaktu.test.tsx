@@ -39,6 +39,9 @@ describe("Formularz bez JavaScriptu (review PR #49)", () => {
     const przycisk = dokument.querySelector('button[type="submit"]');
     expect(przycisk?.textContent).toBe("Wyślij zgłoszenie");
     expect(przycisk?.hasAttribute("disabled")).toBe(true);
+    expect(dokument.querySelector("noscript")?.textContent).toBe(
+      "Wysłanie formularza wymaga włączonego JavaScriptu. Napisz do nas: szkolenia@iskt.pl.",
+    );
   });
 });
 

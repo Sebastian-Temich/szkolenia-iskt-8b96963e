@@ -197,11 +197,12 @@ test.describe("Bez JavaScriptu (review PR #49)", () => {
     await expect(formularz.locator("form")).not.toHaveAttribute("action", /.*/);
     const przycisk = formularz.getByRole("button", { name: "Wyślij zgłoszenie" });
     await expect(przycisk).toBeDisabled();
-    await expect(
-      formularz.getByText(
-        "Wysłanie formularza wymaga włączonego JavaScriptu. Napisz do nas: szkolenia@iskt.pl.",
-      ),
-    ).toBeVisible();
+    // Playwright przy `javaScriptEnabled: false` wyłącza tylko wykonywanie skryptów; parser nadal
+    // traktuje treść <noscript> jako surowy tekst, więc nie da się sprawdzić jej widoczności.
+    // Sprawdzamy, że serwer ją wysłał (widoczność w przeglądarce bez JS: test SSR w Vitest).
+    await expect(formularz.locator("noscript")).toContainText(
+      "Wysłanie formularza wymaga włączonego JavaScriptu. Napisz do nas: szkolenia@iskt.pl.",
+    );
 
     const zadaniaPrzed = zadania.length;
     await formularz.getByLabel("Imię i nazwisko").fill("Janina Testowa");
