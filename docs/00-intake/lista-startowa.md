@@ -45,14 +45,14 @@ Cykl M3 wymienia tylko nowe rzeczy zewnętrzne (poprzednie: `docs/cykle/*/00-int
 
 ## Limity i płatności usług
 
-- [ ] Plan Resend wystarcza na start, PO CO: limit wysyłki (W-12), JAK: właściciel sprawdza w panelu
+- [x] Plan Resend wystarcza na start, PO CO: limit wysyłki (W-12), JAK: właściciel sprawdza w panelu
   Resend (Settings → Billing/Usage) plan i limity (plan darmowy: 100 e-maili dziennie, 3000
   miesięcznie) i potwierdza, że wystarczą; GDZIE: panel Resend; JAK sprawdzimy: potwierdzenie
   właściciela w decyzje.md.
 
 ## Materiały
 
-- [ ] Treść polityki prywatności i klauzuli przy formularzu, PO CO: informacja o przetwarzaniu
+- [x] Treść polityki prywatności i klauzuli przy formularzu, PO CO: informacja o przetwarzaniu
   danych (W-13), JAK: orkiestrator przygotowuje szkic (administrator ISKT Greenovation Sp. z o.o., cel,
   podstawa, okres, prawa, odbiorcy: dostawca poczty Resend), właściciel akceptuje go albo podaje
   własny tekst przed zadaniem W-13; GDZIE: odpowiedź w rozmowie, tekst trafia do kodu strony przez
