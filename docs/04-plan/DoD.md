@@ -1,7 +1,7 @@
 ---
 etap: 04-plan
-status: review
-iteracja: 0
+status: in-progress
+iteracja: 2
 akceptacja_wlasciciela: true
 ---
 
