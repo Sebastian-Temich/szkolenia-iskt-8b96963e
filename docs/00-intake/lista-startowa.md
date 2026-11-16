@@ -35,6 +35,6 @@ Cykl M4 wymienia tylko nowe rzeczy zewnętrzne (poprzednie: `docs/cykle/*/00-int
 
 ## Materiały
 
-- [ ] Supabase CLI na komputerze właściciela, PO CO: kopia i migracje (W-15), JAK: `brew install
+- [x] Supabase CLI na komputerze właściciela, PO CO: kopia i migracje (W-15), JAK: `brew install
   supabase/tap/supabase` (macOS), potem `supabase login`; GDZIE: Terminal właściciela; JAK sprawdzimy:
   `supabase --version` pokazuje wersję 2.x lub nowszą.

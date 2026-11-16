@@ -1,6 +1,6 @@
 ---
 etap: 00-intake
-status: in-progress
+status: done
 iteracja: 2
 akceptacja_wlasciciela: true
 ---
@@ -38,5 +38,5 @@ akceptacja_wlasciciela: true
 
 ## Checkpoint
 
-- [ ] Review etapu dało PASS (zaznacza reviewer, nie autor)
-- [ ] Właściciel zaakceptował specyfikację
+- [x] Review etapu dało PASS (zaznacza reviewer, nie autor) — PR #56, commit bb2a45a
+- [x] Właściciel zaakceptował specyfikację (2026-11-16, decyzje.md)
