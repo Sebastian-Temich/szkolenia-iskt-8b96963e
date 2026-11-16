@@ -23,9 +23,15 @@ afterEach(cleanup);
 const INFORMACJA =
   "Administratorem Twoich danych jest ISKT Greenovation Sp. z o.o. Przetwarzamy je, aby odpowiedzieć na zgłoszenie. Szczegóły i Twoje prawa: Polityka prywatności.";
 
+/**
+ * Szkic polityki zaakceptowany przez właściciela w cyklu M3 (W-13, issue #47). `shctl cykl new`
+ * (cykl M4-produkcja, 2026-11-16) przeniósł go z docs/00-intake/zrodla/ do archiwum cyklu M3 (#57).
+ */
+const SCIEZKA_SZKICU = "docs/cykle/M3-formularze-resend/00-intake/zrodla/polityka-prywatnosci.md";
+
 /** Tekst szkicu zaakceptowanego przez właściciela, bez nagłówków i znaczników Markdown. */
 function szkic() {
-  return readFileSync(resolve("docs/00-intake/zrodla/polityka-prywatnosci.md"), "utf8");
+  return readFileSync(resolve(SCIEZKA_SZKICU), "utf8");
 }
 const bezSpacji = (t: string) => t.replace(/\s+/g, " ").trim();
 
