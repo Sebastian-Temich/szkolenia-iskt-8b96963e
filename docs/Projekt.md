@@ -7,8 +7,8 @@ postep_etapy: "1/6"
 postep_zadania: "0/0"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Start etapu specyfikacja"
-ostatnia_synchronizacja: 2026-11-16T10:42:48Z
+nastepny_krok: "Agent przygotowuje etap specyfikacja"
+ostatnia_synchronizacja: 2026-11-16T10:43:16Z
 ---
 
 # szkolenia-iskt
@@ -20,8 +20,8 @@ ostatnia_synchronizacja: 2026-11-16T10:42:48Z
 - **Etap:** Specyfikacja
 - **Cykl:** M4-produkcja (od 2026-11-16); wcześniejsze: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md), [M3-formularze-resend](cykle/M3-formularze-resend/cykl.md)
 - **Postęp:** Etapy 1/6 · Zadania 0/0 w bieżącym zleceniu (łącznie 19)
-- **Co się dzieje:** etap specyfikacja jeszcze nie rozpoczęty
-- **Następny krok:** Start etapu specyfikacja
+- **Co się dzieje:** etap specyfikacja w przygotowaniu
+- **Następny krok:** Agent przygotowuje etap specyfikacja
 
 ## Czeka na Ciebie
 
