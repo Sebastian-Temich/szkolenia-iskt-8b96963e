@@ -80,6 +80,10 @@ odbiór.
 - 2026-11-15 `wydanie`: review
 - 2026-11-15 `wydanie`: done
 
+### Cykl M4-produkcja
+
+- 2026-11-16 cykl `M4-produkcja`: start (zlecenie_od 2026-11-16T10:42:19Z), cykl M3-formularze-resend w docs/cykle/M3-formularze-resend/
+
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
 

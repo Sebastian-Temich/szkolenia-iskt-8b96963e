@@ -1,14 +1,14 @@
 ---
 projekt: szkolenia-iskt
 tryb: M
-cykl: "M3-formularze-resend"
-etap_opis: "Zakończony"
-postep_etapy: "6/6"
-postep_zadania: "1/1"
+cykl: "M4-produkcja"
+etap_opis: "Specyfikacja"
+postep_etapy: "1/6"
+postep_zadania: "0/0"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Brak, zlecenie zakończone"
-ostatnia_synchronizacja: 2026-11-16T09:32:35Z
+nastepny_krok: "Start etapu specyfikacja"
+ostatnia_synchronizacja: 2026-11-16T10:42:48Z
 ---
 
 # szkolenia-iskt
@@ -17,27 +17,25 @@ ostatnia_synchronizacja: 2026-11-16T09:32:35Z
 
 ## Gdzie jesteśmy
 
-- **Etap:** Zakończony
-- **Cykl:** M3-formularze-resend (od 2026-11-14); wcześniejsze: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md)
-- **Postęp:** Etapy 6/6 · Zadania 1/1 w bieżącym zleceniu (łącznie 19)
-- **Co się dzieje:** nic w toku
-- **Następny krok:** Brak, zlecenie zakończone
+- **Etap:** Specyfikacja
+- **Cykl:** M4-produkcja (od 2026-11-16); wcześniejsze: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md), [M3-formularze-resend](cykle/M3-formularze-resend/cykl.md)
+- **Postęp:** Etapy 1/6 · Zadania 0/0 w bieżącym zleceniu (łącznie 19)
+- **Co się dzieje:** etap specyfikacja jeszcze nie rozpoczęty
+- **Następny krok:** Start etapu specyfikacja
 
 ## Czeka na Ciebie
 
-Nic. Projekt zakończony.
+Nic. Agenci pracują sami.
 
 ## Zadania
 
 Nic w toku.
 
-### Zrobione w bieżącym zleceniu (1)
+### Zrobione w bieżącym zleceniu (0)
 
-| Zadanie | Kamień | PR |
-|---|---|---|
-| #54 Dane firmy w polityce i kontakcie, dofinansowanie do 95%, Certyfikat/Egzamin | - | #55 |
+Jeszcze nic.
 
-Wcześniejsze zlecenia (18 zadań): [Historia](historia.md).
+Wcześniejsze zlecenia (19 zadań): [Historia](historia.md).
 
 ## Eskalacje i pytania
 
@@ -48,13 +46,8 @@ Zamknięte (1): [E-001](07-realizacja/escalations/E-001.md).
 ## Dokumenty
 
 - [Raport analizy](00-analiza/raport.md)
-- [Specyfikacja](00-intake/specyfikacja.md)
-- [Lista startowa](00-intake/lista-startowa.md)
-- [Plan](04-plan/plan.md)
 - [Decyzje](decyzje.md)
-- [Raport QA M3](08-qa/raport-M3.md)
-- Karty funkcji: [W-12](00-intake/funkcje/W-12.md), [W-13](00-intake/funkcje/W-13.md)
-- Poprzednie cykle: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md)
+- Poprzednie cykle: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md), [M3-formularze-resend](cykle/M3-formularze-resend/cykl.md)
 - [Historia](historia.md): punkt przekazania, dziennik etapów, wszystkie zadania
 
 ## Zasady projektu
