@@ -1,0 +1,62 @@
+# Plan: rewizja 475a0f6 (docs/04-plan/plan.md, cykl M4-produkcja, PR #59), rozpisano 2026-11-16 (UTC)
+# Specyfikacja: docs/00-intake/specyfikacja.md (cykl M4), W-15…W-17. ID kontynuują numerację projektu (M3: T9–T11).
+zadania:
+  - id: T12
+    tytul: Skrypty wdrożenia bazy produkcyjnej z testami w CI i instrukcja dla właściciela
+    cel: >-
+      Właściciel wdraża bazę produkcyjną (projekt Supabase vwnvbhiuundeunyzhdxj) według instrukcji
+      i sprawdzonych w CI skryptów (W-15, W-16, W-17). Decyzja i dowody:
+      docs/04-plan/adr/ADR-005-wdrozenie-bazy-produkcyjnej.md (pkt 1–9). Skrypty w nowym katalogu
+      supabase/produkcja/: 01-sprawdz-baze.sql (tylko odczyt; tryby „przed M2” i „po M2” — np.
+      parametr na górze pliku; porównanie ze schematem z docs/cykle/M1/04-plan/schemat-chmury.md;
+      historia migracji; symulacja anon i konta bez roli w transakcji z rollback), 02-dane-startowe.sql
+      (9 szkoleń z supabase/seed.sql, published, bez trenerów i kont, on conflict do nothing),
+      03-role.sql (rola editor dla adresów wpisanych na górze skryptu; w repo tylko adresy
+      @example.com; admin bez zmian; idempotentnie), 09-cofnij.sql (odwrotność M2, usunięcie 9
+      szkoleń startowych bez przypisań, usunięcie obu wpisów historii migracji; konto admin, konta
+      redakcji i ustawienia logowania zostają). Instrukcja docs/wydanie/techniczna/produkcja-baza.md:
+      kroki z poleceniami (supabase link --project-ref vwnvbhiuundeunyzhdxj, migration repair
+      --status applied 20261112232552, db push, migration list), SQL Editor dla skryptów, ustawienia
+      dashboardu (Site URL https://szkolenia.iskt.pl, Redirect URLs https://szkolenia.iskt.pl/**,
+      rejestracja wyłączona, hasła min. 8 z lowercase/uppercase/digits), tworzenie 2 kont z hasłem i
+      Auto Confirm, przekazanie haseł osobnym kanałem, logowanie przez lokalną aplikację z adresem
+      produkcji (.env.production.local, poza repo), co zrobić przy niezgodności schematu, rollback.
+      Bez sekretów, haseł i prawdziwych e-maili w repo. Agenci nie łączą się z produkcją.
+      Poza zakresem: wykonanie na produkcji (właściciel), migracje i config.toml (bez zmian),
+      Vercel, automatyczne wdrażanie z CI.
+    kryteria:
+      - "W-15: CI (job baza) na czystej bazie z migracji uruchamia 01-sprawdz-baze.sql w trybie „po M2” bez błędów, potem 09-cofnij.sql, 01-sprawdz-baze.sql w trybie „przed M2” bez błędów i z pustą historią migracji, potem ponowne wykonanie pliku migracji M2 przez psql -f bez błędów"
+      - "W-16: CI uruchamia 02-dane-startowe.sql dwa razy: 9 opublikowanych szkoleń, bez duplikatów, bez trenerów i przypisań (test pgTAP albo asercja w kroku CI)"
+      - "W-17: CI uruchamia 03-role.sql z kontami testowymi @example.com: rola editor nadana, ponowne uruchomienie bez zmian, rola admin nietknięta; symulacja w 01-sprawdz-baze.sql: anon widzi tylko opublikowane i nie wywoła is_staff(), konto bez roli dostaje is_staff() = false"
+      - "Instrukcja docs/wydanie/techniczna/produkcja-baza.md zawiera wszystkie kroki ADR-005 w kolejności, z poleceniami, oczekiwanym wynikiem każdego kroku i ścieżką przy błędzie (przegląd pliku); gitleaks i bash scripts/check-dod.sh przechodzą"
+      - "shctl db reset i shctl db test lokalnie oraz joby CI baza, jakosc i e2e zielone (seed.sql i migracje bez zmian)"
+    pliki: [supabase/produkcja/, supabase/tests/, .github/workflows/ci.yml, docs/wydanie/techniczna/produkcja-baza.md]
+    testy: shctl db test
+    zaleznosci: []
+    milestone: M4 Baza produkcyjna
+    typ: feature
+    kategoria: baza
+    stack: [supabase]
+    db_migracja: true
+
+  - id: T13
+    tytul: Dokumentacja wydania M4
+    cel: >-
+      Dokumentacja wydania M4 opisuje wdrożenie bazy produkcyjnej, wynik sprawdzenia po wykonaniu
+      instrukcji przez właściciela i znane ograniczenia (W-15…W-17, rezultat kamienia M4 w
+      docs/04-plan/plan.md). Czeka na zadanie właściciela „wykonać instrukcję produkcja-baza.md” i na
+      wynik sprawdzenia tylko do odczytu, który orkiestrator wpisze do celu albo komentarza issue.
+      Wzór: docs/cykle/M3-formularze-resend/wydanie/techniczna/M3.md i produktowa/M3.md. Poza
+      zakresem: zmiany kodu i skryptów (T12), Vercel.
+    kryteria:
+      - "docs/wydanie/techniczna/M4.md: lista migracji z historią w produkcji (bazowa jako zastosowana przez repair, M2 przez db push), wynik 01-sprawdz-baze.sql „po M2” i odczytu orkiestratora, plan rollbacku (09-cofnij.sql), ryzyka planu darmowego, odesłanie do kroku Vercel (przegląd pliku)"
+      - "docs/wydanie/produktowa/M4.md: prostym językiem co jest na produkcji (9 szkoleń, konta redakcji), czego jeszcze nie ma (strona na Vercel, domena) (przegląd pliku)"
+      - "Brak sekretów, haseł i e-maili redakcji w dokumentach; bash scripts/check-dod.sh przechodzi"
+    pliki: [docs/wydanie/techniczna/M4.md, docs/wydanie/produktowa/M4.md]
+    testy: pnpm test
+    zaleznosci: [T12]
+    milestone: M4 Baza produkcyjna
+    typ: docs
+    kategoria: baza
+    stack: [supabase]
+    db_migracja: false
