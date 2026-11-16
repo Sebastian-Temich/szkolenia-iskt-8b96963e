@@ -53,7 +53,8 @@ setup() {
 
 @test "ci.yml: bez testow skryptow szablonu (falszywe alarmy na zywych docs/ projektu)" {
   [ "$(yq -r '.jobs | has("testy-skryptow")' "$W/ci.yml")" = false ]
-  ! grep -q 'bats scripts/tests' "$W/ci.yml"
+  # Cały katalog nie; pojedyncze pliki projektu (np. scripts/tests/vercel-pomin-build.bats, #71) tak.
+  ! grep -qE 'bats (--recursive )?scripts/tests/?([[:space:]]|$)' "$W/ci.yml"
 }
 
 @test "szablon.yml: testy skryptow tylko w repo szablonu" {
