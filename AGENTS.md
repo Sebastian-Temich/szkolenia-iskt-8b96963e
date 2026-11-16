@@ -58,7 +58,7 @@ Stałe dla tego projektu (z analizy `docs/00-analiza/raport.md`):
 | Lint | `pnpm lint` (eslint; stan wyjściowy: 0 błędów, 6 ostrzeżeń w `src/components/ui`) |
 | Typy | `pnpm typecheck` (`tsc --noEmit`) |
 | Testy | `pnpm test` (vitest, jsdom; stan wyjściowy: 22 pliki, 230 testów zielonych) |
-| Build | `pnpm build` |
+| Build | `pnpm build` (wyjście Vercel `.vercel/output`, funkcja w fra1; ADR-006). Wtyczka nitro czyta `.env.local`, którego sandbox workera nie pozwala czytać: lokalnie build z czystego klonu bez `.env.local` albo w CI (job `jakosc`) |
 | Uruchomienie lokalne | `shctl db start`, `shctl db reset` (migracje i seed), `pnpm dev`; instrukcja w `README.md` (zadanie M1) |
 | Baza | `supabase/migrations/` (migracja bazowa 1:1 z chmurą, ADR-001), `supabase/seed.sql` (tylko lokalnie i CI), `supabase/tests/` (pgTAP: `shctl db test`); `shctl db` działa poza sandboksem workera, jeden stack naraz |
 | Zmienne | `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` (wzór w `.env.example`; lokalnie wartości z `shctl db status`); serwerowe, bez `VITE_` (ADR-004): `RESEND_API_KEY` (sekret, tylko `.env.local` właściciela), `ZGLOSZENIA_ODBIORCA`, `ZGLOSZENIA_NADAWCA`, opcjonalnie `ZGLOSZENIA_NAGLOWEK_IP` |
@@ -71,9 +71,15 @@ Zależności projektowe instalujesz sam. Narzędzie z brew instalujesz sam i dop
 
 ## Lovable
 
-Projekt powstał w Lovable, a synchronizacja Lovable z GitHubem zostaje włączona: zmiany z Lovable
-przychodzą na `main` jako commity, a nasze PR wracają do Lovable. Po przenosinach na Vercel
-właściciel odłącza Lovable (`docs/decyzje.md`, 2026-11-12).
+Projekt powstał w Lovable. Od #70 (ADR-006 pkt 1) build nie zależy od Lovable: `vite.config.ts`
+składa wtyczki sam (`tanstackStart`, `nitro` z presetem `vercel` i regionem fra1, React, Tailwind),
+a `@lovable.dev/vite-tanstack-config` i `vite-tsconfig-paths` nie są zależnościami. `pnpm build`
+tworzy `.vercel/output` (funkcja `__server.func` w fra1), `pnpm dev` serwuje na porcie 8080. Lovable
+nie zbuduje już tego projektu.
+
+Synchronizacja Lovable z GitHubem działa do odłączenia przez właściciela: zmiany z Lovable przychodzą
+na `main` jako commity, a nasze PR wracają do Lovable. Właściciel wyłącza ją przed połączeniem
+projektu z Vercel (ADR-006 pkt 2 i 7, `docs/decyzje.md`, 2026-11-12 i 2026-11-16). Do tego czasu:
 
 - Nie publikujesz w Lovable (Publish, Share, własna domena) bez decyzji właściciela w `docs/decyzje.md`.
 - Nie wyłączasz synchronizacji z GitHubem i nie zmieniasz ustawień projektu w Lovable.

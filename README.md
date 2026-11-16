@@ -19,7 +19,8 @@ Szczegóły: [specyfikacja M1](docs/00-intake/specyfikacja.md), stan wyjściowy:
   lokalne z instrukcją, testy zasad dostępu, CI.
 - Później, osobnymi zleceniami: zmiany funkcji, wysyłka formularza kontaktu, a na końcu migracja na
   bazę produkcyjną w chmurze i przeniesienie z Lovable na Vercel.
-- Produkcja działa dziś na Lovable; publikację w Lovable wykonuje wyłącznie właściciel.
+- M5 (ADR-006): build bez Lovable, na Vercel (region fra1). Do przełączenia domeny produkcja działa
+  na Lovable; publikację w Lovable i odłączenie synchronizacji wykonuje wyłącznie właściciel.
 
 ## Uruchomienie lokalne
 
@@ -78,7 +79,7 @@ Komendy uruchamiasz w katalogu repo (główna kopia albo worktree zadania).
    - `pnpm dev` wczytuje te zmienne z `.env.local` przy pierwszej wysyłce. Każda wysyłka z
      `pnpm dev` z kluczem to prawdziwy e-mail do biura; testy i CI używają atrapy.
 
-4. Uruchom serwis:
+4. Uruchom serwis (Vite na porcie 8080, `server.port` w `vite.config.ts`):
 
    ```sh
    pnpm dev
@@ -120,6 +121,23 @@ lokalnie, nigdy w chmurze ani na produkcji. Spełniają wymagania haseł z `supa
   danych startowych, wykonaj krok 2.
 - `shctl db start` kończy się błędem: włącz Docker Desktop i powtórz. Porty bazy to blok
   55421–55429; `shctl` odmawia, gdy działa baza innego projektu (zatrzymaj ją jej `shctl db stop`).
+
+## Build
+
+```sh
+pnpm build
+```
+
+Build nie zależy od Lovable (ADR-006): `vite.config.ts` składa wtyczki TanStack Start, nitro
+(preset `vercel`, region fra1), React i Tailwind. Wynik to katalog `.vercel/output` w formacie
+Vercel Build Output API: pliki statyczne w `static/`, serwer (SSR i funkcje serwerowe) w
+`functions/__server.func` z regionem `fra1` w `.vc-config.json`. Katalog nie trafia do repo.
+
+- Zmienne `VITE_*` są wpisywane w kod w czasie budowania, więc na Vercel muszą być ustawione przed
+  buildem. Zmienne serwerowe (`RESEND_API_KEY`, `ZGLOSZENIA_*`) czyta funkcja w czasie działania; na
+  Vercel `ZGLOSZENIA_NAGLOWEK_IP=x-vercel-forwarded-for`.
+- Build czyta `.env` i `.env.local` z katalogu repo (`VITE_*` z nich trafiają do kodu klienta), więc
+  wyniku lokalnego builda nie wdrażasz: build do wdrożenia robi Vercel ze swoimi zmiennymi.
 
 ## Testy
 
