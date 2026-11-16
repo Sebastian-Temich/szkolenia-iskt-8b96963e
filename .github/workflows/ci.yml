@@ -84,7 +84,28 @@ jobs:
           version: 2.121.0
       - name: Start (migracje i seed na czystej bazie)
         run: supabase start
-      - name: Reset bazy (migracje od zera)
+      # Skrypty wdrożenia produkcji (ADR-005 pkt 7, W-15–W-17, issue #61) na bazie z migracji BEZ
+      # seeda: seed.sql ma trenerów, przypisania i konta testowe, a produkcja ich nie ma. Skrypty idą
+      # przez psql -f jak w SQL Editor; potem zwykły reset z seedem i pgTAP.
+      - name: Reset bazy bez seeda (skrypty produkcji)
+        run: supabase db reset --local --no-seed
+      - name: Klient psql
+        run: |
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y postgresql-client
+          fi
+          psql --version
+      - name: Skrypty produkcji (supabase/produkcja)
+        run: |
+          DB_URL="$(supabase status -o json | jq -r '.DB_URL')"
+          if [ -z "$DB_URL" ] || [ "$DB_URL" = "null" ]; then
+            echo "Brak DB_URL w supabase status" >&2
+            exit 1
+          fi
+          export DB_URL
+          bash supabase/produkcja/ci/test-skryptow.sh
+      - name: Reset bazy (migracje i seed od zera)
         run: supabase db reset --local
       - name: Testy pgTAP
         run: supabase test db --local
