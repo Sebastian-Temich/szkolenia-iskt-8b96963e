@@ -24,6 +24,7 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 | #47 | Polityka prywatności i informacja o danych przy formularzu | done | 1 | M3 Wysyłka zgłoszeń | #50 merged | pass |
 | #48 | Dokumentacja wydania M3 | done | 1 | M3 Wysyłka zgłoszeń | #51 merged | pass |
 | #54 | Dane firmy w polityce i kontakcie, dofinansowanie do 95%, Certyfikat/Egzamin | done | 1 | - | #55 merged | pass |
+| #57 | Test polityki prywatności czyta szkic z archiwum cyklu M3 | todo | 0 | - | - | - |
 <!-- sync-status:end -->
 
 ## Mapa zadań z planu
@@ -52,4 +53,5 @@ Sekcję uzupełnia `shctl task create`: ID z pliku YAML i numer issue.
 | T10 | #47 | Polityka prywatności i informacja o danych przy formularzu | #46 |
 | T11 | #48 | Dokumentacja wydania M3 | #46, #47 |
 | S-20261115-dane-firmy-tresci | #54 | Dane firmy w polityce i kontakcie, dofinansowanie do 95%, Certyfikat/Egzamin | - |
+| S-20261116-test-polityki-sciezka | #57 | Test polityki prywatności czyta szkic z archiwum cyklu M3 | - |
 <!-- shctl:mapa:end -->
