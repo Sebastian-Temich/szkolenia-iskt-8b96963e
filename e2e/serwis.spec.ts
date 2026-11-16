@@ -24,6 +24,40 @@ test.describe("Strona główna (O-4)", () => {
   });
 });
 
+test.describe("Dane firmy i dofinansowanie (#54)", () => {
+  /** Stara wartość 80 procent jako osobna liczba. */
+  const OSIEMDZIESIAT = /(^|[^0-9])80\s?%/;
+
+  test("strona główna: 95%, Certyfikat/Egzamin i telefon tel: w kontakcie i stopce", async ({
+    page,
+  }) => {
+    await otworz(page, "/");
+    await expect(page.getByText("Dofinansowanie do 95%", { exact: true }).first()).toBeVisible();
+    await expect(page.getByText("Certyfikat/Egzamin", { exact: true }).first()).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 2, name: "Zapłać nawet o 95% mniej" }),
+    ).toBeVisible();
+    await expect(page.locator("body")).not.toContainText(OSIEMDZIESIAT);
+    await expect(page.locator("body")).not.toContainText("Numer przykładowy");
+    for (const obszar of [page.locator("#kontakt"), page.getByRole("contentinfo")]) {
+      await expect(obszar.getByRole("link", { name: "+48 504 083 825" })).toHaveAttribute(
+        "href",
+        "tel:+48504083825",
+      );
+    }
+  });
+
+  test("katalog bez 80 procent, szczegół szkolenia z dofinansowaniem do 95%", async ({ page }) => {
+    await otworz(page, "/szkolenia");
+    await expect(page.getByRole("status")).toHaveText("9 szkoleń");
+    await expect(page.locator("body")).not.toContainText(OSIEMDZIESIAT);
+    await otworz(page, "/szkolenia/genai");
+    await expect(page.getByText("Dofinansowanie do 95%", { exact: true })).toBeVisible();
+    await expect(page.getByText("za osobę · dofinansowanie do 95%", { exact: true })).toBeVisible();
+    await expect(page.locator("body")).not.toContainText(OSIEMDZIESIAT);
+  });
+});
+
 test.describe("Katalog /szkolenia (O-4)", () => {
   test("pokazuje 9 kart szkoleń", async ({ page }) => {
     await otworz(page, "/szkolenia");

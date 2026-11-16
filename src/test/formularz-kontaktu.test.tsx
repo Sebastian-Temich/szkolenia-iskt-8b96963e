@@ -79,13 +79,11 @@ describe("Formularz kontaktowy — pola i pusty formularz", () => {
     }
   });
 
-  it("nie ma odnośnika mailto ani tel", () => {
+  it("nie ma odnośnika mailto, a jedyny odnośnik tel: to telefon firmy (#54)", () => {
     const { container } = zamontuj();
-    for (const odnosnik of container.querySelectorAll("a")) {
-      const href = odnosnik.getAttribute("href") ?? "";
-      expect(href.startsWith("mailto:")).toBe(false);
-      expect(href.startsWith("tel:")).toBe(false);
-    }
+    const hrefy = [...container.querySelectorAll("a")].map((a) => a.getAttribute("href") ?? "");
+    expect(hrefy.filter((h) => h.startsWith("mailto:"))).toEqual([]);
+    expect(hrefy.filter((h) => h.startsWith("tel:"))).toEqual(["tel:+48504083825"]);
   });
 
   it("ma wszystkie pola makiety z widoczną etykietą", () => {
@@ -149,11 +147,13 @@ describe("Formularz kontaktowy — pola i pusty formularz", () => {
     ).toBeInTheDocument();
   });
 
-  it("dane kontaktowe są tekstem, z dopiskiem o przykładowym numerze", () => {
+  it("telefon +48 504 083 825 to odnośnik tel: bez dopisku o przykładowym numerze (#54)", () => {
     zamontuj();
     expect(screen.getByText("szkolenia@iskt.pl")).toBeInTheDocument();
-    expect(screen.getByText(/\+48 32 000 00 00/)).toBeInTheDocument();
-    expect(screen.getByText("Numer przykładowy")).toBeInTheDocument();
+    const telefon = screen.getByRole("link", { name: "+48 504 083 825" });
+    expect(telefon.getAttribute("href")).toBe("tel:+48504083825");
+    expect(screen.queryByText(/Numer przykładowy/)).toBeNull();
+    expect(screen.queryByText(/32 000 00 00/)).toBeNull();
     expect(screen.getByText("Żory, woj. śląskie")).toBeInTheDocument();
   });
 });

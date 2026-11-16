@@ -54,7 +54,7 @@ export function SzczegolSzkolenia({
                 {szkolenie.fundable && (
                   <span className="inline-flex items-center gap-1.5 rounded-pill border border-[var(--green-200)] bg-card px-3 py-[5px] text-[12.5px] font-semibold text-[var(--green-800)]">
                     <Banknote className="size-4" aria-hidden="true" />
-                    Dofinansowanie do 80%
+                    Dofinansowanie do 95%
                   </span>
                 )}
               </div>
