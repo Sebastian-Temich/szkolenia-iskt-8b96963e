@@ -100,7 +100,8 @@ gałęzi) do bieżącego commita, czyli wszystkie commity pushu. Pomija build (k
 zmieniony plik leży w `docs/`, `.github/`, `.claude/`, `.lovable/`, `scripts/` albo jest jednym z
 `CHANGELOG.md`, `README.md`, `AGENTS.md`, `CLAUDE.md`, `roadmap.md`. W każdym innym przypadku buduje
 (kod 1), także przy braku poprzedniego wdrożenia, gdy commit poprzedniego wdrożenia nie jest w klonie,
-i przy ponownym wdrożeniu tego samego commita. Zmiana w `supabase/` buduje. Lista jest w skrypcie,
+i przy ponownym wdrożeniu tego samego commita. Inny commit o zawartości identycznej z wdrożoną (np.
+zmiana w `docs/` i jej revert) nie buduje. Zmiana w `supabase/` buduje. Lista jest w skrypcie,
 testy: `scripts/tests/vercel-pomin-build.bats` (job CI `skrypty`).
 
 Oczekiwany wynik: pole pokazuje komendę zamiast `exit 0`. Skutek sprawdzisz w kroku 9 (log builda zawiera

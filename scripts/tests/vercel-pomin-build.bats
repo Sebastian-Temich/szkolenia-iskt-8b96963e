@@ -152,6 +152,15 @@ zmien() {
   [ "$status" -eq 1 ]
 }
 
+@test "rozne commity o identycznej zawartosci (docs/ i jego revert, review PR #74): pomija build (0)" {
+  WDROZONY="$(git rev-parse HEAD)"
+  zmien docs/x.md
+  git revert --no-edit HEAD >/dev/null
+  [ "$(git rev-parse HEAD)" != "$WDROZONY" ]
+  VERCEL_GIT_PREVIOUS_SHA="$WDROZONY" run bash "$SKRYPT"
+  [ "$status" -eq 0 ]
+}
+
 @test "wyjscie mowi, co zdecydowano" {
   zmien docs/x.md
   VERCEL_GIT_PREVIOUS_SHA="$POCZATEK" run bash "$SKRYPT"

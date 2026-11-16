@@ -7,8 +7,8 @@
 # Zakres zmian: od VERCEL_GIT_PREVIOUS_SHA (commit ostatniego udanego wdrożenia tej gałęzi) do HEAD,
 # więc liczą się wszystkie commity pushu, a nie tylko ostatni. Build jest pomijany tylko wtedy, gdy
 # KAŻDY zmieniony plik pasuje do listy POZA_APLIKACJA. W razie wątpliwości skrypt buduje: brak
-# VERCEL_GIT_PREVIOUS_SHA (pierwsze wdrożenie), commit spoza płytkiego klonu Vercel, pusty zakres
-# (ponowne wdrożenie tego samego commita) albo błąd git.
+# VERCEL_GIT_PREVIOUS_SHA (pierwsze wdrożenie), commit spoza płytkiego klonu Vercel, ten sam commit
+# co ostatnie wdrożenie (Redeploy) albo błąd git. Inny commit z identyczną zawartością: pomija.
 
 set -u
 
@@ -52,7 +52,15 @@ lista="$(mktemp "${TMPDIR:-/tmp}/vercel-pomin.XXXXXX")" || buduj "mktemp nie pow
 trap 'rm -f "$lista"' EXIT
 git diff --name-only --no-renames -z "$poprzedni" HEAD -- >"$lista" \
   || buduj "git diff $poprzedni..HEAD nie powiódł się"
-[ -s "$lista" ] || buduj "brak zmian od $poprzedni (ponowne wdrożenie)"
+if [ ! -s "$lista" ]; then
+  # Ten sam commit: ponowne wdrożenie (Redeploy) ma zbudować. Inny commit z identyczną zawartością
+  # (np. zmiana w docs/ i jej revert): wynik builda byłby taki sam jak wdrożony, więc pomija.
+  biezacy="$(git rev-parse HEAD 2>/dev/null)" || buduj "git rev-parse HEAD nie powiódł się"
+  wdrozony="$(git rev-parse "${poprzedni}^{commit}" 2>/dev/null)" || buduj "git rev-parse $poprzedni nie powiódł się"
+  [ "$biezacy" != "$wdrozony" ] || buduj "ten sam commit co ostatnie wdrożenie (ponowne wdrożenie)"
+  echo "vercel-pomin-build: pomijam build, zawartość identyczna z wdrożonym $poprzedni"
+  exit 0
+fi
 
 while IFS= read -r -d '' plik; do
   poza_aplikacja "$plik" || buduj "zmiana w aplikacji: $plik"
