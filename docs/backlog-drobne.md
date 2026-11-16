@@ -83,3 +83,4 @@ Plik wspólny, aktualizuje orkiestrator. Zgłoszenia ⚪ z review i „Drobne uw
 | 2026-11-16 | review PR #67 | Plan M5 (ADR): podglądy PR z bazą produkcyjną — panel na podglądzie zmienia dane produkcji; dopisać ryzyko i ograniczenie. | otwarta |
 | 2026-11-16 | review PR #67 | Spec M5 „Hosting”: niejasne zdanie o `staging_url`; konfiguracja.md bez zmian. | otwarta |
 | 2026-11-16 | CI PR #67 | Niestabilny test E2E: `e2e/dostepnosc.spec.ts:116` „/trenerzy/nowak z otwartym oknem zapytania (#41) › 375 px…” w webkit padł raz (run 43966907857), zielony po powtórce. | otwarta |
+| 2026-11-16 | review PR #68 | ADR-006: job `e2e` ma `if: pull_request || workflow_dispatch`, więc na pushu do `main` nie działa; w T14/T15 uruchamiać `e2e` na pushu do `main` albo w Deployment Checks wymagać tylko `jakosc` (E2E sprawdza PR). | otwarta |
