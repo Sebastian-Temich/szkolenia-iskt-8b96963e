@@ -2,13 +2,13 @@
 projekt: szkolenia-iskt
 tryb: M
 cykl: "M4-produkcja"
-etap_opis: "Odbiór i wydanie"
-postep_etapy: "5/6"
+etap_opis: "Zakończony"
+postep_etapy: "6/6"
 postep_zadania: "3/3"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Review etapu odbiór i wydanie, potem Twoja akceptacja"
-ostatnia_synchronizacja: 2026-11-16T21:47:37Z
+nastepny_krok: "Brak, zlecenie zakończone"
+ostatnia_synchronizacja: 2026-11-16T22:01:13Z
 ---
 
 # szkolenia-iskt
@@ -17,15 +17,15 @@ ostatnia_synchronizacja: 2026-11-16T21:47:37Z
 
 ## Gdzie jesteśmy
 
-- **Etap:** Odbiór i wydanie
+- **Etap:** Zakończony
 - **Cykl:** M4-produkcja (od 2026-11-16); wcześniejsze: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md), [M3-formularze-resend](cykle/M3-formularze-resend/cykl.md)
-- **Postęp:** Etapy 5/6 · Zadania 3/3 w bieżącym zleceniu (łącznie 22)
-- **Co się dzieje:** etap odbiór i wydanie w review
-- **Następny krok:** Review etapu odbiór i wydanie, potem Twoja akceptacja
+- **Postęp:** Etapy 6/6 · Zadania 3/3 w bieżącym zleceniu (łącznie 22)
+- **Co się dzieje:** nic w toku
+- **Następny krok:** Brak, zlecenie zakończone
 
 ## Czeka na Ciebie
 
-Nic. Agenci pracują sami.
+Nic. Projekt zakończony.
 
 ## Zadania
 
