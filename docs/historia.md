@@ -84,6 +84,7 @@ odbiór.
 
 - 2026-11-16 cykl `M4-produkcja`: start (zlecenie_od 2026-11-16T10:42:19Z), cykl M3-formularze-resend w docs/cykle/M3-formularze-resend/
 - 2026-11-16 `00-intake`: in-progress
+- 2026-11-16 `00-intake`: review
 
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
