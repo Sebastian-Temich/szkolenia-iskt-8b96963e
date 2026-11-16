@@ -2,13 +2,13 @@
 projekt: szkolenia-iskt
 tryb: M
 cykl: "M4-produkcja"
-etap_opis: "Plan"
-postep_etapy: "2/6"
+etap_opis: "Rozpisanie zadań"
+postep_etapy: "3/6"
 postep_zadania: "1/1"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Agent przygotowuje etap plan"
-ostatnia_synchronizacja: 2026-11-16T11:32:38Z
+nastepny_krok: "Agent przygotowuje etap rozpisanie zadań"
+ostatnia_synchronizacja: 2026-11-16T11:33:29Z
 ---
 
 # szkolenia-iskt
@@ -17,11 +17,11 @@ ostatnia_synchronizacja: 2026-11-16T11:32:38Z
 
 ## Gdzie jesteśmy
 
-- **Etap:** Plan
+- **Etap:** Rozpisanie zadań
 - **Cykl:** M4-produkcja (od 2026-11-16); wcześniejsze: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md), [M3-formularze-resend](cykle/M3-formularze-resend/cykl.md)
-- **Postęp:** Etapy 2/6 · Zadania 1/1 w bieżącym zleceniu (łącznie 20)
-- **Co się dzieje:** etap plan w przygotowaniu
-- **Następny krok:** Agent przygotowuje etap plan
+- **Postęp:** Etapy 3/6 · Zadania 1/1 w bieżącym zleceniu (łącznie 20)
+- **Co się dzieje:** etap rozpisanie zadań w przygotowaniu
+- **Następny krok:** Agent przygotowuje etap rozpisanie zadań
 
 ## Czeka na Ciebie
 
@@ -50,6 +50,7 @@ Zamknięte (1): [E-001](07-realizacja/escalations/E-001.md).
 - [Raport analizy](00-analiza/raport.md)
 - [Specyfikacja](00-intake/specyfikacja.md)
 - [Lista startowa](00-intake/lista-startowa.md)
+- [Plan](04-plan/plan.md)
 - [Decyzje](decyzje.md)
 - Poprzednie cykle: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md), [M3-formularze-resend](cykle/M3-formularze-resend/cykl.md)
 - [Historia](historia.md): punkt przekazania, dziennik etapów, wszystkie zadania

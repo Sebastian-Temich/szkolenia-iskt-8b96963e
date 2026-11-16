@@ -1,6 +1,6 @@
 ---
 etap: 06-zadania
-status: todo
+status: in-progress
 iteracja: 0
 akceptacja_wlasciciela: false
 ---
