@@ -113,6 +113,7 @@ odbiór.
 - 2026-11-16 `04-plan`: done
 - 2026-11-16 `06-zadania`: in-progress
 - 2026-11-16 `06-zadania`: review
+- 2026-11-16 `06-zadania`: done
 
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
