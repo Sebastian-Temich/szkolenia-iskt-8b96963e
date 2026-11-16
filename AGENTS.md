@@ -81,8 +81,10 @@ właściciel odłącza Lovable (`docs/decyzje.md`, 2026-11-12).
 - Nie przepisujesz opublikowanej historii `main` (force push, rebase, amend): Lovable ją straci.
 - Klient Supabase: `src/lib/supabase/klient.ts`, URL i klucz z env. Klucz publishable (`anon`) jest
   publiczny z założenia; klucz `service_role` nigdy nie trafia do kodu frontendu ani repo.
-- Bazy Supabase w chmurze nie zmieniasz: źródłem prawdy są migracje w repo, a nowa baza produkcyjna
-  powstanie z nich przy przenosinach (`docs/decyzje.md`, 2026-11-12).
+- Baza produkcyjna to projekt Supabase vwnvbhiuundeunyzhdxj (`docs/decyzje.md`, 2026-11-16,
+  ADR-005). Źródłem prawdy są migracje w repo; zmiany w produkcji wykonuje wyłącznie właściciel
+  (`supabase db push` i skrypty z `supabase/produkcja/`). Agenci nie łączą się z produkcją; orkiestrator
+  może ją tylko czytać przez MCP.
 
 ## Reguły aplikacji (z Lovable)
 
