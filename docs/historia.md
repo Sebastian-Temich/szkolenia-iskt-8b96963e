@@ -106,6 +106,8 @@ odbiór.
 - 2026-11-16 cykl `M5-vercel`: start (zlecenie_od 2026-11-16T22:01:43Z), cykl M4-produkcja w docs/cykle/M4-produkcja/
 - 2026-11-16 `00-intake`: in-progress
 - 2026-11-16 `00-intake`: review
+- 2026-11-16 `00-intake`: done
+- 2026-11-16 `04-plan`: in-progress
 
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->

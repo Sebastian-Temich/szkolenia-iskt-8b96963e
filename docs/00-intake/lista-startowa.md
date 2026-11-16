@@ -15,10 +15,10 @@ są tylko konta i dostępy poniżej.
 
 ## Konta i dostępy
 
-- [ ] Konto Vercel (plan Hobby), PO CO: hosting (W-18), JAK: rejestracja na vercel.com kontem GitHub
+- [x] Konto Vercel (plan Hobby), PO CO: hosting (W-18), JAK: rejestracja na vercel.com kontem GitHub
   właściciela (Continue with GitHub), bez tworzenia projektu (zrobimy to według instrukcji); GDZIE:
   vercel.com; JAK sprawdzimy: właściciel potwierdza, że loguje się do dashboardu Vercel.
-- [ ] Dostęp do panelu DNS seohost dla iskt.pl, PO CO: przełączenie domeny (W-22), JAK: właściciel
+- [x] Dostęp do panelu DNS seohost dla iskt.pl, PO CO: przełączenie domeny (W-22), JAK: właściciel
   sprawdza, że w panelu seohost widzi strefę DNS domeny iskt.pl i może edytować rekordy; GDZIE: panel
   seohost; JAK sprawdzimy: potwierdzenie właściciela.
 
