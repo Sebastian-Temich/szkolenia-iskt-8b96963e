@@ -370,6 +370,50 @@ describe("W-12/K5: limit zgłoszeń", () => {
     );
   });
 
+  it("W-19/O-37b: ZGLOSZENIA_NAGLOWEK_IP=x-vercel-forwarded-for: adres z nagłówka Vercel, nie z x-forwarded-for", () => {
+    const konfiguracja = czytajKonfiguracje({
+      RESEND_API_KEY: "re_x",
+      ZGLOSZENIA_ODBIORCA: "biuro@example.com",
+      ZGLOSZENIA_NADAWCA: "Szkolenia ISKT <formularz@example.com>",
+      ZGLOSZENIA_NAGLOWEK_IP: "x-vercel-forwarded-for",
+    });
+    expect(konfiguracja?.naglowekIp).toBe("x-vercel-forwarded-for");
+    const naglowki = new Headers({
+      "x-forwarded-for": "198.51.100.1",
+      "x-vercel-forwarded-for": "192.0.2.55",
+    });
+    expect(
+      adresKlienta({
+        naglowekIp: konfiguracja?.naglowekIp,
+        naglowki,
+        adresPolaczenia: "10.0.0.1",
+      }),
+    ).toBe("192.0.2.55");
+  });
+
+  it("W-19/O-37b: przy x-vercel-forwarded-for zmieniany x-forwarded-for nie zeruje limitu", async () => {
+    const statusy: number[] = [];
+    for (let i = 0; i < 6; i++) {
+      const naglowki = new Headers({
+        "x-forwarded-for": `198.51.100.${i}`,
+        "x-vercel-forwarded-for": "192.0.2.55",
+      });
+      const adres = adresKlienta({
+        naglowekIp: "x-vercel-forwarded-for",
+        naglowki,
+        // Na Vercel adres gniazda to adres proxy platformy, różny przy kolejnych żądaniach.
+        adresPolaczenia: `10.0.0.${i}`,
+      });
+      expect(adres).toBe("192.0.2.55");
+      const odp = await obsluzZgloszenie(
+        poprawne(),
+        kontekst({ adres, teraz: () => new Date(Date.UTC(2026, 10, 15, 10, i)) }),
+      );
+      statusy.push(odp.status);
+    }
+    expect(statusy).toEqual([200, 200, 200, 200, 200, 429]);
+  });
+
   it("51. wysyłka w godzinie z różnych adresów daje „Za dużo prób”", async () => {
     const atrapa = atrapaFetch(okResend);
     const statusy: number[] = [];

@@ -14,6 +14,8 @@ dist-ssr
 .vinxi
 .tanstack/**
 .nitro
+# Wyjście builda Vercel (nitro preset vercel, ADR-006)
+.vercel
 *.local
 
 # Playwright (E2E, issue #20)
