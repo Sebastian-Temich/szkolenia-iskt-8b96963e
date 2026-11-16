@@ -77,3 +77,4 @@ Plik wspólny, aktualizuje orkiestrator. Zgłoszenia ⚪ z review i „Drobne uw
 | 2026-11-16 | M4 wdrożenie | `supabase/produkcja/01-sprawdz-baze.sql`: skrót md5 ograniczeń z ARRAY różni się między chmurą (PG 17.11) a CI mimo zgodnych definicji; porównywać definicje po normalizacji (np. per ograniczenie) zamiast md5 całości. | otwarta |
 | 2026-11-16 | T-62 | `docs/wydanie/DoD.md` (etap wydania) nie był zmieniany: nie jest w „Zakresie” issue. | otwarta |
 | 2026-11-16 | QA M4 | (przyczyna: wymaganie) Konta redakcji i role (kroki 11–12 instrukcji `produkcja-baza.md`) do wykonania przez właściciela po uruchomieniu strony na Vercel. | otwarta |
+| 2026-11-16 | review PR #66 | `docs/wydanie/techniczna/M4.md`, wiersz #62 T13: „ten PR” i pusta kolumna squasha; wpisać PR #64 i SHA 6639362. | otwarta |
