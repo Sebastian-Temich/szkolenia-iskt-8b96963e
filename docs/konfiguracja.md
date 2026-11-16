@@ -5,7 +5,7 @@ tryb_procesu: M
 odbior_S: reczny
 # Początek bieżącego zlecenia (UTC, np. 2026-12-01T09:00:00Z) dla „Zrobione” i postępu zadań w
 # Projekt.md. Wpisuje orkiestrator przy kolejnym zleceniu M w tym projekcie; puste: od początku.
-zlecenie_od: "2026-11-16T10:42:19Z"
+zlecenie_od: "2026-11-16T22:01:43Z"
 # max_local: limit workerów Maca jest w /Users/Shared/sh/konfiguracja.md (domyślnie 2). Wpis tutaj
 # może go tylko obniżyć dla tego projektu, np. max_local: 1.
 max_review_queue: 3
@@ -48,8 +48,8 @@ adopt:
   supabase: true
   produkcja: brak dostępu agentów
 blok_portow: "55421-55429"
-cykl: M4-produkcja
-cykl_od: "2026-11-16T10:42:19Z"
+cykl: M5-vercel
+cykl_od: "2026-11-16T22:01:43Z"
 ---
 
 # Konfiguracja projektu

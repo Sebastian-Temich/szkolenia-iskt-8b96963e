@@ -1,14 +1,14 @@
 ---
 projekt: szkolenia-iskt
 tryb: M
-cykl: "M4-produkcja"
-etap_opis: "Zakończony"
-postep_etapy: "6/6"
-postep_zadania: "3/3"
+cykl: "M5-vercel"
+etap_opis: "Specyfikacja"
+postep_etapy: "1/6"
+postep_zadania: "0/0"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Brak, zlecenie zakończone"
-ostatnia_synchronizacja: 2026-11-16T22:01:13Z
+nastepny_krok: "Start etapu specyfikacja"
+ostatnia_synchronizacja: 2026-11-16T22:02:04Z
 ---
 
 # szkolenia-iskt
@@ -17,29 +17,25 @@ ostatnia_synchronizacja: 2026-11-16T22:01:13Z
 
 ## Gdzie jesteśmy
 
-- **Etap:** Zakończony
-- **Cykl:** M4-produkcja (od 2026-11-16); wcześniejsze: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md), [M3-formularze-resend](cykle/M3-formularze-resend/cykl.md)
-- **Postęp:** Etapy 6/6 · Zadania 3/3 w bieżącym zleceniu (łącznie 22)
-- **Co się dzieje:** nic w toku
-- **Następny krok:** Brak, zlecenie zakończone
+- **Etap:** Specyfikacja
+- **Cykl:** M5-vercel (od 2026-11-16); wcześniejsze: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md), [M3-formularze-resend](cykle/M3-formularze-resend/cykl.md), [M4-produkcja](cykle/M4-produkcja/cykl.md)
+- **Postęp:** Etapy 1/6 · Zadania 0/0 w bieżącym zleceniu (łącznie 22)
+- **Co się dzieje:** etap specyfikacja jeszcze nie rozpoczęty
+- **Następny krok:** Start etapu specyfikacja
 
 ## Czeka na Ciebie
 
-Nic. Projekt zakończony.
+Nic. Agenci pracują sami.
 
 ## Zadania
 
 Nic w toku.
 
-### Zrobione w bieżącym zleceniu (3)
+### Zrobione w bieżącym zleceniu (0)
 
-| Zadanie | Kamień | PR |
-|---|---|---|
-| #62 Dokumentacja wydania M4 | M4 Baza produkcyjna | #64 |
-| #61 Skrypty wdrożenia bazy produkcyjnej z testami w CI i instrukcja dla właściciela | M4 Baza produkcyjna | #63 |
-| #57 Test polityki prywatności czyta szkic z archiwum cyklu M3 | - | #58 |
+Jeszcze nic.
 
-Wcześniejsze zlecenia (19 zadań): [Historia](historia.md).
+Wcześniejsze zlecenia (22 zadań): [Historia](historia.md).
 
 ## Eskalacje i pytania
 
@@ -50,12 +46,8 @@ Zamknięte (1): [E-001](07-realizacja/escalations/E-001.md).
 ## Dokumenty
 
 - [Raport analizy](00-analiza/raport.md)
-- [Specyfikacja](00-intake/specyfikacja.md)
-- [Lista startowa](00-intake/lista-startowa.md)
-- [Plan](04-plan/plan.md)
 - [Decyzje](decyzje.md)
-- [Raport QA M4](08-qa/raport-M4.md)
-- Poprzednie cykle: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md), [M3-formularze-resend](cykle/M3-formularze-resend/cykl.md)
+- Poprzednie cykle: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md), [M3-formularze-resend](cykle/M3-formularze-resend/cykl.md), [M4-produkcja](cykle/M4-produkcja/cykl.md)
 - [Historia](historia.md): punkt przekazania, dziennik etapów, wszystkie zadania
 
 ## Zasady projektu
