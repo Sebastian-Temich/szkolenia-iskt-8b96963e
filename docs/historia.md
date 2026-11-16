@@ -94,10 +94,11 @@ odbiór.
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
 
-## Wszystkie zadania zrobione (19)
+## Wszystkie zadania zrobione (20)
 
 | Zadanie | Cykl | Kamień | PR | Zamknięte |
 |---|---|---|---|---|
+| #57 Test polityki prywatności czyta szkic z archiwum cyklu M3 | M4-produkcja · S | - | #58 | 2026-11-16 |
 | #54 Dane firmy w polityce i kontakcie, dofinansowanie do 95%, Certyfikat/Egzamin | M3-formularze-resend · S | - | #55 | 2026-11-16 |
 | #48 Dokumentacja wydania M3 | M3-formularze-resend | M3 Wysyłka zgłoszeń | #51 | 2026-11-15 |
 | #47 Polityka prywatności i informacja o danych przy formularzu | M3-formularze-resend | M3 Wysyłka zgłoszeń | #50 | 2026-11-15 |
