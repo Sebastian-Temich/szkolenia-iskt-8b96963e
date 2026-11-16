@@ -27,7 +27,7 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 | #57 | Test polityki prywatności czyta szkic z archiwum cyklu M3 | done | 1 | - | #58 merged | pass |
 | #61 | Skrypty wdrożenia bazy produkcyjnej z testami w CI i instrukcja dla właściciela | done | 1 | M4 Baza produkcyjna | #63 merged | pass |
 | #62 | Dokumentacja wydania M4 | done | 1 | M4 Baza produkcyjna | #64 merged | pass |
-| #70 | Build na Vercel bez konfiguracji Lovable | todo | 0 | M5 Produkcja na Vercel | - | - |
+| #70 | Build na Vercel bez konfiguracji Lovable | done | 1 | M5 Produkcja na Vercel | #73 merged | pass |
 | #71 | Workflow migracji produkcji, Ignored Build Step i instrukcja wdrożenia na Vercel | todo | 0 | M5 Produkcja na Vercel | - | - |
 | #72 | Dokumentacja wydania M5 | todo | 0 | M5 Produkcja na Vercel | - | - |
 <!-- sync-status:end -->

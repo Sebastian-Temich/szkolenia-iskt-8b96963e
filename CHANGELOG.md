@@ -26,3 +26,4 @@ Plik wspólny. Aktualizuje go wyłącznie orkiestrator przez `shctl task close`.
 - #57: Test polityki prywatności czyta szkic z archiwum cyklu M3 (PR #58)
 - #61: Skrypty wdrożenia bazy produkcyjnej z testami w CI i instrukcja dla właściciela (PR #63)
 - #62: Dokumentacja wydania M4 (PR #64)
+- #70: Build na Vercel bez konfiguracji Lovable (PR #73)

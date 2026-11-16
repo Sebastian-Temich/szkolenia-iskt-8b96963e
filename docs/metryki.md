@@ -26,6 +26,7 @@ Plik wspólny, aktualizuje orkiestrator. Pomiar poglądowy, służy też do por�
 | #57 Test polityki prywatności czyta szkic z archiwum cyklu M3 | S | 27min | 1 | 1 | 0 | PR #58 |
 | #61 Skrypty wdrożenia bazy produkcyjnej z testami w CI i instrukcja dla właściciela | M | 56min | 1 | 1 | 0 | PR #63 |
 | #62 Dokumentacja wydania M4 | M | 18min | 1 | 1 | 0 | PR #64 |
+| #70 Build na Vercel bez konfiguracji Lovable | M | 31min | 1 | 1 | 0 | PR #73 |
 
 Eskalacje nie liczą pytań workera (`shctl escalate --typ pytanie`): są w „Uwagach” jako „pytania: N”.
 
@@ -53,3 +54,4 @@ według przyczyny: wymaganie, kod, test, design.
 | review PR #58 (#57 Test polityki prywatności czyta szkic z archiwum cyklu M3) | 0 | 1 | 0 | 0 | 0 |
 | review PR #63 (#61 Skrypty wdrożenia bazy produkcyjnej z testami w CI i instrukcja dla właściciela) | 0 | 1 | 0 | 0 | 0 |
 | QA M4 | 1 | 0 | 1 | 0 | 0 |
+| review PR #73 (#70 Build na Vercel bez konfiguracji Lovable) | 0 | 2 | 0 | 0 | 0 |

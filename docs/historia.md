@@ -118,10 +118,11 @@ odbiór.
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
 
-## Wszystkie zadania zrobione (22)
+## Wszystkie zadania zrobione (23)
 
 | Zadanie | Cykl | Kamień | PR | Zamknięte |
 |---|---|---|---|---|
+| #70 Build na Vercel bez konfiguracji Lovable | M5-vercel | M5 Produkcja na Vercel | #73 | 2026-11-16 |
 | #62 Dokumentacja wydania M4 | M4-produkcja | M4 Baza produkcyjna | #64 | 2026-11-16 |
 | #61 Skrypty wdrożenia bazy produkcyjnej z testami w CI i instrukcja dla właściciela | M4-produkcja | M4 Baza produkcyjna | #63 | 2026-11-16 |
 | #57 Test polityki prywatności czyta szkic z archiwum cyklu M3 | M4-produkcja · S | - | #58 | 2026-11-16 |
