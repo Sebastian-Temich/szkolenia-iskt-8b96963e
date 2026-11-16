@@ -13,9 +13,8 @@ podłączenia aplikacji na Vercel (krok 2, osobny cykl).
 Stan obecny: specyfikacje poprzednich cykli w `docs/cykle/*/00-intake/`; schemat chmury
 `docs/cykle/M1/04-plan/schemat-chmury.md`; ADR-001 (baza z migracji), ADR-003 (uprawnienia). Odczyt
 z 2026-11-16 (`zrodlo.md`): treści puste, 1 konto admin, brak historii migracji. Ten sam projekt
-obsługuje dziś stronę na Lovable (nieopublikowane zmiany z repo), więc zmiany bazy widzi też Lovable:
-po kroku 1 strona na Lovable pokaże 9 szkoleń i będzie działać z zasadami M2 (założenie Z5 do
-potwierdzenia przez właściciela).
+był łączony z Lovable, ale według właściciela Lovable nie ma zmiennej tej bazy, więc zmiany go nie
+dotyczą (Z5, potwierdzone przez właściciela 2026-11-16).
 
 Zmiana zasady: „obecnej bazy w chmurze nie zmieniamy” (decyzje.md 2026-11-12) zastępuje decyzja
 właściciela z 2026-11-16: produkcja na istniejącym projekcie.
@@ -34,7 +33,7 @@ W zakresie:
 
 - Wpisanie historii migracji dla schematu, który już jest w chmurze (migracja bazowa jako
   zastosowana), i wgranie migracji M2 (ADR-003) do chmury (W-15).
-- Kopia zapasowa schematu i danych przed zmianą oraz sprawdzenie schematu po zmianie (W-15).
+- Sprawdzenie schematu przed `repair` i po zmianie; bez kopii zapasowej, bo baza jest pusta (Z3, decyzja właściciela), rollback skryptem (W-15).
 - Treści startowe: 9 szkoleń z repo, bez fikcyjnych trenerów (W-16).
 - Ustawienia logowania produkcji (adres strony, przekierowania, rejestracja wyłączona, wymagania
   haseł) i role dla 2 kont utworzonych przez właściciela (W-17).
@@ -61,8 +60,8 @@ kolejne wdrożenia szły zwykłą ścieżką migracji.
   (wykonaną).
 - Given baza po zmianie, when uruchomimy sprawdzenie schematu, then funkcje ról nie są dostępne dla
   anon, a każda tabela treści ma jedną zasadę odczytu na rolę (jak lokalnie po M2).
-- Given zmiana się nie powiedzie, when właściciel użyje kopii zapasowej z kroku przed zmianą według
-  instrukcji przywracania (sposób przywrócenia i sprawdzenie stanu po nim rozstrzyga plan), then
+- Given zmiana się nie powiedzie, when właściciel uruchomi skrypt cofający (odwraca migrację M2,
+  usuwa dane startowe i wpisy historii migracji; bez kopii zapasowej, bo baza jest pusta, Z3), then
   baza wraca do stanu sprzed zmiany, co potwierdza to samo sprawdzenie schematu.
 
 ### W-16: Oferta startowa w produkcji (musi) (bez karty: dane startowe, ekrany bez zmian)
@@ -110,9 +109,9 @@ Web (bez zmian).
 | Konsekwencja | Ustalenie |
 |---|---|
 | Narzędzia testowe | pgTAP i job `baza` (migracje na czystej bazie), skrypt sprawdzający schemat produkcji (SQL tylko do odczytu), test idempotencji danych startowych w CI |
-| Dodatkowe punkty DoD | Kopia zapasowa przed zmianą; brak sekretów (hasło bazy, klucze) w repo i logach |
+| Dodatkowe punkty DoD | Skrypt cofający M2 i dane startowe (zamiast kopii, Z3); brak sekretów (hasło bazy, klucze) w repo i logach |
 | Ograniczenia runnera | Agenci nie mają dostępu do produkcji; orkiestrator może tylko czytać bazę przez MCP (zgoda 2026-11-12) |
-| Kroki ręczne właściciela | Kopia, `supabase link`, `migration repair`, `db push`, dane startowe, ustawienia logowania, konta redakcji i role |
+| Kroki ręczne właściciela | `supabase link`, `migration repair`, `db push`, dane startowe, ustawienia logowania, konta redakcji i role |
 
 ## Stack
 
@@ -132,7 +131,7 @@ Nie dotyczy: brak zmian ekranów.
 
 ## Kroki ręczne właściciela
 
-- Kopia zapasowa schematu i danych przed zmianą.
+- Sprawdzenie schematu przed zmianą (kopia zapasowa niepotrzebna: baza pusta, Z3).
 - Połączenie CLI z projektem, oznaczenie migracji bazowej, wgranie migracji M2.
 - Wgranie danych startowych.
 - Ustawienia logowania w dashboardzie, utworzenie 2 kont z hasłem (Z4), nadanie ról skryptem.
@@ -145,7 +144,7 @@ Nie dotyczy: brak zmian ekranów.
 | Płatności | nie | Brak |
 | Dane osobowe | tak | ADR w 04-plan: dane kont redakcji (e-maile) tylko w auth Supabase; skrypty ról bez e-maili w repo (parametr przy uruchomieniu) |
 | AI przetwarzające dane użytkowników | nie | Brak |
-| Migracje bazy produkcyjnej | tak | ADR w 04-plan: przyjęcie istniejącej bazy (migration repair) i wdrożenie M2. Wiadomo: schemat 1:1 z migracją bazową (ADR-001), baza bez treści. Plan rozstrzyga: sprawdzenie zgodności przed `repair`, kopia, rollback, wpływ na Lovable |
+| Migracje bazy produkcyjnej | tak | ADR w 04-plan: przyjęcie istniejącej bazy (migration repair) i wdrożenie M2. Wiadomo: schemat 1:1 z migracją bazową (ADR-001), baza bez treści. Plan rozstrzyga: sprawdzenie zgodności przed `repair`, rollback skryptem cofającym (bez kopii, Z3) |
 | Upload plików, integracje zewnętrzne | nie | Brak |
 | Płatne usługi, sekrety, nowe konta | tak | ADR w 04-plan: hasło bazy tylko u właściciela (CLI pyta interaktywnie), bez zapisu w repo; plan darmowy (usypianie po 7 dniach, brak kopii automatycznych) jako znane ryzyko |
 
@@ -167,6 +166,6 @@ Tryb M: zmiana bazy produkcyjnej, uprawnień i kont to obszary ryzyka. Zlecono 2
 |---|---|---|---|---|
 | Z1 | W-17 | Rola 2 dodanych osób | editor (redaktor) dla obu; właściciel admin | luka bez pytania |
 | Z2 | W-16 | Status 9 szkoleń w produkcji | opublikowane, jak w repo (strona od razu ma ofertę; redakcja może wycofać w panelu) | luka bez pytania |
-| Z3 | W-15 | Kopia zapasowa | `supabase db dump` schematu i danych na komputer właściciela przed zmianą | luka bez pytania |
+| Z3 | W-15 | Kopia zapasowa | Niepotrzebna: baza pusta (właściciel 2026-11-16); rollback skryptem cofającym M2 i usuwającym dane startowe | właściciel |
 | Z4 | W-17 | Jak dodać 2 osoby, skoro aplikacja nie ma ekranu ustawienia hasła z zaproszenia | Właściciel tworzy konta w dashboardzie z hasłem i potwierdzonym e-mailem (Add user → Create new user) i przekazuje hasła osobom; zmiana hasła przez panel to osobne zlecenie | review PR #56, luka bez pytania |
-| Z5 | W-15, W-16 | Wpływ na stronę Lovable (ten sam projekt bazy) | Akceptowalny: Lovable pokaże 9 szkoleń i działa z zasadami M2 (zgodne wstecz); Lovable i tak zostaje bez publikacji | review PR #56, luka bez pytania |
+| Z5 | W-15, W-16 | Wpływ na stronę Lovable (ten sam projekt bazy) | Bez wpływu: Lovable nie ma zmiennej tej bazy (właściciel 2026-11-16) | właściciel |
