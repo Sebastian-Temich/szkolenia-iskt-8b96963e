@@ -4,11 +4,11 @@ tryb: M
 cykl: "M3-formularze-resend"
 etap_opis: "Zakończony"
 postep_etapy: "6/6"
-postep_zadania: "4/4"
+postep_zadania: "1/1"
 czeka_na_ciebie: 0
 eskalacje: 0
 nastepny_krok: "Brak, zlecenie zakończone"
-ostatnia_synchronizacja: 2026-11-15T21:24:30Z
+ostatnia_synchronizacja: 2026-11-16T09:32:35Z
 ---
 
 # szkolenia-iskt
@@ -19,7 +19,7 @@ ostatnia_synchronizacja: 2026-11-15T21:24:30Z
 
 - **Etap:** Zakończony
 - **Cykl:** M3-formularze-resend (od 2026-11-14); wcześniejsze: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md)
-- **Postęp:** Etapy 6/6 · Zadania 4/4 w bieżącym zleceniu (łącznie 18)
+- **Postęp:** Etapy 6/6 · Zadania 1/1 w bieżącym zleceniu (łącznie 19)
 - **Co się dzieje:** nic w toku
 - **Następny krok:** Brak, zlecenie zakończone
 
@@ -31,16 +31,13 @@ Nic. Projekt zakończony.
 
 Nic w toku.
 
-### Zrobione w bieżącym zleceniu (4)
+### Zrobione w bieżącym zleceniu (1)
 
 | Zadanie | Kamień | PR |
 |---|---|---|
-| #48 Dokumentacja wydania M3 | M3 Wysyłka zgłoszeń | #51 |
-| #47 Polityka prywatności i informacja o danych przy formularzu | M3 Wysyłka zgłoszeń | #50 |
-| #46 Wysyłka zgłoszenia z formularza przez Resend | M3 Wysyłka zgłoszeń | #49 |
-| #41 Okno zapytania na profilu trenera i porządki w dokumentacji wydań | - | #42 |
+| #54 Dane firmy w polityce i kontakcie, dofinansowanie do 95%, Certyfikat/Egzamin | - | #55 |
 
-Wcześniejsze zlecenia (14 zadań): [Historia](historia.md).
+Wcześniejsze zlecenia (18 zadań): [Historia](historia.md).
 
 ## Eskalacje i pytania
 

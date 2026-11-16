@@ -22,6 +22,7 @@ Plik wspólny, aktualizuje orkiestrator. Pomiar poglądowy, służy też do por�
 | #46 Wysyłka zgłoszenia z formularza przez Resend | M | 2h 3min | 1 | 2 | 1 | PR #49 |
 | #47 Polityka prywatności i informacja o danych przy formularzu | M | 35min | 1 | 1 | 0 | PR #50 |
 | #48 Dokumentacja wydania M3 | M | 17min | 1 | 1 | 0 | PR #51 |
+| #54 Dane firmy w polityce i kontakcie, dofinansowanie do 95%, Certyfikat/Egzamin | S | 12h 6min | 1 | 1 | 0 | PR #55 |
 
 Eskalacje nie liczą pytań workera (`shctl escalate --typ pytanie`): są w „Uwagach” jako „pytania: N”.
 
@@ -45,3 +46,4 @@ według przyczyny: wymaganie, kod, test, design.
 | review PR #49 (#46 Wysyłka zgłoszenia z formularza przez Resend) | 0 | 3 | 0 | 0 | 0 |
 | review PR #50 (#47 Polityka prywatności i informacja o danych przy formularzu) | 0 | 1 | 0 | 0 | 0 |
 | QA M3 | 1 | 0 | 1 | 0 | 0 |
+| review PR #55 (#54 Dane firmy w polityce i kontakcie, dofinansowanie do 95%, Certyfikat/Egzamin) | 1 | 0 | 0 | 0 | 0 |
