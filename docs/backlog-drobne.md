@@ -78,3 +78,4 @@ Plik wspólny, aktualizuje orkiestrator. Zgłoszenia ⚪ z review i „Drobne uw
 | 2026-11-16 | T-62 | `docs/wydanie/DoD.md` (etap wydania) nie był zmieniany: nie jest w „Zakresie” issue. | otwarta |
 | 2026-11-16 | QA M4 | (przyczyna: wymaganie) Konta redakcji i role (kroki 11–12 instrukcji `produkcja-baza.md`) do wykonania przez właściciela po uruchomieniu strony na Vercel. | otwarta |
 | 2026-11-16 | review PR #66 | `docs/wydanie/techniczna/M4.md`, wiersz #62 T13: „ten PR” i pusta kolumna squasha; wpisać PR #64 i SHA 6639362. | otwarta |
+| 2026-11-16 | orkiestrator | Po `shctl cykl new` (M5) instrukcja bazy produkcyjnej jest w `docs/cykle/M4-produkcja/wydanie/techniczna/produkcja-baza.md`; komentarze w `supabase/produkcja/*.sql` i `src/lib/polityka/tresc.ts` wskazują stare ścieżki. Propozycja dla sh-system: `cykl new` nie archiwizuje dokumentów eksploatacyjnych (np. instrukcji wdrożenia). | otwarta |
