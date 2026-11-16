@@ -81,8 +81,10 @@ właściciel odłącza Lovable (`docs/decyzje.md`, 2026-11-12).
 - Nie przepisujesz opublikowanej historii `main` (force push, rebase, amend): Lovable ją straci.
 - Klient Supabase: `src/lib/supabase/klient.ts`, URL i klucz z env. Klucz publishable (`anon`) jest
   publiczny z założenia; klucz `service_role` nigdy nie trafia do kodu frontendu ani repo.
-- Bazy Supabase w chmurze nie zmieniasz: źródłem prawdy są migracje w repo, a nowa baza produkcyjna
-  powstanie z nich przy przenosinach (`docs/decyzje.md`, 2026-11-12).
+- Baza produkcyjna to projekt Supabase vwnvbhiuundeunyzhdxj (`docs/decyzje.md`, 2026-11-16,
+  ADR-005). Źródłem prawdy są migracje w repo; zmiany w produkcji wykonuje wyłącznie właściciel
+  (`supabase db push` i skrypty z `supabase/produkcja/`). Agenci nie łączą się z produkcją; orkiestrator
+  może ją tylko czytać przez MCP.
 
 ## Reguły aplikacji (z Lovable)
 
@@ -238,7 +240,9 @@ powiadomienie. Eskalacja nie zatrzymuje zadań niezależnych.
 - Na serwerze i w GitHub Secrets nie ma żadnych poświadczeń produkcyjnych. Nie szukasz ich, nie
   prosisz o nie i nie dodajesz ich tam.
 - Produkcję wdraża wyłącznie właściciel ze swojego urządzenia przez `scripts/deploy-prod.sh`.
-  Workflow `deploy-prod` jest zablokowany. W etapie A nie ma deployów produkcyjnych.
+  Workflow `deploy-prod` jest zablokowany. W etapie A nie ma deployów produkcyjnych. Wyjątek
+  (ADR-005): bazę produkcyjną wdraża ręcznie właściciel (`supabase db push` i skrypty
+  `supabase/produkcja/`).
 - GitHub Secrets zawiera tylko `STAGING_DB_URL`. Staging migruje CI po pushu na `main` ze zmianą w
   `supabase/migrations/` (albo ręcznie: workflow „Staging”, Run workflow).
 - Gdy znajdziesz sekret w repo, przerywasz i eskalujesz. Nie próbujesz go usuwać z historii sam.
