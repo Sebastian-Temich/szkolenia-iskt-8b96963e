@@ -13,7 +13,9 @@ podłączenia aplikacji na Vercel (krok 2, osobny cykl).
 Stan obecny: specyfikacje poprzednich cykli w `docs/cykle/*/00-intake/`; schemat chmury
 `docs/cykle/M1/04-plan/schemat-chmury.md`; ADR-001 (baza z migracji), ADR-003 (uprawnienia). Odczyt
 z 2026-11-16 (`zrodlo.md`): treści puste, 1 konto admin, brak historii migracji. Ten sam projekt
-obsługuje dziś stronę na Lovable (nieopublikowane zmiany z repo), więc zmiany bazy widzi też Lovable.
+obsługuje dziś stronę na Lovable (nieopublikowane zmiany z repo), więc zmiany bazy widzi też Lovable:
+po kroku 1 strona na Lovable pokaże 9 szkoleń i będzie działać z zasadami M2 (założenie Z5 do
+potwierdzenia przez właściciela).
 
 Zmiana zasady: „obecnej bazy w chmurze nie zmieniamy” (decyzje.md 2026-11-12) zastępuje decyzja
 właściciela z 2026-11-16: produkcja na istniejącym projekcie.
@@ -23,7 +25,7 @@ właściciela z 2026-11-16: produkcja na istniejącym projekcie.
 | Grupa | Potrzeba | Uprawnienia |
 |---|---|---|
 | Właściciel (admin) | Bezpiecznie wgrać schemat i dane, zaprosić redakcję | Konto Supabase (dashboard, CLI), rola admin w aplikacji |
-| Redakcja (2 osoby) | Logować się do panelu i redagować ofertę | Rola editor w aplikacji, zaproszenie z dashboardu |
+| Redakcja (2 osoby) | Logować się do panelu i redagować ofertę | Rola editor w aplikacji, konto utworzone przez właściciela w dashboardzie (Z4) |
 | Odwiedzający | Zobaczyć ofertę szkoleń | anon: tylko opublikowane treści |
 
 ## Zakres
@@ -35,7 +37,7 @@ W zakresie:
 - Kopia zapasowa schematu i danych przed zmianą oraz sprawdzenie schematu po zmianie (W-15).
 - Treści startowe: 9 szkoleń z repo, bez fikcyjnych trenerów (W-16).
 - Ustawienia logowania produkcji (adres strony, przekierowania, rejestracja wyłączona, wymagania
-  haseł) i role dla 2 zaproszonych osób (W-17).
+  haseł) i role dla 2 kont utworzonych przez właściciela (W-17).
 - Instrukcja krok po kroku dla właściciela i skrypty sprawdzające (W-15…W-17).
 
 Poza zakresem:
@@ -59,8 +61,9 @@ kolejne wdrożenia szły zwykłą ścieżką migracji.
   (wykonaną).
 - Given baza po zmianie, when uruchomimy sprawdzenie schematu, then funkcje ról nie są dostępne dla
   anon, a każda tabela treści ma jedną zasadę odczytu na rolę (jak lokalnie po M2).
-- Given zmiana się nie powiedzie, when właściciel użyje kopii zapasowej z kroku przed zmianą, then
-  baza wraca do stanu sprzed zmiany.
+- Given zmiana się nie powiedzie, when właściciel użyje kopii zapasowej z kroku przed zmianą według
+  instrukcji przywracania (sposób przywrócenia i sprawdzenie stanu po nim rozstrzyga plan), then
+  baza wraca do stanu sprzed zmiany, co potwierdza to samo sprawdzenie schematu.
 
 ### W-16: Oferta startowa w produkcji (musi) (bez karty: dane startowe, ekrany bez zmian)
 
@@ -72,14 +75,16 @@ Jako odwiedzający chcę zobaczyć ofertę szkoleń na produkcji, aby wybrać sz
 
 ### W-17: Logowanie i konta redakcji w produkcji (musi) (bez karty: ustawienia i role, ekran panelu bez zmian)
 
-Jako właściciel chcę, aby logowanie produkcji było skonfigurowane jak lokalnie, a 2 zaproszone osoby
+Jako właściciel chcę, aby logowanie produkcji było skonfigurowane jak lokalnie, a 2 dodane osoby
 miały rolę redaktora, aby redakcja mogła pracować bez dostępu do niczego więcej.
 
 - Given ustawienia logowania w chmurze, when właściciel je zmieni według instrukcji, then adres strony
   to https://szkolenia.iskt.pl, rejestracja jest wyłączona, hasła mają co najmniej 8 znaków z małymi
   i wielkimi literami oraz cyframi.
-- Given 2 osoby zaproszone z dashboardu Supabase, when przyjmą zaproszenie i właściciel nada role
-  skryptem, then obie mają rolę editor, a właściciel zostaje admin.
+- Given 2 konta utworzone przez właściciela w dashboardzie Supabase z hasłem i potwierdzonym
+  e-mailem (Add user → Create new user; aplikacja loguje tylko hasłem i nie ma ekranu ustawienia
+  hasła z zaproszenia, Z4), when właściciel nada role skryptem, then obie osoby logują się do panelu
+  z rolą editor, a właściciel zostaje admin.
 - Given konto bez roli, when loguje się do panelu, then widzi „Brak uprawnień” (jak lokalnie).
 
 ## Karty funkcji
@@ -107,7 +112,7 @@ Web (bez zmian).
 | Narzędzia testowe | pgTAP i job `baza` (migracje na czystej bazie), skrypt sprawdzający schemat produkcji (SQL tylko do odczytu), test idempotencji danych startowych w CI |
 | Dodatkowe punkty DoD | Kopia zapasowa przed zmianą; brak sekretów (hasło bazy, klucze) w repo i logach |
 | Ograniczenia runnera | Agenci nie mają dostępu do produkcji; orkiestrator może tylko czytać bazę przez MCP (zgoda 2026-11-12) |
-| Kroki ręczne właściciela | Kopia, `supabase link`, `migration repair`, `db push`, dane startowe, ustawienia logowania, zaproszenia i role |
+| Kroki ręczne właściciela | Kopia, `supabase link`, `migration repair`, `db push`, dane startowe, ustawienia logowania, konta redakcji i role |
 
 ## Stack
 
@@ -130,7 +135,7 @@ Nie dotyczy: brak zmian ekranów.
 - Kopia zapasowa schematu i danych przed zmianą.
 - Połączenie CLI z projektem, oznaczenie migracji bazowej, wgranie migracji M2.
 - Wgranie danych startowych.
-- Ustawienia logowania w dashboardzie, zaproszenie 2 osób, nadanie ról skryptem.
+- Ustawienia logowania w dashboardzie, utworzenie 2 kont z hasłem (Z4), nadanie ról skryptem.
 
 ## Ryzyka
 
@@ -150,7 +155,7 @@ Nie dotyczy: brak zmian ekranów.
 |---|---|
 | Zadania | 2–3 (skrypty i instrukcja wdrożenia bazy; dokumentacja wydania) |
 | Czas kalendarzowy | 1 dzień |
-| Czas właściciela | ok. 1 godzina (wykonanie instrukcji, zaproszenia, sprawdzenie) |
+| Czas właściciela | ok. 1 godzina (wykonanie instrukcji, konta redakcji, sprawdzenie) |
 
 ## Tryb procesu
 
@@ -160,6 +165,8 @@ Tryb M: zmiana bazy produkcyjnej, uprawnień i kont to obszary ryzyka. Zlecono 2
 
 | Nr | Karta | Pytanie albo założenie | Proponowana odpowiedź | Źródło (zdecyduj sam, luka bez pytania) |
 |---|---|---|---|---|
-| Z1 | W-17 | Rola 2 zaproszonych osób | editor (redaktor) dla obu; właściciel admin | luka bez pytania |
+| Z1 | W-17 | Rola 2 dodanych osób | editor (redaktor) dla obu; właściciel admin | luka bez pytania |
 | Z2 | W-16 | Status 9 szkoleń w produkcji | opublikowane, jak w repo (strona od razu ma ofertę; redakcja może wycofać w panelu) | luka bez pytania |
 | Z3 | W-15 | Kopia zapasowa | `supabase db dump` schematu i danych na komputer właściciela przed zmianą | luka bez pytania |
+| Z4 | W-17 | Jak dodać 2 osoby, skoro aplikacja nie ma ekranu ustawienia hasła z zaproszenia | Właściciel tworzy konta w dashboardzie z hasłem i potwierdzonym e-mailem (Add user → Create new user) i przekazuje hasła osobom; zmiana hasła przez panel to osobne zlecenie | review PR #56, luka bez pytania |
+| Z5 | W-15, W-16 | Wpływ na stronę Lovable (ten sam projekt bazy) | Akceptowalny: Lovable pokaże 9 szkoleń i działa z zasadami M2 (zgodne wstecz); Lovable i tak zostaje bez publikacji | review PR #56, luka bez pytania |
