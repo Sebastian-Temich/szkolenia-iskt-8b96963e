@@ -1,0 +1,86 @@
+# Plan: rewizja e661717 (docs/04-plan/plan.md, cykl M5-vercel, PR #68), rozpisano 2026-11-16 (UTC)
+# Specyfikacja: docs/00-intake/specyfikacja.md (cykl M5), W-18…W-22. ID kontynuują numerację projektu (M4: T12–T13).
+zadania:
+  - id: T14
+    tytul: Build na Vercel bez konfiguracji Lovable
+    cel: >-
+      Strona buduje się i działa na Vercel w regionie fra1 bez @lovable.dev/vite-tanstack-config
+      (W-18, W-19). Decyzja: docs/04-plan/adr/ADR-006-produkcja-vercel.md pkt 1, 3, 4.
+      vite.config.ts z defineConfig z vite: tanstackStart (server.entry "server"), nitro z presetem
+      vercel i regionem fra1, @vitejs/plugin-react, @tailwindcss/vite, resolve.tsconfigPaths: true
+      (bez vite-tsconfig-paths), alias @, wtyczka naprawy komentarza w src/styles.css bez zmian,
+      devtools tylko w dev, pnpm dev na porcie 8080 (playwright i README tego używają). Usuń
+      @lovable.dev/vite-tanstack-config i vite-tsconfig-paths z zależności; dodaj brakujące paczki
+      jawnie (dokładne wersje zgodne z obecnym lockfile, jeśli były przechodnie). Zmienne VITE_* i
+      serwerowe (ADR-004) działają jak dziś. Test serwera: przy ZGLOSZENIA_NAGLOWEK_IP=x-vercel-forwarded-for
+      adres do limitu pochodzi z tego nagłówka, a zmieniany x-forwarded-for nie zeruje limitu
+      (O-37b). Zaktualizuj sekcję „Lovable” w AGENTS.md (build bez Lovable, synchronizacja do
+      odłączenia przez właściciela, ADR-006) i README (uruchomienie, build). Poza zakresem:
+      workflow migracji, Ignored Build Step, instrukcja Vercel (T15), zmiany funkcji aplikacji.
+    kryteria:
+      - "W-18: pnpm build tworzy wyjście Vercel (.vercel/output z funkcją w regionie fra1) bez @lovable.dev/vite-tanstack-config i vite-tsconfig-paths w package.json i lockfile (przegląd i wynik builda w raporcie)"
+      - "pnpm dev serwuje aplikację na porcie 8080 z tymi samymi stronami; pnpm lint, pnpm typecheck i pnpm test bez błędów; job e2e (chromium, webkit) zielony na PR"
+      - "W-19 / O-37b: test serwera (vitest) potwierdza adres z x-vercel-forwarded-for przy ZGLOSZENIA_NAGLOWEK_IP=x-vercel-forwarded-for i brak wpływu zmienianego x-forwarded-for na limit"
+      - "Wtyczka naprawy komentarza w styles.css działa (src/styles.css bez zmian, build bez błędu CSS); AGENTS.md (sekcja Lovable, Stack) i README opisują build bez Lovable"
+    pliki: [vite.config.ts, package.json, pnpm-lock.yaml, pnpm-workspace.yaml, tsconfig.json, src/server.ts, src/lib/zgloszenia/, src/test/, AGENTS.md, README.md, playwright.config.ts, .gitignore]
+    testy: pnpm test
+    zaleznosci: []
+    milestone: M5 Produkcja na Vercel
+    typ: feature
+    kategoria: ci
+    stack: [react]
+    db_migracja: false
+
+  - id: T15
+    tytul: Workflow migracji produkcji, Ignored Build Step i instrukcja wdrożenia na Vercel
+    cel: >-
+      Właściciel uruchamia produkcję na Vercel według instrukcji krok po kroku, migracje wdrażają
+      się po jego zatwierdzeniu, a zmiany samej dokumentacji nie wdrażają produkcji (W-18, W-20,
+      W-21, W-22). Decyzja: ADR-006 pkt 2, 4, 5, 6, 7. Pliki: .github/workflows/migracje-produkcja.yml
+      (push na main ze zmianą supabase/migrations/** i workflow_dispatch; environment production;
+      sekrety SUPABASE_ACCESS_TOKEN, SUPABASE_DB_PASSWORD, SUPABASE_PROJECT_ID tylko w środowisku;
+      supabase link, db push --dry-run, db push; permissions contents: read; concurrency bez
+      anulowania; bez pull_request_target); scripts/vercel-pomin-build.sh (wyjście 0 = pomiń build
+      Vercel, gdy commit zmienia tylko docs/, CHANGELOG.md i inne pliki spoza aplikacji; lista w
+      skrypcie; test bats w scripts/tests/); CI: e2e uruchamia się także na pushu do main albo
+      Deployment Checks wymagają tylko jakosc — wybór z uzasadnieniem w raporcie i instrukcji
+      (backlog review PR #68). Instrukcja docs/wydanie/techniczna/produkcja-vercel.md: kroki
+      właściciela w kolejności ADR-006 pkt 7 (odłączenie synchronizacji Lovable, ustawienia projektu
+      Vercel: framework, Ignored Build Step ze skryptem zamiast exit 0, region fra1, zmienne
+      Production i Preview z listą nazw, Deployment Checks, Deployment Protection, sprawdzenie
+      *.vercel.app, nowy klucz Resend, środowisko GitHub production z wymaganym reviewerem i
+      sekretami, test workflow przez workflow_dispatch, domena w Vercel i CNAME w seohost, rollback
+      aplikacji przez Promote i rollback DNS), każdy krok z oczekiwanym wynikiem i ścieżką przy
+      błędzie; bez wartości sekretów. Poza zakresem: konfiguracja builda (T14), wykonanie kroków.
+    kryteria:
+      - "W-21: migracje-produkcja.yml ma wyzwalacze push (paths supabase/migrations/**) i workflow_dispatch, environment production, concurrency bez cancel-in-progress, permissions contents: read, bez pull_request_target; sekrety tylko przez secrets.* w jobie środowiska (przegląd pliku, actionlint albo test workflow w CI zielony)"
+      - "W-18: scripts/vercel-pomin-build.sh zwraca 0 dla commita zmieniającego tylko docs/ albo CHANGELOG.md i 1 dla commita ze zmianą w src/, package.json, vite.config.ts lub supabase/ (test bats w scripts/tests/ w CI)"
+      - "Decyzja o e2e na pushu do main albo Deployment Checks tylko z jakosc zapisana w raporcie i instrukcji; CI zgodne z tą decyzją"
+      - "Instrukcja docs/wydanie/techniczna/produkcja-vercel.md zawiera wszystkie kroki ADR-006 pkt 7 w kolejności, z poleceniami lub ścieżkami w panelach, oczekiwanym wynikiem i rollbackiem (przegląd pliku); gitleaks i bash scripts/check-dod.sh przechodzą"
+    pliki: [.github/workflows/migracje-produkcja.yml, .github/workflows/ci.yml, scripts/vercel-pomin-build.sh, scripts/tests/, docs/wydanie/techniczna/produkcja-vercel.md]
+    testy: bats scripts/tests
+    zaleznosci: [T14]
+    milestone: M5 Produkcja na Vercel
+    typ: feature
+    kategoria: ci
+    stack: [supabase]
+    db_migracja: false
+
+  - id: T16
+    tytul: Dokumentacja wydania M5
+    cel: >-
+      Dokumentacja wydania M5 opisuje produkcję na Vercel, wynik wykonania instrukcji przez
+      właściciela (orkiestrator wpisze go w komentarzu issue), drogę wdrożeń i rollback (W-18…W-22).
+      Wzór: docs/cykle/M4-produkcja/wydanie/. Poza zakresem: zmiany kodu i instrukcji (T14, T15).
+    kryteria:
+      - "docs/wydanie/techniczna/M5.md: architektura wdrożeń (Vercel, Deployment Checks, Ignored Build Step, workflow migracji), zmienne bez wartości, rollback aplikacji i DNS, wynik sprawdzeń O-34…O-42 z komentarza issue (przegląd pliku)"
+      - "docs/wydanie/produktowa/M5.md: prostym językiem co się zmieniło (strona na Vercel pod szkolenia.iskt.pl, Lovable odłączony), co robi właściciel przy kolejnych zmianach (zatwierdzanie migracji), konta redakcji do założenia (przegląd pliku)"
+      - "Brak sekretów w dokumentach; bash scripts/check-dod.sh przechodzi"
+    pliki: [docs/wydanie/techniczna/M5.md, docs/wydanie/produktowa/M5.md]
+    testy: pnpm test
+    zaleznosci: [T14, T15]
+    milestone: M5 Produkcja na Vercel
+    typ: docs
+    kategoria: ci
+    stack: [react]
+    db_migracja: false
