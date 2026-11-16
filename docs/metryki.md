@@ -52,3 +52,4 @@ według przyczyny: wymaganie, kod, test, design.
 | review PR #55 (#54 Dane firmy w polityce i kontakcie, dofinansowanie do 95%, Certyfikat/Egzamin) | 1 | 0 | 0 | 0 | 0 |
 | review PR #58 (#57 Test polityki prywatności czyta szkic z archiwum cyklu M3) | 0 | 1 | 0 | 0 | 0 |
 | review PR #63 (#61 Skrypty wdrożenia bazy produkcyjnej z testami w CI i instrukcja dla właściciela) | 0 | 1 | 0 | 0 | 0 |
+| QA M4 | 1 | 0 | 1 | 0 | 0 |

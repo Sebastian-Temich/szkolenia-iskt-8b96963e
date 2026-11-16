@@ -95,6 +95,9 @@ odbiór.
 - 2026-11-16 `06-zadania`: review
 - 2026-11-16 `06-zadania`: done
 - 2026-11-16 `08-qa`: in-progress
+- 2026-11-16 `08-qa`: review
+- 2026-11-16 `08-qa`: done
+- 2026-11-16 `wydanie`: in-progress
 
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
