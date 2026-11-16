@@ -64,3 +64,4 @@ Plik wspólny, aktualizuje orkiestrator. Zgłoszenia ⚪ z review i „Drobne uw
 | 2026-11-16 | T-54 | Szkic `docs/00-intake/zrodla/polityka-prywatnosci.md` nadal ma „[pełny adres, KRS, NIP — do uzupełnienia…]” i „[data wdrożenia]”; to dokument źródłowy, poza zakresem. | otwarta |
 | 2026-11-16 | T-54 | Krok „Odbierz certyfikat” w `src/components/strona-glowna/tresci.ts` („Potwierdź nowe kompetencje uznawanym certyfikatem ISKT.”, sekcja „Jak to działa”) został bez zmian: issue dotyczy tylko potwierdzeń „Certyfikat ISKT”; do decyzji właściciela, czy też ma mówić o egzaminie. | otwarta |
 | 2026-11-16 | T-54 | E-mail `szkolenia@iskt.pl` jest nadal wpisany w `Footer.tsx` i `SekcjaKontakt.tsx` (nie z `DANE_FIRMY`). | otwarta |
+| 2026-11-16 | review PR #56 | Z4: plan ma wskazać bezpieczne przekazanie haseł redakcji (osobny kanał, poza repo i logami) i zalecić zmianę hasła; ekran zmiany hasła w panelu jako osobne zlecenie. | otwarta |
