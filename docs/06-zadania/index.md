@@ -25,6 +25,8 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 | #48 | Dokumentacja wydania M3 | done | 1 | M3 Wysyłka zgłoszeń | #51 merged | pass |
 | #54 | Dane firmy w polityce i kontakcie, dofinansowanie do 95%, Certyfikat/Egzamin | done | 1 | - | #55 merged | pass |
 | #57 | Test polityki prywatności czyta szkic z archiwum cyklu M3 | done | 1 | - | #58 merged | pass |
+| #61 | Skrypty wdrożenia bazy produkcyjnej z testami w CI i instrukcja dla właściciela | todo | 0 | M4 Baza produkcyjna | - | - |
+| #62 | Dokumentacja wydania M4 | todo | 0 | M4 Baza produkcyjna | - | - |
 <!-- sync-status:end -->
 
 ## Mapa zadań z planu
@@ -54,4 +56,6 @@ Sekcję uzupełnia `shctl task create`: ID z pliku YAML i numer issue.
 | T11 | #48 | Dokumentacja wydania M3 | #46, #47 |
 | S-20261115-dane-firmy-tresci | #54 | Dane firmy w polityce i kontakcie, dofinansowanie do 95%, Certyfikat/Egzamin | - |
 | S-20261116-test-polityki-sciezka | #57 | Test polityki prywatności czyta szkic z archiwum cyklu M3 | - |
+| T12 | #61 | Skrypty wdrożenia bazy produkcyjnej z testami w CI i instrukcja dla właściciela | - |
+| T13 | #62 | Dokumentacja wydania M4 | #61 |
 <!-- shctl:mapa:end -->

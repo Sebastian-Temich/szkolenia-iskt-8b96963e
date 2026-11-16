@@ -70,3 +70,4 @@ Plik wspólny, aktualizuje orkiestrator. Zgłoszenia ⚪ z review i „Drobne uw
 | 2026-11-16 | review PR #59 | ADR-005: punkt 9 stoi przed punktem 8 (numeracja 7, 9, 8); uporządkować. | otwarta |
 | 2026-11-16 | T-57 | Test zależy od ścieżki archiwum cyklu; kolejne przeniesienie archiwów (np. zmiana nazwy cyklu) znów go zepsuje. Można rozważyć przeniesienie tekstu szkicu do danych testowych w `src/`. | otwarta |
 | 2026-11-16 | review PR #58 | Komentarz nadal wskazuje starą ścieżkę docs/00-intake/zrodla/polityka-prywatnosci.md. Zmiana kodu aplikacji jest poza zakresem #57, więc warto zaktualizować komentarz osobnym zadaniem na archiwum cyklu M3. (`src/lib/polityka/tresc.ts:3`) | otwarta |
+| 2026-11-16 | review PR #60 | T12 (#61): seed.sql ma trenerów, przypisania i konta testowe; skrypty produkcji testować osobnym krokiem na bazie bez seeda (np. `supabase db reset --no-seed`, potem psql). | otwarta |

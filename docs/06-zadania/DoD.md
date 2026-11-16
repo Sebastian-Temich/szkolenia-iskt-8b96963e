@@ -1,6 +1,6 @@
 ---
 etap: 06-zadania
-status: review
+status: done
 iteracja: 0
 akceptacja_wlasciciela: false
 ---
@@ -9,7 +9,7 @@ akceptacja_wlasciciela: false
 
 ## Dokumentacja
 
-- [x] `zadania.yaml` jest kompletny, a `index.md` zsynchronizowany z issue (plik kompletny: `shctl task create --dry-run` kod 0; issue i `index.md` po merge'u przez `shctl task create`)
+- [x] `zadania.yaml` jest kompletny, a `index.md` zsynchronizowany z issue (plik kompletny: `shctl task create --dry-run` kod 0; issue #61–#62 i `index.md` założone przez `shctl task create` na `main`)
 
 ## Funkcjonalność
 
@@ -27,4 +27,4 @@ akceptacja_wlasciciela: false
 
 ## Checkpoint
 
-- [ ] Review etapu dało PASS (zaznacza reviewer, nie autor)
+- [x] Review etapu dało PASS (zaznacza reviewer, nie autor) — PR #60, commit ac8a582
