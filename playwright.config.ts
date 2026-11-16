@@ -3,7 +3,7 @@ import { defineConfig, devices } from "@playwright/test";
 /**
  * Testy E2E (issue #20, AGENTS.md „Testy E2E”): chromium i webkit, headless, `workers` z
  * `playwright_workers` w docs/konfiguracja.md. Adres serwisu z BASE_URL (np. staging); bez
- * BASE_URL Playwright sam stawia `pnpm dev` na porcie 8080 (port z konfiguracji Lovable).
+ * BASE_URL Playwright sam stawia `pnpm dev` na porcie 8080 (`server.port` w vite.config.ts).
  * Dane pochodzą z lokalnej bazy z migracji i `supabase/seed.sql` (job CI `e2e`).
  */
 const baseUrlZEnv = process.env["BASE_URL"]?.trim();
