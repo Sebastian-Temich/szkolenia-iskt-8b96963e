@@ -9,23 +9,23 @@ akceptacja_wlasciciela: true
 
 ## Dokumentacja
 
-- [ ] `techniczna/` zawiera dokumentację w krótkiej formie
-- [ ] `produktowa/` zawiera dokumentację w krótkiej formie
+- [x] `techniczna/` zawiera dokumentację w krótkiej formie
+- [x] `produktowa/` zawiera dokumentację w krótkiej formie
 <!-- tylko-tryb:L -->
 - [ ] `architektoniczna/` zawiera dokumentację
 <!-- /tylko-tryb -->
-- [ ] `CHANGELOG.md` obejmuje wszystkie zadania
-- [ ] `techniczna/` zawiera listę migracji i plan rollbacku
+- [x] `CHANGELOG.md` obejmuje wszystkie zadania
+- [x] `techniczna/` zawiera listę migracji i plan rollbacku
 
 ## Funkcjonalność
 
-- [ ] Aplikacja uruchamia się według dokumentacji technicznej
-- [ ] Wdrożenie przez `scripts/deploy-prod.sh` jest opisane dla właściciela (w pilocie bez deployu prod)
+- [x] Aplikacja uruchamia się według dokumentacji technicznej
+- [x] Wdrożenie przez `scripts/deploy-prod.sh` jest opisane dla właściciela (w pilocie bez deployu prod)
 
 ## Checklisty jakości
 
-- [ ] `metryki.md` jest uzupełniony
-- [ ] Przekazanie do eksploatacji jest opisane w dokumentacji wydania
+- [x] `metryki.md` jest uzupełniony
+- [x] Przekazanie do eksploatacji jest opisane w dokumentacji wydania
 
 ## Checkpoint
 
