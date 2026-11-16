@@ -23,6 +23,16 @@ Obszary ryzyka: dane osobowe, migracje produkcji, integracje, sekrety.
    Wycofanie: „Promote to Production” poprzedniego wdrożenia w Vercel (instrukcja). Zmienia zasadę z
    AGENTS.md „produkcję wdraża wyłącznie właściciel przez deploy-prod.sh”: produkcję aplikacji wdraża
    merge do `main` po review i zielonym CI; `scripts/deploy-prod.sh` przestaje być ścieżką aplikacji.
+   **Wymuszenie gwarancji** (na `main` trafiają też bezpośrednie commity orkiestratora z plikami
+   wspólnymi, a do odłączenia Lovable także commity z Lovable):
+   - **Ignored Build Step** w Vercel: skrypt `scripts/vercel-pomin-build.sh` pomija build, gdy commit
+     zmienia wyłącznie `docs/`, `CHANGELOG.md` albo inne pliki spoza aplikacji (lista w skrypcie,
+     testowana w CI); commity orkiestratora z plikami wspólnymi nie wdrażają produkcji;
+   - **Vercel Deployment Checks**: wdrożenie produkcji czeka na zielone checki GitHub `jakosc` i
+     `e2e` tego commita (zadanie właściciela w instrukcji); bez nich Vercel nie promuje wdrożenia;
+   - **Lovable odłączony przed połączeniem Vercel** (zmiana kolejności Z2): synchronizacja Lovable z
+     GitHub zostaje wyłączona przed importem projektu do Vercel; opublikowana strona Lovable działa
+     dalej pod domeną do przełączenia DNS, ale nie wprowadza już commitów do repo.
 3. **Kolejność aplikacja–migracja.** Migracje zgodne wstecz (expand/contract, AGENTS.md): kod z `main`
    musi działać na schemacie sprzed migracji, bo aplikacja wdraża się od razu, a migracja po
    zatwierdzeniu. Kod zależny od nowej kolumny trafia w kolejnym PR po wdrożeniu migracji.
@@ -39,11 +49,13 @@ Obszary ryzyka: dane osobowe, migracje produkcji, integracje, sekrety.
    GitHub `production` (wymagany reviewer: właściciel); kroki: `supabase link --project-ref` z
    `SUPABASE_PROJECT_ID`, `supabase db push --dry-run`, `supabase db push`. Sekrety
    `SUPABASE_ACCESS_TOKEN`, `SUPABASE_DB_PASSWORD`, `SUPABASE_PROJECT_ID` tylko w środowisku
-   `production`; brak `pull_request_target`; uprawnienia `contents: read`. Zmienia zasadę „brak
+   `production`; brak `pull_request_target`; uprawnienia `contents: read`; `concurrency` z jedną
+   grupą dla migracji produkcji, bez anulowania trwającego przebiegu. Zmienia zasadę „brak
    poświadczeń produkcji w GitHub” (AGENTS.md): wyjątek ograniczony do tego środowiska.
-7. **Domena (W-22, Z2).** Najpierw `*.vercel.app` i sprawdzenie, potem domena w Vercel i rekord
-   CNAME `szkolenia` → wartość wskazana przez Vercel w panelu seohost, potem odłączenie Lovable
-   (GitHub → Lovable). Wycofanie DNS: przywrócenie poprzedniego rekordu.
+7. **Domena (W-22, Z2).** Odłączenie synchronizacji Lovable (pkt 2), potem `*.vercel.app` i
+   sprawdzenie, potem domena w Vercel i rekord CNAME `szkolenia` → wartość wskazana przez Vercel w
+   panelu seohost. Wycofanie DNS: przywrócenie poprzedniego rekordu (strona Lovable dalej
+   opublikowana do czasu, aż właściciel ją wyłączy).
 8. **Limit zgłoszeń (Z3).** W pamięci per instancja (ADR-004), trwały licznik później.
 
 ## Konsekwencje

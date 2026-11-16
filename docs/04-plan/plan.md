@@ -56,9 +56,10 @@ migracje workflow z zatwierdzeniem właściciela; `scripts/deploy-prod.sh` i zab
 |---|---|---|---|---|
 | M5 | Produkcja na Vercel | Build bez Lovable z CI zielonym; strona na `*.vercel.app` z bazą produkcyjną i wysyłką; podglądy za ochroną; workflow migracji z zatwierdzeniem; domena szkolenia.iskt.pl na Vercel; Lovable odłączony; dokumentacja wydania M5 | W-18…W-22 | Plan zaakceptowany |
 
-Zadania (06-zadania, ID od T14): build Vercel bez Lovable (kod, CI, AGENTS.md, README) → workflow
-migracji i instrukcja wdrożenia dla właściciela (Vercel, zmienne, ochrona, środowisko GitHub, DNS,
-Lovable, rollback) → (wykonanie przez właściciela krok po kroku) → dokumentacja wydania M5.
+Zadania (06-zadania, ID od T14): build Vercel bez Lovable (kod, CI, README, sekcja „Lovable” w
+AGENTS.md, test adresu z `x-vercel-forwarded-for`) → workflow migracji, skrypt Ignored Build Step i
+instrukcja wdrożenia dla właściciela (Lovable, Vercel, Deployment Checks, zmienne, ochrona, środowisko
+GitHub, DNS, rollback) → (wykonanie przez właściciela krok po kroku) → dokumentacja wydania M5.
 
 ## Zadania właściciela
 
@@ -67,8 +68,9 @@ Lovable, rollback) → (wykonanie przez właściciela krok po kroku) → dokumen
 | Projekt Vercel z repo, region fra1, zmienne Production i Preview, Deployment Protection | QA M5 | instrukcja z T15, krok po kroku z orkiestratorem |
 | Nowy klucz Resend dla produkcji | zmiennymi Production | wartość tylko w Vercel |
 | Środowisko GitHub `production` z wymaganym zatwierdzeniem i sekretami Supabase | pierwszą migracją po M5 | ADR-006 pkt 6 |
+| Odłączenie synchronizacji Lovable od GitHub | przed importem projektu do Vercel | odpowiedź 7, ADR-006 pkt 2 (kolejność zmieniona po review planu) |
+| Vercel Deployment Checks (`jakosc`, `e2e`) i Ignored Build Step | przed pierwszym wdrożeniem produkcji | ADR-006 pkt 2 |
 | Rekord DNS w seohost, domena w Vercel | po sprawdzeniu `*.vercel.app` | Z2 |
-| Odłączenie Lovable od GitHub | po domenie | odpowiedź 7 |
 | Projekt Supabase staging, `STAGING_DB_URL` | — | nie dotyczy: brak stagingu (podglądy PR) |
 | Konta redakcji (instrukcja M4, kroki 11–12) | po uruchomieniu strony | decyzja 2026-11-16 |
 
@@ -78,6 +80,7 @@ Lovable, rollback) → (wykonanie przez właściciela krok po kroku) → dokumen
 |---|---|---|---|
 | Build bez Lovable różni się zachowaniem (SSR, zmienne, devtools) | Strona albo funkcja serwerowa nie działa | Pełne CI (jakość, build, E2E) na nowej konfiguracji; build Vercel na podglądzie PR przed merge | worker T14, review |
 | Merge do `main` z kodem wymagającym niewdrożonej migracji | Błędy na produkcji | Expand/contract (ADR-006 pkt 3), review pilnuje | review |
+| Commity na `main` bez review i CI (pliki wspólne orkiestratora, Lovable) wdrażają produkcję | Nieprzetestowany kod na produkcji, przywrócenie konfiguracji Lovable | Ignored Build Step dla zmian spoza aplikacji, Vercel Deployment Checks (`jakosc`, `e2e`), Lovable odłączony przed połączeniem Vercel (ADR-006 pkt 2) | worker T15, właściciel |
 | Sekrety produkcji w GitHub | Wyciek dostępu do bazy | Tylko środowisko `production` z zatwierdzeniem, bez `pull_request_target`, minimalne uprawnienia | worker T15, właściciel |
 | Panel na podglądzie zmienia produkcję | Niezamierzone zmiany danych | Instrukcja dla redakcji, podglądy tylko dla zalogowanych do Vercel | właściciel |
 | Plan Hobby Vercel a regulamin | Blokada konta | Znane ryzyko, decyzja właściciela | właściciel |
@@ -91,6 +94,8 @@ Lovable, rollback) → (wykonanie przez właściciela krok po kroku) → dokumen
 | O-35 | Strona na Vercel | `*.vercel.app` po merge: `/`, `/szkolenia`, szczegół, `/trenerzy`, `/polityka-prywatnosci` | 9 szkoleń z bazy produkcyjnej, strony działają | W-18 | M5 |
 | O-36 | Panel na produkcji | Logowanie kontem admina na `*.vercel.app/panel` | Lista szkoleń | W-18 | M5 |
 | O-37 | Wysyłka (ręcznie, właściciel) | Zgłoszenie z produkcji | E-mail na biuro@iskt.pl | W-19 | M5 |
+| O-37b | Adres do limitu na Vercel | Test serwera (T14): `ZGLOSZENIA_NAGLOWEK_IP=x-vercel-forwarded-for` bierze adres z tego nagłówka, a zmieniany `x-forwarded-for` nie zeruje limitu | Zielony test | W-19 | M5 |
+| O-42 | Commit tylko z docs na `main` | Commit orkiestratora z plikami wspólnymi | Vercel pomija build (Ignored Build Step), produkcja bez zmian | W-18 | M5 |
 | O-38 | Podgląd chroniony | Adres podglądu PR w oknie prywatnym | Wymaga logowania do Vercel; formularz pokazuje błąd wysyłki | W-20 | M5 |
 | O-39 | Workflow migracji | `workflow_dispatch` bez nowych migracji → zatwierdzenie | `db push --dry-run`: brak migracji do wdrożenia; sekrety niewidoczne w logu | W-21 | M5 |
 | O-40 | Domena | https://szkolenia.iskt.pl | Strona z Vercel, certyfikat HTTPS | W-22 | M5 |

@@ -245,7 +245,8 @@ powiadomienie. Eskalacja nie zatrzymuje zadań niezależnych.
   projekcie: bazę produkcyjną wdrożył ręcznie właściciel (ADR-005); od M5 (ADR-006) aplikację wdraża
   merge do `main` przez integrację Git Vercel, a migracje workflow `migracje-produkcja.yml` po
   zatwierdzeniu właściciela. Sekrety Supabase produkcji są wyłącznie w środowisku GitHub `production`
-  (wyjątek od zasady niżej); agenci ich nie czytają i nie używają.
+  (wyjątek od zasady wyżej o braku poświadczeń produkcji w GitHub); agenci ich nie czytają i nie
+  używają. Ten projekt nie ma stagingu ani `STAGING_DB_URL` (podglądy PR zamiast stagingu).
 - GitHub Secrets zawiera tylko `STAGING_DB_URL`. Staging migruje CI po pushu na `main` ze zmianą w
   `supabase/migrations/` (albo ręcznie: workflow „Staging”, Run workflow).
 - Gdy znajdziesz sekret w repo, przerywasz i eskalujesz. Nie próbujesz go usuwać z historii sam.
