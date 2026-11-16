@@ -26,7 +26,7 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 | #54 | Dane firmy w polityce i kontakcie, dofinansowanie do 95%, Certyfikat/Egzamin | done | 1 | - | #55 merged | pass |
 | #57 | Test polityki prywatności czyta szkic z archiwum cyklu M3 | done | 1 | - | #58 merged | pass |
 | #61 | Skrypty wdrożenia bazy produkcyjnej z testami w CI i instrukcja dla właściciela | done | 1 | M4 Baza produkcyjna | #63 merged | pass |
-| #62 | Dokumentacja wydania M4 | todo | 0 | M4 Baza produkcyjna | - | - |
+| #62 | Dokumentacja wydania M4 | done | 1 | M4 Baza produkcyjna | #64 merged | pass |
 <!-- sync-status:end -->
 
 ## Mapa zadań z planu

@@ -2,13 +2,13 @@
 projekt: szkolenia-iskt
 tryb: M
 cykl: "M4-produkcja"
-etap_opis: "Realizacja, kamień M4 Baza produkcyjna"
+etap_opis: "Odbiór i wydanie"
 postep_etapy: "4/6"
-postep_zadania: "2/3"
+postep_zadania: "3/3"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Start #62"
-ostatnia_synchronizacja: 2026-11-16T12:33:48Z
+nastepny_krok: "Start etapu odbiór i wydanie"
+ostatnia_synchronizacja: 2026-11-16T21:33:23Z
 ---
 
 # szkolenia-iskt
@@ -17,12 +17,11 @@ ostatnia_synchronizacja: 2026-11-16T12:33:48Z
 
 ## Gdzie jesteśmy
 
-- **Etap:** Realizacja, kamień M4 Baza produkcyjna
+- **Etap:** Odbiór i wydanie
 - **Cykl:** M4-produkcja (od 2026-11-16); wcześniejsze: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md), [M3-formularze-resend](cykle/M3-formularze-resend/cykl.md)
-- **Postęp:** Etapy 4/6 · Zadania 2/3 w bieżącym zleceniu (łącznie 22)
-- **Co się dzieje:** nic w toku
-- **Następny krok:** Start #62
-- **Szacowany czas:** ok. 3 h pracy agentów (1 zadań, średnio 3 h na zadanie, 3 równolegle; orientacyjnie)
+- **Postęp:** Etapy 4/6 · Zadania 3/3 w bieżącym zleceniu (łącznie 22)
+- **Co się dzieje:** etap odbiór i wydanie jeszcze nie rozpoczęty
+- **Następny krok:** Start etapu odbiór i wydanie
 
 ## Czeka na Ciebie
 
@@ -30,16 +29,13 @@ Nic. Agenci pracują sami.
 
 ## Zadania
 
-### Gotowe do startu (1)
+Nic w toku.
 
-| Zadanie | Kamień | Zależności |
-|---|---|---|
-| #62 Dokumentacja wydania M4 | M4 Baza produkcyjna | #61 ✓ |
-
-### Zrobione w bieżącym zleceniu (2)
+### Zrobione w bieżącym zleceniu (3)
 
 | Zadanie | Kamień | PR |
 |---|---|---|
+| #62 Dokumentacja wydania M4 | M4 Baza produkcyjna | #64 |
 | #61 Skrypty wdrożenia bazy produkcyjnej z testami w CI i instrukcja dla właściciela | M4 Baza produkcyjna | #63 |
 | #57 Test polityki prywatności czyta szkic z archiwum cyklu M3 | - | #58 |
 
