@@ -39,18 +39,27 @@ produkcyjnej, RLS i role, dane osobowe (e-maile kont), sekrety (hasło bazy).
    przykładowe adresy z `example.com`), idempotentnie, bez zmiany roli admin.
 5. **Rollback bez kopii (Z3).** `supabase/produkcja/09-cofnij.sql`: przywraca ACL funkcji ról i zasady
    SELECT sprzed M2 (odwrotność migracji M2, jak w schemacie chmury), usuwa 9 szkoleń startowych (po
-   `id` z listy, tylko gdy nie ma przypisań trenerów), usuwa wpis M2 z
-   `supabase_migrations.schema_migrations`. Zostawia konto admin i jego rolę, konta redakcji i
+   `id` z listy, tylko gdy nie ma przypisań trenerów), usuwa oba wpisy historii migracji (M2 i
+   bazowy z `repair`) z `supabase_migrations.schema_migrations`, czyli wraca do stanu bez historii
+   (W-15, kryterium 3). Zostawia konto admin i jego rolę, konta redakcji i
    ustawienia logowania (świadomie: nie zależą od M2; usuwa je właściciel ręcznie, jeśli chce).
-   Po cofnięciu `01-sprawdz-baze.sql` w trybie „przed M2” przechodzi.
+   Po cofnięciu `01-sprawdz-baze.sql` w trybie „przed M2” przechodzi i pokazuje pustą historię migracji.
 6. **Hasło bazy i sekrety.** `supabase link --project-ref vwnvbhiuundeunyzhdxj` pyta o hasło bazy
    interaktywnie; hasło zostaje tylko u właściciela. Skrypty i instrukcja nie zawierają sekretów ani
    adresów e-mail redakcji.
 7. **Testy w CI (job `baza`).** Na czystej bazie z migracji: `02-dane-startowe.sql` dwa razy (9
    szkoleń, bez duplikatów), `03-role.sql` z kontami testowymi (rola editor, admin bez zmian),
    `01-sprawdz-baze.sql` „po M2” bez błędów, `09-cofnij.sql` i `01-sprawdz-baze.sql` „przed M2” bez
-   błędów, ponowne `db push` (ponowne zastosowanie M2) przechodzi. Skrypty uruchamia test pgTAP albo
-   krok CI przez `psql`.
+   błędów, ponowne wykonanie pliku migracji M2 przez `psql -f` przechodzi. Skrypty uruchamia test
+   pgTAP albo krok CI przez `psql`.
+9. **Sprawdzenie uprawnień na produkcji (tylko odczyt).** `01-sprawdz-baze.sql` w trybie „po M2”
+   symuluje role w transakcji zakończonej `rollback` (`set local role anon` /
+   `authenticated` z `request.jwt.claims` dla losowego UUID bez roli): anon widzi tylko opublikowane
+   szkolenia i nie wywoła `is_staff()`; konto bez roli dostaje `is_staff() = false`, czyli panel
+   pokaże „Brak uprawnień”. Logowanie redakcji do `/panel` sprawdza właściciel, uruchamiając
+   aplikację lokalnie z adresem i kluczem publishable produkcji (`VITE_SUPABASE_URL`,
+   `VITE_SUPABASE_PUBLISHABLE_KEY` w osobnym pliku `.env.production.local`, nie w repo) i logując się
+   kontem redaktora.
 8. **Kolejne wdrożenia.** Automatyczne wdrażanie migracji z CI (odpowiedź 5) wymaga sekretu połączenia
    z produkcją w GitHub, co zmienia zasadę „na serwerze i w GitHub Secrets nie ma poświadczeń
    produkcyjnych”: osobna decyzja właściciela i ADR w kroku Vercel.

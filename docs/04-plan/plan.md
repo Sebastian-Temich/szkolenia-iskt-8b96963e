@@ -42,6 +42,8 @@ Brak nowych. Supabase CLI u właściciela.
 
 ### Środowiska i droga na produkcję
 
+Odstępstwo od drogi na produkcję z `proces.md`: brak stagingu i `STAGING_DB_URL` (jak w M1–M3); bazę
+produkcyjną wdraża ręcznie właściciel (ADR-005), nie `scripts/deploy-prod.sh`.
 Produkcja bazy: projekt vwnvbhiuundeunyzhdxj (plan darmowy). Aplikacja na Vercel w kolejnym kroku;
 do tego czasu nic nie korzysta z produkcji (Lovable nie ma zmiennej tej bazy). Automatyczne wdrażanie
 migracji z CI: osobna decyzja w kroku Vercel (ADR-005 pkt 8).
@@ -68,6 +70,8 @@ przez właściciela, zadanie właściciela) → dokumentacja wydania M4 z wyniki
 | Wykonać instrukcję `produkcja-baza.md` (sprawdzenie, repair, db push, dane, ustawienia, konta, role) | QA M4 | CLI zainstalowane i zalogowane (lista startowa) |
 | Utworzyć 2 konta redakcji w dashboardzie i przekazać hasła osobnym kanałem | nadaniem ról | Z4 |
 | Vercel, klucze w Vercel, domena, automatyczne wdrażanie migracji | kolejnym krokiem (cykl Vercel) | nie dotyczy M4 |
+| Projekt Supabase staging i `STAGING_DB_URL` w GitHub Secrets | — | nie dotyczy M4: brak stagingu (decyzja planu M1); migracje sprawdza job `baza` na czystej bazie w CI, a produkcja dostaje je ręcznie od właściciela (ADR-005) |
+| Logowanie redakcji przez lokalną aplikację z adresem produkcji (O-32) | odbiorem M4 | ADR-005 pkt 9 |
 
 ## Ryzyka
 
@@ -88,7 +92,9 @@ przez właściciela, zadanie właściciela) → dokumentacja wydania M4 z wyniki
 | O-28 | Dane startowe | `02-dane-startowe.sql` dwa razy | 9 opublikowanych szkoleń, bez duplikatów i trenerów | W-16 | M4 |
 | O-29 | Konta i role | 2 konta z dashboardu, `03-role.sql`; odczyt MCP | 2 × editor, 1 × admin | W-17 | M4 |
 | O-30 | Ustawienia logowania | Dashboard: Site URL, Redirect URLs, rejestracja, hasła | Wartości jak w instrukcji (zrzut ekranu albo potwierdzenie właściciela) | W-17 | M4 |
-| O-31 | Cofnięcie (CI) | Job `baza`: `09-cofnij.sql`, sprawdzenie „przed M2”, ponowne M2 | Zielone | W-15 | M4 |
+| O-31 | Cofnięcie (CI) | Job `baza`: `09-cofnij.sql`, sprawdzenie „przed M2” z pustą historią, ponowne M2 przez `psql -f` | Zielone | W-15 | M4 |
+| O-32 | Logowanie redakcji (ręcznie, właściciel) | `pnpm dev` lokalnie z adresem i kluczem publishable produkcji (ADR-005 pkt 9), logowanie każdym kontem redakcji do `/panel` | Lista 9 szkoleń w panelu, edycja dostępna | W-17 | M4 |
+| O-33 | Konto bez roli i anon | `01-sprawdz-baze.sql` „po M2”: symulacja ról w transakcji z `rollback` | anon tylko opublikowane, konto bez roli `is_staff() = false` („Brak uprawnień”) | W-17, W-15 | M4 |
 
 ## Zakres autoryzacji
 

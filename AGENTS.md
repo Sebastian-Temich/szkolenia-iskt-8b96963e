@@ -240,7 +240,9 @@ powiadomienie. Eskalacja nie zatrzymuje zadań niezależnych.
 - Na serwerze i w GitHub Secrets nie ma żadnych poświadczeń produkcyjnych. Nie szukasz ich, nie
   prosisz o nie i nie dodajesz ich tam.
 - Produkcję wdraża wyłącznie właściciel ze swojego urządzenia przez `scripts/deploy-prod.sh`.
-  Workflow `deploy-prod` jest zablokowany. W etapie A nie ma deployów produkcyjnych.
+  Workflow `deploy-prod` jest zablokowany. W etapie A nie ma deployów produkcyjnych. Wyjątek
+  (ADR-005): bazę produkcyjną wdraża ręcznie właściciel (`supabase db push` i skrypty
+  `supabase/produkcja/`).
 - GitHub Secrets zawiera tylko `STAGING_DB_URL`. Staging migruje CI po pushu na `main` ze zmianą w
   `supabase/migrations/` (albo ręcznie: workflow „Staging”, Run workflow).
 - Gdy znajdziesz sekret w repo, przerywasz i eskalujesz. Nie próbujesz go usuwać z historii sam.
