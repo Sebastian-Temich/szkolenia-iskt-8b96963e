@@ -7,8 +7,8 @@ postep_etapy: "3/6"
 postep_zadania: "0/0"
 czeka_na_ciebie: 0
 eskalacje: 0
-nastepny_krok: "Agent przygotowuje etap rozpisanie zadań"
-ostatnia_synchronizacja: 2026-11-16T22:54:45Z
+nastepny_krok: "Review etapu rozpisanie zadań, potem Twoja akceptacja"
+ostatnia_synchronizacja: 2026-11-16T22:55:38Z
 ---
 
 # szkolenia-iskt
@@ -20,8 +20,8 @@ ostatnia_synchronizacja: 2026-11-16T22:54:45Z
 - **Etap:** Rozpisanie zadań
 - **Cykl:** M5-vercel (od 2026-11-16); wcześniejsze: [M1](cykle/M1/cykl.md), [M2-bezpieczenstwo](cykle/M2-bezpieczenstwo/cykl.md), [M3-formularze-resend](cykle/M3-formularze-resend/cykl.md), [M4-produkcja](cykle/M4-produkcja/cykl.md)
 - **Postęp:** Etapy 3/6 · Zadania 0/0 w bieżącym zleceniu (łącznie 22)
-- **Co się dzieje:** etap rozpisanie zadań w przygotowaniu
-- **Następny krok:** Agent przygotowuje etap rozpisanie zadań
+- **Co się dzieje:** etap rozpisanie zadań w review
+- **Następny krok:** Review etapu rozpisanie zadań, potem Twoja akceptacja
 
 ## Czeka na Ciebie
 

@@ -112,6 +112,7 @@ odbiór.
 - 2026-11-16 `04-plan`: iteracja 2 (FAIL review PR #68)
 - 2026-11-16 `04-plan`: done
 - 2026-11-16 `06-zadania`: in-progress
+- 2026-11-16 `06-zadania`: review
 
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
