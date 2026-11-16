@@ -52,7 +52,8 @@ Stałe dla tego projektu (z analizy `docs/00-analiza/raport.md`):
 | Obszar | Wartość |
 |---|---|
 | Typ projektu | Web: publiczny serwis oferty szkoleń + panel redakcyjny |
-| Framework | TanStack Start (React 19, SSR, TanStack Router), Vite 8, Tailwind 4, shadcn/ui, TanStack Query, react-hook-form + zod, Supabase JS v2; build `@lovable.dev/vite-tanstack-config` (nitro, preset `cloudflare-module`) |
+| Framework | TanStack Start (React 19, SSR, TanStack Router), Vite 8, Tailwind 4, shadcn/ui, TanStack Query, react-hook-form + zod, Supabase JS v2; build: własny `vite.config.ts` (nitro, preset `vercel`, region fra1), bez `@lovable.dev/vite-tanstack-config` (ADR-006) |
+| Hosting i wdrożenia | Vercel: `main` → Production, PR → Preview za ochroną (ADR-006); migracje produkcji: workflow `migracje-produkcja.yml` po zatwierdzeniu właściciela w środowisku GitHub `production` |
 | Instalacja | `pnpm install` (w CI `pnpm install --frozen-lockfile`); wersja pnpm w `packageManager` w `package.json`, ustawienia (`minimumReleaseAge`, `allowBuilds`, `overrides`) w `pnpm-workspace.yaml` (ADR-002) |
 | Lint | `pnpm lint` (eslint; stan wyjściowy: 0 błędów, 6 ostrzeżeń w `src/components/ui`) |
 | Typy | `pnpm typecheck` (`tsc --noEmit`) |
@@ -240,9 +241,12 @@ powiadomienie. Eskalacja nie zatrzymuje zadań niezależnych.
 - Na serwerze i w GitHub Secrets nie ma żadnych poświadczeń produkcyjnych. Nie szukasz ich, nie
   prosisz o nie i nie dodajesz ich tam.
 - Produkcję wdraża wyłącznie właściciel ze swojego urządzenia przez `scripts/deploy-prod.sh`.
-  Workflow `deploy-prod` jest zablokowany. W etapie A nie ma deployów produkcyjnych. Wyjątek
-  (ADR-005): bazę produkcyjną wdraża ręcznie właściciel (`supabase db push` i skrypty
-  `supabase/produkcja/`).
+  Workflow `deploy-prod` jest zablokowany. W etapie A nie ma deployów produkcyjnych. Wyjątki w tym
+  projekcie: bazę produkcyjną wdrożył ręcznie właściciel (ADR-005); od M5 (ADR-006) aplikację wdraża
+  merge do `main` przez integrację Git Vercel, a migracje workflow `migracje-produkcja.yml` po
+  zatwierdzeniu właściciela. Sekrety Supabase produkcji są wyłącznie w środowisku GitHub `production`
+  (wyjątek od zasady wyżej o braku poświadczeń produkcji w GitHub); agenci ich nie czytają i nie
+  używają. Ten projekt nie ma stagingu ani `STAGING_DB_URL` (podglądy PR zamiast stagingu).
 - GitHub Secrets zawiera tylko `STAGING_DB_URL`. Staging migruje CI po pushu na `main` ze zmianą w
   `supabase/migrations/` (albo ręcznie: workflow „Staging”, Run workflow).
 - Gdy znajdziesz sekret w repo, przerywasz i eskalujesz. Nie próbujesz go usuwać z historii sam.

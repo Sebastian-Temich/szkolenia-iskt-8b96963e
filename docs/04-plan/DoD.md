@@ -11,22 +11,22 @@ Jeden dokument `plan.md`: krótka architektura i plan kamieni milowych (szablon 
 
 ## Dokumentacja
 
-- [ ] `plan.md` ma krótką architekturę: moduły, model danych, bezpieczeństwo, środowiska
-- [ ] `plan.md` ma kamienie milowe jako pionowe przekroje
-- [ ] `plan.md` ma 5–10 scenariuszy odbioru, zakres autoryzacji i jeden następny krok
-- [ ] Ważne decyzje i obszary ryzyka mają ADR w `adr/`
-- [ ] Sekcja „Stack (kontrakt)” w `AGENTS.md` jest uzupełniona
+- [x] `plan.md` ma krótką architekturę: moduły, model danych, bezpieczeństwo, środowiska
+- [x] `plan.md` ma kamienie milowe jako pionowe przekroje
+- [x] `plan.md` ma 5–10 scenariuszy odbioru, zakres autoryzacji i jeden następny krok
+- [x] Ważne decyzje i obszary ryzyka mają ADR w `adr/`
+- [x] Sekcja „Stack (kontrakt)” w `AGENTS.md` jest uzupełniona
 
 ## Funkcjonalność
 
-- [ ] Każde wymaganie ze specyfikacji ma kamień milowy
-- [ ] Każda funkcja ma wskazany punkt wejścia (strona, trasa, komenda, endpoint)
-- [ ] Pierwszy kamień zaczyna się od szkieletu projektu, ostatni kończy dokumentacją wydania
+- [x] Każde wymaganie ze specyfikacji ma kamień milowy
+- [x] Każda funkcja ma wskazany punkt wejścia (strona, trasa, komenda, endpoint)
+- [x] Pierwszy kamień zaczyna się od szkieletu projektu, ostatni kończy dokumentacją wydania
 
 ## Checklisty jakości
 
-- [ ] Migracje zgodne wstecz są zasadą modelu danych
-- [ ] Zadania właściciela są w planie: konta prod i staging, DNS, `STAGING_DB_URL`, zmienne prod w Vercel oraz kroki typu projektu
+- [x] Migracje zgodne wstecz są zasadą modelu danych
+- [x] Zadania właściciela są w planie: konta prod i staging, DNS, `STAGING_DB_URL`, zmienne prod w Vercel oraz kroki typu projektu
 
 ## Checkpoint
 
