@@ -67,3 +67,4 @@ Plik wspólny, aktualizuje orkiestrator. Zgłoszenia ⚪ z review i „Drobne uw
 | 2026-11-16 | review PR #56 | Z4: plan ma wskazać bezpieczne przekazanie haseł redakcji (osobny kanał, poza repo i logami) i zalecić zmianę hasła; ekran zmiany hasła w panelu jako osobne zlecenie. | otwarta |
 | 2026-11-16 | review PR #56 | Spec M4: „Stack” wymienia `db dump`, a lista startowa „kopia i migracje” — nieaktualne po Z3 (bez kopii). | otwarta |
 | 2026-11-16 | review PR #56 | Plan M4 (ADR rollbacku): skrypt cofający zachowuje konto admin i jego rolę; ustalić, czy cofa ustawienia logowania i konta redakcji z W-17. | otwarta |
+| 2026-11-16 | review PR #59 | ADR-005: punkt 9 stoi przed punktem 8 (numeracja 7, 9, 8); uporządkować. | otwarta |
