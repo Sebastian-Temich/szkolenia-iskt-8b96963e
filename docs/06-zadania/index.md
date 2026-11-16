@@ -24,7 +24,7 @@ Plik wspólny. Tabelę generuje `scripts/sync-status.sh`, nie edytuj jej ręczni
 | #47 | Polityka prywatności i informacja o danych przy formularzu | done | 1 | M3 Wysyłka zgłoszeń | #50 merged | pass |
 | #48 | Dokumentacja wydania M3 | done | 1 | M3 Wysyłka zgłoszeń | #51 merged | pass |
 | #54 | Dane firmy w polityce i kontakcie, dofinansowanie do 95%, Certyfikat/Egzamin | done | 1 | - | #55 merged | pass |
-| #57 | Test polityki prywatności czyta szkic z archiwum cyklu M3 | todo | 0 | - | - | - |
+| #57 | Test polityki prywatności czyta szkic z archiwum cyklu M3 | in-progress | 1 | - | - | - |
 <!-- sync-status:end -->
 
 ## Mapa zadań z planu
