@@ -24,6 +24,7 @@ Plik wspólny, aktualizuje orkiestrator. Pomiar poglądowy, służy też do por�
 | #48 Dokumentacja wydania M3 | M | 17min | 1 | 1 | 0 | PR #51 |
 | #54 Dane firmy w polityce i kontakcie, dofinansowanie do 95%, Certyfikat/Egzamin | S | 12h 6min | 1 | 1 | 0 | PR #55 |
 | #57 Test polityki prywatności czyta szkic z archiwum cyklu M3 | S | 27min | 1 | 1 | 0 | PR #58 |
+| #61 Skrypty wdrożenia bazy produkcyjnej z testami w CI i instrukcja dla właściciela | M | 56min | 1 | 1 | 0 | PR #63 |
 
 Eskalacje nie liczą pytań workera (`shctl escalate --typ pytanie`): są w „Uwagach” jako „pytania: N”.
 
@@ -49,3 +50,4 @@ według przyczyny: wymaganie, kod, test, design.
 | QA M3 | 1 | 0 | 1 | 0 | 0 |
 | review PR #55 (#54 Dane firmy w polityce i kontakcie, dofinansowanie do 95%, Certyfikat/Egzamin) | 1 | 0 | 0 | 0 | 0 |
 | review PR #58 (#57 Test polityki prywatności czyta szkic z archiwum cyklu M3) | 0 | 1 | 0 | 0 | 0 |
+| review PR #63 (#61 Skrypty wdrożenia bazy produkcyjnej z testami w CI i instrukcja dla właściciela) | 0 | 1 | 0 | 0 | 0 |

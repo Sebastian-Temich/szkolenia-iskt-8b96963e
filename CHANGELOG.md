@@ -24,3 +24,4 @@ Plik wspólny. Aktualizuje go wyłącznie orkiestrator przez `shctl task close`.
 - #48: Dokumentacja wydania M3 (PR #51)
 - #54: Dane firmy w polityce i kontakcie, dofinansowanie do 95%, Certyfikat/Egzamin (PR #55)
 - #57: Test polityki prywatności czyta szkic z archiwum cyklu M3 (PR #58)
+- #61: Skrypty wdrożenia bazy produkcyjnej z testami w CI i instrukcja dla właściciela (PR #63)
