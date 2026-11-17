@@ -1,4 +1,5 @@
 # CI projektu: jakość kodu na każdym PR i pushu na main (ADR-002, W-01, W-06).
+# Checki `jakosc` i `e2e` commita z main są Vercel Deployment Checks produkcji (ADR-006 pkt 2, #71).
 # Runner: zmienna repo SH_RUNS_ON (repo prywatne: runner serwera); bez niej ubuntu-24.04 GitHuba,
 # tak samo jak w sh.yml. Wersja pnpm z pola packageManager w package.json.
 name: CI
@@ -118,11 +119,31 @@ jobs:
         continue-on-error: true
         run: supabase stop --no-backup
 
-  # E2E na PR (AGENTS.md „Testy E2E”, issue #20): lokalny Supabase z migracji i seed jak w jobie
-  # baza, serwis z `pnpm dev` (webServer Playwrighta), chromium i webkit headless. Zmienne bazy to
-  # lokalne klucze demo z `supabase status`, bez sekretów repo.
+  # Testy skryptów i workflow wdrożenia (issue #71): Ignored Build Step Vercel i migracje produkcji.
+  # Tylko pliki projektu, nie cały scripts/tests (testy szablonu czytają docs/ szablonu).
+  skrypty:
+    runs-on: ${{ fromJSON(vars.SH_RUNS_ON || '"ubuntu-24.04"') }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Narzędzia (bats, yq)
+        run: |
+          if ! command -v bats >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq bats
+          fi
+          command -v yq >/dev/null 2>&1 || { echo "::error title=Brak yq::Runner bez yq (mikefarah)."; exit 1; }
+          bats --version
+          yq --version
+      - name: Testy bats wdrożenia
+        run: bats scripts/tests/vercel-pomin-build.bats scripts/tests/wdrozenie-vercel.bats
+
+  # E2E na PR, pushu do main i ręcznie (AGENTS.md „Testy E2E”, issue #20, #71): lokalny Supabase z
+  # migracji i seed jak w jobie baza, serwis z `pnpm dev` (webServer Playwrighta), chromium i webkit
+  # headless. Zmienne bazy to lokalne klucze demo z `supabase status`, bez sekretów repo.
+  # Na pushu do main e2e jest checkiem dla Vercel Deployment Checks (jakosc i e2e, ADR-006 pkt 2):
+  # wdrożenie produkcji czeka na oba checki commita z main.
   e2e:
-    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
     runs-on: ${{ fromJSON(vars.SH_RUNS_ON || '"ubuntu-24.04"') }}
     timeout-minutes: 40
     env:
