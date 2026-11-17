@@ -87,3 +87,6 @@ Plik wspólny, aktualizuje orkiestrator. Zgłoszenia ⚪ z review i „Drobne uw
 | 2026-11-17 | T-70 | `pnpm peers check`: niespełniona zależność równorzędna `ocache >=0.3.0` dla `h3@2.0.8` (zainstalowane 0.1.5); pochodzi z nitro, nie z tej zmiany. | otwarta |
 | 2026-11-17 | T-70 | `vitest.config.ts` używa `__dirname` (ostrzeżenie Vite o `configLoader: 'native'`); poza zakresem. | otwarta |
 | 2026-11-17 | review PR #73 | `vite.config.ts`: devtools warunkowane `mode === "development"` włączają się też przy `pnpm build:dev`; lepiej `command === "serve"`. Ręczne `define` dla `import.meta.env.VITE_*` powiela natywne zachowanie Vite. | otwarta |
+| 2026-11-17 | T-71 | `scripts/tests/ci-workflow.bats`: 5 testów szablonu nie pasuje do `ci.yml` projektu (stan sprzed zadania); do decyzji, czy dostosować je do projektu, czy usunąć z repo projektu. | otwarta |
+| 2026-11-17 | T-71 | Po przełączeniu domeny (krok 12) warto sprawdzić w Supabase produkcji Auth → URL Configuration (Site URL i Redirect URLs) dla `https://szkolenia.iskt.pl`, jeśli panel korzysta z linków e-mail (zaproszenia, reset hasła); ADR-006 tego kroku nie wymienia, więc nie dodałem go do instrukcji. | otwarta |
+| 2026-11-17 | T-71 | `staging.yml` używa `supabase/setup-cli` v3.0.1, `ci.yml` i nowy workflow v3.2.0. | otwarta |

@@ -27,3 +27,4 @@ Plik wspólny. Aktualizuje go wyłącznie orkiestrator przez `shctl task close`.
 - #61: Skrypty wdrożenia bazy produkcyjnej z testami w CI i instrukcja dla właściciela (PR #63)
 - #62: Dokumentacja wydania M4 (PR #64)
 - #70: Build na Vercel bez konfiguracji Lovable (PR #73)
+- #71: Workflow migracji produkcji, Ignored Build Step i instrukcja wdrożenia na Vercel (PR #74)

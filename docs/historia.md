@@ -118,10 +118,11 @@ odbiór.
 <!-- historia:start -->
 <!-- Blok generuje scripts/sync-status.sh. Nie edytuj go ręcznie. -->
 
-## Wszystkie zadania zrobione (23)
+## Wszystkie zadania zrobione (24)
 
 | Zadanie | Cykl | Kamień | PR | Zamknięte |
 |---|---|---|---|---|
+| #71 Workflow migracji produkcji, Ignored Build Step i instrukcja wdrożenia na Vercel | M5-vercel | M5 Produkcja na Vercel | #74 | 2026-11-17 |
 | #70 Build na Vercel bez konfiguracji Lovable | M5-vercel | M5 Produkcja na Vercel | #73 | 2026-11-16 |
 | #62 Dokumentacja wydania M4 | M4-produkcja | M4 Baza produkcyjna | #64 | 2026-11-16 |
 | #61 Skrypty wdrożenia bazy produkcyjnej z testami w CI i instrukcja dla właściciela | M4-produkcja | M4 Baza produkcyjna | #63 | 2026-11-16 |
